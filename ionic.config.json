@@ -1,0 +1,7 @@
+{
+  "name": "commum_ibnovabetel_2022",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
