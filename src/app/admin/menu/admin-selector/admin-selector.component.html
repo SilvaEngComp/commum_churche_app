@@ -1,0 +1,7 @@
+<ion-content ionScroll="true" #main>
+  <div [ngSwitch]="isLarge">
+
+    <app-admin-large *ngSwitchCase="true"></app-admin-large>
+    <app-admin-small *ngSwitchCase="false"></app-admin-small>
+  </div>
+</ion-content>

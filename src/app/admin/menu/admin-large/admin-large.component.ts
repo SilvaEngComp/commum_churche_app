@@ -1,0 +1,107 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/member-ordering */
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonContent, Platform, NavController } from '@ionic/angular';
+import { Menu } from 'src/app/models/menu';
+import { User } from 'src/app/models/user';
+import { LoginService } from 'src/app/services/login.service';
+import { UiService } from 'src/app/services/ui.service';
+import { environment } from 'src/environments/environment';
+
+@Component({
+  selector: 'app-admin-large',
+  templateUrl: './admin-large.component.html',
+  styleUrls: ['./admin-large.component.scss'],
+})
+export class AdminLargeComponent implements OnInit {
+  menu_itens: Menu[] = [];
+  permission: boolean;
+  nivel: number;
+  largura: number;
+  page: string;
+  base_url: string = environment.IMAGE_URL;
+  user: User;
+  showMenu: boolean;
+  menu_size_left: string;
+  menu_size_right: string;
+  height: number;
+  defaultPageName = 'lastPage';
+  @ViewChild('main', { static: false }) content: IonContent;
+
+  constructor(private platform: Platform, private nav: NavController) {}
+
+  ngOnInit() {
+    this.height = this.platform.height();
+    this.showMenu = true;
+    this.menu_itens = Menu.getMenuAdmin();
+    console.log(this.menu_itens);
+    this.nivel = 3;
+    this.permission = false;
+    this.page = '0';
+    if (UiService.localGet(this.defaultPageName)) {
+      this.page = UiService.localGet(this.defaultPageName);
+    }
+
+    UiService.toTop.subscribe(() => {
+      this.content.scrollToTop(2000);
+    });
+
+    this.user = LoginService.getUser();
+    console.log(this.user);
+  }
+
+  doRefresh(ev) {
+    window.location.reload();
+  }
+
+  getConditions() {
+    this.largura = window.innerWidth;
+
+    if (this.platform.is('android') || this.largura < 750) {
+      return false;
+    }
+    return true;
+  }
+
+  setShowMenu() {
+    this.checkPlaftorm();
+    this.showMenu = !this.showMenu;
+  }
+
+  checkPlaftorm() {
+    if (this.platform.width() <= 500) {
+      if (this.showMenu) {
+        this.menu_size_left = '0';
+        this.menu_size_right = '12';
+        this.showMenu = false;
+      } else {
+        this.menu_size_left = '8';
+        this.menu_size_right = '1';
+      }
+    } else {
+      this.menu_size_left = '2';
+      this.menu_size_right = '9';
+    }
+  }
+
+  selectSubPage(page: any, subpage: any) {
+    this.page = page;
+    UiService.emitirMenu.emit({ subpage });
+    this.checkPlaftorm();
+    this.content.scrollToTop(2000);
+  }
+
+  selectPage(page: any, item: Menu) {
+    item.showSub = !item.showSub;
+    if (page !== 5) {
+      this.checkPlaftorm();
+      this.page = page;
+      console.log(this.page);
+      UiService.localSet(this.defaultPageName, this.page);
+    } else {
+      localStorage.clear();
+      this.nav.navigateForward('');
+    }
+    this.content.scrollToTop(2000);
+  }
+}

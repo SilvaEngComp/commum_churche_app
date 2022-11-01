@@ -1,0 +1,29 @@
+import { LoginPageRoutingModule } from './login-routing.module';
+import { BrMaskerModule } from 'br-mask';
+import { LoginComponent } from './login.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { EsqueciSenhaComponent } from './esqueci-senha/esqueci-senha.component';
+import { AlterarSenhaComponent } from './esqueci-senha/alterar-senha/alterar-senha.component';
+import { ResponseComponent } from './esqueci-senha/response/response.component';
+
+@NgModule({
+    declarations: [
+        LoginComponent,
+        EsqueciSenhaComponent,
+        ResponseComponent,
+        AlterarSenhaComponent
+    ],
+    imports: [
+        LoginPageRoutingModule,
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        BrMaskerModule,
+        ReactiveFormsModule
+    ],
+    exports: [LoginComponent]
+})
+export class LoginModule { }

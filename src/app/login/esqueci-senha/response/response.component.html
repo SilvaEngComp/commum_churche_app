@@ -1,0 +1,20 @@
+<ion-content class="content">
+    <p  class="title">
+      E-MAIL ENVIADO COM SUCESSO!
+    </p>
+
+  <p class="response">
+    Cole abaixo o cógigo que vc receu em seu email
+  </p>
+<ion-item>
+  <ion-label>Código: </ion-label>
+  <ion-input type="text" (keyup)="checkCod()" [(ngModel)]="cod" maxlength="6"></ion-input>
+</ion-item>
+<ion-button color="success" (click)="checkCod()">VERIFICAR</ion-button>
+  <p class="obs">OBS.: Se você não recebeu o e-mail,verifique na sua caixa de SPAN.</p>
+
+  <ion-item>
+    <ion-button expand="block" (click)="option(2)" color="danger">CANCELAR</ion-button>
+    <ion-button expand="block" (click)="option(1)"  color="tertiary">RE-ENVIAR EMAIL</ion-button>
+  </ion-item>
+</ion-content>

@@ -1,0 +1,7 @@
+<div *ngIf="isLoading" class="spinner">
+  <ion-spinner name="dots"></ion-spinner>
+  <ion-label>Carregando usuários</ion-label>
+  <ion-spinner name="dots"></ion-spinner>
+</div>
+
+<app-profile [users]="users" [role]="role" *ngIf="!isLoading"></app-profile>

@@ -1,9 +1,23 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  API: 'http://127.0.0.1:8000/api/v1',
+  API2: 'http://127.0.0.1:8000/api/v2',
+  IMAGE_URL: 'http://127.0.0.1:8000/storage/',
+
+  // API: 'https://apis2.enginydigitaleco.com/ibnovabetel/public/api/v1',
+  // API2: 'https://apis2.enginydigitaleco.com/ibnovabetel/public/api/v2',
+  // IMAGE_URL: 'https://apis2.enginydigitaleco.com/ibnovabetel/public/storage/',
+
+  PRIVATEKEY: 'QUBjZW1lY2FkZUBlbmdpbnlkaWdpdGFsZWNvLmNvbQ==', // ...
+
+  LOCALSTORAGE: 'ibnovabetel.',
+
+  LOCAL_USER: 'localUser',
 };
 
 /*

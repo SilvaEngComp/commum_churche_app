@@ -1,0 +1,29 @@
+
+
+<ion-content  >
+  <ion-item  lines="none" button (click)="back()">
+      <ion-icon slot="start"  name="arrow-back-outline"></ion-icon>
+<ion-label slot="start" class="lb-entrar-top"  >LOGIN</ion-label>
+        </ion-item>
+  <div class="fundo"></div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item class="item-input" lines="none">
+          <ion-label position="floating">E-mail</ion-label>
+          <ion-input type="email" (keyup.enter)="esqueciSenha()" [(ngModel)]="email" ></ion-input>
+        </ion-item> 
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+    <ion-button  class="btn-entrar" color="tertiary" (click)="esqueciSenha()">ENVIAR</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+        
+
+           
+  </ion-content>
+  

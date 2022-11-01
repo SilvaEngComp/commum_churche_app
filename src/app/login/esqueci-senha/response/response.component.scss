@@ -1,0 +1,33 @@
+.content{
+    width: 98%;
+    display: grid;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+}
+
+.response{
+    text-align: justify;
+    width: 90%;
+    margin-left: 5%;
+}
+.obs{
+    text-align: justify;
+    width: 90%;
+    margin-left: 5%;   
+    font-weight: bold;
+}
+.title{
+    width: 90%;
+    margin-left: 5%;
+    text-align: center;
+    color: var(--ion-color-tertiary);
+    font-size:10pt;
+    font-weight: 900;
+    font-family: Qanelas;
+    border-bottom: 1px solid var(--ion-color-tertiary);
+}
+
+ion-button{
+    font-size: 3vw;
+}

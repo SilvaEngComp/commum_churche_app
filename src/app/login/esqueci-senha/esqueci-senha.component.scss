@@ -1,0 +1,35 @@
+
+.fundo{
+   background-image: url('../../../assets/images/logo.jpeg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+      width: 100%;
+    height: 100%;
+    display: grid;
+    justify-content: center;
+ opacity: 0.3;
+    position: absolute;
+  }
+    .item-input {
+      width: 300px;
+    border-radius: 10px;
+    border: 1px solid var(--ion-color-secondary);
+  }
+  .item-entrar-top{
+    margin-left: -10px
+  }
+  .lb-entrar-top{
+    margin-left: -20px
+  }
+
+  ion-grid{
+      width: 80%;
+  }
+
+  ion-col{
+      display: grid;
+      justify-content: center;
+  }
+
+
+

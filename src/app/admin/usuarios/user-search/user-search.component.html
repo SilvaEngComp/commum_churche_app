@@ -1,0 +1,24 @@
+<ion-content>
+  <ion-item class="item-search">
+    <ion-input mode="ios" autofocus="true" #searchInput (keyup)="searchUser(searchInput.value)"></ion-input>
+  </ion-item>
+
+  <ion-item *ngIf="cadastrar">
+    <ion-label color="tertiary">Cadastrar Novo</ion-label>
+    <ion-radio slot="end" (click)="register()">
+    </ion-radio>
+  </ion-item>
+
+  <ion-label *ngIf="!users.length">Nenhum usuário encontrado</ion-label>
+  <ion-list *ngIf="users.length>0">
+    <ion-item button (click)="selectedUser(user)" title="{{user?.name}}" *ngFor="let user of users | slice:0,limit">
+      <ion-label>{{ user?.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="resetLimit($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Carregando">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

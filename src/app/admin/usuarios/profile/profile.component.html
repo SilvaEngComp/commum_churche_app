@@ -1,0 +1,65 @@
+<ion-grid>
+  <ion-row>
+    <ion-col size="12">
+      <ion-item lines="none" class="item-search">
+        <ion-input type="text" #searchInput (keyup)="search(searchInput.value)"></ion-input>
+        <ion-icon color="secondary" name="search-outline"></ion-icon>
+        <ion-note slot="end" color="secondary">{{ users?.length }} {{ users?.length>1 ? 'registros' : 'registro' }}
+        </ion-note>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#" (click)="backPage()">
+              <ion-icon name="chevron-back-sharp"></ion-icon>
+            </a></li>
+          <li class="page-item">
+            <ion-item lines="none">
+              <ion-label>Página {{paginationNumber}}</ion-label>
+            </ion-item>
+          </li>
+          <li class="page-item"><a class="page-link" href="#" (click)="nextPage()">
+              <ion-icon name="chevron-forward-sharp"></ion-icon>
+            </a></li>
+        </ul>
+      </nav>
+
+    </ion-col>
+
+    <ion-col>
+      <ion-button fill="clear" color="primary" (click)="newUser()">
+        <ion-label>Cadastrar {{label}}</ion-label>
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngFor="let user of users | slice:inferiorLimit:upperLimit">
+    <ion-col>
+      <ion-item lines="none">
+        <ion-card-title>{{ user?.name }} </ion-card-title>
+      </ion-item>
+      <p *ngFor="let contact of user?.contacts"> {{contact?.contactType?.name}}: {{ contact?.value }}
+
+    </ion-col>
+    <ion-col>
+      <ion-item lines="none">
+
+
+        <ion-list (click)="edit(user)" slot="end">
+          <ion-icon color="secondary" name="pencil-sharp"></ion-icon>
+          <ion-label color="secondary">Editar</ion-label>
+        </ion-list>
+
+
+
+        <ion-list (click)="delete(user)" slot="end">
+          <ion-icon color="danger" name="trash-outline"></ion-icon>
+          <ion-label color="danger">Excluir</ion-label>
+        </ion-list>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>

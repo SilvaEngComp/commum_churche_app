@@ -1,0 +1,20 @@
+<ion-item>
+  <ion-label position="floating">{{label | uppercase}}</ion-label>
+  <ion-input type="text" placeholder="Digite o nome" #searchCustomer (keyup)="searchBar()" [(ngModel)]="selected">
+  </ion-input>
+  <ion-select *ngIf="showSelect" [interfaceOptions]="customPopoverOptions" interface="popover"
+    (ionChange)="onSelect($event)">
+    <ion-select-option class="item-search" *ngFor="let item of apiResponseAdapted" [value]="item?.code">{{ item?.value |
+      uppercase}}</ion-select-option>
+  </ion-select>
+
+
+  <ion-button fill="clear" (click)="createNew()" *ngIf="create">
+    <ion-icon color="medium" name="add-circle-outline"></ion-icon>
+  </ion-button>
+</ion-item>
+
+<ion-list *ngIf="filtredSearch.length>0">
+  <ion-item (click)="onSelectSearch(item)" class="item-search" *ngFor="let item of filtredSearch">{{ item?.value |
+    uppercase}}</ion-item>
+</ion-list>
