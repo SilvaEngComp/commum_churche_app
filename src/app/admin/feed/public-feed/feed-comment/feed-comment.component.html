@@ -1,0 +1,57 @@
+<div class="geral">
+
+
+
+    <div>
+        <div class="new-comment-message">
+            <ion-textarea maxlength="250" placeholder="O que você está pensando? Conta pra gente!" [(ngModel)]="newComment.message"></ion-textarea>
+
+            <div>
+                <ion-note>{{ newComment?.message?.length ? newComment?.message?.length : 0}} / 250 caracteres</ion-note>
+                <ion-button *ngIf="!is_loading" fill="clear" color="primary" (click)="postComment()">publicar</ion-button>
+                <ion-spinner name="dots" *ngIf="is_loading"></ion-spinner>
+
+            </div>
+        </div>
+        <div *ngIf="!is_editting">
+            <ion-grid *ngFor="let comment of feed?.comments">
+
+
+                <ion-row>
+                    <ion-col size="11">
+
+                        <ion-item lines="none">
+                            <ion-avatar>
+                                <ion-img [src]="base_url + feed?.publisher?.image"></ion-img>
+                            </ion-avatar>
+                            <ion-label class="lb-comment-commenter">{{ feed?.publisher?.name }}
+                            </ion-label>
+                        </ion-item>
+                        <ion-text class="lb-comment-message" *ngIf="!comment.edit">{{ comment?.message }}</ion-text>
+
+                        <div *ngIf="comment.edit">
+
+                            <ion-item>
+                                <ion-label position="floating">Menssagem</ion-label>
+                                <ion-textarea cols="3" rows="3" maxlength="250" placeholder="O que você está pensando? Conta pra gente!" [(ngModel)]="comment.message"></ion-textarea>
+
+                            </ion-item>
+                            <ion-note>{{ feed?.message?.length ? feed?.message?.length : 0}} / 250 caracteres</ion-note>
+
+                        </div>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item lines="none" class="alter-cancel-label-as-button" *ngIf="comment.edit">
+                            <ion-label slot="end" (click)="editCancel(comment)">Cancelar</ion-label>
+                            <ion-label slot="end" (click)="edit(comment)">ALterar</ion-label>
+                        </ion-item>
+                        <ion-icon *ngIf="!comment.edit" (click)="menuPost(comment, $event)" name="ellipsis-vertical-outline"></ion-icon>
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>
+        </div>
+    </div>
+
+
+</div>

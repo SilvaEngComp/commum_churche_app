@@ -80,13 +80,13 @@ export class UserService extends ServiceInterface {
       .toPromise();
   }
 
-  async delete(user: User): Promise<User[]> {
+  async delete(user: User): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
     return this.http
-      .delete<User[]>(`${environment.API2}/users/${user.id}`, {
+      .delete<Responser>(`${environment.API2}/users/${user.id}`, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();

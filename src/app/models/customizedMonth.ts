@@ -8,10 +8,21 @@ export class CustomizedMonth {
     }
     if (id >= 1 && id <= 12) {
       this.id = id;
-      const meses = ['Jeneiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
-        'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+      const meses = [
+        'Jeneiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro',
+      ];
       this.name = meses[id - 1];
-
     }
   }
 
@@ -21,5 +32,13 @@ export class CustomizedMonth {
       meses.push(new CustomizedMonth(i));
     }
     return meses;
+  }
+
+  static monthsOfYear() {
+    const monthes: CustomizedMonth[] = [];
+    for (let i = 1; i <= 12; i++) {
+      monthes.push(new CustomizedMonth(i));
+    }
+    return monthes;
   }
 }

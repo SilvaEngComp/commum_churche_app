@@ -1,122 +1,42 @@
-import { environment } from '../../environments/environment';
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import {
   ToastController,
   LoadingController,
   AlertController,
   ModalController,
+  Platform,
 } from '@ionic/angular';
 import { FinishActionComponent } from '../ui/finish-action/finish-action.component';
-import { Router } from '@angular/router';
-import { PushNotify } from '../models/pushNotification';
+// import { SocialAuthService } from 'angularx-social-login';
 import { UiService } from './ui.service';
+import { PushNotify } from '../models/pushNotification';
+import { Responser } from '../models/responser';
+// import { NotificationsService } from 'angular2-notifications';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExceptionService {
   constructor(
+    private modalCtrl: ModalController,
     private toastCtrl: ToastController,
     private loadCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private router: Router,
-    private modalCtrl: ModalController
+    // private notiWeb: NotificationsService,
+    private platform: Platform
   ) {}
 
-  async alertDialog(message: string, header: string = '', exit?: boolean) {
-    const toast = await this.alertCtrl.create({
-      header,
-      message,
-      mode: 'ios',
-      buttons: [
-        {
-          text: 'OK',
-          handler: () => {
-            if (exit) {
-              localStorage.removeItem(environment.LOCALSTORAGE + 'token');
-              this.router.navigate(['']);
-            }
-          },
-        },
-      ],
-    });
-
-    return toast.present();
-  }
-
-  async toastHandler(message: string, duration = 2000) {
-    const toast = await this.toastCtrl.create({
-      message,
-      duration,
-    });
-
-    return toast.present();
-  }
-
-  success(
-    menssage: boolean = true,
-    msg: string = 'Operação realizada com sucesso!',
-    atualizar: boolean = false
+  async openLoading(
+    msg: string,
+    icon: boolean = true,
+    duration: number = 2,
+    reload?: boolean
   ) {
-    if (menssage) {
-      this.toastHandler(msg);
-    }
-
-    if (atualizar) {
-      window.location.reload();
-    }
-    this.loadCtrl.dismiss();
-  }
-  erro(error: any) {
-    console.log(error);
-    if (error) {
-      switch (error.status) {
-        case 400:
-          this.alertDialog(error.error.message, 'Erro!');
-          break;
-        case 401:
-          this.alertDialog('Sessão Expridada', 'Erro!');
-          break;
-        case 403:
-          this.alertDialog('Login ou senha incorretos', 'Erro!');
-          break;
-        case 413:
-          this.alertDialog('O arquivo é muito grande! Tente outro', 'Erro!');
-          break;
-        case 422:
-          this.alertDialog(JSON.stringify(error.error.errors), 'Erro!');
-          break;
-        default:
-          if (error.error) {
-            this.alertDialog(error.error.message, 'Erro!');
-          }
-          break;
-      }
-
-      if (error.error) {
-        this.alertDialog(error.error.message);
-      } else {
-        this.alertDialog(error);
-      }
-    } else {
-      this.alertDialog('Erro Desconhecido', 'Erro!');
-    }
-  }
-
-  async loadingFunction(msg: string = 'Aguarde um instante...') {
-    const loading = await this.loadCtrl.create({
-      message: msg,
-      translucent: true,
-      backdropDismiss: true,
-      duration: 2000,
-    });
-    await loading.present();
-  }
-
-  async openLoading(msg: string, reload?: boolean) {
     const modal = await this.modalCtrl.create({
       component: FinishActionComponent,
-      componentProps: { msg },
+      cssClass: 'modal-model',
+      componentProps: { msg, icon, duration },
     });
     await modal.present();
 
@@ -193,5 +113,77 @@ export class ExceptionService {
     }
 
     UiService.emitirRefreshUserChat.emit(msg.click_action.chatConfig.sender);
+  }
+
+  async alertDialog(message: string, header: string = '', exit?: boolean) {
+    const toast = await this.alertCtrl.create({
+      header,
+      message,
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            if (exit) {
+            }
+          },
+        },
+      ],
+    });
+
+    return toast.present();
+  }
+
+  async toastHandler(message: string, duration = 2000) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration,
+    });
+
+    return toast.present();
+  }
+
+  success(resp: Responser) {
+    if (resp.message) {
+      this.toastHandler(resp.message);
+    } else {
+      this.toastHandler('Operação realizada com sucesso!');
+    }
+
+    // this.loadCtrl.dismiss();
+  }
+  error(err: any) {
+    if (err) {
+      switch (err.status) {
+        case 400:
+          this.alertDialog(err.error.message, 'Erro!');
+          break;
+        case 401:
+          this.alertDialog('Sessão Expridada', 'Erro!');
+          break;
+        case 403:
+          this.alertDialog('Login ou senha incorretos', 'Erro!');
+          break;
+        case 413:
+          this.alertDialog('O arquivo é muito grande! Tente outro', 'Erro!');
+          break;
+        default:
+          if (err.error) {
+            this.alertDialog(err.error.message, 'Erro!');
+          }
+          break;
+      }
+    } else {
+      this.alertDialog('Erro Desconhecido', 'Erro!');
+    }
+  }
+
+  async loadingFunction(msg: string = 'Aguarde um instante...') {
+    const loading = await this.loadCtrl.create({
+      message: msg,
+      translucent: true,
+      backdropDismiss: true,
+      duration: 2000,
+    });
+    await loading.present();
   }
 }

@@ -124,4 +124,47 @@ export class LoginService {
       .get<User>(`${environment.API}/users/updateSenha/${user.id}/${senha}`)
       .toPromise();
   }
+
+  sendInvitation(email: string): Promise<Responser> {
+    if (!LoginService.getHeaders()) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+
+    return this.http
+      .post<Responser>(
+        `${environment.API2}/auth/sendInvitation/${email}`,
+        {},
+        {
+          headers: LoginService.getHeaders(),
+        }
+      )
+      .toPromise();
+  }
+
+  async validCod(cod: string, is_invitation: boolean): Promise<Responser> {
+    return this.http
+      .get<Responser>(
+        `${environment.API}/auth/codeRescue/${cod}/${is_invitation}`,
+        {
+          headers: await LoginService.getHeaders(),
+        }
+      )
+      .toPromise();
+  }
+
+  async recorverAccess(email: string): Promise<Responser> {
+    return this.http
+      .get<Responser>(`${environment.API}/auth/recoverAccess/${email}`)
+      .toPromise();
+  }
+
+  async checkExistentUser(email: string): Promise<Responser> {
+    return this.http
+      .get<Responser>(
+        `${environment.API}/users/checkEmailExistente?email=${email}`,
+        { headers: await LoginService.getHeaders() }
+      )
+      .toPromise();
+  }
 }

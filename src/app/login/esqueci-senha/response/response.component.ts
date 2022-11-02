@@ -11,40 +11,40 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./response.component.scss'],
 })
 export class ResponseComponent implements OnInit {
-
   @Input() email: string;
   constructor(
     private loginService: LoginService,
     private popCtrl: PopoverController,
     private modalCtrl: ModalController,
-    private exceptionService: ExceptionService,
-    ) { }
+    private exceptionService: ExceptionService
+  ) {}
 
   cod: string;
 
   ngOnInit() {}
-  option(op: number){
-    switch (op){
+  option(op: number) {
+    switch (op) {
       case 1:
         this.cod = '';
         this.exceptionService.loadingFunction();
         this.loginService.esqueciSenha(this.email);
-      break;
+        break;
 
       case 2:
-       this.popCtrl.dismiss();
-       break;
+        this.popCtrl.dismiss();
+        break;
     }
   }
 
   checkCod() {
     if (this.cod.length >= 6) {
       this.exceptionService.loadingFunction();
-      this.loginService.checkCod(this.cod).then(
-        async (user) => {
+      this.loginService
+        .checkCod(this.cod)
+        .then(async (user) => {
           const modal = await this.modalCtrl.create({
             component: AlterarSenhaComponent,
-            componentProps: ({ user })
+            componentProps: { user },
           });
 
           await modal.present();
@@ -55,17 +55,11 @@ export class ResponseComponent implements OnInit {
           if (data) {
             status = data.status;
           }
-          this.popCtrl.dismiss(
-            {
-              status
-            }
-          );
-        }
-      ).catch(
-        (erro) => this.exceptionService.erro(erro)
-      );
+          this.popCtrl.dismiss({
+            status,
+          });
+        })
+        .catch((erro) => this.exceptionService.error(erro));
     }
-   }
-
-
+  }
 }

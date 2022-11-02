@@ -14,6 +14,7 @@ export class User {
   usingCredit: boolean;
   goal: number;
   password: string;
+  policy: boolean;
   constructor(roles: string[] = [], name: string = '', email: string = '') {
     this.name = name;
     this.email = email;

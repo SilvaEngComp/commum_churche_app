@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-toolbar>
+
+        <ion-grid>
+            <ion-row>
+                <ion-col size="2">
+                    <ion-icon class="back-button" (click)="back()" name="chevron-back-outline"></ion-icon>
+                </ion-col>
+                <ion-col>
+                    <ion-progress-bar value="0.01"></ion-progress-bar>
+                    <ion-label>Estamos quase lá</ion-label>
+                </ion-col>
+                <ion-col size="2">
+                    <ion-icon class="image-right" src="./assets/images/shield.svg"></ion-icon>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+    <ion-toolbar>
+
+        <ion-label class="lb-title">
+            POLÍTICA DE <strong>PRIVACIDADE</strong>
+        </ion-label>
+        <ion-icon *ngIf="!isSpeaking" (click)="readPolicy()" class="microphone" src="./assets/icons/microphone.svg"></ion-icon>
+        <ion-icon *ngIf="isSpeaking" (click)="pause()" class="microphone" name="mic-off-outline"></ion-icon>
+        <!-- <ion-icon (click)="voicesOptions($event)" name="ellipsis-vertical-outline"></ion-icon> -->
+
+    </ion-toolbar>
+</ion-header>
+<div class="geral" [ngStyle]="{'height': height+'px'}">
+    <iframe class="frame" src="https://www.enginydigitaleco.com/private_policy/private_policy_fkdeb.html"></iframe>
+
+</div>
+
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-item>
+            <ion-button expand="block" slot="start" color="primary" (click)="assinar(true)">
+                <ion-label class="lb-aceito">ACEITO</ion-label>
+            </ion-button>
+            <ion-button expand="block" slot="end" color="danger" (click)="assinar(false)">
+                <ion-label class="lb-aceito">NÃO ACEITO</ion-label>
+
+            </ion-button>
+        </ion-item>
+    </ion-toolbar>
+</ion-footer>

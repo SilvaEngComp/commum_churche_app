@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['admin']);
       })
       .catch((error) => {
-        this.exceptionService.erro(error);
+        this.exceptionService.error(error);
       });
   }
 

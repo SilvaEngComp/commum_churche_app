@@ -1,0 +1,91 @@
+.open-div {
+    overflow-y: auto;
+    z-index: 2000;
+    // box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    background: white;
+}
+
+.buttons {
+    display: flex;
+}
+
+.grid-challengeWeeks {
+    margin-top: 40px;
+    ion-item {
+        ion-label {
+            margin: 10px;
+        }
+    }
+    ion-textarea {
+        color: var(--ion-color-medium);
+        text-align: justify;
+    }
+    .challengeWeek {
+        display: grid;
+        grid-template-columns: 30px auto;
+        ion-radio {
+            margin-top: 15px;
+        }
+    }
+}
+
+ion-radio-group {
+    ion-item {
+        ion-label {
+            margin: 10px
+        }
+    }
+}
+
+.new-comment-message {
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+    ion-texarea {
+        text-align: justify
+    }
+    div {
+        display: grid;
+        grid-template-columns: auto 80px;
+    }
+}
+
+//div que é expandida simulando o select list
+.open-div ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.open-div::-webkit-scrollbar {
+    width: 1em;
+    border-radius: 20px;
+    background: var(--ion-color-light);
+}
+
+.open-div::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: var(--ion-color-primary);
+}
+
+.open-div::-webkit-scrollbar-corner {
+    background: var(--ion-color-tertiary);
+}
+
+.open-div::-webkit-scrollbar-corner {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.open-div::-webkit-scrollbar-button:single-button {
+    background-color: var(--ion-color-light);
+    display: block;
+    border-style: solid;
+    height: 13px;
+    width: 16px;
+}
+
+.open-div::-webkit-scrollbar-button:single-button:vertical:decrement {
+    border-width: 0 8px 8px 8px;
+    border-color: var(--ion-color-light) var(--ion-color-light) var(--ion-color-primary) var(--ion-color-light);
+}
+
+.open-div::-webkit-scrollbar-button:single-button:vertical:increment {
+    border-width: 8px 8px 0 8px;
+    border-color: var(--ion-color-primary) var(--ion-color-light) var(--ion-color-light) var(--ion-color-light);
+}

@@ -10,7 +10,6 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./esqueci-senha.component.scss'],
 })
 export class EsqueciSenhaComponent implements OnInit {
-
   erro: boolean;
   email: string;
 
@@ -20,8 +19,8 @@ export class EsqueciSenhaComponent implements OnInit {
     private modalCtrl: ModalController,
     private exceptionService: ExceptionService,
     private popCtrl: PopoverController,
-    private loginService: LoginService,
-        ) {}
+    private loginService: LoginService
+  ) {}
 
   ngOnInit() {
     this.email = '';
@@ -29,53 +28,49 @@ export class EsqueciSenhaComponent implements OnInit {
     this.typePassword = 'password';
   }
 
-  async esqueciSenha(){
-    if (this.email.length <= 0){
+  async esqueciSenha() {
+    if (this.email.length <= 0) {
       this.exceptionService.toastHandler('insira um email');
       return;
     }
     this.exceptionService.loadingFunction();
     // Enviando o email para recupeação de senha
-    this.loginService.esqueciSenha(this.email).then(
-      async () => {
-          // popover para inserir o código de recuperação
-    const modal = await this.popCtrl.create({
-      component: ResponseComponent,
-      componentProps: ({email: this.email}),
-      backdropDismiss: false
-    });
+    this.loginService
+      .esqueciSenha(this.email)
+      .then(async () => {
+        // popover para inserir o código de recuperação
+        const modal = await this.popCtrl.create({
+          component: ResponseComponent,
+          componentProps: { email: this.email },
+          backdropDismiss: false,
+        });
 
-    await modal.present();
+        await modal.present();
 
-    const { data } = await modal.onDidDismiss();
+        const { data } = await modal.onDidDismiss();
 
-         let status = false;
-         if (data) {
-           status = data.status;
-         }
+        let status = false;
+        if (data) {
+          status = data.status;
+        }
 
-      this.modalCtrl.dismiss(
-           {
-             status
-           }
-         );
-      }
-    ).catch(
-      (erro) => {
-        this.exceptionService.erro(erro);
+        this.modalCtrl.dismiss({
+          status,
+        });
+      })
+      .catch((erro) => {
+        this.exceptionService.error(erro);
       });
+  }
 
-
-    }
-
-  back(){
+  back() {
     this.modalCtrl.dismiss();
   }
-  showPassword(){
-    this.show  = !this.show;
-    if (this.show){
+  showPassword() {
+    this.show = !this.show;
+    if (this.show) {
       this.typePassword = 'text';
-    }else{
+    } else {
       this.typePassword = 'password';
     }
   }

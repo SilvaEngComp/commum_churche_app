@@ -37,6 +37,6 @@ export class FacadeService {
           this.dataLoaded.emit({ financialReport: response });
         }
       })
-      .catch((error) => this.exceptionService.erro(error));
+      .catch((error) => this.exceptionService.error(error));
   }
 }

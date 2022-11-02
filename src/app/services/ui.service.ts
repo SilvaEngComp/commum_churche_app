@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable eqeqeq */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable, EventEmitter, Output } from '@angular/core';
@@ -6,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import * as CriptoJs from 'crypto-js';
 import { Md5 } from 'ts-md5/dist/md5';
 import { DatePipe } from '@angular/common';
+import { ValidDateObj } from '../models/validDateObj';
 
 @Injectable({
   providedIn: 'root',
@@ -118,7 +120,72 @@ export class UiService {
     return amount.replace('.', ',');
   }
 
-  constructor() {}
+  static validEmail(email) {
+    if (email.length > 9) {
+      const regex = new RegExp(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+
+      return regex.test(email);
+    }
+    return true;
+  }
+  static validDate(date, year = null): ValidDateObj {
+    const validDateObj = new ValidDateObj();
+
+    if (!year) {
+      year = new Date().getFullYear();
+    }
+    if (date.length >= 10) {
+      const dates = date.split('/');
+      if (dates[0] > 24 || dates[0] < 1) {
+        validDateObj.message = 'Dia inválido';
+      } else if (dates[1] > 12 || dates[1] < 1) {
+        validDateObj.message = 'Mês inválido';
+      } else if (dates[2] > year || dates[2] < 1) {
+        validDateObj.message = 'Ano inválido';
+      }
+
+      validDateObj.status = true;
+      validDateObj.date = date;
+      return validDateObj;
+    }
+    return null;
+  }
+
+  static validTime(time, year = null): ValidDateObj {
+    const validDateObj = new ValidDateObj();
+
+    if (time.length >= 5) {
+      const times = time.split(':');
+      if (times[0] > 24 || times[0] < 0) {
+        validDateObj.message = 'Dia inválido';
+      } else if (times[1] > 59 || times[1] < 0) {
+        validDateObj.message = 'Mês inválido';
+      }
+
+      validDateObj.status = true;
+      validDateObj.time = times[0] + ':' + times[1];
+      return validDateObj;
+    }
+    return null;
+  }
+
+  static getWeekNumber() {
+    // Copy date so don't modify original
+    const d = new Date(Date.now());
+    // Set to nearest Thursday: current date + 4 - current day number
+    // Make Sunday's day number 7
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+    // Get first day of year
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    // Calculate full weeks to nearest Thursday
+    const weekNo = Math.ceil(
+      ((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7
+    );
+    // Return array of year and week number
+    return weekNo + 1;
+  }
 
   static buildChartMonth(
     canvas,

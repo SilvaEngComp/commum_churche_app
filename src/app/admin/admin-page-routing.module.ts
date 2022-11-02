@@ -10,7 +10,25 @@ const routes: Routes = [
       {
         path: 'user',
         loadChildren: () =>
-          import('./usuarios/user.module').then((m) => m.UserPageModule),
+          import('./user/user.module').then((m) => m.UserPageModule),
+      },
+      {
+        path: 'challenge',
+        loadChildren: () =>
+          import('./challenge/challenge.module').then(
+            (m) => m.ChallengePageModule
+          ),
+      },
+      {
+        path: 'feed',
+        loadChildren: () =>
+          import('./feed/feed.module').then((m) => m.FeedPageModule),
+      },
+
+      {
+        path: 'more',
+        loadChildren: () =>
+          import('./more/more.module').then((m) => m.MorePageModule),
       },
     ],
   },

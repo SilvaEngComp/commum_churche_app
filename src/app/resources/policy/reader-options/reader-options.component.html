@@ -1,0 +1,5 @@
+<ion-list lines="none">
+    <ion-item *ngFor="let voice of voices; let i=index" (click)="onSelectCVoice(i)">
+        <ion-label>{{voice}}</ion-label>
+    </ion-item>
+</ion-list>

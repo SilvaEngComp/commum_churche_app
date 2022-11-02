@@ -1,3 +1,4 @@
+import { Responser } from './../models/responser';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UserFilter } from 'src/app/models/userFilter';
 import { ModalController, AlertController } from '@ionic/angular';
@@ -7,8 +8,8 @@ import { FacadeService } from './facade.service';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { UiService } from '../services/ui.service';
 import { User } from '../models/User';
-import { UserRegisterComponent } from '../admin/usuarios/user-register/user-register.component';
 import { environment } from 'src/environments/environment';
+import { UserRegisterComponent } from '../admin/user/user-register/user-register.component';
 
 @Injectable({
   providedIn: 'root',
@@ -110,11 +111,11 @@ export class UserFacadeService extends FacadeService {
           handler: () => {
             this.userService
               .delete(user)
-              .then(() => {
+              .then((responser: Responser) => {
                 this.load(this.role);
-                this.exceptionService.success();
+                this.exceptionService.success(responser);
               })
-              .catch((error) => this.exceptionService.erro(error));
+              .catch((error) => this.exceptionService.error(error));
           },
         },
       ],

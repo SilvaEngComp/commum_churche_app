@@ -1,0 +1,26 @@
+<ion-content [fullscreen]="true">
+    <ion-toolbar>
+        <!-- <ion-button color="dark"> -->
+        <ion-icon class="back-button" (click)="back()" slot="start" name="chevron-back-outline"></ion-icon>
+        <!-- </ion-button> -->
+    </ion-toolbar>
+
+    <div class="lb-box">
+        <p class="title">RECUPERAR <br> SENHA</p>
+        <p class="sub-title">Digite o e-mail cadastrado ou seu cpf, que vamos enviar um código para você recuperar seu acesso</p>
+
+    </div>
+
+    <div class="inputs-box">
+
+        <ion-item>
+            <ion-input placeholder="Digite seu email" type="email" (keyup.enter)="send()" [(ngModel)]="email"></ion-input>
+            <ion-note slot="end" (click)="send()" color="secondary">Enviar</ion-note>
+        </ion-item>
+
+    </div>
+    <a href="#" (click)="haveCode()">Já tenho um código</a>
+
+    <ion-button class="btn-entrar" color="tertiary" (click)="send()">ENVIAR</ion-button>
+
+</ion-content>

@@ -1,0 +1,124 @@
+.lb-feed-title {
+    font-family: Qanelas-bold;
+    font-size: 16pt;
+    color: var(--ion-color-dark);
+}
+
+ion-item {
+    width: 100%;
+}
+
+.hidde-menu {
+    font-size: 0px;
+}
+
+@media screen and (min-width:500px) {
+    ion-grid {
+        width: 50%;
+    }
+    .feed-img-short {
+        min-width: 100%;
+        min-height: 100%;
+    }
+    .feed-img-large {}
+}
+
+@media screen and (max-width:500px) {
+    ion-grid {
+        width: 100%;
+    }
+    .feed-img-short {
+        ion-img {
+            min-width: 300px;
+            min-height: 300px;
+            max-width: 500px;
+            max-height: 500px;
+        }
+    }
+    .feed-img-large {
+        ion-img {
+            min-width: 300px;
+            min-height: 300px;
+        }
+    }
+}
+
+ion-textarea {
+    width: 90%;
+    margin: 20px;
+    text-align: justify;
+}
+
+.div-publisher {
+    display: flex;
+    margin-top: 10px;
+    div {
+        margin-left: 15px;
+        display: grid;
+        grid-template-columns: auto;
+        justify-content: left;
+        ion-note {
+            font-size: 10pt;
+            margin-top: -20px;
+            font-family: Qanelas;
+            font-weight: 900;
+            color: var(--ion-color-medium);
+        }
+    }
+}
+
+.short-message {
+    max-height: 5em;
+    text-align: justify;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.complete-message {
+    text-align: justify;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+ion-avatar {
+    width: 20px;
+    height: 20px;
+}
+
+.headers-reactions {
+    display: grid;
+    grid-template-columns: 60px 60px auto;
+    ion-icon {
+        font-size: 30px;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+    ion-icon:hover {
+        opacity: 0.5;
+    }
+    ion-label {
+        margin-top: 10px;
+        margin-left: 20px;
+        font-family: Qanelas-light;
+        font-size: 10pt;
+        color: var(--ion-color-dark);
+    }
+}
+
+.draft {
+    ion-label {
+        margin-top: 10px;
+        margin-left: 20px;
+        font-family: Qanelas-light;
+        font-size: 10pt;
+        color: var(--ion-color-danger);
+    }
+}
+
+.p-as-a-link {
+    color: var(--ion-color-tertiary);
+    text-decoration: underline;
+    font-size: 10pt;
+    font-family: Qanelas;
+    cursor: pointer;
+}

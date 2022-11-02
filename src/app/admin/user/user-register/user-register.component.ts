@@ -97,22 +97,22 @@ export class UserRegisterComponent implements OnInit {
             if (this.isOrderCustomer) {
               UiService.localSet(environment.LOCAL_USER, this.user);
             }
-            this.exceptionService.success();
+            this.exceptionService.success(responser);
             this.cancelar();
           })
           .catch((erro) => {
-            this.exceptionService.erro(erro);
+            this.exceptionService.error(erro);
           });
       } else {
         this.usuarioService
           .update(this.user)
           .then((responser) => {
             this.user = responser.data;
-            this.exceptionService.success();
+            this.exceptionService.success(responser);
             this.cancelar();
           })
           .catch((erro) => {
-            this.exceptionService.erro(erro);
+            this.exceptionService.error(erro);
           });
       }
     }

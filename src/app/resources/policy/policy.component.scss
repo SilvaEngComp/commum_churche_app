@@ -1,0 +1,103 @@
+    ion-toolbar {
+        .back-button {
+            margin-left: 10px;
+            margin-right: 10px;
+            font-size: 30px;
+            background: var(--ion-color-primary);
+            color: white;
+        }
+        .image-right {
+            margin-left: 10px;
+            margin-right: 10px;
+            font-size: 40px;
+        }
+        ion-progress-bar {
+            border-radius: 40px;
+            margin-top: 5%;
+            --background: var(--ion-color-light);
+            border: 1px solid var(--ion-color-primary);
+        }
+        ion-grid {
+            text-align: center;
+            ion-label {
+                font-size: 6pt;
+                font-family: Qanelas-bold;
+                color: var(--ion-color-medium)
+            }
+        }
+        .microphone {
+            font-size: 20px;
+            margin-left: 3%;
+        }
+    }
+    
+    .geral {
+        display: grid;
+        grid-template-columns: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
+    .lb-aceito {
+        margin-left: 10px;
+        font-family: Qanelas-bold;
+        font-size: 10pt;
+        color: var(--ion-color-light);
+    }
+    
+    ion-footer {
+        ion-button {
+            --border-radius: 40px;
+            width: 120px;
+        }
+    }
+    
+    .lb-title {
+        margin: 15px;
+        font-family: Qanelas-light;
+        font-size: 14pt;
+        font-weight: 900;
+        letter-spacing: 2px;
+        color: var(--ion-color-dark);
+        strong {
+            font-family: Qanelas-bold;
+        }
+    }
+    
+    .btn-finalizar {
+        margin-left: 20%;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        // width: 200px;
+        --border-radius: 40px;
+        --background: var(--ion-color-medium);
+        ion-label {
+            font-family: Qanelas;
+            font-weight: 900;
+            color: var(--ion-color-light);
+        }
+    }
+    
+    div {
+        margin-left: 2%;
+        margin-right: 2%;
+        text-align: justify;
+        font-size: 12pt;
+        z-index: 2000;
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    .policy {
+        overflow-y: auto;
+        overflow-x: hidden;
+        width: 1400px;
+        transform: scale(0.3) !important;
+        transform-origin: 0px 0px;
+    }
+    
+    .frame {
+        width: 1400px;
+        height: 350%;
+        transform: scale(0.29) !important;
+        transform-origin: 0px 0px;
+    }

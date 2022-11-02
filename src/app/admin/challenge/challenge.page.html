@@ -1,0 +1,79 @@
+<ion-content>
+
+    <div class="div-header">
+        <ion-item lines="none">
+            <ion-label slot="start" class="lb-title">
+                DESAFIOS
+            </ion-label>
+
+        </ion-item>
+    </div>
+
+    <div *ngIf="is_loading" class="progress_bar_waitting_redirect">
+        <ion-spinner name="dots"></ion-spinner>
+
+        <ion-label>Aguarde um instante</ion-label>
+
+        <ion-spinner name="dots"></ion-spinner>
+
+
+    </div>
+    <div *ngIf="!is_loading" class="options-dashboard" [ngStyle]="{'width': width}">
+        <ion-item *ngIf="challenges?.length===0" lines="none">
+            <ion-label>Nenhum Desafio Postado</ion-label>
+
+        </ion-item>
+        <ion-grid *ngIf="challenges?.length>0">
+
+            <ion-row>
+                <ion-col *ngIf="monthSlide" [ngStyle]="{'width': width}" class="div-slide-challenges">
+                    <div class="div-months" *ngIf="showMonths">
+                        <p (click)="gotoBeforeSlide()">{{ monthSlide[before]?.abbreviation | uppercase}}</p>
+                        <p>{{ monthSlide[selectedMonth]?.abbreviation | uppercase}}</p>
+                        <p (click)="gotoNextSlide()">{{ monthSlide[next]?.abbreviation | uppercase}}</p>
+                    </div>
+                    <div>
+                        <ion-slides [ngStyle]="{'width': width}" (ionSlideWillChange)="onScroll(monthSlides)" #monthSlides>
+                            <ion-slide class="slide" *ngFor="let challengeMonth of challenges">
+                                <div class="div-slide-challenge-month" *ngIf="challengeMonth?.month!==-1">
+                                    <div class="indicator"></div>
+
+                                    <div class="div-slide-challenge-month-header">
+                                        <div>
+                                            <ion-label [ngClass]="{'lb-selected-week': selectedWeek===i}" (click)="setSelectedWeek(i)" *ngFor="let item of challengeMonth?.challengeWeek; let i=index">s{{i+1}}</ion-label>
+                                        </div>
+                                    </div>
+                                    <ion-item lines="none">
+                                        <ion-icon *permission="'super_admin'" slot="end" (click)="showChallengeWeekEdit=!showChallengeWeekEdit" name="create-outline"></ion-icon>
+                                    </ion-item>
+                                    <ion-item (click)="challengeDone(selectedChallengeWeek)" lines="none" class="item-challenge-done">
+                                        <ion-checkbox [checked]="selectedChallengeWeek?.done"></ion-checkbox>
+                                        <ion-label>Marcar como concluído</ion-label>
+                                    </ion-item>
+                                    <div (click)="copy(selectedChallengeWeek?.challengeSuggestion?.description)" class="div-slide-challenge-month-body" *ngIf="!showChallengeWeekEdit">
+                                        <ion-text class="lb-challenge-description">{{selectedChallengeWeek?.challengeSuggestion?.description}}</ion-text>
+                                    </div>
+
+                                    <div class="new-comment-message" *ngIf="showChallengeWeekEdit">
+                                        <ion-item>
+                                            <ion-textarea maxlength="250" placeholder="O que você está pensando? Conta pra gente!" [(ngModel)]="selectedChallengeWeek?.challengeSuggestion.description"></ion-textarea>
+                                            <ion-button fill="clear" color="primary" (click)="sendChallengeWeekUpdate(selectedChallengeWeek)">{{selectedChallengeWeek?.id ? 'ALterar': 'Enviar'}}</ion-button>
+                                        </ion-item>
+                                        <ion-note>{{ selectedChallengeWeek?.challengeSuggestion?.description?.length ? selectedChallengeWeek?.challengeSuggestion?.description?.length : 0}} / 250 caracteres</ion-note>
+                                    </div>
+
+                                </div>
+
+                                <app-quiz [quiz]="quiz" [user]="user" [width]="width" (quizReturn)="quizReturn($event)" *ngIf="challengeMonth?.month===-1"></app-quiz>
+
+                            </ion-slide>
+                        </ion-slides>
+                    </div>
+                </ion-col>
+            </ion-row>
+
+        </ion-grid>
+
+
+    </div>
+</ion-content>

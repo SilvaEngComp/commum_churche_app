@@ -6,7 +6,7 @@ import { AdminSelectorComponent } from './menu/admin-selector/admin-selector.com
 import { AdminSmallComponent } from './menu/admin-small/admin-small.component';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { UserPageModule } from './usuarios/user.module';
+import { UserPageModule } from './user/user.module';
 
 @NgModule({
   declarations: [

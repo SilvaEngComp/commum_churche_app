@@ -42,6 +42,6 @@ export class RoleFacadeService extends FacadeService {
           this.dataLoaded.emit(response);
         }
       })
-      .catch((error) => this.exceptionService.erro(error));
+      .catch((error) => this.exceptionService.error(error));
   }
 }

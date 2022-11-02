@@ -1,0 +1,67 @@
+<div class="geral">
+    <ion-toolbar>
+
+        <ion-buttons>
+            <ion-button (click)="back()">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+                <ion-label>Voltar</ion-label>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+
+    <div class="body-div">
+        <p class="lb-title">
+            DIGITE O <br>
+            <strong class="lb-subtitle">
+            CÓDIGO QUE VOCÊ
+            <BR> RECEBEU NO E-MAIL
+        </strong>
+        </p>
+
+
+        <ion-progress-bar *ngIf="is_validing" value="0.25" buffer="0.5"></ion-progress-bar>
+        <ion-grid *ngIf="!is_validing">
+            <ion-row>
+                <ion-col>
+                    <ion-input #input0 type="text" [value]="cod[0]" maxlength="6" (keyup)="checkCod(0, input0.value, input1)"></ion-input>
+                </ion-col>
+                <ion-col>
+                    <ion-input #input1 type="text" [value]="cod[1]" maxlength="1" (keyup)="checkCod(1,input1.value, input2)"></ion-input>
+
+                </ion-col>
+                <ion-col>
+                    <ion-input #input2 type="text" [value]="cod[2]" maxlength="1" (keyup)="checkCod(2, input2.value, input3)"></ion-input>
+
+                </ion-col>
+                <ion-col>
+                    <ion-input #input3 type="text" [value]="cod[3]" maxlength="1" (keyup)="checkCod(3, input3.value, input4)"></ion-input>
+
+                </ion-col>
+                <ion-col>
+                    <ion-input #input4 type="text" [value]="cod[4]" maxlength="1" (keyup)="checkCod(4, input4.value, input5)"></ion-input>
+
+                </ion-col>
+                <ion-col>
+                    <ion-input #input5 type="text" [value]="cod[5]" maxlength="6" (keyup)="checkCod(5, input5.value, input5)"></ion-input>
+
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-button fill="clear" (click)="clear()">Limpar</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+    </div>
+
+    <div class="buttons-bottom" *ngIf="email">
+
+        <ion-button class="reenviar" (click)="resend()" color="danger">
+            <ion-label>RE-ENVIAR E-MAIL</ion-label>
+        </ion-button>
+
+    </div>
+    <a href="#">BY ENGINY DIGITAL-ECO</a>
+
+</div>
