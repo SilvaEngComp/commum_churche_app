@@ -6,6 +6,13 @@ const routes: Routes = [
   {
     path: '',
     component: AdminSelectorComponent,
+    children: [
+      {
+        path: 'user',
+        loadChildren: () =>
+          import('./usuarios/user.module').then((m) => m.UserPageModule),
+      },
+    ],
   },
 ];
 

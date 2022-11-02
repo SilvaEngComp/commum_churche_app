@@ -1,3 +1,26 @@
-<p>
-  admin-small works!
-</p>
+<ion-tabs #tabAdmin (ionTabsDidChange)="hasSaw()">
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="challenge">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Desafios</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="feed">
+      <ion-icon name="chatbubbles-sharp"></ion-icon>
+      <ion-label>Fórum</ion-label>
+      <!-- <ion-badge *ngIf="badge_feed">{{badge_feed}}</ion-badge> -->
+
+    </ion-tab-button>
+
+    <ion-tab-button tab="user">
+      <ion-icon name="person-circle"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-tab-button>
+
+
+    <ion-tab-button tab="more">
+      <ion-icon name="apps-sharp"></ion-icon>
+      <ion-label>Mais</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

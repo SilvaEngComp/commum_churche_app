@@ -8,6 +8,8 @@ import {
 } from '@ionic/angular';
 import { FinishActionComponent } from '../ui/finish-action/finish-action.component';
 import { Router } from '@angular/router';
+import { PushNotify } from '../models/pushNotification';
+import { UiService } from './ui.service';
 
 @Injectable({
   providedIn: 'root',
@@ -121,5 +123,75 @@ export class ExceptionService {
     if (reload) {
       modal.onWillDismiss().then(() => window.location.reload());
     }
+  }
+
+  async pushMessage(msg: PushNotify) {
+    console.log(msg.click_action);
+    const audio = new Audio(msg.audio);
+
+    if (msg.click_action) {
+      if (msg.click_action.chatConfig.audio) {
+        audio.play();
+      }
+    } else {
+      audio.play();
+    }
+
+    if (msg.click_action) {
+      if (!msg.click_action.delete) {
+        const toast = await this.toastCtrl.create({
+          header: msg.title,
+          message: msg.body,
+          mode: 'ios',
+          duration: 2000,
+
+          buttons: [
+            {
+              icon: 'chatbubbles-outline',
+              text: 'OK',
+              handler: () => {
+                if (msg.click_action) {
+                  if (msg.click_action.page) {
+                    UiService.pageMenu.emit(msg.click_action.page);
+                  }
+                  UiService.emitirTo.emit(msg.click_action.chatConfig.sender);
+                }
+              },
+            },
+          ],
+        });
+
+        toast.present();
+      } else {
+        if (localStorage.getItem(environment.LOCALSTORAGE + 'to')) {
+          if (
+            JSON.parse(localStorage.getItem(environment.LOCALSTORAGE + 'to'))
+              .id === msg.click_action.chatConfig.sender.id
+          ) {
+            UiService.emitirTo.emit(msg.click_action.chatConfig.sender);
+            return;
+          }
+        }
+      }
+    } else {
+      const toast = await this.toastCtrl.create({
+        header: msg.title,
+        message: msg.body,
+        mode: 'ios',
+        duration: 2000,
+
+        buttons: [
+          {
+            icon: 'chatbubbles-outline',
+            text: 'OK',
+            handler: () => {},
+          },
+        ],
+      });
+
+      toast.present();
+    }
+
+    UiService.emitirRefreshUserChat.emit(msg.click_action.chatConfig.sender);
   }
 }

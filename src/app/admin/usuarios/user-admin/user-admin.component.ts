@@ -19,7 +19,7 @@ export class UserAdminComponent implements OnInit {
       this.subpage = UiService.localGet(this.defaultPageName);
     }
 
-    UiService.emitirMenu.subscribe((menu) => {
+    UiService.pageMenu.subscribe((menu) => {
       this.subpage = menu.subpage;
       this.save();
     });

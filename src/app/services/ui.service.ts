@@ -12,9 +12,23 @@ import { DatePipe } from '@angular/common';
 })
 export class UiService {
   @Output()
-  static emitirMenu: EventEmitter<any> = new EventEmitter();
+  static pageMenu: EventEmitter<any> = new EventEmitter<any>();
+
   @Output()
   static toTop: EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  static feedPage: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  @Output()
+  static emitirTo: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  static emitirRefreshUserChat: EventEmitter<any> = new EventEmitter<any>();
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @Output()
+  static loadImageEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   static getCurrentDate() {
     if (UiService.localGet('currentyDate')) {

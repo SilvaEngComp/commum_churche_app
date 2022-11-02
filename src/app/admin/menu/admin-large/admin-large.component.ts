@@ -86,7 +86,7 @@ export class AdminLargeComponent implements OnInit {
 
   selectSubPage(page: any, subpage: any) {
     this.page = page;
-    UiService.emitirMenu.emit({ subpage });
+    UiService.pageMenu.emit({ subpage });
     this.checkPlaftorm();
     this.content.scrollToTop(2000);
   }
