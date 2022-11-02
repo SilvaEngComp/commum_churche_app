@@ -1,0 +1,49 @@
+<ion-toolbar *ngIf="is_a_selected_post">
+
+  <ion-buttons>
+    <ion-button (click)="back()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      VOLTAR
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+
+<ion-grid>
+  <ion-row *ngIf="feed?.checkPublish">
+    <ion-col size="10">
+      <div class="div-publisher">
+        <ion-avatar>
+          <ion-img [src]="base_url + feed?.publisher?.image"></ion-img>
+        </ion-avatar>
+        <div>
+          <ion-label>{{ feed?.publisher?.name }}</ion-label>
+        </div>
+      </div>
+    </ion-col>
+
+  </ion-row>
+  <ion-row *ngIf="feed?.checkPublish">
+    <ion-col>
+      <div [ngClass]="{'feed-img-short': !expandAll, 'feed-img-large':expandAll}" *ngIf="feed?.image"
+        (click)="setComment()">
+        <ion-img [src]=" base_url + feed?.image"></ion-img>
+      </div>
+
+    </ion-col>
+    <ion-col>
+
+      <div class="draft" *ngIf="!feed?.date">
+        <ion-label color="danger">Rascunho não publicado</ion-label>
+      </div>
+      <ion-item lines="none">
+        <p class="lb-feed-title">{{ feed?.title }}</p>
+      </ion-item>
+      <ion-text [ngClass]="{ 'short-message': !expandAll, 'complete-message': expandAll}">{{ feed?.message }}</ion-text>
+
+      <ion-item lines="none" *ngIf="feed?.message?.length>100">
+        <p class="p-as-a-link" (click)="showCompleteMessage()">{{expandAll ? 'MENOS': 'MAIS...'}}</p>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>

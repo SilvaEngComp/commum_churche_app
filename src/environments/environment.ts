@@ -17,9 +17,6 @@ export const environment = {
 
   LOCALSTORAGE: 'ibnovabetel.',
 
-  LOCAL_USER: 'localUser',
-  MENU: 'menu',
-
   firebaseConfig: {
     apiKey: 'AIzaSyC3wIqvObcuZKDO4QxAMQBN1v1-K8RqzBo',
     authDomain: 'loved-husband.firebaseapp.com',

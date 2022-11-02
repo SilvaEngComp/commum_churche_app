@@ -1,4 +1,3 @@
-import { LoginPageRoutingModule } from './login-routing.module';
 import { BrMaskerModule } from 'br-mask';
 import { LoginComponent } from './login.component';
 import { NgModule } from '@angular/core';
@@ -10,20 +9,19 @@ import { AlterarSenhaComponent } from './esqueci-senha/alterar-senha/alterar-sen
 import { ResponseComponent } from './esqueci-senha/response/response.component';
 
 @NgModule({
-    declarations: [
-        LoginComponent,
-        EsqueciSenhaComponent,
-        ResponseComponent,
-        AlterarSenhaComponent
-    ],
-    imports: [
-        LoginPageRoutingModule,
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        BrMaskerModule,
-        ReactiveFormsModule
-    ],
-    exports: [LoginComponent]
+  declarations: [
+    LoginComponent,
+    EsqueciSenhaComponent,
+    ResponseComponent,
+    AlterarSenhaComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    BrMaskerModule,
+    ReactiveFormsModule,
+  ],
+  exports: [LoginComponent],
 })
-export class LoginModule { }
+export class LoginModule {}

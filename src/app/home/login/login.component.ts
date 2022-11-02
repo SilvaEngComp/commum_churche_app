@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { LoginService } from 'src/app/services/login.service';
 import { ModalController } from '@ionic/angular';
-import { ExceptionService } from '../services/exception-service.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EsqueciSenhaComponent } from './esqueci-senha/esqueci-senha.component';
-import { User } from '../models/User';
+import { User } from 'src/app/models/User';
+import { ExceptionService } from 'src/app/services/exception-service.service';
 
 @Component({
   selector: 'app-login',

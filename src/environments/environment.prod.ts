@@ -7,8 +7,6 @@ export const environment = {
   PRIVATEKEY: 'QUBjZW1lY2FkZUBlbmdpbnlkaWdpdGFsZWNvLmNvbQ==', // ...
 
   LOCALSTORAGE: 'ibnovabetel.',
-  LOCAL_USER: 'localUser',
-  MENU: 'menu',
 
   firebaseConfig: {
     apiKey: 'AIzaSyC3wIqvObcuZKDO4QxAMQBN1v1-K8RqzBo',

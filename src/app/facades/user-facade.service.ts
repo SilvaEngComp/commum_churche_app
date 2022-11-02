@@ -10,6 +10,7 @@ import { UiService } from '../services/ui.service';
 import { User } from '../models/User';
 import { environment } from 'src/environments/environment';
 import { UserRegisterComponent } from '../admin/user/user-register/user-register.component';
+import { Constants } from '../models/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,7 @@ export class UserFacadeService extends FacadeService {
     protected exceptionService: ExceptionService
   ) {
     super(userService, exceptionService);
-    this.localName = environment.LOCAL_USER;
+    this.localName = Constants.LOCAL_USER;
   }
 
   load(role: string = 'customer') {

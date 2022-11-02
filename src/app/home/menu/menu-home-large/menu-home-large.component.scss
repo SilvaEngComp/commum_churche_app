@@ -1,0 +1,120 @@
+ion-grid {
+  height: 100%;
+}
+
+.menu-logo {
+  width: 80px;
+  height: 80px;
+}
+
+.user-name {
+  color: white;
+  font-family: Qanelas;
+  height: 40px;
+}
+
+.backColor {
+  // --background: var(--ion-color-medium);
+}
+
+.center {
+  display: grid;
+  align-content: center;
+  align-items: center;
+  align-self: center;
+}
+
+ion-segment {
+  // width: 90%;
+  font-size: 1.5vw;
+}
+
+ion-segment ion-label {
+  font-size: 2vw;
+}
+
+.menu-left {
+  ion-label {
+    font-size: 1vw;
+    color: white;
+  }
+
+  ion-icon {
+    margin-left: 20px;
+    font-size: 30px;
+  }
+  ion-list {
+    background: var(--ion-color-secondary);
+    margin-right: 10%;
+    float: right;
+  }
+  .search-item {
+    width: 500px;
+  }
+  ion-button {
+    font-size: 5pt;
+    background: var(--ion-color-primary);
+    color: var(--ion-color-light);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+}
+
+.menu-right {
+  ion-avatar {
+    margin-right: 20px;
+    width: 100px;
+    height: 40px;
+  }
+  ion-item {
+    width: 200px;
+      word-wrap: break-word;
+
+  }
+  ion-label {
+    font-size: 14pt;
+    font-weight: bold;
+    font-family: Qanelas;
+    color: var(--ion-color-medium);
+    word-wrap: break-word;
+  }
+  ion-note {
+    margin-top: -60px;
+    font-size: 8pt;
+    color: var(--ion-color-medium);
+    // margin-bottom: 20px;
+  }
+}
+
+//menu lateral
+.menu-lateral {
+  background-color: var(--ion-color-primary);
+
+  .menu-logo {
+    width: 80px;
+    height: 80px;
+  }
+  ion-list {
+    margin-left: 10%;
+    background-color: var(--ion-color-primary);
+    ion-item {
+      --background: var(--ion-color-primary);
+    }
+  }
+  ion-icon {
+    font-size: 10px;
+    color: var(--ion-color-light);
+  }
+  ion-button > ion-label {
+    font-family: Qanelas;
+    font-size: 8pt;
+    color: var(--ion-color-light);
+  }
+}
+
+.menu-icons{
+  ion-icon{
+    font-size: 50px;
+    padding: 5px;;
+  }
+}

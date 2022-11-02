@@ -1,0 +1,11 @@
+<ion-content ionScroll="true" #main *ngIf="isLarge">
+  <app-menu-home-large></app-menu-home-large>
+</ion-content>
+
+<ion-content ionScroll="true" #mainSmall *ngIf="!isLarge">
+  <div [ngSwitch]="page">
+    <app-home *ngSwitchCase="'0'"></app-home>
+    <app-login *ngSwitchCase="'1'"></app-login>
+  </div>
+</ion-content>
+<app-menu-home-small *ngIf="!isLarge"></app-menu-home-small>

@@ -1,17 +1,17 @@
-import { LoginComponent } from './login.component';
+import { MenuHomeSelectComponent } from './menu-home-select/menu-home-select.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
-  }
+    component: MenuHomeSelectComponent,
+    children: [],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LoginPageRoutingModule {}
+export class HomePageRoutingModule {}

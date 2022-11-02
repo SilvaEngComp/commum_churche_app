@@ -1,0 +1,87 @@
+<ion-grid>
+
+  <ion-row>
+    <ion-col>
+      <ion-item lines="none" class="input">
+        <ion-label position="floating">*Nome Completo: </ion-label>
+        <ion-input type="text" [(ngModel)]="user.name" #name="ngModel" name="userName"
+          [ngModelOptions]="{standalone: true}" required></ion-input>
+        <ion-note *ngIf="!name?.valid && name?.touched" color="danger">Este campo é obrigatório</ion-note>
+
+      </ion-item>
+
+      <ion-item lines="none" class="input">
+        <ion-label position="floating">email: </ion-label>
+        <ion-input type="email" [(ngModel)]="email" email #inputEmail="ngModel"></ion-input>
+        <ion-note *ngIf="!inputEmail?.valid && inputEmail?.touched" color="danger">Email inválido</ion-note>
+
+      </ion-item>
+
+      <ion-item lines="none" class="input" *ngIf="iscliente">
+        <ion-label>Cliente Fidelidade: </ion-label>
+        <ion-toggle [checked]="user?.isFidelity" [(ngModel)]="user.isFidelity"></ion-toggle>
+      </ion-item>
+
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+
+      <ion-item lines="none" class="input">
+        <ion-label position="floating">Celular 1: </ion-label>
+        <ion-input type="text" [brmasker]="{phone: true}" [(ngModel)]="phone1"></ion-input>
+      </ion-item>
+
+
+      <ion-item lines="none" class="input">
+        <ion-label>Data Nascimento: </ion-label>
+        <ion-input type="date" [(ngModel)]="user.birthDate"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input">
+        <ion-label position="floating">Profissão </ion-label>
+        <ion-input placeholder="Com o que trabalha (Opcional)" type="text" [(ngModel)]="user.occupation"></ion-input>
+      </ion-item>
+
+
+      <ion-item lines="none" class="input">
+        <ion-label>Já é Batizado? </ion-label>
+        <ion-toggle slot="end"></ion-toggle>
+      </ion-item>
+
+
+
+
+
+
+      <ion-item lines="none" class="input">
+        <ion-label position="floating">Rua </ion-label>
+        <ion-input type="text" [brmasker]="{money: true}" [(ngModel)]="user.contact.street"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input">
+        <ion-label position="floating">Numero da residência: </ion-label>
+        <ion-input type="text" placeholder="Qual o número da residência?" [(ngModel)]="user.contact.hauseNumber">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input">
+        <ion-label position="floating">Bairro: </ion-label>
+        <ion-input type="text" placeholder="Em que bairro mora?" [(ngModel)]="user.contact.district"></ion-input>
+      </ion-item>
+
+
+      <ion-item lines="none" class="input">
+        <ion-label position="floating">Complemento: </ion-label>
+        <ion-input type="text" placeholder="Alguma informação que ajude a localizar?"
+          [(ngModel)]="user.contact.complement"></ion-input>
+      </ion-item>
+
+
+      <ion-button expand="block" color="success" type="submit" (click)="register()">
+        <ion-label>SALVAR</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

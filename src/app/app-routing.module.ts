@@ -3,16 +3,11 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuardAdmin } from './guards/guardAdmin';
 
 const routes: Routes = [
-  // {
-  //   path: 'home',
-  //   loadChildren: () =>
-  //     import('./home/home.module').then((m) => m.HomePageModule),
-  // },
   {
     path: 'home',
     canActivate: [AuthGuardAdmin],
     loadChildren: () =>
-      import('./login/login.module').then((m) => m.LoginModule),
+      import('./home/menu/menu.module').then((m) => m.MenuHomeModule),
   },
   {
     path: '',

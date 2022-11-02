@@ -1,0 +1,49 @@
+<ion-grid>
+  <ion-row>
+    <ion-col class="menu-lateral">
+
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start" class="menu-left">
+            <ion-item lines="none" color="primary">
+              <ion-img src="./assets/images/white-logo.png" class="menu-logo"></ion-img>
+            </ion-item>
+          </ion-buttons>
+          <ion-buttons>
+            <ion-button *ngFor="let item of menu_itens; let i=index">
+              <ion-button fill="clear" (click)="selectPage(i, item)">
+                <ion-label>{{ item?.name}}</ion-label>
+              </ion-button>
+            </ion-button>
+
+          </ion-buttons>
+
+          <ion-buttons slot="end" class="menu-icons">
+            <ion-icon name="logo-instagram"></ion-icon>
+            <ion-icon name="logo-youtube"></ion-icon>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <div [ngSwitch]="page">
+        <!-- <app-home *ngSwitchCase="'0'"></app-home> -->
+        <app-home-user-register *ngSwitchCase="'0'"></app-home-user-register>
+        <app-login *ngSwitchCase="'1'"></app-login>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+    refreshingSpinner="circles" refreshingText="Atualizando...">
+  </ion-refresher-content>
+</ion-refresher>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button color="success">
+    <ion-icon name="logo-whatsapp"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

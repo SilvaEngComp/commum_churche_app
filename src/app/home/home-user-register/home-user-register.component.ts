@@ -1,31 +1,23 @@
-import { UiService } from './../../../services/ui.service';
-import { UserFacadeService } from 'src/app/facades/user-facade.service';
-/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
-import { environment } from '../../../../environments/environment';
-import { ExceptionService } from 'src/app/services/exception-service.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { UserService } from '../../../services/user.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { User } from '../../../models/user';
-import { Contact } from './../../../models/contact';
 import { RoleFacadeService } from 'src/app/facades/role-facade.service';
+import { UserFacadeService } from 'src/app/facades/user-facade.service';
 import { Constants } from 'src/app/models/constants';
+import { Contact } from 'src/app/models/contact';
+import { User } from 'src/app/models/User';
+import { ExceptionService } from 'src/app/services/exception-service.service';
+import { UiService } from 'src/app/services/ui.service';
+import { UserService } from 'src/app/services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-user-register',
-  templateUrl: './user-register.component.html',
-  styleUrls: ['./user-register.component.scss'],
+  selector: 'app-home-user-register',
+  templateUrl: './home-user-register.component.html',
+  styleUrls: ['./home-user-register.component.scss'],
 })
-export class UserRegisterComponent implements OnInit {
-  constructor(
-    private usuarioService: UserService,
-    private modalCtrl: ModalController,
-    private exceptionService: ExceptionService,
-    private roleFacadeService: RoleFacadeService,
-    private userFacadeService: UserFacadeService
-  ) {}
+export class HomeUserRegisterComponent implements OnInit {
   base_url: string = environment.IMAGE_URL;
   @Input() user: User;
   @Input() op: string;
@@ -48,32 +40,19 @@ export class UserRegisterComponent implements OnInit {
   phone1: string;
   phone2: string;
   roles: string[];
+
+  constructor(
+    private usuarioService: UserService,
+    private modalCtrl: ModalController,
+    private exceptionService: ExceptionService,
+    private roleFacadeService: RoleFacadeService,
+    private userFacadeService: UserFacadeService
+  ) {}
+
   ngOnInit() {
     this.active = true;
-    if (!this.user) {
-      this.user = new User(['customer']);
-    }
-
-    this.load();
-
-    this.roleFacadeService.dataLoaded.subscribe((data) => {
-      setTimeout(() => {
-        this.roles = data;
-      }, 1000);
-    });
-  }
-
-  load() {
-    this.roleFacadeService.load();
-    if (this.op === 'user-new') {
-      this.user = new User([this.role]);
-    } else {
-      this.user.roles.filter((role) => {});
-    }
-  }
-
-  onSelectRole(ev) {
-    this.user.roles.push(ev.target.value);
+    this.user = new User();
+    console.log(this.user);
   }
 
   cancelar() {

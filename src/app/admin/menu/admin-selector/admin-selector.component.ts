@@ -12,9 +12,11 @@ import { User } from 'src/app/models/User';
 export class AdminSelectorComponent implements OnInit {
   isLarge: boolean;
   user: User;
+  page: string;
   constructor(private platform: Platform) {}
 
   ngOnInit() {
+    this.page = '0';
     this.isLarge = this.platform.width() > 500;
     this.user = LoginService.getUser();
   }
