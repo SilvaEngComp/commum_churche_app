@@ -1,7 +1,7 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <ion-breadcrumbs color="medium">
+      <ion-breadcrumbs color="medium" *ngIf="session>0">
         <ion-breadcrumb [ngClass]="{'selected': session===1}">
           <ion-label>Informações Pessoais</ion-label>
           <ion-icon slot="separator" name="arrow-forward-circle"></ion-icon>
@@ -15,7 +15,11 @@
           <ion-icon slot="separator" name="arrow-forward-circle"></ion-icon>
         </ion-breadcrumb>
       </ion-breadcrumbs>
+      <ion-item lines="none" button (click)="clear()" *ngIf="session>0">
+        <a href="#" slot="end">Limpar tudo</a>
+      </ion-item>
       <div [ngSwitch]="session">
+        <app-register-justification *ngSwitchCase="0" (session)="onReceiveSession($event)"></app-register-justification>
         <app-register-personal-info *ngSwitchCase="1" (session)="onReceiveSession($event)">
         </app-register-personal-info>
         <app-register-contact *ngSwitchCase="2" (session)="onReceiveSession($event)"></app-register-contact>

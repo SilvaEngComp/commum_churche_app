@@ -26,7 +26,7 @@ export class HomeUserRegisterComponent implements OnInit {
     this.session = UiService.localGet(Constants.CURRENT_REGISTER_SESSION);
     console.log(this.session);
     if (!this.session) {
-      this.session = 1;
+      this.session = 0;
       this.save();
     }
     this.user = UiService.localGet(Constants.REGISTRING_USER);
@@ -69,5 +69,11 @@ export class HomeUserRegisterComponent implements OnInit {
       .catch((erro) => {
         this.exceptionService.error(erro);
       });
+  }
+
+  clear() {
+    localStorage.clear();
+    this.session = 0;
+    this.save();
   }
 }

@@ -1,3 +1,4 @@
+import { RegisterJustificationComponent } from './register-justification/register-justification.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 import { RegisterPersonalInfoComponent } from './register-personal-info/register-personal-info.component';
 import { RegisterContactComponent } from './register-contact/register-contact.component';
@@ -14,6 +15,7 @@ import { HomeUserRegisterComponent } from './home-user-register.component';
     RegisterPersonalInfoComponent,
     RegisterLoginComponent,
     HomeUserRegisterComponent,
+    RegisterJustificationComponent,
   ],
   imports: [
     CommonModule,
