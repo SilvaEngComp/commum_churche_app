@@ -1,17 +1,13 @@
 import { UiService } from './../../../services/ui.service';
-import { UserFacadeService } from 'src/app/facades/user-facade.service';
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
-import { environment } from '../../../../environments/environment';
 import { ExceptionService } from 'src/app/services/exception-service.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
-import { ModalController } from '@ionic/angular';
 import { User } from '../../../models/user';
-import { Contact } from './../../../models/contact';
-import { RoleFacadeService } from 'src/app/facades/role-facade.service';
 import { Constants } from 'src/app/models/constants';
+import { ConstantMessages } from 'src/app/models/messages';
 
 @Component({
   selector: 'app-user-register',
@@ -19,128 +15,60 @@ import { Constants } from 'src/app/models/constants';
   styleUrls: ['./user-register.component.scss'],
 })
 export class UserRegisterComponent implements OnInit {
+  user: User;
+
+  session: number;
   constructor(
     private usuarioService: UserService,
-    private modalCtrl: ModalController,
-    private exceptionService: ExceptionService,
-    private roleFacadeService: RoleFacadeService,
-    private userFacadeService: UserFacadeService
+    private exceptionService: ExceptionService
   ) {}
-  base_url: string = environment.IMAGE_URL;
-  @Input() user: User;
-  @Input() op: string;
-  @Input() role: string;
-  @Input() isOrderCustomer: boolean;
 
-  selectedRole: string;
-  haveParcela: boolean;
-  validade: string;
-  active: boolean;
-  iscliente: boolean;
-  havCardAccess: boolean;
-  contact: Contact;
-  customActionSheetOptions: any = {
-    header: 'Parcelamento',
-    subHeader: 'Escolha uma parcela',
-  };
-
-  email: string;
-  phone1: string;
-  phone2: string;
-  roles: string[];
   ngOnInit() {
-    this.active = true;
+    this.session = UiService.localGet(Constants.CURRENT_REGISTER_SESSION);
+    console.log(this.session);
+    if (!this.session) {
+      this.session = 1;
+      this.save();
+    }
+    this.user = UiService.localGet(Constants.REGISTRING_USER);
+    console.log(this.user);
     if (!this.user) {
-      this.user = new User(['customer']);
+      this.user = new User();
+      this.save();
     }
-
-    this.load();
-
-    this.roleFacadeService.dataLoaded.subscribe((data) => {
-      setTimeout(() => {
-        this.roles = data;
-      }, 1000);
-    });
   }
 
-  load() {
-    this.roleFacadeService.load();
-    if (this.op === 'user-new') {
-      this.user = new User([this.role]);
+  save() {
+    UiService.localSet(Constants.CURRENT_REGISTER_SESSION, this.session);
+  }
+
+  onReceiveSession(session: number) {
+    if (session === 4) {
+      this.user = UiService.localGet(Constants.REGISTRING_USER);
+      this.register();
     } else {
-      this.user.roles.filter((role) => {});
+      this.session = session;
+      this.save();
     }
-  }
-
-  onSelectRole(ev) {
-    this.user.roles.push(ev.target.value);
-  }
-
-  cancelar() {
-    this.modalCtrl.dismiss({
-      user: this.user,
-    });
-  }
-
-  async onSelectstring(ev: any) {
-    this.user.roles = ev.target.value;
   }
 
   register() {
-    if (this.check()) {
-      this.exceptionService.loadingFunction();
+    this.exceptionService.loadingFunction();
 
-      if (this.op === 'user-new') {
-        this.usuarioService
-          .store(this.user)
-          .then((responser) => {
-            this.user = responser.data;
-            if (this.isOrderCustomer) {
-              UiService.localSet(Constants.LOCAL_USER, this.user);
-            }
-            this.exceptionService.success(responser);
-            this.cancelar();
-          })
-          .catch((erro) => {
-            this.exceptionService.error(erro);
-          });
-      } else {
-        this.usuarioService
-          .update(this.user)
-          .then((responser) => {
-            this.user = responser.data;
-            this.exceptionService.success(responser);
-            this.cancelar();
-          })
-          .catch((erro) => {
-            this.exceptionService.error(erro);
-          });
-      }
-    }
-  }
+    this.usuarioService
+      .store(this.user)
+      .then((responser) => {
+        this.exceptionService.openLoading(
+          ConstantMessages.FINISHING_REGISTRATION_TITLE,
+          ConstantMessages.FINISHING_REGISTRATION_SUCCESS,
+          true,
+          30000
+        );
 
-  check() {
-    if (this.user.name.length <= 0) {
-      this.exceptionService.alertDialog(
-        'Insira um nome válido (Nome e sobrenome',
-        'Erro'
-      );
-      return false;
-    }
-
-    const nome: string[] = this.user.name.split(' ');
-    if (nome.length < 2) {
-      this.exceptionService.alertDialog(
-        'Insira um nome válido (Nome e sobrenome',
-        'Erro'
-      );
-      return false;
-    }
-
-    if (!this.user.roles) {
-      this.user.roles = ['customer'];
-    }
-
-    return true;
+        localStorage.clear();
+      })
+      .catch((erro) => {
+        this.exceptionService.error(erro);
+      });
   }
 }

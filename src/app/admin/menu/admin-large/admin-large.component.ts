@@ -88,12 +88,12 @@ export class AdminLargeComponent implements OnInit {
     this.page = page;
     UiService.pageMenu.emit({ subpage });
     this.checkPlaftorm();
-    this.content.scrollToTop(2000);
+    // this.content.scrollToTop(2000);
   }
 
   selectPage(page: any, item: Menu) {
     item.showSub = !item.showSub;
-    if (page !== 5) {
+    if (page !== this.menu_itens.length - 1) {
       this.checkPlaftorm();
       this.page = page;
       console.log(this.page);

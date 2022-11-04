@@ -1,3 +1,4 @@
+import { Constants } from 'src/app/models/constants';
 import { ExceptionService } from './../services/exception-service.service';
 import { RoleService } from './../services/role.service';
 import { FacadeService } from './facade.service';
@@ -24,7 +25,7 @@ export class RoleFacadeService extends FacadeService {
   }
 
   getLocal() {
-    const response = UiService.localGet();
+    const response = UiService.localGet(Constants.TOKEN);
     if (response) {
       this.dataLoaded.emit(response);
       return UiService.getHash(response);

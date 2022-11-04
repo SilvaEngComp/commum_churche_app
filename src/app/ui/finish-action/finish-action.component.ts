@@ -10,17 +10,23 @@ import { ModalController } from '@ionic/angular';
 export class FinishActionComponent implements OnInit {
   constructor(private modalCtrl: ModalController) {}
 
+  @Input() title: string;
   @Input() msg: string;
+  @Input() duration: number;
+
   ngOnInit() {
-    if (!this.msg) {
-      this.msg = 'operação concluída com sucesso!';
+    if (!this.title) {
+      this.title = 'operação concluída com sucesso!';
     }
     this.starDismiss();
   }
   starDismiss() {
     setTimeout(() => {
       this.modalCtrl.dismiss();
-    }, 2000);
+    }, this.duration);
+  }
+
+  ok() {
+    this.modalCtrl.dismiss();
   }
 }
-

@@ -4,9 +4,6 @@ import { UiService } from 'src/app/services/ui.service';
 /* eslint-disable @typescript-eslint/member-ordering */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MySelectAdapter } from 'src/app/models/mySelectAdapter';
-import { BrandFacadeService } from 'src/app/facades/brand-facade.service';
-import { CategoryFacadeService } from 'src/app/facades/categories-facade.service';
 
 @Component({
   selector: 'app-my-select-list',
@@ -29,11 +26,7 @@ export class MySelectListComponent implements OnInit {
   listAux: any[] = [];
 
   customPopoverOptions = {};
-  constructor(
-    private brandFacadeService: BrandFacadeService,
-    private categoryFacadeService: CategoryFacadeService,
-    private userFacedeService: UserFacadeService
-  ) {}
+  constructor(private userFacedeService: UserFacadeService) {}
 
   ngOnInit() {
     this.selected = '';
@@ -59,47 +52,42 @@ export class MySelectListComponent implements OnInit {
   }
 
   async load() {
-    if (this.listName === 'brands') {
-      this.apiResponse = UiService.localGet('localBrands');
-
-      this.brandFacadeService.dataLoaded.subscribe((data) => {
-        this.apiResponse = data.list;
-        this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
-          this.apiResponse
-        );
-        this.listAux = this.apiResponseAdapted;
-      });
-    } else if (this.listName === 'categories') {
-      this.apiResponse = UiService.localGet('localCategories');
-
-      this.categoryFacadeService.dataLoaded.subscribe((data) => {
-        this.apiResponse = data.list;
-        this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
-          this.apiResponse
-        );
-        this.listAux = this.apiResponseAdapted;
-      });
-    } else if (this.listName === 'customers') {
-      this.apiResponse = UiService.localGet(environment.LOCAL_CUSTOMER);
-
-      this.userFacedeService.load();
-      this.userFacedeService.dataLoaded.subscribe((data) => {
-        this.apiResponse = data.list;
-        this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
-          this.apiResponse
-        );
-        this.listAux = this.apiResponseAdapted;
-      });
-    }
-
-    this.apiResponseAdapted = MySelectAdapter.toMySelectAny(this.apiResponse);
-    this.listAux = this.apiResponseAdapted;
-
-    if (this.apiResponse.length < this.limit) {
-      this.limit = this.apiResponse.length;
-    } else {
-      this.limit = 10;
-    }
+    // if (this.listName === 'brands') {
+    //   this.apiResponse = UiService.localGet('localBrands');
+    //   this.brandFacadeService.dataLoaded.subscribe((data) => {
+    //     this.apiResponse = data.list;
+    //     this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
+    //       this.apiResponse
+    //     );
+    //     this.listAux = this.apiResponseAdapted;
+    //   });
+    // } else if (this.listName === 'categories') {
+    //   this.apiResponse = UiService.localGet('localCategories');
+    //   this.categoryFacadeService.dataLoaded.subscribe((data) => {
+    //     this.apiResponse = data.list;
+    //     this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
+    //       this.apiResponse
+    //     );
+    //     this.listAux = this.apiResponseAdapted;
+    //   });
+    // } else if (this.listName === 'customers') {
+    //   this.apiResponse = UiService.localGet(environment.LOCAL_CUSTOMER);
+    //   this.userFacedeService.load();
+    //   this.userFacedeService.dataLoaded.subscribe((data) => {
+    //     this.apiResponse = data.list;
+    //     this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
+    //       this.apiResponse
+    //     );
+    //     this.listAux = this.apiResponseAdapted;
+    //   });
+    // }
+    // this.apiResponseAdapted = MySelectAdapter.toMySelectAny(this.apiResponse);
+    // this.listAux = this.apiResponseAdapted;
+    // if (this.apiResponse.length < this.limit) {
+    //   this.limit = this.apiResponse.length;
+    // } else {
+    //   this.limit = 10;
+    // }
   }
 
   onSelect(ev) {
@@ -129,33 +117,31 @@ export class MySelectListComponent implements OnInit {
   }
 
   createNew() {
-    if (this.listName === 'brands') {
-      this.brandFacadeService.create();
-      this.brandFacadeService.dataLoaded.subscribe((data) => {
-        this.apiResponse = data.list;
-        if (this.apiResponse != null && this.apiResponse?.length > 0) {
-          this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
-            this.apiResponse
-          );
-
-          this.listAux = this.apiResponseAdapted;
-          this.onSelectTLastCreated();
-        }
-      });
-    } else if (this.listName === 'categories') {
-      this.categoryFacadeService.create();
-      this.categoryFacadeService.dataLoaded.subscribe((data) => {
-        this.apiResponse = data.list;
-
-        if (this.apiResponse != null && this.apiResponse?.length > 0) {
-          this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
-            this.apiResponse
-          );
-          this.onSelectTLastCreated();
-          this.listAux = this.apiResponseAdapted;
-        }
-      });
-    }
+    // if (this.listName === 'brands') {
+    //   this.brandFacadeService.create();
+    //   this.brandFacadeService.dataLoaded.subscribe((data) => {
+    //     this.apiResponse = data.list;
+    //     if (this.apiResponse != null && this.apiResponse?.length > 0) {
+    //       this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
+    //         this.apiResponse
+    //       );
+    //       this.listAux = this.apiResponseAdapted;
+    //       this.onSelectTLastCreated();
+    //     }
+    //   });
+    // } else if (this.listName === 'categories') {
+    //   this.categoryFacadeService.create();
+    //   this.categoryFacadeService.dataLoaded.subscribe((data) => {
+    //     this.apiResponse = data.list;
+    //     if (this.apiResponse != null && this.apiResponse?.length > 0) {
+    //       this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
+    //         this.apiResponse
+    //       );
+    //       this.onSelectTLastCreated();
+    //       this.listAux = this.apiResponseAdapted;
+    //     }
+    //   });
+    // }
   }
 
   onSelectTLastCreated() {

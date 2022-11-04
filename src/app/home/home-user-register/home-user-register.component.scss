@@ -6,20 +6,30 @@
   padding: 2px;
 }
 
-.input-grid {
-  ion-grid{
-    margin-left: 30%;
-    width: 80%;
 
-  }
-
+.input-item {
   ion-item{
-    border-radius: 20px;
-    border-bottom: 1px solid var(--ion-color-tertiary);
-    padding: 2px;
-  }
+   border-radius: 20px;
+   border-bottom: 1px solid var(--ion-color-tertiary);
+   padding: 2px;
+   margin-left: 30%;
+   width: 80%;
+ }
 
 }
+
+.item-botao{
+   padding: 2px;
+   margin-left: 30%;
+   width: 80%;
+}
+
+ion-breadcrumbs{
+  margin-left: 30%;
+  width: 80%;
+  padding: 2px;
+}
+
 
 .align-title {
   text-align: center;
@@ -49,3 +59,10 @@ ion-header {
 .ng-invalid.ng-touched:not(form) {
   border-bottom: 1px solid red;
 }
+.selected{
+  ion-label{
+  font-size: 14pt;
+  font-family: Qanelas-bold;
+  color:var(--ion-color-primary);
+  }
+  }

@@ -56,12 +56,9 @@ export class UserService extends ServiceInterface {
   }
 
   async store(user: User): Promise<Responser> {
-    if (!(await LoginService.getHeaders())) {
-      this.checkLogged();
-      return Promise.resolve(null);
-    }
+    console.log(JSON.stringify(user));
     return this.http
-      .post<Responser>(`${environment.API2}/users`, user, {
+      .post<Responser>(`${environment.API}/users`, user, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();
@@ -95,6 +92,47 @@ export class UserService extends ServiceInterface {
   alterarSenha(user: User, senha: string) {
     return this.http
       .get(`${environment.API}/users/updateSenha/${user.id}/${senha}`)
+      .toPromise();
+  }
+
+  async upload(formData: FormData, user: User): Promise<User> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+    return this.http
+      .post<User>(`${environment.API2}/users/${user.id}/upload`, formData, {
+        headers: await LoginService.getHeaders(true),
+      })
+      .toPromise();
+  }
+
+  async newUser(user: User): Promise<User> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+    return this.http
+      .post<User>(`${environment.API}/users/new`, user, {})
+      .toPromise();
+  }
+
+  consultaCep(cep: string): Promise<any> {
+    return this.http.get<any>(`${environment.API}/cep/${cep}`).toPromise();
+  }
+
+  async deleteImage(user: User): Promise<User> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+    return this.http
+      .delete<User>(
+        `${environment.API2}/users/image/${user.id}/${user.image}`,
+        {
+          headers: await LoginService.getHeaders(),
+        }
+      )
       .toPromise();
   }
 }

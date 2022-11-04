@@ -2,10 +2,10 @@
   <app-admin-large></app-admin-large>
 </ion-content>
 
-<ion-content ionScroll="true" #mainSmall *ngIf="isLarge">
+<ion-content ionScroll="true" #mainSmall *ngIf="!isLarge">
   <div [ngSwitch]="page">
     <app-profile *ngSwitchCase="'0'"></app-profile>
     <app-user-admin *ngSwitchCase="'1'"></app-user-admin>
   </div>
 </ion-content>
-<app-admin-small *ngIf="!isLarge"></app-admin-small>
+<app-admin-small *ngIf="!isLarge" (selectedPage)="onSelectPage($event)"></app-admin-small>

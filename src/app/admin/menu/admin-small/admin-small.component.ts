@@ -1,7 +1,14 @@
 import { ExceptionService } from 'src/app/services/exception-service.service';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { IonTabs, Platform } from '@ionic/angular';
 import { FcmService } from 'src/app/services/fcm.service';
 import { MessagingService } from 'src/app/services/messaging.service';
@@ -14,6 +21,7 @@ import { PushNotify } from 'src/app/models/pushNotification';
   styleUrls: ['./admin-small.component.scss'],
 })
 export class AdminSmallComponent implements OnInit, AfterViewInit {
+  @Output() selectedPage: EventEmitter<any> = new EventEmitter<any>();
   page_selected: string;
   badge_feed: number;
 
@@ -41,6 +49,10 @@ export class AdminSmallComponent implements OnInit, AfterViewInit {
     //   this.page_selected = 'challenge';
     // }
     // this.tab.select(this.page_selected);
+  }
+  async setPage(page: number) {
+    this.selectedPage.emit(page);
+    // UiService.localSet('tab-page', this.page_selected);
   }
 
   async hasSaw() {

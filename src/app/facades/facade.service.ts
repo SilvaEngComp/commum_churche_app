@@ -1,4 +1,5 @@
 import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
+import { Constants } from '../models/constants';
 import { ExceptionService } from '../services/exception-service.service';
 import { ServiceInterface } from '../services/serviceInterface';
 import { UiService } from '../services/ui.service';
@@ -19,7 +20,7 @@ export class FacadeService {
   }
 
   getLocal() {
-    const response = UiService.localGet();
+    const response = UiService.localGet(Constants.TOKEN);
     if (response) {
       this.dataLoaded.emit(response);
       return UiService.getHash(response);

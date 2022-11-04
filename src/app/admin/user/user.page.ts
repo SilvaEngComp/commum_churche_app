@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { ExceptionService } from '../../services/exception-service.service';
-import { ModalController, IonInput, PopoverController } from '@ionic/angular';
+import { ModalController, IonInput } from '@ionic/angular';
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../models/user';
@@ -30,7 +30,6 @@ export class UserPage implements OnInit {
   @ViewChild('searchUser', { static: false }) inputSearch: IonInput;
 
   constructor(
-    private popCtrl: PopoverController,
     private userFacadeService: UserFacadeService,
     private modalCtrl: ModalController,
     private exceptionService: ExceptionService

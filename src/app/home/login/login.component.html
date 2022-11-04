@@ -1,49 +1,43 @@
-<ion-content>
-  <div class="fundo"></div>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-label class="title">Acessar Sistema</ion-label>
+<div class="fundo"></div>
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-label class="title">Acessar Sistema</ion-label>
 
-        <ion-item class="item-input" lines="none">
-          <ion-label position="floating">CPF/E-mail</ion-label>
-          <ion-input (keyup.enter)="login()" type="text" [(ngModel)]="user.email"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item class="item-input" lines="none">
-          <ion-label position="floating">senha</ion-label>
-          <ion-input (keyup.enter)="login()" [type]="password" [(ngModel)]="user.password"></ion-input>
-          <ion-button slot="end" expand="block" fill="clear" (click)="showPassword()">
-            <ion-icon color="secondary" *ngIf="show" name="eye-outline"></ion-icon>
-            <ion-icon color="secondary" *ngIf="!show" name="eye-off-outline"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item lines="none">
-          <ion-button slot="start" expand="block" color="danger" (click)="cancel()">Cancelar</ion-button>
+      <ion-item class="item-input" lines="none">
+        <ion-label position="floating">CPF/E-mail</ion-label>
+        <ion-input (keyup.enter)="login()" type="text" [(ngModel)]="user.email"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item class="item-input" lines="none">
+        <ion-label position="floating">senha</ion-label>
+        <ion-input (keyup.enter)="login()" [type]="password" [(ngModel)]="user.password"></ion-input>
+        <ion-button slot="end" expand="block" fill="clear" (click)="showPassword()">
+          <ion-icon color="secondary" *ngIf="show" name="eye-outline"></ion-icon>
+          <ion-icon color="secondary" *ngIf="!show" name="eye-off-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item lines="none">
+        <ion-button slot="start" expand="block" color="danger" (click)="cancel()">Cancelar</ion-button>
 
-          <ion-button slot="end" expand="block" color="success" (click)="login()">Entrar</ion-button>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+        <ion-button slot="end" expand="block" color="success" (click)="login()">Entrar</ion-button>
+      </ion-item>
+    </ion-col>
+  </ion-row>
 
-    <ion-row>
-      <ion-col>
-        <a href="#" color="light" (click)="esqueciSenha()">
-          <ion-label class="esqueciSenha">Esqueci minha senha</ion-label>
-        </a>
-      </ion-col>
-      <ion-col>
-        <a href="#" color="light" (click)="esqueciSenha()">
-          <ion-label class="esqueciSenha">Cadastrar</ion-label>
-        </a>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+  <ion-row>
+    <ion-col>
+      <a href="#" color="light" (click)="esqueciSenha()">
+        <ion-label class="esqueciSenha">Esqueci minha senha</ion-label>
+      </a>
+    </ion-col>
+
+  </ion-row>
+</ion-grid>

@@ -1,3 +1,4 @@
+import { UiModule } from './ui/ui.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -29,6 +30,7 @@ import { environment } from 'src/environments/environment';
       enabled: environment.production,
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    UiModule,
   ],
   providers: [
     HttpClientModule,

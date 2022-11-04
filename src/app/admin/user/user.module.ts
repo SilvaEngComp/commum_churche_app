@@ -1,3 +1,4 @@
+import { HomeUserRegisterModule } from './../../home/home-user-register/home-user-register.module';
 import { ProfileComponent } from './profile/profile.component';
 import { PipesModule } from '../../pipes/pipes.module';
 import { UserService } from '../../services/user.service';
@@ -26,6 +27,7 @@ import { UserSearchModule } from './user-search/user-search.module';
     ReactiveFormsModule,
     PipesModule,
     UserSearchModule,
+    HomeUserRegisterModule,
   ],
   declarations: [
     UserPage,

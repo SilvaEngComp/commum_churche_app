@@ -1,17 +1,15 @@
+import { HomeUserRegisterComponent } from './home-user-register.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ChallengePage } from './challenge.page';
-
 const routes: Routes = [
   {
-    path: '',
-    component: ChallengePage
-  }
+    path: 'cadastro',
+    component: HomeUserRegisterComponent,
+  },
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ChallengePageRoutingModule {}
+export class HomeUserRegisterRoutingModule {}

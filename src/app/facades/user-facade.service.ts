@@ -55,21 +55,8 @@ export class UserFacadeService extends FacadeService {
 
     const filter = new UserFilter(this.role);
     const response = await this.userService.get(filter);
-    if (response) {
-      const users = response.filter((user) => {
-        if (user.roles.indexOf('owner') >= 0 && this.role === 'seller') {
-          return user;
-        }
-        if (user.roles.indexOf(this.role) >= 0) {
-          return user;
-        }
-      });
 
-      if (this.role === 'customer') {
-        UiService.validlocalSet(users, this.localName, lastHash);
-      }
-      this.dataLoaded.emit(users);
-    }
+    this.dataLoaded.emit(response);
   }
 
   searchUser(name: string) {

@@ -234,3 +234,36 @@
     --ion-card-background: #1e1e1e;
   }
 }
+
+
+@font-face {
+  font-family: raustila;
+  src: url(../assets/fonts/raustila-Regular.ttf) format("truetype");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Qanelas;
+  src: url(../assets/fonts/Qanelas/Qanelas-Regular.otf) format("opentype");
+}
+
+@font-face {
+  font-family: Qanelas-bold;
+  src: url(../assets/fonts/Qanelas/Qanelas-Bold.otf) format("opentype");
+}
+
+@font-face {
+  font-family: Qanelas-light;
+  src: url(../assets/fonts/Qanelas/Qanelas-Light.otf) format("opentype");
+}
+
+@font-face {
+  font-family: Qanelas-thin;
+  src: url(../assets/fonts/Qanelas/Qanelas-thin.otf) format("opentype");
+}
+
+.transparent-modal {
+  .modal-wrapper {
+    --background: rgba(44, 39, 45, 0.2);
+  }
+}

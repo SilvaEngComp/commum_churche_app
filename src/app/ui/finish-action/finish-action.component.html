@@ -1,7 +1,20 @@
-<div>
+<ion-content>
+  <div>
 
-    <ion-label>{{msg | uppercase}}</ion-label>
+    <ion-label class="title">{{title }}</ion-label>
 
 
     <ion-icon class="icon-ok" name="checkmark-circle-outline"></ion-icon>
-</div>
+
+    <ion-label class="message">{{msg }}</ion-label>
+
+    <ion-item lines="none">
+      <ion-button expand="block" (click)="ok()">
+        <ion-label>ENTENDI</ion-label>
+      </ion-button>
+    </ion-item>
+
+  </div>
+
+
+</ion-content>

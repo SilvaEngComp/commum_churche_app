@@ -1,3 +1,4 @@
+import { Constants } from 'src/app/models/constants';
 /* eslint-disable max-len */
 /* eslint-disable eqeqeq */
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -69,7 +70,7 @@ export class UiService {
   }
 
   static validPermissions(permission?: string) {
-    const user = UiService.localGet().user;
+    const user = UiService.localGet(Constants.TOKEN).user;
     if (user.roles.indexOf('super_admin') >= 0) {
       return true;
     }
@@ -81,13 +82,15 @@ export class UiService {
     return false;
   }
   static localRemove(key) {
-    key = btoa(key).substr(0, 8);
+    key = btoa(key).substring(0, 8);
     localStorage.removeItem(environment.LOCALSTORAGE + key);
   }
-  static localGet(key = 'token') {
-    key = btoa(key).substr(0, 8);
-    if (localStorage.getItem(environment.LOCALSTORAGE + key)) {
-      const encrypted = localStorage.getItem(environment.LOCALSTORAGE + key);
+  static localGet(key: string) {
+    const encriptedKey =
+      environment.LOCALSTORAGE +
+      btoa(key).substring(0, Constants.SIZE_ENCRIPTY_KEY);
+    const encrypted = localStorage.getItem(encriptedKey);
+    if (encrypted) {
       const bytes = CriptoJs.AES.decrypt(encrypted, environment.PRIVATEKEY);
       return JSON.parse(bytes.toString(CriptoJs.enc.Utf8));
     }
@@ -95,16 +98,18 @@ export class UiService {
   }
 
   static localSet(key: string, data) {
-    if (key === 'token') {
+    if (key === Constants.TOKEN) {
       data = data.data;
     }
-    key = btoa(key).substr(0, 8);
+    const encriptedKey =
+      environment.LOCALSTORAGE +
+      btoa(key).substring(0, Constants.SIZE_ENCRIPTY_KEY);
     const encypt = JSON.stringify(data);
     const encrypted = CriptoJs.AES.encrypt(
       encypt,
       environment.PRIVATEKEY
     ).toString();
-    localStorage.setItem(environment.LOCALSTORAGE + key, encrypted);
+    localStorage.setItem(encriptedKey, encrypted);
   }
 
   static convertToNumber(value: string) {
@@ -185,6 +190,24 @@ export class UiService {
     );
     // Return array of year and week number
     return weekNo + 1;
+  }
+
+  static socialNetworks(op: string) {
+    switch (op) {
+      case 'w':
+        window.open('https://api.whatsapp.com/send?phone=5575983256990');
+        break;
+      case 'm':
+        window.open('mailto:ibnovabetel@gmail.com');
+        break;
+
+      case 'i':
+        window.open('https://www.instagram.com/ibnovabetel/');
+        break;
+      case 'y':
+        window.open('https://www.youtube.com/c/ibnovabetel');
+        break;
+    }
   }
 
   static buildChartMonth(

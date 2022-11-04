@@ -12,13 +12,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('./user/user.module').then((m) => m.UserPageModule),
       },
-      {
-        path: 'challenge',
-        loadChildren: () =>
-          import('./challenge/challenge.module').then(
-            (m) => m.ChallengePageModule
-          ),
-      },
+
       {
         path: 'feed',
         loadChildren: () =>

@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { Platform, IonTabs } from '@ionic/angular';
 import { PushNotify } from 'src/app/models/pushNotification';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -14,6 +21,7 @@ import { UiService } from 'src/app/services/ui.service';
   styleUrls: ['./menu-home-small.component.scss'],
 })
 export class MenuHomeSmallComponent implements OnInit, AfterViewInit {
+  @Output() selectedPage: EventEmitter<any> = new EventEmitter<any>();
   page_selected: string;
   badge_feed: number;
   @ViewChild('tabHome', { static: false }) tab!: IonTabs;
@@ -42,13 +50,9 @@ export class MenuHomeSmallComponent implements OnInit, AfterViewInit {
     // this.tab.select(this.page_selected);
   }
 
-  async hasSaw() {
-    this.page_selected = await this.tab.getSelected();
-    if (this.page_selected === 'feed' && this.badge_feed > 0) {
-      await this.feedService.hasSawNewest();
-      this.badge_feed = null;
-    }
-    UiService.localSet('tab-page', this.page_selected);
+  async setPage(page: number) {
+    this.selectedPage.emit(page);
+    // UiService.localSet('tab-page', this.page_selected);
   }
   requestPermission() {
     this.messagingService.requestPermission().subscribe(

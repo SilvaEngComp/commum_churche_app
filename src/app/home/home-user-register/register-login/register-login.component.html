@@ -1,0 +1,79 @@
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-item lines="none" class="input">
+        <ion-label position="floating">*email: </ion-label>
+        <ion-input type="email" (ionBlur)="save()" [(ngModel)]="user.email" email #inputEmail="ngModel"></ion-input>
+        <ion-note *ngIf="!inputEmail?.valid && inputEmail?.touched" color="danger">Email inválido</ion-note>
+      </ion-item>
+      <div *ngIf="!is_registering">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item class="input">
+                <ion-label position="floating">Nova Senha</ion-label>
+                <ion-icon slot="end" *ngIf="show1" name="eye-outline" (click)="showPassword(1)"></ion-icon>
+                <ion-icon slot="end" *ngIf="!show1" name="eye-off-outline" (click)="showPassword(1)"></ion-icon>
+                <ion-input (keyup)="checkRoles(nova.value)" #nova [type]="typePassword1"></ion-input>
+              </ion-item>
+
+            </ion-col>
+
+          </ion-row>
+
+        </ion-grid>
+        <div disabled class="inputs-box">
+          <div class="check-item">
+            <ion-checkbox [checked]="check1" disabled></ion-checkbox>
+            <ion-label class="lb-checkbox">Ter pelo menos uma (01) letra MAIÚSCULA.</ion-label>
+          </div>
+
+          <div class="check-item">
+            <ion-checkbox [checked]="check2" disabled></ion-checkbox>
+            <ion-label class="lb-checkbox">Ter pelo menos uma (01) letra minúscula.</ion-label>
+          </div>
+
+          <div class="check-item">
+            <ion-checkbox [checked]="check3" disabled></ion-checkbox>
+            <ion-label class="lb-checkbox">Ter pelo menos um (01) número.</ion-label>
+          </div>
+
+          <div class="check-item">
+            <ion-checkbox [checked]="check4" disabled></ion-checkbox>
+            <ion-label class="lb-checkbox">Ter pelo menos um (01) caractere especial (!@$%&).</ion-label>
+          </div>
+
+          <div class="check-item">
+            <ion-checkbox [checked]="check5" disabled></ion-checkbox>
+            <ion-label class="lb-checkbox">Tamanho mínimo: Oito (08) caracteres.</ion-label>
+          </div>
+        </div>
+
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item class="input">
+                <ion-label position="floating">Confirmar Senha</ion-label>
+                <ion-icon slot="end" *ngIf="show2" name="eye-outline" (click)="showPassword(2)"></ion-icon>
+                <ion-icon slot="end" *ngIf="!show2" name="eye-off-outline" (click)="showPassword(2)"></ion-icon>
+                <ion-input (keyup)="validPassword()" (ionFocus)="setEditing()" (ionBlur)="setEditing()"
+                  [type]="typepasswordConfirmation" [(ngModel)]="passwordConfirmation"></ion-input>
+              </ion-item>
+              <ion-label class="erro" *ngIf="diferentes" color="danger">Erro: Senhas diferentes</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
+      <ion-item class="item-button" lines="none">
+        <ion-button expand="block" color="secondary" type="submit" (click)="setSession(2)">
+          <ion-label>ATERIOR</ion-label>
+        </ion-button>
+        <ion-button expand="block" color="secondary" type="submit" [disabled]="btnDisable" (click)="setSession(4)">
+          <ion-label>FINALIZAR CADASTRO</ion-label>
+        </ion-button>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>

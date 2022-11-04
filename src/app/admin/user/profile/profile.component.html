@@ -1,65 +1,182 @@
-<ion-grid>
-  <ion-row>
-    <ion-col size="12">
-      <ion-item lines="none" class="item-search">
-        <ion-input type="text" #searchInput (keyup)="search(searchInput.value)"></ion-input>
-        <ion-icon color="secondary" name="search-outline"></ion-icon>
-        <ion-note slot="end" color="secondary">{{ users?.length }} {{ users?.length>1 ? 'registros' : 'registro' }}
-        </ion-note>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#" (click)="backPage()">
-              <ion-icon name="chevron-back-sharp"></ion-icon>
-            </a></li>
-          <li class="page-item">
-            <ion-item lines="none">
-              <ion-label>Página {{paginationNumber}}</ion-label>
-            </ion-item>
-          </li>
-          <li class="page-item"><a class="page-link" href="#" (click)="nextPage()">
-              <ion-icon name="chevron-forward-sharp"></ion-icon>
-            </a></li>
-        </ul>
-      </nav>
+<div class="geral">
 
-    </ion-col>
 
-    <ion-col>
-      <ion-button fill="clear" color="primary" (click)="newUser()">
-        <ion-label>Cadastrar {{label}}</ion-label>
-        <ion-icon name="add"></ion-icon>
+  <div class="div-header">
+    <ion-item lines="none" (click)="back()">
+      <ion-icon name="arrow-back-outline" color="dark"></ion-icon>
+      <ion-label> VOLTAR</ion-label>
+    </ion-item>
+  </div>
+
+  <ion-spinner name="bubbles" *ngIf="is_loading"></ion-spinner>
+
+  <div class="div-body" *ngIf="!is_loading">
+    <div>
+      <ion-label slot="start" class="lb-title">
+        PERFIL
+      </ion-label>
+      <ion-button (click)="setEdit()" *ngIf="edit">
+        <ion-icon src="./assets/icons/edit-light.svg"></ion-icon>
+        <ion-label>EDITAR</ion-label>
       </ion-button>
-    </ion-col>
-  </ion-row>
-  <ion-row *ngFor="let user of users | slice:inferiorLimit:upperLimit">
-    <ion-col>
-      <ion-item lines="none">
-        <ion-card-title>{{ user?.name }} </ion-card-title>
-      </ion-item>
-      <p *ngFor="let contact of user?.contacts"> {{contact?.contactType?.name}}: {{ contact?.value }}
-
-    </ion-col>
-    <ion-col>
-      <ion-item lines="none">
-
-
-        <ion-list (click)="edit(user)" slot="end">
-          <ion-icon color="secondary" name="pencil-sharp"></ion-icon>
-          <ion-label color="secondary">Editar</ion-label>
-        </ion-list>
+      <ion-button (click)="cancel()" *ngIf="!edit" color="danger">
+        <ion-icon name="close-circle-outline"></ion-icon>
+        <ion-label>CANCELAR</ion-label>
+      </ion-button>
+      <ion-button (click)="finish()" *ngIf="!edit" color="success">
+        <ion-icon name="save-outline"></ion-icon>
+        <ion-label>SALVAR</ion-label>
+      </ion-button>
 
 
 
-        <ion-list (click)="delete(user)" slot="end">
-          <ion-icon color="danger" name="trash-outline"></ion-icon>
-          <ion-label color="danger">Excluir</ion-label>
-        </ion-list>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+    </div>
+
+    <ion-spinner name="bubbles" *ngIf="!user"></ion-spinner>
+
+    <ion-grid *ngIf="user">
+      <ion-row>
+        <ion-col>
+          <ion-avatar [ngClass]="{'avatar-center': edit,'avatar-notcenter': !edit}">
+            <ion-img [src]="user?.image"></ion-img>
+          </ion-avatar>
+        </ion-col>
+        <ion-col *ngIf="!edit">
+          <ion-button color="danger" fill="outline" (click)="deleteImage()">
+            <ion-label>REMOVER FOTO</ion-label>
+          </ion-button>
+          <ion-button color="primary" fill="outline" (click)="setImage()">
+            <ion-label>CARREGAR FOTO</ion-label>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">*NOME</ion-label>
+            <ion-input [disabled]="edit" [(ngModel)]="user.name"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">*FONE</ion-label>
+            <ion-input [disabled]="edit" [value]="user?.contact?.phone1" [brmasker]="{phone: true}"
+              (keyup)="onSetBrmaskers($event,1)"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>*Data Nascimento: </ion-label>
+            <ion-input [disabled]="edit" type="date" [max]="today" [(ngModel)]="user.birthDate"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">*SEXO</ion-label>
+            <ion-select [disabled]="edit" (ionChange)="onSelectGender($event)" [interfaceOptions]="options"
+              interface="action-sheet" [selectedText]="user?.gender">
+              <ion-select-option [disabled]="edit" *ngFor="let gender of genders" [value]="gender">{{ gender }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">*E-MAIL</ion-label>
+            <ion-input [disabled]="edit" [(ngModel)]="user.email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+
+
+      <ion-row>
+        <ion-col class="item-input">
+          <ion-item class="item-input">
+            <ion-label position="floating">*CEP</ion-label>
+            <ion-input [disabled]="edit" (keyup)="checkCep(inputCep.value)" #inputCep
+              [brmasker]="{mask:'00000-000', len:9, type: 'num'}" [value]="user?.contact?.postalcode">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <!-- <ion-col size="1">
+          <app-info page="admin" right="40px" iconName="help-circle-outline"
+            info="CEP significa Código de Endereçamento Postal"
+            link="https://buscacepinter.correios.com.br/app/endereco/index.php?t"></app-info>
+        </ion-col> -->
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-input">
+          <ion-item>
+            <ion-label position="floating">*LOGRADOURO</ion-label>
+            <ion-input [disabled]="edit" [value]="user?.contact?.street" (keyup)="onSetAddress($event, 1)">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-input">
+          <ion-item>
+            <ion-label position="floating">NUMERO</ion-label>
+            <ion-input [disabled]="edit" [value]="user?.contact?.hauseNumber" (keyup)="onSetAddress($event, 2)">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col class="item-input">
+          <ion-item>
+            <ion-label position="floating">*BAIRRO</ion-label>
+            <ion-input [disabled]="edit" [value]="user?.contact?.district" (keyup)="onSetAddress($event, 3)">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="item-input">
+          <ion-item>
+            <ion-label position="floating">COMPLEMENTO</ion-label>
+            <ion-input [disabled]="edit" [value]="user?.contact?.complement" (keyup)="onSetAddress($event, 4)">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col class="item-input">
+          <ion-item>
+            <ion-label position="floating">*CIDADE</ion-label>
+            <ion-input [disabled]="edit" [value]="user?.contact?.city" (keyup)="onSetAddress($event, 5)">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-input">
+          <ion-item>
+            <ion-label position="floating">*ESTADO</ion-label>
+            <ion-input [disabled]="edit" [value]="user?.contact?.state" (keyup)="onSetAddress($event, 6)">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col class="item-input">
+          <ion-item>
+            <ion-label position="floating">*PAIS</ion-label>
+            <ion-input [disabled]="edit" [value]="user?.contact?.country" (keyup)="onSetAddress($event, 7)">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+  </div>
+</div>

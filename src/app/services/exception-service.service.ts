@@ -28,7 +28,8 @@ export class ExceptionService {
   ) {}
 
   async openLoading(
-    msg: string,
+    title: string,
+    msg: string = '',
     icon: boolean = true,
     duration: number = 2,
     reload?: boolean
@@ -36,7 +37,7 @@ export class ExceptionService {
     const modal = await this.modalCtrl.create({
       component: FinishActionComponent,
       cssClass: 'modal-model',
-      componentProps: { msg, icon, duration },
+      componentProps: { title, msg, icon, duration },
     });
     await modal.present();
 
@@ -119,6 +120,7 @@ export class ExceptionService {
     const toast = await this.alertCtrl.create({
       header,
       message,
+      mode: 'ios',
       buttons: [
         {
           text: 'OK',
@@ -170,8 +172,18 @@ export class ExceptionService {
           if (err.error) {
             this.alertDialog(err.error.message, 'Erro!');
           }
+
           break;
       }
+
+      // const data = err.error.data;
+      // console.log(data);
+      // console.log(Array.isArray(data));
+      // if (data) {
+      //   if (Array.isArray(data)) {
+      //     data.filter((obj) => this.alertDialog(obj, 'Erro!'));
+      //   }
+      // }
     } else {
       this.alertDialog('Erro Desconhecido', 'Erro!');
     }
