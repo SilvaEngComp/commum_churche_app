@@ -1,3 +1,4 @@
+import { RequestEmailComponent } from './request-email/request-email.component';
 import { BrMaskerModule } from 'br-mask';
 import { LoginComponent } from './login.component';
 import { NgModule } from '@angular/core';
@@ -10,6 +11,7 @@ import { ResponseComponent } from './esqueci-senha/response/response.component';
 
 @NgModule({
   declarations: [
+    RequestEmailComponent,
     LoginComponent,
     EsqueciSenhaComponent,
     ResponseComponent,

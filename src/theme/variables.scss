@@ -267,3 +267,26 @@
     --background: rgba(44, 39, 45, 0.2);
   }
 }
+
+.my-custom-class {
+  --background: var(--ion-color-light);
+}
+//*[@id="ion-overlay-1"]//div
+.customized-modal {
+  .modal-wrapper {
+    width: 90%;
+  }
+}
+
+.modal-print {
+  .modal-wrapper {
+    border-radius: 30px;
+    width: 158mm;
+  }
+}
+
+.modal-model {
+  div {
+    --background: rgba(44, 39, 45, 0.1);
+  }
+}

@@ -1,3 +1,4 @@
+import { DayToSelectComponent } from './day-to-select/day-to-select.component';
 import { InputMethod } from './../../../models/inputhMethod';
 import { MaritalStatusService } from './../../../services/marital-status.service';
 import { InputMethodService } from './../../../services/input-method.service';
@@ -15,8 +16,14 @@ import {
 import { Constants } from 'src/app/models/constants';
 import { User } from 'src/app/models/User';
 import { UiService } from 'src/app/services/ui.service';
-import { IonDatetime } from '@ionic/angular';
+import {
+  IonDatetime,
+  IonPopover,
+  Platform,
+  PopoverController,
+} from '@ionic/angular';
 import { MaritalStatus } from 'src/app/models/maritalStatus';
+import { range } from 'rxjs';
 
 @Component({
   selector: 'app-register-personal-info',
@@ -28,14 +35,21 @@ export class RegisterPersonalInfoComponent implements OnInit {
   user: User;
   dateSelected: boolean;
   @ViewChild('timeData', { static: false }) timeData: IonDatetime;
-  @ViewChild('timeMonthYear', { static: false }) timeMonthYear: IonDatetime;
+  @ViewChild('popDay', { static: false }) popDay: IonPopover;
   today: string;
   maritalStatuses: MaritalStatus[];
   inputMethods: InputMethod[];
+  isSmallDevice: boolean;
+  days: string[] = [];
+  day: string;
+  monthYear: string;
+
   constructor(
     private exceptionService: ExceptionService,
     private inputMethodService: InputMethodService,
-    private maritalStatusService: MaritalStatusService
+    private maritalStatusService: MaritalStatusService,
+    private platform: Platform,
+    private popCtrl: PopoverController
   ) {}
   ngOnInit() {
     this.user = UiService.localGet(Constants.REGISTRING_USER);
@@ -48,9 +62,20 @@ export class RegisterPersonalInfoComponent implements OnInit {
     this.today = date.transform(Date.now(), 'yyyy-MM-dd');
 
     this.load();
+
+    this.isSmallDevice = this.platform.width() <= 500;
+
+    console.log(this.days);
   }
 
   async load() {
+    for (let i = 1; i <= 31; i++) {
+      if (i < 10) {
+        this.days.push('0' + i);
+      } else {
+        this.days.push(String(i));
+      }
+    }
     const inputMethodResponser = await this.inputMethodService.get();
     this.inputMethods = inputMethodResponser.data;
 
@@ -130,7 +155,7 @@ export class RegisterPersonalInfoComponent implements OnInit {
       }
     }
 
-    if (!this.user.birthDate) {
+    if (!this.user.birthDate || this.user.birthDate.length < 10) {
       this.exceptionService.alertDialog(
         ConstantMessages.BIRTHDATE_INVALID,
         'Erro'
@@ -169,5 +194,29 @@ export class RegisterPersonalInfoComponent implements OnInit {
     this.user.isBaptized = ev.target.value;
     this.save();
     console.log(this.user);
+  }
+
+  onSelectData(date: any) {
+    this.user.birthDate = date.substring(0, 10);
+    this.save();
+  }
+
+  onSelectDay(value: string) {
+    this.day = value;
+    this.popDay.dismiss();
+    this.setBirthdate();
+  }
+  onSelectMonth(value: any) {
+    console.clear();
+    console.log(value);
+    this.monthYear = value.substring(0, 7);
+    this.setBirthdate();
+  }
+
+  setBirthdate() {
+    console.clear();
+    this.user.birthDate = this.monthYear + '-' + this.day;
+    console.log(this.user.birthDate);
+    this.save();
   }
 }
