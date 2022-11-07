@@ -57,14 +57,13 @@ export class HomeUserRegisterComponent implements OnInit {
     this.usuarioService
       .store(this.user)
       .then((responser) => {
+        this.clear();
         this.exceptionService.openLoading(
           ConstantMessages.FINISHING_REGISTRATION_TITLE,
           ConstantMessages.FINISHING_REGISTRATION_SUCCESS,
           true,
           30000
         );
-
-        localStorage.clear();
       })
       .catch((erro) => {
         this.exceptionService.error(erro);

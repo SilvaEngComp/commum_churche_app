@@ -36,7 +36,7 @@ export class EsqueciSenhaComponent implements OnInit {
     this.exceptionService.loadingFunction();
     // Enviando o email para recupeação de senha
     this.loginService
-      .esqueciSenha(this.email)
+      .recoverAccess(this.email)
       .then(async () => {
         // popover para inserir o código de recuperação
         const modal = await this.popCtrl.create({

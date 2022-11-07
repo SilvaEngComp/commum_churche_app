@@ -4,23 +4,29 @@
 
       <ion-item lines="none" class="input">
         <ion-label position="floating">*Rua </ion-label>
-        <ion-input (ionBlur)="save()" type="text" [(ngModel)]="user.contact.street"></ion-input>
+        <ion-input (ionBlur)="save()" type="text" [(ngModel)]="user.contact.street" #name="ngModel" name="street"
+          [ngModelOptions]="{standalone: true}" required></ion-input>
+        <ion-note *ngIf="!name?.valid && name?.touched" color="danger">Este campo é obrigatório</ion-note>
       </ion-item>
 
       <ion-item lines="none" class="input">
         <ion-label position="floating">*Numero da residência: </ion-label>
         <ion-input (ionBlur)="save()" [type]="typeNumber" [disabled]="thereIsNotNumber"
-          placeholder="Qual o número da residência" [(ngModel)]="user.contact.hauseNumber">
-        </ion-input>
+          placeholder="Qual o número da residência" [(ngModel)]="user.contact.hauseNumber" #name="ngModel"
+          name="housenumber" [ngModelOptions]="{standalone: true}" required></ion-input>
+        <ion-note *ngIf="!name?.valid && name?.touched" color="danger">Este campo é obrigatório</ion-note>
+
       </ion-item>
       <ion-item lines="none" class="input checkbox">
-        <ion-checkbox (ionChange)="setNotNumber(checkNumber)" #checkNumber></ion-checkbox>
+        <ion-checkbox [checked]="user?.contact?.hauseNumberCheck" (ionChange)="setNotNumber(checkNumber)" #checkNumber>
+        </ion-checkbox>
         <ion-label>Sem número</ion-label>
       </ion-item>
       <ion-item lines="none" class="input">
         <ion-label position="floating">*Bairro: </ion-label>
-        <ion-input (ionBlur)="save()" type="text" placeholder="Em que bairro mora?" [(ngModel)]="user.contact.district">
-        </ion-input>
+        <ion-input (ionBlur)="save()" type="text" placeholder="Em que bairro mora?" [(ngModel)]="user.contact.district"
+          #name="ngModel" name="district" [ngModelOptions]="{standalone: true}" required></ion-input>
+        <ion-note *ngIf="!name?.valid && name?.touched" color="danger">Este campo é obrigatório</ion-note>
       </ion-item>
 
 

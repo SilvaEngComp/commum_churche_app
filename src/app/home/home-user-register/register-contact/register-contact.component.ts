@@ -5,6 +5,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { IonCheckbox } from '@ionic/angular';
 import { ConstantMessages } from 'src/app/models/messages';
+import { Contact } from 'src/app/models/contact';
 
 @Component({
   selector: 'app-register-contact',
@@ -26,6 +27,8 @@ export class RegisterContactComponent implements OnInit {
       this.user = new User();
       this.save();
     }
+
+    this.thereIsNotNumber = this.user.contact.hauseNumberCheck;
   }
 
   save() {
@@ -47,10 +50,20 @@ export class RegisterContactComponent implements OnInit {
   }
 
   check() {
-    console.log(this.user);
     if (!this.user.contact.street || this?.user?.contact?.street?.length <= 0) {
       this.exceptionService.alertDialog(
         ConstantMessages.STREET_INVALID,
+        'Erro'
+      );
+      return false;
+    }
+
+    if (
+      !this.user?.contact?.hauseNumber ||
+      this.user?.contact?.hauseNumber?.length <= 0
+    ) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.HOUSENUMBER_INVALID,
         'Erro'
       );
       return false;
@@ -71,6 +84,10 @@ export class RegisterContactComponent implements OnInit {
   }
 
   setNotNumber(check: IonCheckbox) {
+    if (!this.user.contact) {
+      this.user.contact = new Contact();
+    }
+    this.user.contact.hauseNumberCheck = check.checked;
     if (!check.checked) {
       this.thereIsNotNumber = false;
       this.user.contact.hauseNumber = '';

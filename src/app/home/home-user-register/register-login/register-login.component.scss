@@ -17,7 +17,7 @@
 .item-button{
   padding: 2px;
   margin-left: 10%;
-  width: 80%;
+  width: 90%;
 
   ion-button{
    --border-radius: 20px;
@@ -71,11 +71,11 @@ ion-header {
 }
 @media only screen and (max-width: 500px) {
   .inputs-box{
-
+    margin-left: 10%;
     .check-item{
       ion-label{
         margin-left: 5px;
-        font-size: 10pt;
+        font-size: 12pt;
         font-family: Qanelas-light;
       }
 

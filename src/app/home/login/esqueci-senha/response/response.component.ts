@@ -27,7 +27,7 @@ export class ResponseComponent implements OnInit {
       case 1:
         this.cod = '';
         this.exceptionService.loadingFunction();
-        this.loginService.esqueciSenha(this.email);
+        this.loginService.recoverAccess(this.email);
         break;
 
       case 2:

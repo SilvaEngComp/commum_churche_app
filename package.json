@@ -31,6 +31,7 @@
     "@capacitor/push-notifications": "^4.1.1",
     "@capacitor/status-bar": "4.0.1",
     "@ionic/angular": "^6.1.9",
+    "animate.css": "^4.1.1",
     "br-mask": "0.0.10",
     "chart.js": "^3.9.1",
     "cordova-sqlite-storage": "^6.0.0",

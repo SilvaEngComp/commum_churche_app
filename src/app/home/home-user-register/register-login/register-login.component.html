@@ -24,27 +24,27 @@
         </ion-grid>
         <div disabled class="inputs-box">
           <div class="check-item">
-            <ion-checkbox [checked]="check1" disabled></ion-checkbox>
-            <ion-label class="lb-checkbox">Ter pelo menos uma (01) letra MAIÚSCULA.</ion-label>
+            <ion-checkbox mode="ios" [checked]="check1" disabled></ion-checkbox>
+            <ion-label class="lb-checkbox">01 letra MAIÚSCULA.</ion-label>
           </div>
 
           <div class="check-item">
-            <ion-checkbox [checked]="check2" disabled></ion-checkbox>
-            <ion-label class="lb-checkbox">Ter pelo menos uma (01) letra minúscula.</ion-label>
+            <ion-checkbox mode="ios" [checked]="check2" disabled></ion-checkbox>
+            <ion-label class="lb-checkbox">01 letra minúscula.</ion-label>
           </div>
 
           <div class="check-item">
-            <ion-checkbox [checked]="check3" disabled></ion-checkbox>
-            <ion-label class="lb-checkbox">Ter pelo menos um (01) número.</ion-label>
+            <ion-checkbox mode="ios" [checked]="check3" disabled></ion-checkbox>
+            <ion-label class="lb-checkbox">01 número.</ion-label>
           </div>
 
           <div class="check-item">
-            <ion-checkbox [checked]="check4" disabled></ion-checkbox>
-            <ion-label class="lb-checkbox">Ter pelo menos um (01) caractere especial (!@$%&).</ion-label>
+            <ion-checkbox mode="ios" [checked]="check4" disabled></ion-checkbox>
+            <ion-label class="lb-checkbox">01 caractere especial (!@$%&).</ion-label>
           </div>
 
           <div class="check-item">
-            <ion-checkbox [checked]="check5" disabled></ion-checkbox>
+            <ion-checkbox mode="ios" [checked]="check5" disabled></ion-checkbox>
             <ion-label class="lb-checkbox">Tamanho mínimo: Oito (08) caracteres.</ion-label>
           </div>
         </div>
@@ -57,8 +57,9 @@
                 <ion-label position="floating">Confirmar Senha</ion-label>
                 <ion-icon slot="end" *ngIf="show2" name="eye-outline" (click)="showPassword(2)"></ion-icon>
                 <ion-icon slot="end" *ngIf="!show2" name="eye-off-outline" (click)="showPassword(2)"></ion-icon>
-                <ion-input (keyup)="validPassword()" (ionFocus)="setEditing()" (ionBlur)="setEditing()"
-                  [type]="typepasswordConfirmation" [(ngModel)]="passwordConfirmation"></ion-input>
+                <ion-input #inputPasswordConfirmation (keyup)="validPassword(inputPasswordConfirmation.value)"
+                  (ionFocus)="setEditing()" (ionBlur)="setEditing()" [type]="typepasswordConfirmation">
+                </ion-input>
               </ion-item>
               <ion-label class="erro" *ngIf="diferentes" color="danger">Erro: Senhas diferentes</ion-label>
             </ion-col>
@@ -71,7 +72,7 @@
           <ion-label>ATERIOR</ion-label>
         </ion-button>
         <ion-button expand="block" color="secondary" type="submit" [disabled]="btnDisable" (click)="setSession(4)">
-          <ion-label>FINALIZAR CADASTRO</ion-label>
+          <ion-label>OK! ENVIAR</ion-label>
         </ion-button>
       </ion-item>
     </ion-col>

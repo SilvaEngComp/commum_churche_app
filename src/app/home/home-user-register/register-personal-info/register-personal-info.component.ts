@@ -100,22 +100,6 @@ export class RegisterPersonalInfoComponent implements OnInit {
       this.exceptionService.alertDialog(ConstantMessages.NAME_INVALID, 'Erro');
       return false;
     }
-    if (!this.user?.maritalStatus?.id) {
-      this.exceptionService.alertDialog(
-        ConstantMessages.MARITAL_STATUS_INVALID,
-        'Erro'
-      );
-      return false;
-    }
-    console.log(this.user.inputMethod);
-
-    if (!this.user?.inputMethod?.id) {
-      this.exceptionService.alertDialog(
-        ConstantMessages.INPUT_METHOD_INVALID,
-        'Erro'
-      );
-      return false;
-    }
 
     const nome: string[] = this.user.name.split(' ');
     if (nome.length < 2) {
@@ -130,7 +114,11 @@ export class RegisterPersonalInfoComponent implements OnInit {
         return false;
       }
     }
-    if (this.user?.contact?.phone1?.length <= 0) {
+
+    if (
+      !this.user?.contact?.phone1 ||
+      this.user?.contact?.phone1?.length <= 0
+    ) {
       this.exceptionService.alertDialog(ConstantMessages.PHONE_INVALID, 'Erro');
       return false;
     } else {
@@ -141,6 +129,7 @@ export class RegisterPersonalInfoComponent implements OnInit {
         );
       }
     }
+
     if (!this.user.birthDate) {
       this.exceptionService.alertDialog(
         ConstantMessages.BIRTHDATE_INVALID,
@@ -148,7 +137,37 @@ export class RegisterPersonalInfoComponent implements OnInit {
       );
       return false;
     }
-    this.save();
+
+    if (!this.user.isBaptized) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.ISBAPTIZED_INVALID,
+        'Erro'
+      );
+      return false;
+    }
+
+    if (!this.user?.maritalStatus?.id) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.MARITAL_STATUS_INVALID,
+        'Erro'
+      );
+      return false;
+    }
+
+    if (!this.user?.inputMethod?.id) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.INPUT_METHOD_INVALID,
+        'Erro'
+      );
+      return false;
+    }
+
     return true;
+  }
+
+  setIsBaptized(ev: any) {
+    this.user.isBaptized = ev.target.value;
+    this.save();
+    console.log(this.user);
   }
 }

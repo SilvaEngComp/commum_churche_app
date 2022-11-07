@@ -8,11 +8,14 @@ export class Contact {
   street_type: string;
   street: string;
   hauseNumber: string;
+  hauseNumberCheck: boolean;
   complement: string;
   district: string;
   city: string;
   state: string;
   postalcode: string;
 
-  constructor() {}
+  constructor() {
+    this.hauseNumberCheck = false;
+  }
 }

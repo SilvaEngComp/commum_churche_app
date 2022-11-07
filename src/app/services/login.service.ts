@@ -114,9 +114,9 @@ export class LoginService {
       .toPromise();
   }
 
-  esqueciSenha(email: string): Promise<any> {
+  recoverAccess(email: string): Promise<any> {
     return this.http
-      .get(`${environment.API}/users/esqueciSenha/${email}`)
+      .get(`${environment.API}/auth/recoverAccess/${email}`)
       .toPromise();
   }
   alterarSenha(user: User, senha: string): Promise<User> {

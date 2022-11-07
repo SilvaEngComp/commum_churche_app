@@ -18,7 +18,6 @@ export class RegisterLoginComponent implements OnInit {
   show2: boolean;
   editing: boolean;
   password: string;
-  passwordConfirmation: string;
   check1: boolean;
   check2: boolean;
   check3: boolean;
@@ -47,7 +46,6 @@ export class RegisterLoginComponent implements OnInit {
     this.show1 = false;
     this.show2 = false;
     this.password = '';
-    this.passwordConfirmation = '';
     this.typePassword1 = 'password';
     this.typepasswordConfirmation = 'password';
   }
@@ -66,14 +64,10 @@ export class RegisterLoginComponent implements OnInit {
     }
     console.log(flag);
     if (flag) {
-      this.user.password = this.passwordConfirmation;
+      this.user.password = this.password;
       this.save();
       this.session.emit(session);
     }
-  }
-
-  setPasswordConfirmation(value) {
-    this.passwordConfirmation = value;
   }
 
   setEditing() {
@@ -132,9 +126,9 @@ export class RegisterLoginComponent implements OnInit {
     }
   }
 
-  validPassword() {
-    if (this.password.length > 0 && this.passwordConfirmation.length > 0) {
-      if (this.passwordConfirmation !== this.password) {
+  validPassword(passwordConfirmation: any) {
+    if (this.password.length > 0 && passwordConfirmation.length > 0) {
+      if (passwordConfirmation !== this.password) {
         this.diferentes = true;
       } else {
         this.diferentes = false;
@@ -143,9 +137,15 @@ export class RegisterLoginComponent implements OnInit {
 
     if (this.diferentes) {
       this.btnDisable = true;
-    } else {
+    } else if (!this.diferentes && this.isAllParametersValids()) {
       this.btnDisable = false;
     }
+  }
+
+  isAllParametersValids() {
+    return (
+      this.check1 && this.check2 && this.check3 && this.check4 && this.check5
+    );
   }
 
   showPassword(op) {

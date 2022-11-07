@@ -9,7 +9,7 @@ export class User {
   id: number;
   name: string;
   email: string;
-  isBaptized: boolean;
+  isBaptized: number;
   birthDate: string;
   contact: Contact;
   role: string;
@@ -26,7 +26,6 @@ export class User {
     this.name = name;
     this.email = email;
     this.contact = new Contact();
-    this.isBaptized = false;
     this.maritalStatus = new MaritalStatus();
     this.inputMethod = new InputMethod();
   }

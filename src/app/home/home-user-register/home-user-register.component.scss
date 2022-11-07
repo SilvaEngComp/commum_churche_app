@@ -24,11 +24,6 @@
    width: 80%;
 }
 
-ion-breadcrumbs{
-  margin-left: 30%;
-  width: 80%;
-  padding: 2px;
-}
 
 
 .align-title {
@@ -66,3 +61,22 @@ ion-header {
   color:var(--ion-color-primary);
   }
   }
+
+  @media only screen and (min-width: 500px) {
+
+  ion-breadcrumbs{
+    margin-left: 30%;
+    width: 80%;
+    padding: 2px;
+    font-family: Qanelas-thin;
+  }
+}
+  @media only screen and (max-width: 500px) {
+
+  ion-breadcrumbs{
+    width: 100%;
+    padding: 2px;
+    font-size: 8pt;
+    font-family: Qanelas-thin;
+  }
+}
