@@ -1,4 +1,4 @@
-<div class="fundo"></div>
+<!-- <div class="fundo"></div> -->
 <ion-grid>
   <ion-row>
     <ion-col>
@@ -25,8 +25,9 @@
   <ion-row>
     <ion-col>
       <ion-item lines="none">
-        <ion-button slot="start" expand="block" color="danger" (click)="cancel()">Cancelar</ion-button>
-
+        <a slot="start" href="#" color="light" (click)="recoverPasswordd()">
+          <ion-label class="esqueciSenha">Esqueci minha senha</ion-label>
+        </a>
         <ion-button slot="end" expand="block" color="success" (click)="login()">Entrar</ion-button>
       </ion-item>
     </ion-col>
@@ -34,9 +35,7 @@
 
   <ion-row>
     <ion-col>
-      <a href="#" color="light" (click)="esqueciSenha()">
-        <ion-label class="esqueciSenha">Esqueci minha senha</ion-label>
-      </a>
+
     </ion-col>
 
   </ion-row>

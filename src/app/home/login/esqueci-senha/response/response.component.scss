@@ -1,33 +1,101 @@
-.content{
-    width: 98%;
-    display: grid;
-    align-items: center;
-    align-content: center;
-    align-self: center;
+ion-toolbar {
+  .back-button {
+      margin-left: 10px;
+      margin-right: 10px;
+      font-size: 30px;
+      background: var(--ion-color-medium);
+      color: white;
+  }
+  .image-right {
+      margin-left: 10px;
+      margin-right: 10px;
+      font-size: 40px;
+  }
 }
 
-.response{
-    text-align: justify;
-    width: 90%;
-    margin-left: 5%;
-}
-.obs{
-    text-align: justify;
-    width: 90%;
-    margin-left: 5%;   
-    font-weight: bold;
-}
-.title{
-    width: 90%;
-    margin-left: 5%;
-    text-align: center;
-    color: var(--ion-color-tertiary);
-    font-size:10pt;
-    font-weight: 900;
-    font-family: Qanelas;
-    border-bottom: 1px solid var(--ion-color-tertiary);
+.response {
+  border: 2px dotted var(--ion-color-dark);
+  font-family: Qanelas-light;
+  font-size: 12pt;
+  text-align: center;
+  width: 90%;
+  margin-left: 5%;
+  color: var(--ion-color-medium);
 }
 
-ion-button{
-    font-size: 3vw;
+.obs {
+  text-align: justify;
+  width: 90%;
+  margin-left: 5%;
+  font-weight: bold;
+}
+
+.lb-title {
+  width: 90%;
+  margin-left: 5%;
+  text-align: center;
+  color: var(--ion-color-medium);
+  font-size: 20pt;
+  font-weight: 900;
+  font-family: Qanelas-light;
+}
+
+.lb-subtitle {
+  width: 90%;
+  margin-left: 5%;
+  text-align: center;
+  color: var(--ion-color-dark);
+  font-size: 20pt;
+  font-weight: 900;
+  font-family: Qanelas-bold;
+}
+
+.reenviar {
+  margin: 20px;
+  --border-radius: 20px;
+  margin-left: 35%;
+  width: 60%;
+  ion-label {
+      font-size: 8pt;
+      color: white;
+      font-family: Qanelas-bold;
+  }
+}
+
+a {
+  position: absolute;
+  bottom: 0px;
+  margin: 20px;
+  font-size: 10pt;
+  font-family: Qanelas-light;
+  left: 35%;
+  text-decoration: underline;
+  color: var(--ion-color-medium);
+}
+
+.body-div {
+  margin-top: 5%;
+  display: grid;
+}
+
+.buttons-bottom {
+  display: grid;
+  width: 300px;
+  position: relative;
+  top: 50px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.erro {
+  margin: 10px;
+  font-size: 10pt;
+  text-align: justify;
+}
+
+ion-input {
+  border: 2px solid var(--ion-color-tertiary);
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
 }

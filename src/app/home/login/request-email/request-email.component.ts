@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { User } from 'src/app/models/User';
@@ -12,6 +12,8 @@ import { EsqueciSenhaComponent } from '../esqueci-senha/esqueci-senha.component'
   styleUrls: ['./request-email.component.scss'],
 })
 export class RequestEmailComponent implements OnInit {
+  @Output() selectedPage: EventEmitter<number> = new EventEmitter<number>();
+
   newParte: number;
   show: boolean;
   action: string;
@@ -62,12 +64,7 @@ export class RequestEmailComponent implements OnInit {
       });
   }
 
-  async esqueciSenha() {
-    const modal = await this.modalCtrl.create({
-      component: EsqueciSenhaComponent,
-      cssClass: 'modal-model',
-    });
-
-    await modal.present();
+  async recoverPasswordd() {
+    this.selectedPage.emit(1);
   }
 }

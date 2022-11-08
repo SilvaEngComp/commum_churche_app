@@ -1,5 +1,5 @@
 import { ResponseComponent } from './response/response.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
@@ -10,6 +10,7 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./esqueci-senha.component.scss'],
 })
 export class EsqueciSenhaComponent implements OnInit {
+  @Output() selectedPage: EventEmitter<number> = new EventEmitter<number>();
   erro: boolean;
   email: string;
 
@@ -28,7 +29,11 @@ export class EsqueciSenhaComponent implements OnInit {
     this.typePassword = 'password';
   }
 
-  async esqueciSenha() {
+  async backPage() {
+    this.selectedPage.emit(1);
+  }
+
+  async sendRequest() {
     if (this.email.length <= 0) {
       this.exceptionService.toastHandler('insira um email');
       return;
@@ -38,34 +43,17 @@ export class EsqueciSenhaComponent implements OnInit {
     this.loginService
       .recoverAccess(this.email)
       .then(async () => {
-        // popover para inserir o código de recuperação
-        const modal = await this.popCtrl.create({
-          component: ResponseComponent,
-          componentProps: { email: this.email },
-          backdropDismiss: false,
-        });
-
-        await modal.present();
-
-        const { data } = await modal.onDidDismiss();
-
-        let status = false;
-        if (data) {
-          status = data.status;
-        }
-
-        this.modalCtrl.dismiss({
-          status,
-        });
+        this.codeValidation();
       })
       .catch((erro) => {
         this.exceptionService.error(erro);
       });
   }
 
-  back() {
-    this.modalCtrl.dismiss();
+  codeValidation() {
+    this.selectedPage.emit(2);
   }
+
   showPassword() {
     this.show = !this.show;
     if (this.show) {

@@ -1,19 +1,17 @@
 
 .fundo{
-   background-image: url('../../../../assets/images/logo.jpeg');
+   background-image: url('../../../../assets/images/logo.png');
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: 200px;
+    // background-position: 10% 10%;
       width: 100%;
     height: 100%;
-    display: grid;
-    justify-content: center;
- opacity: 0.3;
-    position: absolute;
   }
     .item-input {
-      width: 300px;
+      width: 400px;
     border-radius: 10px;
-    border: 1px solid var(--ion-color-secondary);
+    box-shadow: 2px 2px 1px 1px var(--ion-color-medium);
+    border: 2px solid var(--ion-color-secondary);
   }
   .item-entrar-top{
     margin-left: -10px
@@ -23,6 +21,7 @@
   }
 
   ion-grid{
+    margin-top: 20%;
       width: 80%;
   }
 

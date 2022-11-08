@@ -11,4 +11,5 @@ export class Constants {
   static SIZE_ENCRIPTY_KEY = 25;
   static MALE_PERSON = './assets/images/male_person.webp';
   static FEMALE_PERSON = './assets/images/female_person.jpg';
+  static PAGE_MENU_LOGIN = 'pageLogin';
 }

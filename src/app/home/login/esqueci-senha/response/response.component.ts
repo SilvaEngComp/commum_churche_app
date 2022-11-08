@@ -1,6 +1,7 @@
+import { ViewChild } from '@angular/core';
 /* eslint-disable @typescript-eslint/member-ordering */
-import { PopoverController, ModalController } from '@ionic/angular';
-import { Component, Input, OnInit } from '@angular/core';
+import { PopoverController, ModalController, IonInput } from '@ionic/angular';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { AlterarSenhaComponent } from '../alterar-senha/alterar-senha.component';
 import { LoginService } from 'src/app/services/login.service';
@@ -11,55 +12,63 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./response.component.scss'],
 })
 export class ResponseComponent implements OnInit {
+  @Output() selectedPage: EventEmitter<number> = new EventEmitter<number>();
+  @ViewChild('inputZero', { static: false }) inputZero: IonInput;
   @Input() email: string;
   constructor(
     private loginService: LoginService,
-    private popCtrl: PopoverController,
-    private modalCtrl: ModalController,
     private exceptionService: ExceptionService
   ) {}
 
   cod: string;
+  cod2: string[] = ['', '', '', '', '', ''];
+  error: boolean;
 
-  ngOnInit() {}
-  option(op: number) {
-    switch (op) {
-      case 1:
-        this.cod = '';
-        this.exceptionService.loadingFunction();
-        this.loginService.recoverAccess(this.email);
-        break;
+  ngOnInit() {
+    this.error = false;
+    this.cod = '';
+  }
 
-      case 2:
-        this.popCtrl.dismiss();
-        break;
+  back() {
+    this.selectedPage.emit(0);
+  }
+
+  resend() {
+    if (this.email) {
+      this.exceptionService.loadingFunction();
+      this.loginService.recorverAccess(this.email).then((response) => {
+        this.exceptionService.success(response);
+      });
     }
   }
 
-  checkCod() {
+  toString() {
+    this.cod = '';
+    this.cod2.filter((l) => {
+      this.cod += l;
+    });
+  }
+
+  checkCod(id: number, ev) {
+    if (id === 0 && ev.target.value.length > 1) {
+      this.cod2 = ev.target.value.split('');
+    } else {
+      this.cod2[id] = ev.target.value;
+    }
+
+    this.toString();
+    console.log(this.cod2[0]);
     if (this.cod.length >= 6) {
-      this.exceptionService.loadingFunction();
       this.loginService
         .checkCod(this.cod)
         .then(async (user) => {
-          const modal = await this.modalCtrl.create({
-            component: AlterarSenhaComponent,
-            componentProps: { user },
-          });
-
-          await modal.present();
-
-          const { data } = await modal.onDidDismiss();
-
-          let status = false;
-          if (data) {
-            status = data.status;
-          }
-          this.popCtrl.dismiss({
-            status,
-          });
+          this.selectedPage.emit(0);
         })
-        .catch((erro) => this.exceptionService.error(erro));
+        .catch((error) => {
+          this.cod = '';
+          this.error = true;
+          this.exceptionService.error(error);
+        });
     }
   }
 }

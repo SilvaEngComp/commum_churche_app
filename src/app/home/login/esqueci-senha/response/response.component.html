@@ -1,20 +1,53 @@
-<ion-content class="content">
-    <p  class="title">
-      E-MAIL ENVIADO COM SUCESSO!
-    </p>
-
-  <p class="response">
-    Cole abaixo o cógigo que vc receu em seu email
+<div class="body-div">
+  <p class="lb-title">
+    DIGITE O <br>
+    <strong class="lb-subtitle">
+      CÓDIGO QUE VOCÊ
+      <BR> RECEBEU NO E-MAIL
+    </strong>
   </p>
-<ion-item>
-  <ion-label>Código: </ion-label>
-  <ion-input type="text" (keyup)="checkCod()" [(ngModel)]="cod" maxlength="6"></ion-input>
-</ion-item>
-<ion-button color="success" (click)="checkCod()">VERIFICAR</ion-button>
-  <p class="obs">OBS.: Se você não recebeu o e-mail,verifique na sua caixa de SPAN.</p>
 
-  <ion-item>
-    <ion-button expand="block" (click)="option(2)" color="danger">CANCELAR</ion-button>
-    <ion-button expand="block" (click)="option(1)"  color="tertiary">RE-ENVIAR EMAIL</ion-button>
-  </ion-item>
-</ion-content>
+
+  <ion-progress-bar *ngIf="cod.length===6" value="0.25" buffer="0.5"></ion-progress-bar>
+  <ion-grid *ngIf="cod.length<6">
+    <ion-row>
+      <ion-col>
+        <ion-input #inputZero type="text" [value]="cod2[0]" maxlength="6" (keyup)="checkCod(0, $event)"></ion-input>
+
+      </ion-col>
+      <ion-col>
+        <ion-input type="text" [value]="cod2[1]" maxlength="1" (keyup)="checkCod(1, $event)"></ion-input>
+
+      </ion-col>
+      <ion-col>
+        <ion-input type="text" [value]="cod2[2]" maxlength="1" (keyup)="checkCod(2, $event)"></ion-input>
+
+      </ion-col>
+      <ion-col>
+        <ion-input type="text" [value]="cod2[3]" maxlength="1" (keyup)="checkCod(3, $event)"></ion-input>
+
+      </ion-col>
+      <ion-col>
+        <ion-input type="text" [value]="cod2[4]" maxlength="1" (keyup)="checkCod(4, $event)"></ion-input>
+
+      </ion-col>
+      <ion-col>
+        <ion-input type="text" [value]="cod2[5]" maxlength="6" (keyup)="checkCod(5, $event)"></ion-input>
+
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none">
+          <ion-button slot="start" (click)="back()" color="danger">
+            <ion-label>VOLTAR</ion-label>
+          </ion-button>
+          <ion-button slot="end" (click)="resend()" color="tertiary">
+            <ion-label>RE-ENVIAR E-MAIL</ion-label>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</div>
