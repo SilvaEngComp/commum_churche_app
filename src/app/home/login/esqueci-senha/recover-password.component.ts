@@ -1,15 +1,16 @@
-import { ResponseComponent } from './response/response.component';
+import { UiService } from 'src/app/services/ui.service';
+import { Constants } from 'src/app/models/constants';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
+import { User } from 'src/app/models/User';
 
 @Component({
-  selector: 'app-esqueci-senha',
-  templateUrl: './esqueci-senha.component.html',
-  styleUrls: ['./esqueci-senha.component.scss'],
+  selector: 'app-recover-password',
+  templateUrl: './recover-password.component.html',
+  styleUrls: ['./recover-password.component.scss'],
 })
-export class EsqueciSenhaComponent implements OnInit {
+export class RevoverPasswordComponent implements OnInit {
   @Output() selectedPage: EventEmitter<number> = new EventEmitter<number>();
   erro: boolean;
   email: string;
@@ -17,9 +18,7 @@ export class EsqueciSenhaComponent implements OnInit {
   typePassword: string;
   show: boolean;
   constructor(
-    private modalCtrl: ModalController,
     private exceptionService: ExceptionService,
-    private popCtrl: PopoverController,
     private loginService: LoginService
   ) {}
 
@@ -30,7 +29,7 @@ export class EsqueciSenhaComponent implements OnInit {
   }
 
   async backPage() {
-    this.selectedPage.emit(1);
+    this.selectedPage.emit(Constants.PAGE_REQUEST_EMAIL);
   }
 
   async sendRequest() {
@@ -43,6 +42,9 @@ export class EsqueciSenhaComponent implements OnInit {
     this.loginService
       .recoverAccess(this.email)
       .then(async () => {
+        const user = new User();
+        user.email = this.email;
+        UiService.localSet(Constants.RECOVER_USER, user);
         this.codeValidation();
       })
       .catch((erro) => {
@@ -51,7 +53,7 @@ export class EsqueciSenhaComponent implements OnInit {
   }
 
   codeValidation() {
-    this.selectedPage.emit(2);
+    this.selectedPage.emit(Constants.PAGE_CODE_VALIDATION);
   }
 
   showPassword() {

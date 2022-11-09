@@ -32,30 +32,14 @@ export class UserFacadeService extends FacadeService {
     this.localName = Constants.LOCAL_USER;
   }
 
-  load(role: string = 'customer') {
-    this.role = role;
+  load() {
     this.geRepository();
   }
 
-  getLocal() {
-    let response;
-    if (this.role === 'customer') {
-      response = UiService.localGet(this.localName);
-    } else {
-      response = UiService.localGet(this.localSellers);
-    }
-    if (response) {
-      this.dataLoaded.emit(response);
-      return UiService.getHash(response);
-    }
-    return null;
-  }
   async geRepository() {
-    const lastHash = this.getLocal();
-
     const filter = new UserFilter(this.role);
     const response = await this.userService.get(filter);
-
+    UiService.localSet(this.localName, response.data);
     this.dataLoaded.emit(response);
   }
 
@@ -86,6 +70,7 @@ export class UserFacadeService extends FacadeService {
   async delete(user: User) {
     const alert = await this.alertCtrl.create({
       message: 'Tem certeza que deseja exlcuir o usuário ' + user.name + '?',
+      mode: 'ios',
       buttons: [
         {
           text: 'Cancelar',
@@ -100,7 +85,7 @@ export class UserFacadeService extends FacadeService {
             this.userService
               .delete(user)
               .then((responser: Responser) => {
-                this.load(this.role);
+                this.load();
                 this.exceptionService.success(responser);
               })
               .catch((error) => this.exceptionService.error(error));

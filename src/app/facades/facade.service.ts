@@ -23,9 +23,8 @@ export class FacadeService {
     const response = UiService.localGet(Constants.TOKEN);
     if (response) {
       this.dataLoaded.emit(response);
-      return UiService.getHash(response);
+      UiService.getHash(response);
     }
-    return '';
   }
 
   geRepository() {

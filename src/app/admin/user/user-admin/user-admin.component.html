@@ -1,4 +1,4 @@
 <div [ngSwitch]="subpage">
   <app-user-register *ngSwitchCase="'0'"></app-user-register>
-  <app-user *ngSwitchCase="'1'"></app-user>
+  <app-user *ngSwitchCase="'1'" (sessionPage)="onReceiveSession($event)"></app-user>
 </div>

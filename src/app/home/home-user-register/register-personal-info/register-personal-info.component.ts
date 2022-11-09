@@ -1,4 +1,5 @@
 import { DayToSelectComponent } from './day-to-select/day-to-select.component';
+import { ChurchService } from './../../../services/church.service';
 import { InputMethod } from './../../../models/inputhMethod';
 import { MaritalStatusService } from './../../../services/marital-status.service';
 import { InputMethodService } from './../../../services/input-method.service';
@@ -23,7 +24,7 @@ import {
   PopoverController,
 } from '@ionic/angular';
 import { MaritalStatus } from 'src/app/models/maritalStatus';
-import { range } from 'rxjs';
+import { Church } from 'src/app/models/church';
 
 @Component({
   selector: 'app-register-personal-info',
@@ -39,6 +40,7 @@ export class RegisterPersonalInfoComponent implements OnInit {
   today: string;
   maritalStatuses: MaritalStatus[];
   inputMethods: InputMethod[];
+  churches: Church[];
   isSmallDevice: boolean;
   days: string[] = [];
   day: string;
@@ -49,6 +51,7 @@ export class RegisterPersonalInfoComponent implements OnInit {
     private inputMethodService: InputMethodService,
     private maritalStatusService: MaritalStatusService,
     private platform: Platform,
+    private churchService: ChurchService,
     private popCtrl: PopoverController
   ) {}
   ngOnInit() {
@@ -69,37 +72,13 @@ export class RegisterPersonalInfoComponent implements OnInit {
   }
 
   async load() {
-    for (let i = 1; i <= 31; i++) {
-      if (i < 10) {
-        this.days.push('0' + i);
-      } else {
-        this.days.push(String(i));
-      }
-    }
     const inputMethodResponser = await this.inputMethodService.get();
     this.inputMethods = inputMethodResponser.data;
 
-    console.log(this.inputMethods);
-
     const maritalResponser = await this.maritalStatusService.get();
     this.maritalStatuses = maritalResponser.data;
-    console.log(this.maritalStatuses);
-  }
-
-  setMaritalStatus(ev: any) {
-    if (!this.user.maritalStatus) {
-      this.user.maritalStatus = new MaritalStatus();
-    }
-    this.user.maritalStatus.id = ev.target.value;
-    this.save();
-  }
-
-  setInputMethod(ev: any) {
-    if (!this.user.inputMethod) {
-      this.user.inputMethod = new InputMethod();
-    }
-    this.user.inputMethod.id = ev.target.value;
-    this.save();
+    const churchResponser = await this.churchService.get();
+    this.churches = churchResponser.data;
   }
 
   save() {
@@ -170,6 +149,13 @@ export class RegisterPersonalInfoComponent implements OnInit {
       );
       return false;
     }
+    if (!this.user.gender) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.GENDER_INVALID,
+        'Erro'
+      );
+      return false;
+    }
 
     if (!this.user?.maritalStatus?.id) {
       this.exceptionService.alertDialog(
@@ -187,6 +173,14 @@ export class RegisterPersonalInfoComponent implements OnInit {
       return false;
     }
 
+    if (!this.user?.church?.id) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.CHURCH_INVALID,
+        'Erro'
+      );
+      return false;
+    }
+
     return true;
   }
 
@@ -195,20 +189,41 @@ export class RegisterPersonalInfoComponent implements OnInit {
     this.save();
     console.log(this.user);
   }
+  setGender(ev: any) {
+    this.user.gender = ev.target.value;
+    this.save();
+  }
+
+  setMaritalStatus(ev: any) {
+    if (!this.user.maritalStatus) {
+      this.user.maritalStatus = new MaritalStatus();
+    }
+    this.user.maritalStatus.id = ev.target.value;
+    this.save();
+  }
+
+  setInputMethod(ev: any) {
+    if (!this.user.inputMethod) {
+      this.user.inputMethod = new InputMethod();
+    }
+    this.user.inputMethod.id = ev.target.value;
+    this.save();
+  }
+
+  setChurch(ev: any) {
+    if (!this.user.church) {
+      this.user.church = new Church();
+    }
+    this.user.church.id = ev.target.value;
+    this.save();
+  }
 
   onSelectData(date: any) {
     this.user.birthDate = date.substring(0, 10);
     this.save();
   }
 
-  onSelectDay(value: string) {
-    this.day = value;
-    this.popDay.dismiss();
-    this.setBirthdate();
-  }
   onSelectMonth(value: any) {
-    console.clear();
-    console.log(value);
     this.monthYear = value.substring(0, 7);
     this.setBirthdate();
   }
@@ -218,5 +233,21 @@ export class RegisterPersonalInfoComponent implements OnInit {
     this.user.birthDate = this.monthYear + '-' + this.day;
     console.log(this.user.birthDate);
     this.save();
+  }
+
+  async openDay(ev: any) {
+    const pop = await this.popCtrl.create({
+      component: DayToSelectComponent,
+      event: ev,
+    });
+
+    pop.present();
+
+    const { data } = await pop.onDidDismiss();
+    console.log(data.day);
+    if (data) {
+      this.day = data.day;
+      this.setBirthdate();
+    }
   }
 }

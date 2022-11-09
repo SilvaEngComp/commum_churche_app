@@ -5,17 +5,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { EsqueciSenhaComponent } from './esqueci-senha/esqueci-senha.component';
-import { AlterarSenhaComponent } from './esqueci-senha/alterar-senha/alterar-senha.component';
-import { ResponseComponent } from './esqueci-senha/response/response.component';
+import { RevoverPasswordComponent } from './esqueci-senha/recover-password.component';
+import { UpdatePasswordComponent } from './esqueci-senha/update-password/update-password.component';
+import { CodeValidationComponent } from './esqueci-senha/code-validation/code-validation.component';
 
 @NgModule({
   declarations: [
     RequestEmailComponent,
     LoginComponent,
-    EsqueciSenhaComponent,
-    ResponseComponent,
-    AlterarSenhaComponent,
+    RevoverPasswordComponent,
+    CodeValidationComponent,
+    UpdatePasswordComponent,
   ],
   imports: [
     CommonModule,

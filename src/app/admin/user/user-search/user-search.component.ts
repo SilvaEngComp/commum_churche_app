@@ -45,7 +45,7 @@ export class SearchUserComponent implements OnInit, AfterViewInit {
   }
 
   getUsers() {
-    this.userFacadeService.load(this.role);
+    this.userFacadeService.load();
   }
 
   searchUser(search) {

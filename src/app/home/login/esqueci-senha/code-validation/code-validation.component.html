@@ -16,23 +16,28 @@
 
       </ion-col>
       <ion-col>
-        <ion-input type="text" [value]="cod2[1]" maxlength="1" (keyup)="checkCod(1, $event)"></ion-input>
+        <ion-input [disabled]="cod2[0].length<=0" type="text" [value]="cod2[1]" maxlength="1"
+          (keyup)="checkCod(1, $event)"></ion-input>
 
       </ion-col>
       <ion-col>
-        <ion-input type="text" [value]="cod2[2]" maxlength="1" (keyup)="checkCod(2, $event)"></ion-input>
+        <ion-input [disabled]="cod2[1].length<=0" type="text" [value]="cod2[2]" maxlength="1"
+          (keyup)="checkCod(2, $event)"></ion-input>
 
       </ion-col>
       <ion-col>
-        <ion-input type="text" [value]="cod2[3]" maxlength="1" (keyup)="checkCod(3, $event)"></ion-input>
+        <ion-input [disabled]="cod2[2].length<=0" type="text" [value]="cod2[3]" maxlength="1"
+          (keyup)="checkCod(3, $event)"></ion-input>
 
       </ion-col>
       <ion-col>
-        <ion-input type="text" [value]="cod2[4]" maxlength="1" (keyup)="checkCod(4, $event)"></ion-input>
+        <ion-input [disabled]="cod2[3].length<=0" type="text" [value]="cod2[4]" maxlength="1"
+          (keyup)="checkCod(4, $event)"></ion-input>
 
       </ion-col>
       <ion-col>
-        <ion-input type="text" [value]="cod2[5]" maxlength="6" (keyup)="checkCod(5, $event)"></ion-input>
+        <ion-input [disabled]="cod2[4].length<=0" type="text" [value]="cod2[5]" maxlength="6"
+          (keyup)="checkCod(5, $event)"></ion-input>
 
       </ion-col>
     </ion-row>

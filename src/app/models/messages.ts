@@ -6,6 +6,8 @@ export class ConstantMessages {
   static MARITAL_STATUS_INVALID = 'Selecione um estado civil';
   static INPUT_METHOD_INVALID = 'Selecione a forma como entrou na igreja';
   static ISBAPTIZED_INVALID = 'Você já é batizado? Marque SIM ou NÃO';
+  static GENDER_INVALID = 'Qual o seu gênero? Marque Masculino ou Feminino';
+  static CHURCH_INVALID = 'Selecione o templo onde tem frequentado';
 
   //Contact register constants
   static STREET_INVALID = 'É necessário inserir um logradouro (Rua, AV., Trv.)';

@@ -1,17 +1,18 @@
+import { UiService } from 'src/app/services/ui.service';
+import { Constants } from 'src/app/models/constants';
 import { ViewChild } from '@angular/core';
 /* eslint-disable @typescript-eslint/member-ordering */
-import { PopoverController, ModalController, IonInput } from '@ionic/angular';
+import { IonInput } from '@ionic/angular';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ExceptionService } from 'src/app/services/exception-service.service';
-import { AlterarSenhaComponent } from '../alterar-senha/alterar-senha.component';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
-  selector: 'app-response',
-  templateUrl: './response.component.html',
-  styleUrls: ['./response.component.scss'],
+  selector: 'app-code-validation',
+  templateUrl: './code-validation.component.html',
+  styleUrls: ['./code-validation.component.scss'],
 })
-export class ResponseComponent implements OnInit {
+export class CodeValidationComponent implements OnInit {
   @Output() selectedPage: EventEmitter<number> = new EventEmitter<number>();
   @ViewChild('inputZero', { static: false }) inputZero: IonInput;
   @Input() email: string;
@@ -30,16 +31,17 @@ export class ResponseComponent implements OnInit {
   }
 
   back() {
-    this.selectedPage.emit(0);
+    this.selectedPage.emit(Constants.PAGE_LOGIN);
   }
 
   resend() {
-    if (this.email) {
-      this.exceptionService.loadingFunction();
-      this.loginService.recorverAccess(this.email).then((response) => {
-        this.exceptionService.success(response);
-      });
-    }
+    this.exceptionService.loadingFunction();
+    const user = UiService.localGet(Constants.RECOVER_USER);
+    this.loginService.recorverAccess(user.email).then((response) => {
+      this.exceptionService.success(response);
+      this.cod2 = ['', '', '', '', '', ''];
+      this.cod = '';
+    });
   }
 
   toString() {
@@ -61,8 +63,10 @@ export class ResponseComponent implements OnInit {
     if (this.cod.length >= 6) {
       this.loginService
         .checkCod(this.cod)
-        .then(async (user) => {
-          this.selectedPage.emit(0);
+        .then(async (response) => {
+          console.log(response);
+          UiService.localSet(Constants.RECOVER_USER, response.data);
+          this.selectedPage.emit(Constants.PAGE_UPDATE_PASSWORD);
         })
         .catch((error) => {
           this.cod = '';

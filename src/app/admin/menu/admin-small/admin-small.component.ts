@@ -1,3 +1,4 @@
+import { User } from 'src/app/models/user';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -15,6 +16,7 @@ import { MessagingService } from 'src/app/services/messaging.service';
 import { UiService } from 'src/app/services/ui.service';
 import { FeedService } from 'src/app/services/feed.service';
 import { PushNotify } from 'src/app/models/pushNotification';
+import { LoginService } from 'src/app/services/login.service';
 @Component({
   selector: 'app-admin-small',
   templateUrl: './admin-small.component.html',
@@ -24,7 +26,8 @@ export class AdminSmallComponent implements OnInit, AfterViewInit {
   @Output() selectedPage: EventEmitter<any> = new EventEmitter<any>();
   page_selected: string;
   badge_feed: number;
-
+  isMember: boolean;
+  user: User;
   constructor(
     // private fcmService: FcmService,
     private platform: Platform,
@@ -37,18 +40,12 @@ export class AdminSmallComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {}
   ngAfterViewInit() {
-    // this.load();
-    // if (!this.platform.is('cordova')) {
-    //   this.requestPermission();
-    // } else {
-    //   this.fcmService.initPush();
-    // }
-    // if (UiService.localGet('tab-page')) {
-    //   this.page_selected = UiService.localGet('tab-page');
-    // } else {
-    //   this.page_selected = 'challenge';
-    // }
-    // this.tab.select(this.page_selected);
+    this.user = LoginService.getUser();
+    if (this?.user?.role !== 'member') {
+      this.isMember = false;
+    } else {
+      this.isMember = true;
+    }
   }
   async setPage(page: number) {
     this.selectedPage.emit(page);

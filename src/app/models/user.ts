@@ -1,3 +1,4 @@
+import { Church } from './church';
 import { InputMethod } from './inputhMethod';
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Constants } from './constants';
@@ -20,7 +21,8 @@ export class User {
   gender: string;
   maritalStatus: MaritalStatus;
   inputMethod: InputMethod;
-
+  church: Church;
+  showDetails: boolean;
   constructor(name: string = '', email: string = '') {
     this.role = Constants.ROLE_MEMBER;
     this.name = name;
@@ -28,5 +30,7 @@ export class User {
     this.contact = new Contact();
     this.maritalStatus = new MaritalStatus();
     this.inputMethod = new InputMethod();
+    this.church = new Church();
+    this.showDetails = false;
   }
 }

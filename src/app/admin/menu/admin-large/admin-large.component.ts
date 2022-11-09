@@ -26,6 +26,7 @@ export class AdminLargeComponent implements OnInit {
   menu_size_right: string;
   height: number;
   defaultPageName = 'lastPage';
+  isMember: boolean;
   @ViewChild('main', { static: false }) content: IonContent;
 
   constructor(private platform: Platform, private nav: NavController) {}
@@ -33,7 +34,7 @@ export class AdminLargeComponent implements OnInit {
   ngOnInit() {
     this.height = this.platform.height();
     this.showMenu = true;
-    this.menu_itens = Menu.getMenuAdmin();
+
     console.log(this.menu_itens);
     this.nivel = 3;
     this.permission = false;
@@ -47,6 +48,13 @@ export class AdminLargeComponent implements OnInit {
     });
 
     this.user = LoginService.getUser();
+    if (this?.user?.role !== 'member') {
+      this.menu_itens = Menu.getMenuAdmin();
+      this.isMember = false;
+    } else {
+      this.menu_itens = Menu.getMenuMember();
+      this.isMember = true;
+    }
     console.log(this.user);
   }
 

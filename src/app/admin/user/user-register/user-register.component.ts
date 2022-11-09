@@ -3,7 +3,7 @@ import { UiService } from './../../../services/ui.service';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { ExceptionService } from 'src/app/services/exception-service.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user';
 import { Constants } from 'src/app/models/constants';

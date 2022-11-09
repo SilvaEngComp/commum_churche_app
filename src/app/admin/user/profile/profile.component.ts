@@ -87,11 +87,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   setEdit() {
-    this.edit = !this.edit;
-    localStorage.setItem(
-      environment.LOCALSTORAGE + 'edit',
-      JSON.stringify(this.edit)
+    this.exceptionService.alertDialog(
+      Constants.IN_DEVELOPMENT,
+      Constants.IN_DEVELOPMENT_TITLE
     );
+    // this.edit = !this.edit;
+    // localStorage.setItem(
+    //   environment.LOCALSTORAGE + 'edit',
+    //   JSON.stringify(this.edit)
+    // );
   }
 
   onSetBrmaskers(ev, op: number) {

@@ -1,3 +1,4 @@
+import { PopoverController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./day-to-select.component.scss'],
 })
 export class DayToSelectComponent implements OnInit {
+  days: string[] = [];
+  constructor(private popCtrl: PopoverController) {}
 
-  constructor() { }
+  ngOnInit() {
+    for (let i = 1; i <= 31; i++) {
+      if (i < 10) {
+        this.days.push('0' + i);
+      } else {
+        this.days.push(String(i));
+      }
+    }
+  }
 
-  ngOnInit() {}
-
+  onSelectDay(day: string) {
+    this.popCtrl.dismiss({ day });
+  }
 }

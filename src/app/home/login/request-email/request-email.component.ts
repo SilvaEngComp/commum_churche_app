@@ -4,7 +4,6 @@ import { ModalController } from '@ionic/angular';
 import { User } from 'src/app/models/User';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
-import { EsqueciSenhaComponent } from '../esqueci-senha/esqueci-senha.component';
 
 @Component({
   selector: 'app-request-email',
@@ -54,8 +53,7 @@ export class RequestEmailComponent implements OnInit {
     this.exceptionService.loadingFunction();
     this.loginService
       .login(this.user.email, this.user.password)
-      .then(async (token) => {
-        console.log(token);
+      .then((token) => {
         LoginService.setToken(token);
         this.router.navigate(['admin']);
       })

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Responser } from '../models/responser';
-import { AlertController, ModalController } from '@ionic/angular';
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -107,8 +106,9 @@ export class LoginService {
   }
 
   checkCod(cod: string): Promise<Responser> {
+    console.log(cod);
     return this.http
-      .get<Responser>(`${environment.API}/users/virificarcodigo/${cod}`, {
+      .get<Responser>(`${environment.API}/auth/codeValidation/${cod}`, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();
@@ -119,9 +119,14 @@ export class LoginService {
       .get(`${environment.API}/auth/recoverAccess/${email}`)
       .toPromise();
   }
-  alterarSenha(user: User, senha: string): Promise<User> {
+
+  updatePassword(user: User): Promise<Responser> {
+    console.log(user);
     return this.http
-      .get<User>(`${environment.API}/users/updateSenha/${user.id}/${senha}`)
+      .patch<Responser>(
+        `${environment.API}/auth/updatePassword/user/${user.id}`,
+        user
+      )
       .toPromise();
   }
 

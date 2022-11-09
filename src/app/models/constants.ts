@@ -12,4 +12,11 @@ export class Constants {
   static MALE_PERSON = './assets/images/male_person.webp';
   static FEMALE_PERSON = './assets/images/female_person.jpg';
   static PAGE_MENU_LOGIN = 'pageLogin';
+  static PAGE_LOGIN = 0;
+  static PAGE_REQUEST_EMAIL = 1;
+  static PAGE_CODE_VALIDATION = 2;
+  static PAGE_UPDATE_PASSWORD = 3;
+  static RECOVER_USER = 'recoverUser';
+  static IN_DEVELOPMENT = 'Ação em desenvolvimento! Aguarde novidades!';
+  static IN_DEVELOPMENT_TITLE = 'Em desenvolvimento';
 }

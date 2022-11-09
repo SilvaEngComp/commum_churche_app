@@ -1,0 +1,19 @@
+.large-input-date {
+  width: 100%;
+  ion-button{
+    width: 100%;
+  border-radius: 10px;
+  border-bottom: 1px solid var(--ion-color-tertiary);
+  }
+  margin-left: 8%;
+}
+
+.days{
+  --border-radius:40px;
+    ion-label{
+    font-family: Qanelas-bold;
+    color: var(--ion-color-primary);
+    font-size: 18;
+    text-align: center;
+    }
+  }

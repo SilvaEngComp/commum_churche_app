@@ -1,3 +1,7 @@
-<p>
-  day-to-select works!
-</p>
+<ion-content>
+  <ion-list>
+    <ion-item button lines="none" *ngFor="let day of days" class="days" (click)="onSelectDay(day)">
+      <ion-label>{{day}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

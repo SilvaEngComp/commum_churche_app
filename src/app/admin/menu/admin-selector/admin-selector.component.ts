@@ -14,12 +14,17 @@ export class AdminSelectorComponent implements OnInit {
   isLarge: boolean;
   user: User;
   page: string;
+  defaultPageName = 'menu-admin-page';
   constructor(private platform: Platform, private router: Router) {}
 
   ngOnInit() {
     this.page = '0';
     this.isLarge = this.platform.width() > 500;
     this.user = LoginService.getUser();
+
+    if (UiService.localGet(this.defaultPageName)) {
+      this.page = UiService.localGet(this.defaultPageName);
+    }
   }
 
   onSelectPage(page: any) {
@@ -28,5 +33,9 @@ export class AdminSelectorComponent implements OnInit {
       this.router.navigate(['']);
     }
     this.page = page;
+    this.save();
+  }
+  save() {
+    UiService.localSet(this.defaultPageName, this.page);
   }
 }

@@ -1,3 +1,4 @@
+import { Responser } from './../models/responser';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ExceptionService } from './exception-service.service';
@@ -21,9 +22,9 @@ export class ServiceInterface {
     );
   }
 
-  async get(filtro?: any): Promise<any[]> {
+  async get(filtro?: any): Promise<Responser> {
     return this.http
-      .get<any[]>(`${this.url}/${this.endpoint}/${filtro.getRequest()}`, {
+      .get<Responser>(`${this.url}/${this.endpoint}/${filtro.getRequest()}`, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();

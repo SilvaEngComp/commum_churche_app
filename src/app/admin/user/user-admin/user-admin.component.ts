@@ -19,6 +19,7 @@ export class UserAdminComponent implements OnInit {
       this.subpage = UiService.localGet(this.defaultPageName);
     }
 
+    console.log(this.subpage);
     UiService.pageMenu.subscribe((menu) => {
       this.subpage = menu.subpage;
       this.save();
@@ -27,5 +28,10 @@ export class UserAdminComponent implements OnInit {
 
   save() {
     UiService.localSet(this.defaultPageName, this.subpage);
+  }
+
+  onReceiveSession(subpage: string) {
+    this.subpage = subpage;
+    this.save();
   }
 }

@@ -23,8 +23,8 @@
         <app-register-contact *ngSwitchCase="2" (session)="onReceiveSession($event)"></app-register-contact>
         <app-register-login *ngSwitchCase="3" (session)="onReceiveSession($event)"></app-register-login>
       </div>
-      <ion-item lines="none" button (click)="clear()" *ngIf="session>0">
-        <a href="#" slot="start">Limpar tudo</a>
+      <ion-item lines="none" button *ngIf="session>0">
+        <a href="#" slot="start" (click)="clear()">Limpar tudo</a>
       </ion-item>
     </ion-col>
   </ion-row>

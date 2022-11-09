@@ -4,6 +4,17 @@
   border-bottom: 1px solid var(--ion-color-tertiary);
   margin-left: 10%;
   padding: 2px;
+}.lebel {
+  width: 80%;
+  border-radius: 20px;
+  margin-left: 10%;
+  padding: 2px;
+}
+
+.label-small {
+  width: 100%;
+  border-radius: 10px;
+  margin-right: 2%;
 }
 
 .input-small {
@@ -106,12 +117,3 @@ ion-radio-group{
   display: flex;
 }
 
-.days{
---border-radius:40px;
-  ion-label{
-  font-family: Qanelas-bold;
-  color: var(--ion-color-primary);
-  font-size: 18;
-  text-align: center;
-  }
-}
