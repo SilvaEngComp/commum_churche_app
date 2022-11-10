@@ -47,7 +47,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <div [ngSwitch]="page" *ngIf="!isMember">
+      <div [ngSwitch]="page" *ngIf="isMember">
         <app-profile *ngSwitchCase="'0'"></app-profile>
       </div>
       <div [ngSwitch]="page" *ngIf="!isMember">

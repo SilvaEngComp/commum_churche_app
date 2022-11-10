@@ -2,40 +2,30 @@ import { Constants } from 'src/app/models/constants';
 import { AfterViewInit } from '@angular/core';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
-import { DatePipe } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import {
-  IonInput,
-  PopoverController,
-  ModalController,
-  AlertController,
-} from '@ionic/angular';
-import { UserFacadeService } from 'src/app/facades/user-facade.service';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { PopoverController, AlertController, Platform } from '@ionic/angular';
 import { Contact } from 'src/app/models/contact';
 import { ConstantMessages } from 'src/app/models/messages';
 import { User } from 'src/app/models/User';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
-import { UiService } from 'src/app/services/ui.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
-import { UserRegisterComponent } from '../user-register/user-register.component';
+import { Church } from 'src/app/models/church';
+import { InputMethod } from 'src/app/models/inputhMethod';
+import { MaritalStatus } from 'src/app/models/maritalStatus';
+import { DayToSelectComponent } from 'src/app/home/home-user-register/register-personal-info/day-to-select/day-to-select.component';
+import { ChurchService } from 'src/app/services/church.service';
+import { InputMethodService } from 'src/app/services/input-method.service';
+import { MaritalStatusService } from 'src/app/services/marital-status.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent implements OnInit, AfterViewInit {
+export class ProfileComponent implements OnInit {
   @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
-  today: string;
   is_loading: boolean;
   base_url: string = environment.IMAGE_URL;
   user: User;
@@ -55,13 +45,64 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   section: number;
   localImage: string;
   genders: string[] = ['MASCULINO', 'FEMININO'];
+  maritalStatuses: MaritalStatus[];
+  inputMethods: InputMethod[];
+  churches: Church[];
+  isSmallDevice: boolean;
+  days: string[] = [];
+  day: string;
+  monthYear: string;
   constructor(
     private userService: UserService,
     private alertCtrl: AlertController,
-    private exceptionService: ExceptionService
+    private exceptionService: ExceptionService,
+    private popCtrl: PopoverController,
+    private inputMethodService: InputMethodService,
+    private maritalStatusService: MaritalStatusService,
+    private platform: Platform,
+    private churchService: ChurchService,
+    private loginService: LoginService
   ) {}
-  ngAfterViewInit(): void {
-    if (!this.user?.image) {
+
+  ngOnInit() {
+    this.edit = true;
+    this.section = 1;
+    this.is_loading = true;
+
+    this.isSmallDevice = this.platform.width() <= 500;
+    this.load();
+  }
+  async load() {
+    const response = await this.loginService.loggedUser();
+    this.user = response.data;
+
+    this.validUser();
+    const inputMethodResponser = await this.inputMethodService.get();
+    this.inputMethods = inputMethodResponser.data;
+
+    const maritalResponser = await this.maritalStatusService.get();
+    this.maritalStatuses = maritalResponser.data;
+    const churchResponser = await this.churchService.get();
+    this.churches = churchResponser.data;
+
+    this.is_loading = false;
+  }
+
+  validUser() {
+    if (this.user?.gender?.toLocaleLowerCase().includes('masculino')) {
+      this.localImage = Constants.MALE_PERSON;
+    } else {
+      this.localImage = Constants.FEMALE_PERSON;
+    }
+    if (!this.user.contact) {
+      this.user.contact = new Contact();
+    }
+
+    if (
+      !this.user?.image ||
+      this.user?.image === Constants.MALE_PERSON ||
+      this.user?.image === Constants.FEMALE_PERSON
+    ) {
       this.user.image = this.localImage;
       this.is_localImage = true;
     } else {
@@ -69,33 +110,12 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit() {
-    this.edit = true;
-    this.section = 1;
-
-    this.user = LoginService.getUser();
-    if (this.user?.gender.toLocaleLowerCase().includes('masculino')) {
-      this.localImage = Constants.MALE_PERSON;
-    } else {
-      this.localImage = Constants.FEMALE_PERSON;
-    }
-
-    const date = new DatePipe('en');
-
-    this.today = date.transform(Date.now(), 'yyyy-MM-dd');
-    console.log(this.user);
-  }
-
   setEdit() {
-    this.exceptionService.alertDialog(
-      Constants.IN_DEVELOPMENT,
-      Constants.IN_DEVELOPMENT_TITLE
+    this.edit = !this.edit;
+    localStorage.setItem(
+      environment.LOCALSTORAGE + 'edit',
+      JSON.stringify(this.edit)
     );
-    // this.edit = !this.edit;
-    // localStorage.setItem(
-    //   environment.LOCALSTORAGE + 'edit',
-    //   JSON.stringify(this.edit)
-    // );
   }
 
   onSetBrmaskers(ev, op: number) {
@@ -206,17 +226,14 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     return true;
   }
 
-  finish() {
+  update() {
     if (this.onSubmit()) {
       this.setEdit();
-
-      this.exceptionService.openLoading('agradecemos!');
+      this.exceptionService.loadingFunction();
       this.userService
         .update(this.user)
         .then((responser) => {
-          const token = LoginService.getToken();
-          token.user = responser.data;
-          LoginService.setToken(token);
+          this.validUser();
           this.edit = true;
         })
         .catch((erro) => {
@@ -268,8 +285,11 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         return false;
       }
     }
-    console.log(this.user?.contact?.phone1);
-    if (this.user?.contact?.phone1?.length <= 0) {
+
+    if (
+      !this.user?.contact?.phone1 ||
+      this.user?.contact?.phone1?.length <= 0
+    ) {
       this.exceptionService.alertDialog(ConstantMessages.PHONE_INVALID, 'Erro');
       return false;
     } else {
@@ -280,13 +300,113 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         );
       }
     }
-    if (!this.user.birthDate) {
+
+    if (!this.user.birthDate || this.user.birthDate.length < 10) {
       this.exceptionService.alertDialog(
         ConstantMessages.BIRTHDATE_INVALID,
         'Erro'
       );
       return false;
     }
+
+    if (!this.user.isBaptized) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.ISBAPTIZED_INVALID,
+        'Erro'
+      );
+      return false;
+    }
+    if (!this.user.gender) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.GENDER_INVALID,
+        'Erro'
+      );
+      return false;
+    }
+
+    if (!this.user?.maritalStatus?.id) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.MARITAL_STATUS_INVALID,
+        'Erro'
+      );
+      return false;
+    }
+
+    if (!this.user?.inputMethod?.id) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.INPUT_METHOD_INVALID,
+        'Erro'
+      );
+      return false;
+    }
+
+    if (!this.user?.church?.id) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.CHURCH_INVALID,
+        'Erro'
+      );
+      return false;
+    }
     return true;
+  }
+
+  setIsBaptized(ev: any) {
+    this.user.isBaptized = ev.target.value;
+    console.log(this.user);
+  }
+  setGender(ev: any) {
+    this.user.gender = ev.target.value;
+  }
+
+  setMaritalStatus(ev: any) {
+    if (!this.user.maritalStatus) {
+      this.user.maritalStatus = new MaritalStatus();
+    }
+    this.user.maritalStatus.id = ev.target.value;
+  }
+
+  setInputMethod(ev: any) {
+    if (!this.user.inputMethod) {
+      this.user.inputMethod = new InputMethod();
+    }
+    this.user.inputMethod.id = ev.target.value;
+  }
+
+  setChurch(ev: any) {
+    if (!this.user.church) {
+      this.user.church = new Church();
+    }
+    this.user.church.id = ev.target.value;
+  }
+
+  onSelectData(date: any) {
+    this.user.birthDate = date.substring(0, 10);
+  }
+
+  onSelectMonth(value: any) {
+    this.monthYear = value.substring(0, 7);
+    this.setBirthdate();
+  }
+
+  setBirthdate() {
+    console.clear();
+    this.user.birthDate = this.monthYear + '-' + this.day;
+    console.log(this.user.birthDate);
+  }
+
+  async openDay(ev: any) {
+    const pop = await this.popCtrl.create({
+      component: DayToSelectComponent,
+      event: ev,
+    });
+
+    pop.present();
+
+    const { data } = await pop.onDidDismiss();
+    console.log(data.day);
+    if (data) {
+      this.day = data.day;
+      this.setBirthdate();
+    }
   }
 }

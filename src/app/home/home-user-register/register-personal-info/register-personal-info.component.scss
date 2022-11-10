@@ -81,21 +81,7 @@
   width: 100px;
 }
 
-ion-header {
-  ion-toolbar {
-    --background: var(--ion-color-tertiary);
-  }
-  ion-label {
-    font-size: 16pt;
-    font-weight: 900;
-    font-family: Qanelas;
-    color: var(--ion-color-light);
-  }
 
-  ion-icon {
-    font-size: 40px;
-  }
-}
 
 .ng-invalid.ng-touched:not(form) {
   border-bottom: 1px solid red;

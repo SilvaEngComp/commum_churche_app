@@ -67,7 +67,7 @@ export class UserService extends ServiceInterface {
       this.checkLogged();
       return Promise.resolve(null);
     }
-
+    console.log(JSON.stringify(user));
     return this.http
       .patch<Responser>(`${environment.API2}/users/${user.id}`, user, {
         headers: LoginService.getHeaders(),

@@ -72,37 +72,18 @@ export class AdminLargeComponent implements OnInit {
   }
 
   setShowMenu() {
-    this.checkPlaftorm();
     this.showMenu = !this.showMenu;
-  }
-
-  checkPlaftorm() {
-    if (this.platform.width() <= 500) {
-      if (this.showMenu) {
-        this.menu_size_left = '0';
-        this.menu_size_right = '12';
-        this.showMenu = false;
-      } else {
-        this.menu_size_left = '8';
-        this.menu_size_right = '1';
-      }
-    } else {
-      this.menu_size_left = '2';
-      this.menu_size_right = '9';
-    }
   }
 
   selectSubPage(page: any, subpage: any) {
     this.page = page;
     UiService.pageMenu.emit({ subpage });
-    this.checkPlaftorm();
     // this.content.scrollToTop(2000);
   }
 
   selectPage(page: any, item: Menu) {
     item.showSub = !item.showSub;
     if (page !== this.menu_itens.length - 1) {
-      this.checkPlaftorm();
       this.page = page;
       console.log(this.page);
       UiService.localSet(this.defaultPageName, this.page);

@@ -10,7 +10,8 @@ export class User {
   id: number;
   name: string;
   email: string;
-  isBaptized: number;
+  isBaptized: string;
+  isBaptizedString: string;
   birthDate: string;
   contact: Contact;
   role: string;

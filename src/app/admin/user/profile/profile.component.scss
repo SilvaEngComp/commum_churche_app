@@ -16,26 +16,6 @@ ion-avatar {
   margin-left: 10px;
 }
 
-.geral {
-  display: grid;
-  grid-template-columns: auto;
-  background-color: rgba($color: #92949c, $alpha: 0.6);
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.div-header {
-  background: var(--ion-color-light);
-  width: 100%;
-  min-height: 80px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  display: grid;
-  align-items: center;
-  align-content: center;
-  align-self: center;
-  margin-bottom: 10px;
-}
 
 .div-body {
   background: var(--ion-color-light);
@@ -62,10 +42,12 @@ ion-avatar {
   ion-item {
       width: 100%;
       ion-label {
-          font-size: 12pt;
+          font-size: 10pt;
           color: var(--ion-color-medium);
-          margin-left: 10px
       }
+  }
+  ion-grid{
+    width: 70%;
   }
 }
 
@@ -91,44 +73,51 @@ ion-avatar {
   }
 }
 
-//div que é expandida simulando o select list
-.geral ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+.isSmall{
+  width: 0px;
+  height: 0px;
 }
 
-.geral::-webkit-scrollbar {
-  width: 1em;
+.separated-date{
+  display: flex;
+  width: 100%;
   border-radius: 20px;
-  background: var(--ion-color-light);
+  border-bottom: 1px solid var(--ion-color-tertiary);
 }
 
-.geral::-webkit-scrollbar-thumb {
+.input {
   border-radius: 20px;
-  background: var(--ion-color-primary);
+  border-bottom: 1px solid var(--ion-color-tertiary);
 }
 
-.geral::-webkit-scrollbar-corner {
-  background: var(--ion-color-tertiary);
+
+
+.input-small {
+  border-bottom: 1px solid var(--ion-color-tertiary);
 }
 
-.geral::-webkit-scrollbar-corner {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+.small-input-date {
+  border-bottom: 1px solid var(--ion-color-tertiary);
+}
+.large-input-date {
+  width: 100%;
+  ion-button{
+    width: 100%;
+  border-radius: 10px;
+  border-bottom: 1px solid var(--ion-color-tertiary);
+  }
+  margin-left: 8%;
+}
+.right-input-date {
+  width: 100%;
+  ion-button{
+    width: 100%;
+  border-radius: 10px;
+  border-bottom: 1px solid var(--ion-color-tertiary);
+  }
 }
 
-.geral::-webkit-scrollbar-button:single-button {
-  background-color: var(--ion-color-light);
-  display: block;
-  border-style: solid;
-  height: 13px;
-  width: 16px;
-}
-
-.geral::-webkit-scrollbar-button:single-button:vertical:decrement {
-  border-width: 0 8px 8px 8px;
-  border-color: var(--ion-color-light) var(--ion-color-light) var(--ion-color-primary) var(--ion-color-light);
-}
-
-.geral::-webkit-scrollbar-button:single-button:vertical:increment {
-  border-width: 8px 8px 0 8px;
-  border-color: var(--ion-color-primary) var(--ion-color-light) var(--ion-color-light) var(--ion-color-light);
+ion-radio-group{
+  width: 100%;
+  display: flex;
 }

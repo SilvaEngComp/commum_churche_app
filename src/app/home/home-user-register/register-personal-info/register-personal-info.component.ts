@@ -67,8 +67,6 @@ export class RegisterPersonalInfoComponent implements OnInit {
     this.load();
 
     this.isSmallDevice = this.platform.width() <= 500;
-
-    console.log(this.days);
   }
 
   async load() {

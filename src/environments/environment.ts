@@ -5,14 +5,14 @@
 
 export const environment = {
   production: false,
-  // API: 'http://127.0.0.1:8000/api/v1',
-  // API2: 'http://127.0.0.1:8000/api/v2',
-  // IMAGE_URL: 'http://127.0.0.1:8000/storage/',
+  API: 'http://127.0.0.1:8000/api/v1',
+  API2: 'http://127.0.0.1:8000/api/v2',
+  IMAGE_URL: 'http://127.0.0.1:8000/storage/',
 
-  API: 'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
-  API2: 'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
-  IMAGE_URL:
-    'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/storage/',
+  // API: 'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
+  // API2: 'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
+  // IMAGE_URL:
+  //   'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/storage/',
 
   PRIVATEKEY: 'QUBjZW1lY2FkZUBlbmdpbnlkaWdpdGFsZWNvLmNvbQ==', // ...
 

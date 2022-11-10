@@ -89,7 +89,7 @@ export class LoginService {
 
   loggedUser(): Promise<Responser> {
     return this.http
-      .get<Responser>(`${environment.API2}/loggedUser`, {
+      .get<Responser>(`${environment.API2}/auth/loggedUser`, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();
