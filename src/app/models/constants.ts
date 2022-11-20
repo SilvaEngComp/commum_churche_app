@@ -19,4 +19,8 @@ export class Constants {
   static RECOVER_USER = 'recoverUser';
   static IN_DEVELOPMENT = 'Ação em desenvolvimento! Aguarde novidades!';
   static IN_DEVELOPMENT_TITLE = 'Em desenvolvimento';
+  static PAGE_ADMIN_REGISTER = '1';
+  static PAGE_ADMIN_LIST_USER = '0';
+  static USER_SUPERIOR_LIMIT = 'upperUserLimit';
+  static USER_INFERIOR_LIMIT = 'inferiorUserLimit';
 }

@@ -16,10 +16,10 @@ export class Menu {
 
     let cont = 0;
     for (let i = 0; i < menu_itens.length; i++) {
-      let submenu = [];
-      if (i === 1) {
-        submenu = ['Cadastro', 'Lista de Membros'];
-      }
+      const submenu = [];
+      // if (i === 1) {
+      //   submenu = ['Cadastro', 'Lista de Membros'];
+      // }
       menuGeral.push(new Menu(menu_itens[i], submenu));
       cont++;
     }

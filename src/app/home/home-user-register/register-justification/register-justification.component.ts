@@ -22,7 +22,8 @@ export class RegisterJustificationComponent implements OnInit {
   }
 
   clear() {
-    localStorage.clear();
+    UiService.localRemove(Constants.CURRENT_REGISTER_SESSION);
+    UiService.localRemove(Constants.REGISTRING_USER);
     this.setSession(0);
   }
 }

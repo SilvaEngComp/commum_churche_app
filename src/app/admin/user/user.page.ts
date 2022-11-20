@@ -2,8 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { ExceptionService } from '../../services/exception-service.service';
-import { ModalController, IonInput } from '@ionic/angular';
-import { UserRegisterComponent } from './user-register/user-register.component';
+import { IonInput } from '@ionic/angular';
 import {
   Component,
   EventEmitter,
@@ -48,7 +47,6 @@ export class UserPage implements OnInit {
 
   constructor(
     private userFacadeService: UserFacadeService,
-    private modalCtrl: ModalController,
     private exceptionService: ExceptionService
   ) {}
 
@@ -70,7 +68,6 @@ export class UserPage implements OnInit {
       this.isLoading = false;
       this.users = data.data;
       this.checkImage();
-      console.log(this.users);
       UiService.localSet('upperUserLimit', 10);
       UiService.localSet('inferiorUserLimit', 0);
     });
@@ -79,16 +76,6 @@ export class UserPage implements OnInit {
   loadUsers() {
     this.isLoading = true;
     this.userFacadeService.load();
-  }
-
-  setShowFilterseller() {
-    this.isSellerShowed = !this.isSellerShowed;
-    UiService.localSet('isSellerShowed', this.isSellerShowed);
-  }
-
-  setShowFilterCustomer() {
-    this.isFilterCustomerShowed = !this.isFilterCustomerShowed;
-    UiService.localSet('isFilterCustomerShowed', this.isFilterCustomerShowed);
   }
 
   backPage() {
@@ -110,8 +97,8 @@ export class UserPage implements OnInit {
   }
 
   limitsSave() {
-    UiService.localSet('upperUserLimit', this.upperLimit);
-    UiService.localSet('inferiorUserLimit', this.inferiorLimit);
+    UiService.localSet(Constants.USER_SUPERIOR_LIMIT, this.upperLimit);
+    UiService.localSet(Constants.USER_INFERIOR_LIMIT, this.inferiorLimit);
   }
 
   search(search: any) {
@@ -121,7 +108,7 @@ export class UserPage implements OnInit {
   }
 
   async newUser() {
-    this.sessionPage.emit('0');
+    this.sessionPage.emit(Constants.PAGE_ADMIN_REGISTER);
   }
 
   async edit(user: User) {

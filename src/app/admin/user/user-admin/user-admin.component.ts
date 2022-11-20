@@ -14,12 +14,10 @@ export class UserAdminComponent implements OnInit {
 
   ngOnInit() {
     this.subpage = '0';
-
     if (UiService.localGet(this.defaultPageName)) {
       this.subpage = UiService.localGet(this.defaultPageName);
     }
 
-    console.log(this.subpage);
     UiService.pageMenu.subscribe((menu) => {
       this.subpage = menu.subpage;
       this.save();
@@ -31,6 +29,7 @@ export class UserAdminComponent implements OnInit {
   }
 
   onReceiveSession(subpage: string) {
+    console.log(subpage);
     this.subpage = subpage;
     this.save();
   }

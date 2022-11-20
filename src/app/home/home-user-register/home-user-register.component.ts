@@ -1,3 +1,5 @@
+import { LoginService } from './../../services/login.service';
+import { Platform } from '@ionic/angular';
 import { ConstantMessages } from 'src/app/models/messages';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -15,26 +17,31 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HomeUserRegisterComponent implements OnInit {
   user: User;
-
+  wouldShowBrads: boolean;
   session: number;
   constructor(
     private usuarioService: UserService,
-    private exceptionService: ExceptionService
+    private exceptionService: ExceptionService,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
     this.session = UiService.localGet(Constants.CURRENT_REGISTER_SESSION);
-    console.log(this.session);
     if (!this.session) {
-      this.session = 0;
+      if (LoginService.getHeaders) {
+        this.session = 1;
+      } else {
+        this.session = 0;
+      }
       this.save();
     }
     this.user = UiService.localGet(Constants.REGISTRING_USER);
-    console.log(this.user);
     if (!this.user) {
       this.user = new User();
       this.save();
     }
+
+    this.wouldShowBrads = this.platform.width() > 500 && this.session > 0;
   }
 
   save() {
@@ -42,6 +49,7 @@ export class HomeUserRegisterComponent implements OnInit {
   }
 
   onReceiveSession(session: number) {
+    console.log(session);
     if (session === 4) {
       this.user = UiService.localGet(Constants.REGISTRING_USER);
       this.register();
@@ -56,7 +64,7 @@ export class HomeUserRegisterComponent implements OnInit {
 
     this.usuarioService
       .store(this.user)
-      .then((responser) => {
+      .then(() => {
         this.clear();
         this.exceptionService.openLoading(
           ConstantMessages.FINISHING_REGISTRATION_TITLE,
@@ -71,7 +79,8 @@ export class HomeUserRegisterComponent implements OnInit {
   }
 
   clear() {
-    localStorage.clear();
+    UiService.localRemove(Constants.CURRENT_REGISTER_SESSION);
+    UiService.localRemove(Constants.REGISTRING_USER);
     this.session = 0;
     this.save();
   }

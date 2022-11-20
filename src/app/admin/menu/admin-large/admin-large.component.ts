@@ -35,17 +35,12 @@ export class AdminLargeComponent implements OnInit {
     this.height = this.platform.height();
     this.showMenu = true;
 
-    console.log(this.menu_itens);
     this.nivel = 3;
     this.permission = false;
     this.page = '0';
     if (UiService.localGet(this.defaultPageName)) {
       this.page = UiService.localGet(this.defaultPageName);
     }
-
-    UiService.toTop.subscribe(() => {
-      this.content.scrollToTop(2000);
-    });
 
     this.user = LoginService.getUser();
     if (this?.user?.role !== 'member') {
@@ -55,7 +50,6 @@ export class AdminLargeComponent implements OnInit {
       this.menu_itens = Menu.getMenuMember();
       this.isMember = true;
     }
-    console.log(this.user);
   }
 
   doRefresh(ev) {
@@ -78,14 +72,14 @@ export class AdminLargeComponent implements OnInit {
   selectSubPage(page: any, subpage: any) {
     this.page = page;
     UiService.pageMenu.emit({ subpage });
-    // this.content.scrollToTop(2000);
   }
 
   selectPage(page: any, item: Menu) {
     item.showSub = !item.showSub;
+    console.log(page);
+    console.log(this.menu_itens.length - 1);
     if (page !== this.menu_itens.length - 1) {
       this.page = page;
-      console.log(this.page);
       UiService.localSet(this.defaultPageName, this.page);
     } else {
       localStorage.clear();

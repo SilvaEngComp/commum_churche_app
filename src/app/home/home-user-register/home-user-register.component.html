@@ -1,7 +1,7 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <ion-breadcrumbs color="medium" *ngIf="session>0">
+      <ion-breadcrumbs color="medium" *ngIf="wouldShowBrads">
         <ion-breadcrumb [ngClass]="{'selected': session===1}">
           <ion-label>Informações Pessoais</ion-label>
           <ion-icon slot="separator" name="arrow-forward-circle"></ion-icon>
