@@ -23,4 +23,6 @@ export class Constants {
   static PAGE_ADMIN_LIST_USER = '0';
   static USER_SUPERIOR_LIMIT = 'upperUserLimit';
   static USER_INFERIOR_LIMIT = 'inferiorUserLimit';
+  static USER_FILTER_LIST = ['Mês', 'Semana'];
+  static USER_FILTER = 'userFilter';
 }

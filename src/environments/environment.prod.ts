@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export const environment = {
   production: true,
-  API: 'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
-  API2: 'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
+  API: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
+  API2: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
   IMAGE_URL:
-    'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/storage/',
+    'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/storage/',
   PRIVATEKEY: 'QUBjZW1lY2FkZUBlbmdpbnlkaWdpdGFsZWNvLmNvbQ==', // ...
 
   LOCALSTORAGE: 'ibnovabetel.',

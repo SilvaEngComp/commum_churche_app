@@ -1,48 +1,71 @@
+import { InputMethod } from './inputhMethod';
+import { MaritalStatus } from './maritalStatus';
+import { Church } from './church';
 export class UserFilter {
   role: string;
   email: string;
-  birthDay: string;
+  birthdayMonth: string;
   name: string;
-  ativo: number;
-  page: number;
-  size: number;
+  isActive: number;
+  church: Church;
+  inputMethod: InputMethod;
+  maritalStatus: MaritalStatus;
+  gender: string;
+  isBaptized: number;
 
-  constructor(role: string = 'customer') {
-    this.page = 0;
-    this.size = null;
-    this.ativo = 1;
-    this.role = role;
-    this.birthDay = null;
-    this.name = null;
-  }
-  getRequest() {
+  constructor() {}
+  static getRequest(filter: UserFilter): string {
     let request = '';
-    if (this.size) {
-      request += 'page=' + this.page + '&size=' + this.size;
-    }
-    if (this.name) {
-      request += 'name=' + this.name;
-    }
-
-    if (this.birthDay) {
+    if (filter.birthdayMonth) {
       if (request.length > 0) {
         request += '&';
       }
-      request += 'birthDay=' + this.birthDay;
+      request += 'birthdayMonth=' + filter.birthdayMonth;
     }
-    if (this.ativo) {
+    if (filter.isActive) {
       if (request.length > 0) {
         request += '&';
       }
-      request += 'ativo=' + this.ativo;
+      request += 'isActive=' + filter.isActive;
     }
 
-    // if (this.role) {
-    //   if (request.length > 0) {
-    //     request += '&';
-    //   }
-    //   request += 'role=' + this.role;
-    // }
+    if (filter.role) {
+      if (request.length > 0) {
+        request += '&';
+      }
+      request += 'role=' + filter.role;
+    }
+    if (filter.church) {
+      if (request.length > 0) {
+        request += '&';
+      }
+      request += 'church=' + filter.church?.id;
+    }
+
+    if (filter.inputMethod) {
+      if (request.length > 0) {
+        request += '&';
+      }
+      request += 'inputMethod=' + filter.inputMethod?.id;
+    }
+    if (filter.maritalStatus) {
+      if (request.length > 0) {
+        request += '&';
+      }
+      request += 'maritalStatus=' + filter.maritalStatus?.id;
+    }
+    if (filter.gender) {
+      if (request.length > 0) {
+        request += '&';
+      }
+      request += 'gender=' + filter.gender;
+    }
+    if (filter.isBaptized) {
+      if (request.length > 0) {
+        request += '&';
+      }
+      request += 'isBaptized=' + filter.isBaptized;
+    }
     return request;
   }
 }

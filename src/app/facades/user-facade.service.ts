@@ -37,7 +37,8 @@ export class UserFacadeService extends FacadeService {
   }
 
   async geRepository() {
-    const filter = new UserFilter(this.role);
+    const filter = UiService.localGet(Constants.USER_FILTER);
+
     const response = await this.userService.get(filter);
     UiService.localSet(this.localName, response.data);
     this.dataLoaded.emit(response);

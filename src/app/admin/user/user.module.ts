@@ -1,3 +1,4 @@
+import { FilterComponent } from './filter/filter.component';
 import { HomeUserRegisterModule } from './../../home/home-user-register/home-user-register.module';
 import { ProfileComponent } from './profile/profile.component';
 import { PipesModule } from '../../pipes/pipes.module';
@@ -34,6 +35,7 @@ import { UserSearchModule } from './user-search/user-search.module';
     UserAdminComponent,
     UserRegisterComponent,
     ProfileComponent,
+    FilterComponent,
   ],
   exports: [
     UserAdminComponent,

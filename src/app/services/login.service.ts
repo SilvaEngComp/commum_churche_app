@@ -79,6 +79,7 @@ export class LoginService {
   }
 
   async login(login: string, senha: string = ''): Promise<TokenAccess> {
+    console.log(`${environment.API}/auth/login`);
     return this.http
       .post<TokenAccess>(`${environment.API}/auth/login`, {
         email: login,

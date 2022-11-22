@@ -1,3 +1,5 @@
+import { FilterComponent } from './filter/filter.component';
+import { ModalController } from '@ionic/angular';
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -47,7 +49,8 @@ export class UserPage implements OnInit {
 
   constructor(
     private userFacadeService: UserFacadeService,
-    private exceptionService: ExceptionService
+    private exceptionService: ExceptionService,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -74,6 +77,7 @@ export class UserPage implements OnInit {
   }
 
   loadUsers() {
+    console.log('is loading');
     this.isLoading = true;
     this.userFacadeService.load();
   }
@@ -146,5 +150,16 @@ export class UserPage implements OnInit {
         }
       }
     });
+  }
+
+  async openFilter() {
+    const modal = this.modalController.create({
+      component: FilterComponent,
+    });
+
+    (await modal).present();
+
+    const { data } = await (await modal).onWillDismiss();
+    this.loadUsers();
   }
 }

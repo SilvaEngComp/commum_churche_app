@@ -29,15 +29,21 @@ export class UserService extends ServiceInterface {
     );
   }
 
-  async get(filtro: UserFilter = new UserFilter()): Promise<Responser> {
+  async get(filter: UserFilter = new UserFilter()): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
+
+    console.log(filter);
+    console.log(`${environment.API2}/users?${UserFilter.getRequest(filter)}`);
     return this.http
-      .get<Responser>(`${environment.API2}/users?${filtro.getRequest()}`, {
-        headers: LoginService.getHeaders(),
-      })
+      .get<Responser>(
+        `${environment.API2}/users?${UserFilter.getRequest(filter)}`,
+        {
+          headers: LoginService.getHeaders(),
+        }
+      )
       .toPromise();
   }
 
