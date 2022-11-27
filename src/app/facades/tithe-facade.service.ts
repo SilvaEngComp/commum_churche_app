@@ -50,11 +50,11 @@ export class TitheFacade extends FacadeService {
     );
   }
 
-  async registerTithe(isCorderCustomer: boolean = false) {
+  async registerTithe(isNew: boolean = true, tithe?: Tithe) {
     if (!this.isModalOpen) {
       const modal = await this.modalCtrl.create({
         component: TitheRegisterComponent,
-        componentProps: { op: 'tithe-new', role: 'customer', isCorderCustomer },
+        componentProps: { isNew, tithe },
       });
 
       this.isModalOpen = true;

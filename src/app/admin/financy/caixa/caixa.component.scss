@@ -1,0 +1,12 @@
+.register {
+  .with-border {
+      border: 1px dotted var(--ion-color-tertiary);
+      border-radius:10px;
+      box-shadow: 2px 2px 2px 2px var(--ion-color-tertiary);
+  }
+
+  ion-col{
+    display: grid;
+    align-items: center;
+  }
+}

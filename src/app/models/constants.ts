@@ -29,7 +29,6 @@ export class Constants {
   static TITHE_INFERIOR_LIMIT = 'inferiorTitheLimit';
   static LOCAL_TITHE = 'localTithe';
   static TITHE_FILTER = 'titheFilter';
-  static TITHE_FILTER_LIST = 'titheFilterList';
 
   static PAGE_FINANCY_CAIXA = '0';
   static PAGE_FINANCY_TITHE = '1';

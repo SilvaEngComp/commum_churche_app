@@ -7,6 +7,7 @@ import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
 import { environment } from 'src/environments/environment';
 import { TitheFacade } from 'src/app/facades/tithe-facade.service';
+import { FilterTitheComponent } from './filter-tithe/filter-tithe.component';
 
 @Component({
   selector: 'app-tithe',
@@ -97,7 +98,9 @@ export class TitheComponent implements OnInit {
     this.tithes = this.titheFacade.searchTithe(search);
   }
 
-  async newTithe() {}
+  async newTithe() {
+    this.titheFacade.registerTithe();
+  }
 
   async edit(tithe: Tithe) {
     this.exceptionService.alertDialog(
@@ -136,6 +139,6 @@ export class TitheComponent implements OnInit {
     (await modal).present();
 
     const { data } = await (await modal).onWillDismiss();
-    this.loadUsers();
+    this.loadTithes();
   }
 }

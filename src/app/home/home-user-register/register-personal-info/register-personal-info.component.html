@@ -12,28 +12,21 @@
 
       <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
         <ion-label position="floating">*Celular: </ion-label>
-        <ion-input (ionBlur)="save()" type="text" [brmasker]="{phone: true, type:'num'}"
-          [(ngModel)]="user.contact.phone1" [ngModelOptions]="{standalone: true}" required #name="ngModel" name="phone">
+        <ion-input name="phone" (ionBlur)="save()" type="text" [brmasker]="{phone: true, type:'num'}">
         </ion-input>
-        <ion-note *ngIf="!name?.valid && name?.touched" color="danger">Este campo é obrigatório</ion-note>
       </ion-item>
 
-      <!--
-      <ion-item lines="none"  *ngIf="!isSmallDevice" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-        <ion-label>*Data Nascimento: {{user.birthDate | date}}</ion-label>
-        <ion-input (ionBlur)="save()" type="date" [max]="today" [(ngModel)]="user.birthDate" #name="ngModel"
-          name="birthdate" [ngModelOptions]="{standalone: true}" required></ion-input>
-        <ion-note *ngIf="!name?.valid && name?.touched" color="danger">Este campo é obrigatório</ion-note>
-      </ion-item> -->
 
-      <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+      <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice} ">
         <ion-label position="floating">Profissão </ion-label>
         <ion-input (ionBlur)="save()" placeholder="Com o que trabalha (Opcional)" type="text"
           [(ngModel)]="user.occupation"></ion-input>
       </ion-item>
 
       <ion-item lines="none" [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}">
-        <ion-label>Data de Nascimento: {{user.birthDate | date: 'dd/MM/yyyy'}}</ion-label>
+
+        <ion-label>Data de
+          Nascimento: {{ user?.birthDate | date: 'dd/MM/yyyy'}}</ion-label>
       </ion-item>
 
       <ion-item lines="none" class="separated-date">

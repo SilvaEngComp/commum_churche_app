@@ -1,3 +1,62 @@
-<p>
-  tithe-registration works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-item class="header" lines="none">
+      <ion-label color="light">ENTRADA DO TITHE</ion-label>
+    </ion-item>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none" [ngClass]="{'label': !isSmallDevice, 'label-small':isSmallDevice}">
+          <ion-label>Valor: R$</ion-label>
+          <ion-input type="text" #inputAmount placeholder="Digite o amount de abertura"
+            [brmasker]="{money: true, thousand: '.',  decimalCaracter: ','}">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+          <ion-radio-group (click)="setIsTithe($event)" [value]="tithe?.isTithe" [allowEmptySelection]="false">
+            <ion-item lines="none">
+              <ion-label>Dízimo</ion-label>
+              <ion-radio slot="start" value="1"></ion-radio>
+            </ion-item>
+
+            <ion-item lines="none">
+              <ion-label>Oferta</ion-label>
+              <ion-radio slot="start" value="0"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-item lines="none" class="separated-date">
+      <ion-item lines="none" class="right-input-date ">
+        <ion-button fill="clear" id="popover-button-month" expand="block">
+          <label>Mês/Ano: {{monthYear | date: 'MM/yyyy'}}</label>
+        </ion-button>
+
+        <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
+          <ng-template>
+            <ion-content>
+              <ion-datetime [showDefaultButtons]="true" presentation="month-year" display-format="MM-YYYY" #timeMonth
+                (click)="onSelectMonth(timeMonth.value)" doneText="OK" cancelText="CANCELAR">
+              </ion-datetime>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </ion-item>
+    </ion-item>
+  </ion-grid>
+
+
+  <ion-button expand="block" color="medium" (click)="alterar(inputAmount.value)">REGISTRAR</ion-button>
+</ion-content>

@@ -4,10 +4,11 @@ export class Tithe {
   id: number;
   amount: number;
   isTithe: boolean;
-  month: number;
-  year: number;
+  month: string;
+  year: string;
   CustomizedMonth: CustomizedMonth;
   showDetails: boolean;
+  created_at: string;
   constructor() {
     this.CustomizedMonth = new CustomizedMonth();
   }

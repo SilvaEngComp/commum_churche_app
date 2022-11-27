@@ -1,3 +1,41 @@
-<p>
-  caixa works!
-</p>
+<ion-grid class="register" *ngIf="!isLoading">
+  <ion-row>
+    <ion-col>
+      <ion-item lines="none">
+        <ion-datetime display-format="DD/MM/YYYY" [value]="filtter.date" [max]="currentDate"
+          (ionChange)="onSetData($event)" placeholder="Data inicial" presentation="date"></ion-datetime>
+      </ion-item>
+    </ion-col>
+
+    <ion-col>
+      <ion-item class="with-border">
+        <ion-label position="floating">Valor: </ion-label>
+        <ion-input type="text" name="money" [(ngModel)]="caixa.amount" placeholder="(R$) Real"
+          [brmasker]="{money: true, thousand: '.',  decimalCaracter: ','}"></ion-input>
+      </ion-item>
+      <ion-item lines="none" class="with-border">
+        <ion-label position="floating">Motivo da retirada: </ion-label>
+        <ion-textarea [(ngModel)]="caixa.reason"></ion-textarea>
+      </ion-item>
+      <ion-button expand="block" color="success" (click)="registrar()">Registrar</ion-button>
+    </ion-col>
+  </ion-row>
+
+</ion-grid>
+<ion-list *ngIf="!isLoading">
+  <ion-item *ngFor="let item of saidas">
+    <ion-item lines="none">
+      <ion-label>
+        {{ item?.seller.name }}
+        <p>{{item?.reason}}</p>
+        <p>{{item?.created_at | date:'dd/MM/yyyy hh:mm:ss'}}</p>
+
+      </ion-label>
+    </ion-item>
+
+    <ion-note color="primary" slot="end">{{ item?.amount | currencyBrl}}</ion-note>
+    <ion-button slot="end" fill="clear" (click)="deletar(item)">
+      <ion-icon color="danger" name="trash-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-list>
