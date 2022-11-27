@@ -1,0 +1,50 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none">
+          <ion-label slot="start">Aniversariantes</ion-label>
+          <ion-button slot="end" fill="clear" (click)="clean()">
+            <ion-label>Limpar</ion-label>
+          </ion-button>
+        </ion-item>
+        <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+          <ion-select placeholder="Mês" [value]="filter?.birthdayMonth" interface="popover"
+            (ionChange)="setMonth($event)">
+            <ion-select-option [value]="item?.id" *ngFor="let item of months">{{item?.name | uppercase}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col>
+
+        <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+          <ion-radio-group (click)="setIsTithe($event)" [value]="filter?.isTithe" [allowEmptySelection]="false">
+            <ion-item lines="none">
+              <ion-label>Dízimo</ion-label>
+              <ion-radio slot="start" value="1"></ion-radio>
+            </ion-item>
+
+            <ion-item lines="none">
+              <ion-label>Oferta</ion-label>
+              <ion-radio slot="start" value="0"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col>
+        <ion-button fill="outline" color="primary" (click)="makeFilter()">
+          <ion-label>Aplicar Filtro</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -12,14 +12,14 @@ export class Menu {
 
   static getMenuAdmin() {
     const menuGeral: Menu[] = [];
-    const menu_itens: string[] = ['PERFIL', 'MEMBROS', 'SAIR'];
+    const menu_itens: string[] = ['PERFIL', 'MEMBROS', 'FINANCEIRO', 'SAIR'];
 
     let cont = 0;
     for (let i = 0; i < menu_itens.length; i++) {
-      const submenu = [];
-      // if (i === 1) {
-      //   submenu = ['Cadastro', 'Lista de Membros'];
-      // }
+      let submenu = [];
+      if (i === 2) {
+        submenu = ['Dízimos', 'Entradas e Saídas'];
+      }
       menuGeral.push(new Menu(menu_itens[i], submenu));
       cont++;
     }
@@ -28,7 +28,7 @@ export class Menu {
   }
   static getMenuMember() {
     const menuGeral: Menu[] = [];
-    const menu_itens: string[] = ['PERFIL', 'SAIR'];
+    const menu_itens: string[] = ['PERFIL', 'DÍZIMO', 'SAIR'];
 
     let cont = 0;
     for (let i = 0; i < menu_itens.length; i++) {

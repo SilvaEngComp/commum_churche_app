@@ -25,4 +25,12 @@ export class Constants {
   static USER_INFERIOR_LIMIT = 'inferiorUserLimit';
   static USER_FILTER_LIST = ['Mês', 'Semana'];
   static USER_FILTER = 'userFilter';
+  static TITHE_SUPERIOR_LIMIT = 'upperTitheLimit';
+  static TITHE_INFERIOR_LIMIT = 'inferiorTitheLimit';
+  static LOCAL_TITHE = 'localTithe';
+  static TITHE_FILTER = 'titheFilter';
+  static TITHE_FILTER_LIST = 'titheFilterList';
+
+  static PAGE_FINANCY_CAIXA = '0';
+  static PAGE_FINANCY_TITHE = '1';
 }

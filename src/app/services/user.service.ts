@@ -38,8 +38,6 @@ export class UserService extends ServiceInterface {
     if (!filter) {
       filter = new UserFilter();
     }
-    console.log(filter);
-    console.log(`${environment.API2}/users?${UserFilter.getRequest(filter)}`);
     return this.http
       .get<Responser>(
         `${environment.API2}/users?${UserFilter.getRequest(filter)}`,

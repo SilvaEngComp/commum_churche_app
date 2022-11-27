@@ -1,3 +1,4 @@
+import { FinancyModule } from './financy/financy.module';
 import { AdminPagePageRoutingModule } from './admin-page-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,6 +21,7 @@ import { UserPageModule } from './user/user.module';
     IonicModule,
     AdminPagePageRoutingModule,
     UserPageModule,
+    FinancyModule,
   ],
   exports: [AdminSelectorComponent],
 })

@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { CustomizedMonth } from './customizedMonth';
 export class Tithe {
-  date: string;
+  id: number;
   amount: number;
   isTithe: boolean;
-  monthRefer: CustomizedMonth;
-
+  month: number;
+  year: number;
+  CustomizedMonth: CustomizedMonth;
+  showDetails: boolean;
   constructor() {
-    this.monthRefer = new CustomizedMonth();
+    this.CustomizedMonth = new CustomizedMonth();
   }
 }
