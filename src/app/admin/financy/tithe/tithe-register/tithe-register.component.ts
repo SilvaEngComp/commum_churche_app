@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Tithe } from 'src/app/models/tithe';
 import { Component, Input, OnInit } from '@angular/core';
-import { PopoverController, Platform } from '@ionic/angular';
+import { PopoverController, Platform, ModalController } from '@ionic/angular';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
@@ -21,7 +21,7 @@ export class TitheRegisterComponent implements OnInit {
   isSmallDevice: boolean;
   constructor(
     private titheService: TitheService,
-    private popCtrl: PopoverController,
+    private modalCtrl: ModalController,
     private exceptionService: ExceptionService,
     private platform: Platform
   ) {}
@@ -33,6 +33,7 @@ export class TitheRegisterComponent implements OnInit {
     this.isSmallDevice = this.platform.width() <= 500;
     const datePipe = new DatePipe('en');
     this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
+    this.onSelectMonth(this.monthYear);
   }
 
   onSelectMonth(value: any) {
@@ -48,28 +49,30 @@ export class TitheRegisterComponent implements OnInit {
   setIsTithe(ev: any) {
     this.tithe.isTithe = ev.target.value;
   }
-  async alterar(amount: any) {
+
+  async register(amount: any) {
     this.tithe.amount = UiService.convertToNumber(amount);
+    const tipo = this.tithe?.isTithe ? 'do dízimo' : 'da oferta';
 
     if (this.tithe.id) {
       await this.titheService.update(this.tithe);
       this.exceptionService.openLoading(
-        'Entrado do tithe registrado com Successo!'
+        `Entrada ${tipo} alterado com Successo!`
       );
     } else {
       await this.titheService.store(this.tithe);
       this.exceptionService.openLoading(
-        'Entrado do tithe alterado com Successo!'
+        `Entrada ${tipo} registrado com Successo!`
       );
     }
 
-    this.popCtrl.dismiss({
+    this.modalCtrl.dismiss({
       action: true,
     });
   }
 
-  cancelar() {
-    this.popCtrl.dismiss({
+  back() {
+    this.modalCtrl.dismiss({
       action: false,
     });
   }

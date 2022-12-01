@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { BrMaskerModule } from 'br-mask';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 
 @NgModule({
   declarations: [TitheComponent, TitheRegisterComponent, FilterTitheComponent],
@@ -17,6 +18,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     BrMaskerModule,
     ReactiveFormsModule,
     PipesModule,
+    DirectivesModule,
   ],
   exports: [TitheComponent],
 })

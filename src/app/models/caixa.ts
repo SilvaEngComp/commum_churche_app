@@ -8,18 +8,12 @@ export class Caixa {
   type: CaixaType;
   amount: number;
   reason: string;
-  seller: User;
+  user: User;
   created_at: string;
 
-  constructor(
-    caixaType: number = 1,
-    reason: string = 'Entrada',
-    amount: number = 0
-  ) {
+  constructor(name?: string) {
     this.date = UiService.getCurrentDate();
-    this.type = new CaixaType(caixaType);
-    this.amount = UiService.convertToNumber(String(amount));
-    this.reason = reason;
-    this.seller = new User();
+    this.type = new CaixaType(name);
+    this.user = new User();
   }
 }

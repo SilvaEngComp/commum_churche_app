@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
 import { User } from 'src/app/models/User';
@@ -16,6 +16,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./more.page.scss'],
 })
 export class MorePage implements OnInit {
+  @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
   is_invitting: boolean;
   base_url: string = environment.IMAGE_URL;
 
@@ -48,16 +49,14 @@ export class MorePage implements OnInit {
     }
   }
 
-  async selectOption(page: string) {
-    if (page === 'sair') {
-      this.logout();
-    } else if (page === 'policy') {
+  async selectOption(page: number) {
+    if (page === 100) {
       const modal = await this.modalCtrl.create({
         component: PolicyComponent,
       });
       await modal.present();
     } else {
-      this.router.navigate(['admin/' + page]);
+      this.returnPage.emit(page);
     }
   }
 

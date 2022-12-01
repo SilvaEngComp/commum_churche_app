@@ -6,6 +6,9 @@
   <div [ngSwitch]="page">
     <app-profile *ngSwitchCase="'0'"></app-profile>
     <app-user-admin *ngSwitchCase="'1'"></app-user-admin>
+    <app-more *ngSwitchCase="'2'" (returnPage)="onSelectPage($event)"></app-more>
+    <app-tithe *ngSwitchCase="'3'" (sessionPage)="onSelectPage($event)"></app-tithe>
+    <app-caixa *ngSwitchCase="'4'" (sessionPage)="onSelectPage($event)"></app-caixa>
   </div>
 </ion-content>
 <app-admin-small *ngIf="!isLarge" (selectedPage)="onSelectPage($event)"></app-admin-small>

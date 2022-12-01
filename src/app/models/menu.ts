@@ -18,7 +18,7 @@ export class Menu {
     for (let i = 0; i < menu_itens.length; i++) {
       let submenu = [];
       if (i === 2) {
-        submenu = ['Dízimos', 'Entradas e Saídas'];
+        submenu = ['Dízimos e Ofertas', 'Entradas e Saídas'];
       }
       menuGeral.push(new Menu(menu_itens[i], submenu));
       cont++;
@@ -28,7 +28,7 @@ export class Menu {
   }
   static getMenuMember() {
     const menuGeral: Menu[] = [];
-    const menu_itens: string[] = ['PERFIL', 'DÍZIMO', 'SAIR'];
+    const menu_itens: string[] = ['PERFIL', 'DÍZIMOS E OFERTAS', 'SAIR'];
 
     let cont = 0;
     for (let i = 0; i < menu_itens.length; i++) {

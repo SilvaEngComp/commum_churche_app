@@ -3,13 +3,15 @@
   <ion-label>Carregando</ion-label>
   <ion-spinner name="dots"></ion-spinner>
 </div>
-
+<ion-item lines="none" class="page-title">
+  <ion-label>Controle de Dízimos e Ofertas</ion-label>
+</ion-item>
 
 <ion-grid *ngIf="!isLoading">
-  <ion-row>
+  <ion-row *permission="'financial'">
     <ion-col size="12">
       <ion-item lines="none" class="item-search">
-        <ion-input type="text" #searchInput (keyup)="search(searchInput.value)"></ion-input>
+        <ion-input placeholder="Digite o nome" type="text" #searchInput (keyup)="search(searchInput.value)"></ion-input>
         <ion-icon color="secondary" name="search-outline"></ion-icon>
         <ion-note slot="end" color="secondary">{{ tithes?.length }} {{ tithes?.length>1 ? 'registros' : 'registro' }}
         </ion-note>
@@ -56,7 +58,8 @@
         <ion-icon *ngIf="!tithe?.showDetails" name="caret-forward-outline" (click)="setShowDetail(tithe)"></ion-icon>
         <ion-icon *ngIf="tithe?.showDetails" name="caret-down-outline" (click)="setShowDetail(tithe)"></ion-icon>
 
-        <ion-card-title>{{ tithe?.month }}/{{tithe?.year}} </ion-card-title>
+        <ion-card-title>{{ tithe?.customizedMonth?.name }}/{{tithe?.year}} </ion-card-title>
+        <ion-note slot="end">{{tithe?.isTithe ? 'DÍZIMO':'OFERTA'}}</ion-note>
       </ion-item>
 
 
@@ -64,15 +67,6 @@
       <div [ngClass]="{'ocult-details': !tithe?.showDetails, 'show-details':tithe?.showDetails}">
         <ion-card>
           <ion-grid>
-            <ion-row>
-              <ion-col>
-                <ion-label><strong>Cod:</strong> {{tithe?.id}} </ion-label>
-              </ion-col>
-              <ion-col>
-                <ion-label><strong>Tipo:</strong> {{tithe?.isTithe ? 'DÍZIMO':'OFERTA'}} </ion-label>
-              </ion-col>
-
-            </ion-row>
             <ion-row>
               <ion-col>
                 <ion-label><strong>Valor:</strong> {{tithe?.month}}/{{tithe?.year}} </ion-label>

@@ -1,3 +1,4 @@
+import { CaixaHomeComponent } from './caixa-home/caixa-home.component';
 import { CaixaComponent } from './caixa.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -7,7 +8,7 @@ import { BrMaskerModule } from 'br-mask';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
-  declarations: [CaixaComponent],
+  declarations: [CaixaComponent, CaixaHomeComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -16,6 +17,6 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     ReactiveFormsModule,
     PipesModule,
   ],
-  exports: [CaixaComponent],
+  exports: [CaixaHomeComponent],
 })
 export class CaixaModule {}

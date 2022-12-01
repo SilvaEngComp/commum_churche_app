@@ -71,11 +71,9 @@ export class UiService {
 
   static validPermissions(permission?: string) {
     const user = UiService.localGet(Constants.TOKEN).user;
-    if (user.roles.indexOf('super_admin') >= 0) {
-      return true;
-    }
-
-    if (user.permissions.indexOf(permission) >= 0) {
+    const roleUserIndex = Constants.DEFAULT_ROLES.indexOf(user?.role);
+    const roleMinIndex = Constants.DEFAULT_ROLES.indexOf(permission);
+    if (roleUserIndex <= roleMinIndex) {
       return true;
     }
 

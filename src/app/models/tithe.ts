@@ -6,10 +6,10 @@ export class Tithe {
   isTithe: boolean;
   month: string;
   year: string;
-  CustomizedMonth: CustomizedMonth;
+  customizedMonth: CustomizedMonth;
   showDetails: boolean;
   created_at: string;
   constructor() {
-    this.CustomizedMonth = new CustomizedMonth();
+    this.customizedMonth = new CustomizedMonth();
   }
 }

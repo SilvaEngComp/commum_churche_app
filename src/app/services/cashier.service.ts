@@ -57,7 +57,7 @@ export class CaixaService {
       return Promise.resolve(null);
     }
 
-    caixa.seller = LoginService.getUser();
+    caixa.user = LoginService.getUser();
     caixa.amount = UiService.convertToNumber(String(caixa.amount));
     return this.http
       .post<Responser>(`${environment.API2}/caixas`, caixa, {

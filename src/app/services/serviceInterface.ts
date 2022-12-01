@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ExceptionService } from './exception-service.service';
 import { LoginService } from './login.service';
+import { Constants } from '../models/constants';
 
 export class ServiceInterface {
   url: string;
@@ -12,6 +13,7 @@ export class ServiceInterface {
     protected exceptionService: ExceptionService
   ) {
     this.url = environment.API2;
+    this.endpoint = Constants.ENDPOINT_TITHE;
   }
 
   checkLogged() {
@@ -31,6 +33,9 @@ export class ServiceInterface {
   }
 
   async store(data: any): Promise<any> {
+    console.clear();
+    console.log(`${this.url}/${this.endpoint}`);
+    console.log(JSON.stringify(data));
     return this.http
       .post<any>(`${this.url}/${this.endpoint}`, data, {
         headers: LoginService.getHeaders(),

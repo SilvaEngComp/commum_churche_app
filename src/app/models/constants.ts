@@ -32,4 +32,28 @@ export class Constants {
 
   static PAGE_FINANCY_CAIXA = '0';
   static PAGE_FINANCY_TITHE = '1';
+  static DEFAULT_ROLES = [
+    'super_admin',
+    'financial',
+    'secretary',
+    'counselor',
+    'member',
+  ];
+
+  static CAIXA_TYPES = [
+    'saída genérica',
+    'entrada genérica',
+    'salário',
+    'Comunicação',
+    'saneamento',
+    'Energia',
+    'ministério',
+    'manutenção',
+    'encargo social',
+    'taxa',
+    'previsionado',
+    'patrimônio',
+  ];
+
+  static ENDPOINT_TITHE = 'tithes';
 }

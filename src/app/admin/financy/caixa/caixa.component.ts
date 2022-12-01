@@ -29,7 +29,7 @@ export class CaixaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.caixa = new Caixa(2);
+    this.caixa = new Caixa();
     this.caixa.reason = '';
     this.filtter = new CaixaFilter();
     this.filtter.type = 2;

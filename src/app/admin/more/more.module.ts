@@ -22,5 +22,6 @@ import { ResourcesModule } from 'src/app/resources/resources.module';
     DirectivesModule,
   ],
   declarations: [MorePage],
+  exports: [MorePage],
 })
 export class MorePageModule {}

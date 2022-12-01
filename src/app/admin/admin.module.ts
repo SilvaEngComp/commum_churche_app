@@ -1,3 +1,4 @@
+import { MorePageModule } from './more/more.module';
 import { FinancyModule } from './financy/financy.module';
 import { AdminPagePageRoutingModule } from './admin-page-routing.module';
 import { NgModule } from '@angular/core';
@@ -22,6 +23,7 @@ import { UserPageModule } from './user/user.module';
     AdminPagePageRoutingModule,
     UserPageModule,
     FinancyModule,
+    MorePageModule,
   ],
   exports: [AdminSelectorComponent],
 })

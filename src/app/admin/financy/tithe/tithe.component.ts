@@ -1,3 +1,4 @@
+import { CustomizedMonth } from './../../../models/customizedMonth';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
@@ -58,7 +59,11 @@ export class TitheComponent implements OnInit {
     this.paginationNumber = this.upperLimit / this.tresholderPagination;
     this.titheFacade.dataLoaded.subscribe((data) => {
       this.isLoading = false;
-      this.tithes = data.data;
+      this.tithes = data.data.filter((tithe) => {
+        tithe.customizedMonth = new CustomizedMonth(tithe.month);
+        return tithe;
+      });
+      console.log(this.tithes);
       UiService.localSet('upperTitheLimit', 10);
       UiService.localSet('inferiorTitheLimit', 0);
     });

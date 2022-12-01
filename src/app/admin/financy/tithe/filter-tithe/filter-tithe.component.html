@@ -40,12 +40,15 @@
         </ion-popover>
       </ion-item>
     </ion-item>
-    <ion-row>
-      <ion-col>
-        <ion-button fill="outline" color="primary" (click)="makeFilter()">
-          <ion-label>Aplicar Filtro</ion-label>
-        </ion-button>
-      </ion-col>
-    </ion-row>
+
   </ion-grid>
 </ion-content>
+
+
+<ion-footer [translucent]="true">
+  <ion-toolbar>
+    <ion-button fill="outline" color="primary" (click)="makeFilter()">
+      <ion-label>Aplicar Filtro</ion-label>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -15,19 +15,16 @@
     <ion-label>Perfil</ion-label>
   </ion-tab-button>
 
-  <ion-tab-button tab="members" (click)="setPage(1)" *ngIf="!isMember">
-    <ion-icon name="people-circle-outline"></ion-icon>
-    <ion-label>Membros</ion-label>
-  </ion-tab-button>
+
 
 
   <ion-tab-button tab="more" (click)="setPage(-1)">
     <ion-icon name="power-outline"></ion-icon>
     <ion-label>Sair</ion-label>
   </ion-tab-button>
-  <!--
-  <ion-tab-button tab="more" (click)="setPage(0)">
+
+  <ion-tab-button tab="more" (click)="setPage(2)">
     <ion-icon name="apps-sharp"></ion-icon>
     <ion-label>Mais</ion-label>
-  </ion-tab-button> -->
+  </ion-tab-button>
 </ion-tab-bar>
