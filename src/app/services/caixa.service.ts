@@ -8,15 +8,18 @@ import { CaixaFilter } from '../models/caixaFilter';
 import { CaixaType } from '../models/caixaType';
 import { Responser } from '../models/responser';
 import { UiService } from './ui.service';
+import { ServiceInterface } from './serviceInterface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CaixaService {
+export class CaixaService extends ServiceInterface {
   constructor(
-    private http: HttpClient,
-    private exceptionService: ExceptionService
-  ) {}
+    protected http: HttpClient,
+    protected exceptionService: ExceptionService
+  ) {
+    super(http, exceptionService);
+  }
 
   checkLogged() {
     this.exceptionService.alertDialog(
@@ -26,28 +29,34 @@ export class CaixaService {
     );
   }
 
-  async get(filtro: CaixaFilter = new CaixaFilter()): Promise<Caixa[]> {
+  async get(filter: CaixaFilter = new CaixaFilter()): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
     return this.http
-      .get<Caixa[]>(`${environment.API2}/caixas?${filtro.getRequest()}`, {
-        headers: LoginService.getHeaders(),
-      })
+      .get<Responser>(
+        `${environment.API2}/caixas?${CaixaFilter.getRequest(filter)}`,
+        {
+          headers: LoginService.getHeaders(),
+        }
+      )
       .toPromise();
   }
 
-  async getByType(data: string, tipo: CaixaType): Promise<Caixa> {
+  async getByType(data: string, tipo: CaixaType): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
 
     return this.http
-      .get<Caixa>(`${environment.API2}/caixas/tipo/${tipo.id}?data=${data}`, {
-        headers: LoginService.getHeaders(),
-      })
+      .get<Responser>(
+        `${environment.API2}/caixas/tipo/${tipo.id}?data=${data}`,
+        {
+          headers: LoginService.getHeaders(),
+        }
+      )
       .toPromise();
   }
 
@@ -66,27 +75,27 @@ export class CaixaService {
       .toPromise();
   }
 
-  async update(caixa: Caixa) {
+  async update(caixa: Caixa): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
 
     return this.http
-      .patch(`${environment.API2}/caixas/${caixa.id}`, caixa, {
+      .patch<Responser>(`${environment.API2}/caixas/${caixa.id}`, caixa, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();
   }
 
-  async delete(id: number) {
+  async delete(caixa: Caixa): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
 
     return this.http
-      .delete(`${environment.API2}/caixas/${id}`, {
+      .delete<Responser>(`${environment.API2}/caixas/${caixa?.id}`, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();

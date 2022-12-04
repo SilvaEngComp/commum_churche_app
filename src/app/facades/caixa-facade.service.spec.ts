@@ -1,12 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { CaixaService } from './caixa.service';
 
-describe('CategoryService', () => {
-  let service: CaixaService;
+import { CaixaFacadeService } from './caixa-facade.service';
+
+describe('CaixaFacadeService', () => {
+  let service: CaixaFacadeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CaixaService);
+    service = TestBed.inject(CaixaFacadeService);
   });
 
   it('should be created', () => {

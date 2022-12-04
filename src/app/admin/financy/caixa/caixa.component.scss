@@ -1,12 +1,117 @@
-.register {
-  .with-border {
-      border: 1px dotted var(--ion-color-tertiary);
-      border-radius:10px;
-      box-shadow: 2px 2px 2px 2px var(--ion-color-tertiary);
+.card-summary{
+  width: 150px;
+  height: 60px;
+  text-align: center;
+}
+.page-title{
+  font-family: Qanelas-bold;
+  font-size: 14pt;
+  color: var(--ion-color-medium);
+  text-align: center;
+}
+
+.spinner {
+  text-align: center;
+  margin: 20%;
+  ion-spinner {
+    margin-top: 25px;
+    color: var(--ion-color-primary);
+  }
+  ion-label {
+    margin: 1px;
+    font-size: 24pt;
+    font-family: Qanelas-bold;
+    color: var(--ion-color-primary);
+  }
+}
+ion-card {
+  border: 1px solid var(--ion-color-medium);
+  ion-card {
+    width: 300px;
+    height: 250px;
+  }
+}
+ion-list {
+  margin: 20px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+
+  ion-label {
+    font-size: 8pt;
+  }
+}
+.item-search {
+  border-radius: 20px;
+  border: 1px solid var(--ion-color-secondary);
+  margin: 10px;
+  width: 100%;
+}
+
+p {
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--ion-color-medim);
+  margin: 10px;
+}
+
+.container {
+  height: 500px;
+  width: 500px;
+}
+
+ion-spinner {
+  width: 50px;
+  height: 50px;
+  color: var(--ion-color-secondary);
+  margin-left: 40%;
+  margin-right: 40%;
+}
+
+.title {
+  font-family: Qanelas-bold;
+  color: var(--ion-color-medium);
+}
+
+
+.ocult-details{
+  display: none;
+
+}
+.show-details{
+  display: block;
+strong{
+  font-family: Qanelas-bold;
+  color:var(--ion-color-medium);
+  font-size: 8pt;
+}
+  ion-label{
+    font-family: Qanelas-light;
+    color:var(--ion-color-tertiary);
+    font-size: 8pt;
   }
 
-  ion-col{
-    display: grid;
-    align-items: center;
+}
+
+ion-card-title{
+  font-family: Qanelas-bold;
+  color: var(--ion-color-medium);
+}
+
+@media only screen and (min-width: 500px) {
+
+}
+@media only screen and (max-width: 500px) {
+  ion-card-title{
+    font-size: 10pt;
   }
+
+
+}
+
+
+.separated-date{
+  border-radius: 10px;
+  border:1px solid var(--ion-color-primary);
 }

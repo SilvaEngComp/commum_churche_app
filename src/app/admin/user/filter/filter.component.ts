@@ -51,7 +51,6 @@ export class FilterComponent implements OnInit {
   async load() {
     const inputMethodResponser = await this.inputMethodService.get();
     this.inputMethods = inputMethodResponser.data;
-    console.log(this.inputMethods);
     const maritalResponser = await this.maritalStatusService.get();
     this.maritalStatuses = maritalResponser.data;
     const churchResponser = await this.churchService.get();

@@ -1,3 +1,4 @@
+import { FinancySummaryFilter } from './../models/financySummaryFilter';
 import { CaixaSummary } from './../models/caixaSummary';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -26,15 +27,20 @@ export class FinancyService extends ServiceInterface {
     );
   }
 
-  async caixaSummary(month: string, year: string): Promise<Responser> {
+  async caixaSummary(filter: FinancySummaryFilter): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
 
+    if (!filter?.month || !filter?.year) {
+      this.exceptionService.alertDialog('Selecione um mês e um ano', 'Erro');
+      return Promise.resolve(null);
+    }
+
     return this.http
       .get<Responser>(
-        `${environment.API2}/financies/caixaSummary/month/${month}/year/${year}`,
+        `${environment.API2}/financies/caixaSummary/month/${filter?.month}/year/${filter?.year}`,
         {
           headers: LoginService.getHeaders(),
         }

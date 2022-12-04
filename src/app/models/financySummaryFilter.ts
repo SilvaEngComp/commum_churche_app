@@ -1,14 +1,14 @@
 import { User } from './User';
 
-export class CaixaFilter {
+export class FinancySummaryFilter {
   amount: number;
-  isEntry: boolean;
+  isTithe: boolean;
   month: string;
   year: string;
   user: User;
 
   constructor() {}
-  static getRequest(filter: CaixaFilter): string {
+  static getRequest(filter: FinancySummaryFilter): string {
     let request = '';
     if (filter.amount) {
       if (request.length > 0) {
@@ -28,11 +28,11 @@ export class CaixaFilter {
       }
       request += 'year=' + filter.year;
     }
-    if (filter.isEntry) {
+    if (filter.isTithe) {
       if (request.length > 0) {
         request += '&';
       }
-      request += 'isEntry=' + filter.isEntry;
+      request += 'isTithe=' + filter.isTithe;
     }
     if (filter.user) {
       if (request.length > 0) {

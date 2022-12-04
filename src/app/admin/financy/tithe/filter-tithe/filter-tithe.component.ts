@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Platform, ModalController } from '@ionic/angular';
 import { Church } from 'src/app/models/church';
@@ -34,6 +35,10 @@ export class FilterTitheComponent implements OnInit {
     }
     this.isSmallDevice = this.platform.width() <= 500;
     this.months = CustomizedMonth.getMonths();
+
+    const datePipe = new DatePipe('en');
+    this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
+    this.onSelectMonth(this.monthYear);
   }
   clean() {
     this.filter = new TitheFilter();

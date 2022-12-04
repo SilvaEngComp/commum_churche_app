@@ -3,6 +3,7 @@ export class Constants {
   static ROLE_MEMBER = 'member';
 
   static LOCAL_USER = 'localUser';
+  static LOCAL_CAIXA = 'localCaixa';
   static MENU = 'menu';
   static MENU_HOME_PAGE = 'defaultMenuPage';
   static REGISTRING_USER = 'registringUser';
@@ -29,6 +30,7 @@ export class Constants {
   static TITHE_INFERIOR_LIMIT = 'inferiorTitheLimit';
   static LOCAL_TITHE = 'localTithe';
   static TITHE_FILTER = 'titheFilter';
+  static CAIXA_FILTER = 'caixaFilter';
 
   static PAGE_FINANCY_CAIXA = '0';
   static PAGE_FINANCY_TITHE = '1';

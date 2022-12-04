@@ -9,8 +9,9 @@ export class Caixa {
   amount: number;
   reason: string;
   user: User;
+  isEntry: boolean;
   created_at: string;
-
+  showDetails: boolean;
   constructor(name?: string) {
     this.date = UiService.getCurrentDate();
     this.type = new CaixaType(name);

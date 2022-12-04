@@ -1,12 +1,14 @@
+import { FilterCaixaComponent } from './filter-caixa/filter-caixa.component';
+import { ModalController } from '@ionic/angular';
+import { CaixaFacadeService } from './../../../facades/caixa-facade.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import { Caixa } from 'src/app/models/caixa';
-import { CaixaFilter } from 'src/app/models/caixaFilter';
 import { Constants } from 'src/app/models/constants';
-import { User } from 'src/app/models/User';
-import { CaixaService } from 'src/app/services/cashier.service';
 import { ExceptionService } from 'src/app/services/exception-service.service';
-import { UiService } from 'src/app/services/ui.service';
+import { DatePipe } from '@angular/common';
+import { FinancySummary, CaixaSummary } from 'src/app/models/caixaSummary';
+import { FinancySummaryFilter } from 'src/app/models/financySummaryFilter';
+import { Caixa } from 'src/app/models/caixa';
+import { FinancyService } from 'src/app/services/financy-service.service';
 
 @Component({
   selector: 'app-caixa',
@@ -16,94 +18,101 @@ import { UiService } from 'src/app/services/ui.service';
 export class CaixaComponent implements OnInit {
   @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
 
-  vendedor: User;
-  caixa: Caixa;
-  filtter: CaixaFilter;
-  saidas: Caixa[];
-  isLoading: boolean;
-  currentDate: string;
+  filter: FinancySummaryFilter;
+  sumary: FinancySummary;
+  month: string;
+  year: string;
+  caixaSummary: CaixaSummary;
+  monthYear: string;
+
   constructor(
-    private alertCtrl: AlertController,
+    private financyService: FinancyService,
     private exceptionService: ExceptionService,
-    private caixaService: CaixaService
+    private caixaFacade: CaixaFacadeService,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
-    this.caixa = new Caixa();
-    this.caixa.reason = '';
-    this.filtter = new CaixaFilter();
-    this.filtter.type = 2;
-    this.currentDate = UiService.getCurrentDate();
-
-    this.load();
-  }
-
-  async onSetData(ev: any) {
-    this.filtter.date = ev.target.value.substr(0, 10);
-    this.load();
-  }
-
-  registrar() {
-    this.caixa.date = this.caixa.date.substr(0, 10);
-    if (this.caixa.amount <= 0) {
-      this.exceptionService.alertDialog(
-        'Digite um amount maior que zero',
-        'Opa!'
-      );
-      return;
+    if (!this.filter) {
+      this.filter = new FinancySummaryFilter();
     }
-    if (this.caixa.reason === '') {
-      this.exceptionService.alertDialog('Digite um Motivo', 'Opa!');
-      return;
-    }
-    this.exceptionService.loadingFunction();
-    this.caixaService.story(this.caixa).then(() => {
-      this.exceptionService.openLoading('Saída registrada com sucesso!');
-      this.load();
-    });
+    const datePipe = new DatePipe('en');
+    this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
+    this.onSelectMonth(this.monthYear);
+    this.load();
   }
 
   async load() {
-    this.isLoading = true;
-    this.saidas = await this.caixaService.get(this.filtter);
-    if (!this.saidas) {
-      this.saidas = [];
+    if (this.filter?.month && this.filter?.year) {
+      const response = await this.financyService.caixaSummary(this.filter);
+      console.log(response);
+      if (response?.data) {
+        this.sumary = response.data;
+      }
+
+      this.sumary.caixaSummary.filter((caixa) => {
+        this.caixaSummary.total += caixa.total;
+      });
     }
-    this.isLoading = false;
+
+    console.log(this.sumary);
   }
 
-  async deletar(caixa: Caixa) {
-    const alert = await this.alertCtrl.create({
-      header: 'Confirmação',
-      message: 'Tem certeza que deseja deletar esse registro de caixa ?',
-      mode: 'ios',
-      buttons: [
-        {
-          text: 'CANCELAR',
-          handler: () => {},
-        },
-        {
-          text: 'SIM',
-          handler: () => {
-            this.exceptionService.loadingFunction();
-            this.caixaService
-              .delete(caixa.id)
-              .then(() => {
-                this.exceptionService.openLoading('Saída de Caixa Deletada!');
-                this.load();
-              })
-              .catch((error) => this.exceptionService.error(error));
-          },
-        },
-      ],
-    });
+  setShowDetail(caixa: CaixaSummary) {
+    const position = this.sumary.caixaSummary.indexOf(caixa);
 
-    await alert.present();
+    this.sumary.caixaSummary[position].showDetails =
+      !this.sumary.caixaSummary[position].showDetails;
+  }
 
-    alert.onDidDismiss().then(() => this.load());
+  showMoreCaixaSummary(caixa: CaixaSummary) {}
+
+  onSelectMonth(value: any) {
+    console.clear();
+    this.monthYear = value.substring(0, 7);
+    const dates = this.monthYear.split('-');
+    console.log(dates);
+    this.filter.month = dates[1];
+    this.filter.year = dates[0];
+
+    console.log(this.filter);
+  }
+
+  async newCaixa() {
+    this.sessionPage.emit('2');
+  }
+
+  async edit(caixa: Caixa) {
+    this.exceptionService.alertDialog(
+      Constants.IN_DEVELOPMENT,
+      Constants.IN_DEVELOPMENT_TITLE
+    );
+    // const modal = await this.modalCtrl.create({
+    //   component: CaixaRegisterComponent,
+    //   componentProps: { caixa, permission: this.permission, op: 'caixa-alter' },
+    // });
+
+    // await modal.present();
+
+    // await modal.onDidDismiss().then(() => this.loadCaixas());
+  }
+
+  delete(caixa: Caixa) {
+    this.caixaFacade.delete(caixa);
   }
 
   back() {
     this.sessionPage.emit(Constants.PAGE_FINANCY_CAIXA);
+  }
+
+  async openFilter() {
+    const modal = this.modalController.create({
+      component: FilterCaixaComponent,
+    });
+
+    (await modal).present();
+
+    const { data } = await (await modal).onWillDismiss();
+    this.load();
   }
 }
