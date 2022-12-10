@@ -127,7 +127,7 @@ export class UiService {
     return parseFloat(value);
   }
   static convertToCurrency(value: number) {
-    const amount = String(value.toFixed(2));
+    const amount = Number(value).toFixed(2);
     return amount.replace('.', ',');
   }
 

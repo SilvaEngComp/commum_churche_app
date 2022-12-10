@@ -30,8 +30,8 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/theme/variables.scss", "src/global.scss"],
-            "scripts": [],
+            "styles": ["src/theme/variables.scss", "src/global.scss","./node_modules/materialize-css/dist/css/materialize.css"],
+            "scripts": ["./node_modules/materialize-css/dist/js/materialize.js"],
             "aot": false,
             "vendorChunk": true,
             "extractLicenses": false,

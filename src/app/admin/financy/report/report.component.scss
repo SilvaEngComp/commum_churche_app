@@ -1,0 +1,210 @@
+
+  .page-title{
+    font-family: Qanelas-bold;
+    font-size: 14pt;
+    color: var(--ion-color-medium);
+    text-align: center;
+  }
+
+  .spinner {
+    text-align: center;
+    margin: 20%;
+    ion-spinner {
+      margin-top: 25px;
+      color: var(--ion-color-primary);
+    }
+    ion-label {
+      margin: 1px;
+      font-size: 24pt;
+      font-family: Qanelas-bold;
+      color: var(--ion-color-primary);
+    }
+  }
+  ion-card {
+    border: 1px solid var(--ion-color-medium);
+    ion-card {
+      width: 300px;
+      height: 250px;
+    }
+  }
+  ion-list {
+    margin: 20px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+    ion-label {
+      font-size: 8pt;
+    }
+  }
+  .item-search {
+    border-radius: 20px;
+    border: 1px solid var(--ion-color-secondary);
+    margin: 10px;
+    width: 100%;
+  }
+
+  p {
+    font-size: 10px;
+    font-weight: bold;
+    color: var(--ion-color-medim);
+    margin: 10px;
+  }
+
+  .container {
+    height: 500px;
+    width: 500px;
+  }
+
+  ion-spinner {
+    width: 50px;
+    height: 50px;
+    color: var(--ion-color-secondary);
+    margin-left: 40%;
+    margin-right: 40%;
+  }
+
+  .title {
+    font-family: Qanelas-bold;
+    color: var(--ion-color-medium);
+  }
+
+
+  .ocult-details{
+    display: none;
+
+  }
+
+  // .show-item-details{
+  //   margin-top: 20px;
+  //   display: grid;
+  //   align-items: center;
+  //   align-self: center;
+  //   align-content: center;
+  //   width: 100%;
+  //   max-height: 200px;
+  //   overflow: auto;
+  // }
+  .show-details{
+    display: block;
+    width: 100%;
+    max-height: 500px;
+    overflow: auto;
+  strong{
+    font-family: Qanelas-bold;
+    color:var(--ion-color-medium);
+    font-size: 8pt;
+  }
+    ion-label{
+      font-family: Qanelas-light;
+      color:var(--ion-color-tertiary);
+      font-size: 8pt;
+    }
+
+  }
+
+
+  //div que é expandida simulando o select list
+  .show-details ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .show-details::-webkit-scrollbar {
+    width: 1em;
+    border-radius: 20px;
+    background: var(--ion-color-light);
+  }
+
+  .show-details::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: var(--ion-color-primary);
+  }
+
+  .show-details::-webkit-scrollbar-corner {
+    background: var(--ion-color-tertiary);
+  }
+
+  .show-details::-webkit-scrollbar-corner {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .show-details::-webkit-scrollbar-button:single-button {
+    background-color: var(--ion-color-light);
+    display: block;
+    border-style: solid;
+    height: 13px;
+    width: 16px;
+  }
+
+  .show-details::-webkit-scrollbar-button:single-button:vertical:decrement {
+    border-width: 0 8px 8px 8px;
+    border-color: var(--ion-color-light) var(--ion-color-light) var(--ion-color-primary) var(--ion-color-light);
+  }
+
+  .show-details::-webkit-scrollbar-button:single-button:vertical:increment {
+    border-width: 8px 8px 0 8px;
+    border-color: var(--ion-color-primary) var(--ion-color-light) var(--ion-color-light) var(--ion-color-light);
+  }
+
+  .div-item {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    padding: 5px;
+    border-radius: 10px;
+    margin-left: 20px;
+    div {
+        display: flex;
+        ion-icon {
+            margin-left: -20px;
+        }
+        app-info {
+            margin-left: 10px;
+        }
+    }
+    ion-input {
+        margin-left: 10px;
+    }
+    ion-item {
+        margin-left: -20px;
+        ion-icon {
+            position: absolute;
+            right: 25px;
+            bottom: 15px;
+            z-index: 2000;
+        }
+    }
+    ion-icon {
+        font-size: 20px;
+        padding-left: 50px;
+    }
+  }
+
+  ion-card-title{
+    font-family: Qanelas-bold;
+    color: var(--ion-color-medium);
+  }
+
+  @media only screen and (min-width: 500px) {
+    .card-summary{
+        width: 150px;
+        height: 60px;
+        text-align: center;
+      }
+  }
+  @media only screen and (max-width: 500px) {
+    .card-summary{
+        width: 100px;
+        height: 60px;
+        text-align: center;
+      }
+    ion-card-title{
+      font-size: 10pt;
+    }
+
+
+  }
+
+
+

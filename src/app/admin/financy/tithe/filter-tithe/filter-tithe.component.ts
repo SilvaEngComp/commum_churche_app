@@ -60,13 +60,18 @@ export class FilterTitheComponent implements OnInit {
     UiService.localSet(Constants.TITHE_FILTER, this.filter);
   }
 
-  makeFilter() {
-    this.modalCtrl.dismiss();
-  }
-
   onSelectMonth(value: any) {
     const dates = value.substring(0, 7).split('-');
     this.filter.month = dates[1];
     this.filter.year = dates[0];
+  }
+
+  makeFilter() {
+    this.back(true);
+  }
+  back(action: boolean = false) {
+    this.modalCtrl.dismiss({
+      action,
+    });
   }
 }

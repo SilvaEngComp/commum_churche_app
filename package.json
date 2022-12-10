@@ -38,6 +38,7 @@
     "cordova-sqlite-storage": "^6.0.0",
     "crypto-js": "^4.1.1",
     "ionicons": "^6.0.3",
+    "materialize-css": "^1.0.0-rc.2",
     "ng2-file-upload": "^1.4.0",
     "ngx-clipboard": "^15.1.0",
     "rxjs": "~6.6.0",
@@ -82,5 +83,5 @@
   "description": "An Ionic project",
   "config": {
     "ionic_sass": "./sass.config.js"
-}
+  }
 }

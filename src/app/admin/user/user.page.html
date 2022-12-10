@@ -18,22 +18,23 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#" (click)="backPage()">
-              <ion-icon name="chevron-back-sharp"></ion-icon>
-            </a></li>
-          <li class="page-item">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#" (click)="backPage()">
             <ion-item lines="none">
-              <ion-label>Página {{paginationNumber}}</ion-label>
+              <ion-icon name="chevron-back-sharp"></ion-icon>
             </ion-item>
-          </li>
-          <li class="page-item"><a class="page-link" href="#" (click)="nextPage()">
+          </a></li>
+        <li class="page-item">
+          <ion-item lines="none">
+            <ion-label>Página {{paginationNumber}}</ion-label>
+          </ion-item>
+        </li>
+        <li class="page-item"><a class="page-link" href="#" (click)="nextPage()">
+            <ion-item lines="none">
               <ion-icon name="chevron-forward-sharp"></ion-icon>
-            </a></li>
-        </ul>
-      </nav>
-
+            </ion-item>
+          </a></li>
+      </ul>
     </ion-col>
 
     <ion-col>

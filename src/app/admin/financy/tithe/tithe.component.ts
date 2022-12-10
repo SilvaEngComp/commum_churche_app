@@ -1,4 +1,4 @@
-import { TitheFilter } from 'src/app/models/titheFilter';
+import { TitheFilter } from './../../../models/titheFilter';
 import { CustomizedMonth } from './../../../models/customizedMonth';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
@@ -10,6 +10,7 @@ import { UiService } from 'src/app/services/ui.service';
 import { environment } from 'src/environments/environment';
 import { TitheFacade } from 'src/app/facades/tithe-facade.service';
 import { FilterTitheComponent } from './filter-tithe/filter-tithe.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-tithe',
@@ -29,7 +30,7 @@ export class TitheComponent implements OnInit {
   isSellerShowed: boolean;
   isFilterCustomerShowed: boolean;
   isLoading: boolean;
-
+  monthYear: string;
   isFilterShowed: boolean;
   funcIsLoading: boolean;
   label: string;
@@ -37,32 +38,20 @@ export class TitheComponent implements OnInit {
   upperLimit: number;
   paginationNumber: number;
   tresholderPagination: number;
-  titheFilter: TitheFilter;
-
+  filter: TitheFilter;
+  headTitheList: string[] = ['Valor', 'Tipo', 'Data'];
+  customizedMonth: CustomizedMonth;
   constructor(
     private titheFacade: TitheFacade,
-    private exceptionService: ExceptionService,
     private modalController: ModalController
   ) {}
 
   ngOnInit() {
-    this.titheFilter = UiService.localGet(Constants.TITHE_FILTER);
-    if (!this.titheFilter) {
-      this.titheFilter = new TitheFilter();
-    }
-    this.loadTithes();
-
-    this.tresholderPagination = 10;
-    this.inferiorLimit = UiService.localGet(Constants.TITHE_INFERIOR_LIMIT);
-    this.upperLimit = UiService.localGet(Constants.TITHE_SUPERIOR_LIMIT);
-    if (!this.inferiorLimit) {
-      this.inferiorLimit = 0;
-    }
-    if (!this.upperLimit) {
-      this.upperLimit = this.tresholderPagination;
+    this.filter = UiService.localGet(Constants.TITHE_FILTER);
+    if (!this.filter) {
+      this.filter = new TitheFilter();
     }
 
-    this.paginationNumber = this.upperLimit / this.tresholderPagination;
     this.titheFacade.dataLoaded.subscribe((data) => {
       this.isLoading = false;
       this.tithes = data.filter((tithe: Tithe) => {
@@ -72,9 +61,13 @@ export class TitheComponent implements OnInit {
       UiService.localSet('upperTitheLimit', 10);
       UiService.localSet('inferiorTitheLimit', 0);
     });
+
+    const datePipe = new DatePipe('en');
+    this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
+    this.onSelectMonth(this.monthYear);
   }
 
-  loadTithes() {
+  load() {
     this.isLoading = true;
     this.titheFacade.load();
   }
@@ -112,20 +105,17 @@ export class TitheComponent implements OnInit {
   }
 
   async edit(tithe: Tithe) {
-    this.exceptionService.alertDialog(
-      Constants.IN_DEVELOPMENT,
-      Constants.IN_DEVELOPMENT_TITLE
-    );
-    // const modal = await this.modalCtrl.create({
-    //   component: TitheRegisterComponent,
-    //   componentProps: { tithe, permission: this.permission, op: 'tithe-alter' },
-    // });
-
-    // await modal.present();
-
-    // await modal.onDidDismiss().then(() => this.loadTithes());
+    this.titheFacade.registerTithe(false, tithe);
   }
-
+  onSelectMonth(value: any) {
+    this.monthYear = value.substring(0, 7);
+    const dates = this.monthYear.split('-');
+    this.filter.year = dates[0];
+    this.filter.month = dates[1];
+    UiService.localSet(Constants.TITHE_FILTER, this.filter);
+    this.customizedMonth = new CustomizedMonth(Number(this.filter?.month));
+    this.load();
+  }
   delete(tithe: Tithe) {
     this.titheFacade.delete(tithe);
   }
@@ -148,6 +138,8 @@ export class TitheComponent implements OnInit {
     (await modal).present();
 
     const { data } = await (await modal).onWillDismiss();
-    this.loadTithes();
+    if (data.action) {
+      this.load();
+    }
   }
 }

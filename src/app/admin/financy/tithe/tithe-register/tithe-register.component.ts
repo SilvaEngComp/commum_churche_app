@@ -19,6 +19,9 @@ export class TitheRegisterComponent implements OnInit {
   monthYear: string;
   months: CustomizedMonth[];
   isSmallDevice: boolean;
+  value: string;
+  isTithe: string;
+
   constructor(
     private titheService: TitheService,
     private modalCtrl: ModalController,
@@ -27,8 +30,14 @@ export class TitheRegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this.tithe);
     if (!this.tithe) {
       this.tithe = new Tithe();
+      this.value = '';
+      this.isTithe = '1';
+    } else {
+      this.value = UiService.convertToCurrency(this.tithe?.amount);
+      this.isTithe = String(this.tithe?.isTithe);
     }
     this.isSmallDevice = this.platform.width() <= 500;
     const datePipe = new DatePipe('en');
@@ -43,8 +52,6 @@ export class TitheRegisterComponent implements OnInit {
     const dates = value.substring(0, 7).split('-');
     this.tithe.month = dates[1];
     this.tithe.year = dates[0];
-    console.clear();
-    console.log(this.tithe);
   }
   setIsTithe(ev: any) {
     this.tithe.isTithe = ev.target.value;
@@ -57,12 +64,12 @@ export class TitheRegisterComponent implements OnInit {
     if (this.tithe.id) {
       await this.titheService.update(this.tithe);
       this.exceptionService.openLoading(
-        `Entrada ${tipo} alterado com Successo!`
+        `Entrada ${tipo} alterado com Sucesso!`
       );
     } else {
       await this.titheService.store(this.tithe);
       this.exceptionService.openLoading(
-        `Entrada ${tipo} registrado com Successo!`
+        `Entrada ${tipo} registrado com Sucesso!`
       );
     }
 

@@ -4,6 +4,11 @@
   color: var(--ion-color-medium);
   text-align: center;
 }
+.date-title{
+  font-family: Qanelas-bold;
+  font-size: 14pt;
+  color: var(--ion-color-medium);
+}
 
 .spinner {
   text-align: center;
@@ -103,4 +108,9 @@ ion-card-title{
   }
 
 
+}
+
+.separated-date{
+  border-radius: 10px;
+  border:1px solid var(--ion-color-primary);
 }

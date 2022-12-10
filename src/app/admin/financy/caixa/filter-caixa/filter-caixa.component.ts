@@ -52,9 +52,13 @@ export class FilterCaixaComponent implements OnInit {
   }
 
   makeFilter() {
-    this.modalCtrl.dismiss();
+    this.back(true);
   }
-
+  back(action: boolean = false) {
+    this.modalCtrl.dismiss({
+      action,
+    });
+  }
   onSelectMonth(value: any) {
     const dates = value.substring(0, 7).split('-');
     this.filter.month = dates[1];
