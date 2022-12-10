@@ -39,8 +39,12 @@ export class TitheFacade extends FacadeService {
     const filter = UiService.localGet(Constants.TITHE_FILTER);
 
     const response = await this.titheService.get(filter);
-    UiService.localSet(this.localName, response.data);
-    this.dataLoaded.emit(response);
+    if (response.status.toLocaleLowerCase().includes('success')) {
+      UiService.localSet(this.localName, response.data);
+      this.dataLoaded.emit(response.data);
+    } else {
+      this.exceptionService.alertDialog(response.message);
+    }
   }
 
   searchTithe(name: string) {

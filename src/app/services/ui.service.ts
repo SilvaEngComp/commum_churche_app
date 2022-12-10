@@ -111,12 +111,20 @@ export class UiService {
   }
 
   static convertToNumber(value: string) {
+    console.log(value);
     if (!value) {
       value = '0,0';
     }
-    let v = value?.replace('.', '');
-    v = v.replace(',', '.');
-    return parseFloat(v);
+    const splitDecimal = value.split(',');
+    if (splitDecimal.length === 2) {
+      console.log(splitDecimal);
+      const integerPart = splitDecimal[0]?.replace(/[^\d]+/g, '');
+      console.log(integerPart);
+      const result = integerPart + '.' + splitDecimal[1];
+      console.log(result);
+      return parseFloat(result);
+    }
+    return parseFloat(value);
   }
   static convertToCurrency(value: number) {
     const amount = String(value.toFixed(2));

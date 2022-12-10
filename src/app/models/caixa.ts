@@ -5,16 +5,17 @@ import { User } from './user';
 export class Caixa {
   id: number;
   date: string;
-  type: CaixaType;
+  caixaType: CaixaType;
   amount: number;
   reason: string;
   user: User;
-  isEntry: boolean;
+  isEntry: string;
   created_at: string;
   showDetails: boolean;
   constructor(name?: string) {
     this.date = UiService.getCurrentDate();
-    this.type = new CaixaType(name);
+    this.caixaType = new CaixaType(name);
     this.user = new User();
+    this.isEntry = '0';
   }
 }

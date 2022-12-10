@@ -9,7 +9,7 @@ export class TitheFilter {
 
   constructor() {}
   static getRequest(filter: TitheFilter): string {
-    let request = '';
+    let request = '?';
     if (filter.amount) {
       if (request.length > 0) {
         request += '&';
@@ -41,6 +41,9 @@ export class TitheFilter {
       request += 'user_id=' + filter.user?.id;
     }
 
+    if (request === '?') {
+      request = '';
+    }
     return request;
   }
 }

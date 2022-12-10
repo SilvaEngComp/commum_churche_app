@@ -1,17 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { CaixaType } from '../models/caixaType';
 import { Responser } from '../models/responser';
-import { Tithe } from '../models/tithe';
-import { TitheFilter } from '../models/titheFilter';
 import { ExceptionService } from './exception-service.service';
 import { LoginService } from './login.service';
 import { ServiceInterface } from './serviceInterface';
+import { UiService } from './ui.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TitheService extends ServiceInterface {
+export class CaixaTypeService extends ServiceInterface {
   constructor(
     protected http: HttpClient,
     protected exceptionService: ExceptionService
@@ -27,19 +27,42 @@ export class TitheService extends ServiceInterface {
     );
   }
 
-  async get(filter: TitheFilter): Promise<Responser> {
+  async get(): Promise<Responser> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+    return this.http
+      .get<Responser>(`${environment.API2}/caixaTypes`, {
+        headers: LoginService.getHeaders(),
+      })
+      .toPromise();
+  }
+
+  async story(caixatype: CaixaType): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
 
-    if (!filter) {
-      filter = new TitheFilter();
-    }
-    console.log(`${environment.API2}/tithes${TitheFilter.getRequest(filter)}`);
+    console.log(JSON.stringify(caixatype));
     return this.http
-      .get<Responser>(
-        `${environment.API2}/tithes?${TitheFilter.getRequest(filter)}`,
+      .post<Responser>(`${environment.API2}/caixaTypes`, caixatype, {
+        headers: LoginService.getHeaders(),
+      })
+      .toPromise();
+  }
+
+  async update(caixatype: CaixaType): Promise<Responser> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+
+    return this.http
+      .patch<Responser>(
+        `${environment.API2}/caixaTypes/${caixatype.id}`,
+        caixatype,
         {
           headers: LoginService.getHeaders(),
         }
@@ -47,26 +70,14 @@ export class TitheService extends ServiceInterface {
       .toPromise();
   }
 
-  async update(tithe: Tithe): Promise<Responser> {
+  async delete(caixatype: CaixaType): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
-    console.log(JSON.stringify(tithe));
-    return this.http
-      .patch<Responser>(`${environment.API2}/tithes/${tithe.id}`, tithe, {
-        headers: LoginService.getHeaders(),
-      })
-      .toPromise();
-  }
 
-  async delete(tithe: Tithe): Promise<Responser> {
-    if (!(await LoginService.getHeaders())) {
-      this.checkLogged();
-      return Promise.resolve(null);
-    }
     return this.http
-      .delete<Responser>(`${environment.API2}/tithes/${tithe.id}`, {
+      .delete<Responser>(`${environment.API2}/caixaTypes/${caixatype?.id}`, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();

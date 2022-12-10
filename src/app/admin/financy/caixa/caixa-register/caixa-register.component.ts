@@ -1,6 +1,8 @@
+import { CaixaType } from './../../../../models/caixaType';
+import { CaixaTypeService } from './../../../../services/caixa-type.service';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ModalController, Platform, PopoverController } from '@ionic/angular';
+import { Platform, PopoverController } from '@ionic/angular';
 import { DayToSelectComponent } from 'src/app/home/home-user-register/register-personal-info/day-to-select/day-to-select.component';
 import { Caixa } from 'src/app/models/caixa';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
@@ -23,9 +25,10 @@ export class CaixaRegisterComponent implements OnInit {
   isSmallDevice: boolean;
   days: string[] = [];
   day: string;
+  caixaTypes: CaixaType[];
   constructor(
     private caixaService: CaixaService,
-    private modalCtrl: ModalController,
+    private caixaTypeService: CaixaTypeService,
     private exceptionService: ExceptionService,
     private platform: Platform,
     private popCtrl: PopoverController
@@ -39,11 +42,17 @@ export class CaixaRegisterComponent implements OnInit {
     const datePipe = new DatePipe('en');
     this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
     this.onSelectMonth(this.monthYear);
+    this.load();
+  }
+
+  async load() {
+    const inputMethodResponser = await this.caixaTypeService.get();
+    this.caixaTypes = inputMethodResponser.data;
   }
 
   setIsEntry(ev: any) {
     console.log(ev.target.value);
-    this.caixa.isEntry = Number(ev.target.value) === 1 ? true : false;
+    this.caixa.isEntry = ev.target.value;
     console.log(this.caixa.isEntry);
   }
 
@@ -90,5 +99,12 @@ export class CaixaRegisterComponent implements OnInit {
 
   back() {
     this.sessionPage.emit('1');
+  }
+
+  setType(ev: any) {
+    if (!this.caixa.caixaType) {
+      this.caixa.caixaType = new CaixaType();
+    }
+    this.caixa.caixaType.id = ev.target.value;
   }
 }

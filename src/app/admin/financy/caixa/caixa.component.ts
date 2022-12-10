@@ -36,6 +36,7 @@ export class CaixaComponent implements OnInit {
     if (!this.filter) {
       this.filter = new FinancySummaryFilter();
     }
+    this.caixaSummary = new CaixaSummary();
     const datePipe = new DatePipe('en');
     this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
     this.onSelectMonth(this.monthYear);
@@ -49,9 +50,9 @@ export class CaixaComponent implements OnInit {
       if (response?.data) {
         this.sumary = response.data;
       }
-
+      this.caixaSummary.total = 0;
       this.sumary.caixaSummary.filter((caixa) => {
-        this.caixaSummary.total += caixa.total;
+        this.caixaSummary.total += caixa?.total;
       });
     }
 

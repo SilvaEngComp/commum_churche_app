@@ -66,9 +66,7 @@ export class TitheRegisterComponent implements OnInit {
       );
     }
 
-    this.modalCtrl.dismiss({
-      action: true,
-    });
+    this.back();
   }
 
   back() {

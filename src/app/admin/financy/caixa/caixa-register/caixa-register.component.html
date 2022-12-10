@@ -12,36 +12,25 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-
       <ion-item lines="none" class="input">
         <ion-label>Valor: R$</ion-label>
         <ion-input type="text" #inputAmount placeholder="Digite o valor"
           [brmasker]="{money: true, thousand: '.',  decimalCaracter: ','}">
         </ion-input>
       </ion-item>
-
-
-      <ion-item lines="none" class="input" *ngIf="!caixa?.isEntry">
-        <ion-label>Justificativa</ion-label>
-        <ion-textarea type="text" #inputAmount placeholder="Descreva o motivo da retirada">
-        </ion-textarea>
+    </ion-col>
+    <ion-col>
+      <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+        <ion-label>Tipo </ion-label>
+        <ion-select [value]="caixa?.caixaType?.id" interface="popover" (ionChange)="setType($event)">
+          <ion-select-option [value]="item?.id" *ngFor="let item of caixaTypes">{{item?.name | uppercase}}
+          </ion-select-option>
+        </ion-select>
       </ion-item>
-
-      <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-        <ion-radio-group (click)="setIsEntry($event)" [value]="caixa?.isEntry" [allowEmptySelection]="false">
-          <ion-item lines="none">
-            <ion-label>Entrada</ion-label>
-            <ion-radio slot="start" value="1"></ion-radio>
-          </ion-item>
-
-          <ion-item lines="none">
-            <ion-label>Saída</ion-label>
-            <ion-radio slot="start" value="0"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-      </ion-item>
-
-
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
       <ion-item lines="none" class="separated-date">
         <ion-item>
           <label>{{day}}</label>
@@ -68,8 +57,30 @@
           </ion-popover>
         </ion-item>
       </ion-item>
+    </ion-col>
+    <ion-col>
 
+      <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+        <ion-radio-group (click)="setIsEntry($event)" [value]="caixa?.isEntry" [allowEmptySelection]="false">
+          <ion-item lines="none">
+            <ion-label>Entrada</ion-label>
+            <ion-radio slot="start" value="1"></ion-radio>
+          </ion-item>
 
+          <ion-item lines="none">
+            <ion-label>Saída</ion-label>
+            <ion-radio slot="start" value="0"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item lines="none" *ngIf="caixa?.isEntry==='0'">
+        <ion-textarea type="text" #inputAmount placeholder="Descreva o motivo da retirada">
+        </ion-textarea>
+      </ion-item>
     </ion-col>
   </ion-row>
 </ion-grid>

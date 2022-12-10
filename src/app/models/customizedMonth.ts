@@ -8,7 +8,7 @@ export class CustomizedMonth {
     }
     if (id >= 1 && id <= 12) {
       this.id = id;
-      const meses = [
+      const monthes = [
         'Jeneiro',
         'Fevereiro',
         'Março',
@@ -22,16 +22,17 @@ export class CustomizedMonth {
         'Novembro',
         'Dezembro',
       ];
-      this.name = meses[id - 1];
+      console.log(id);
+      this.name = monthes[id - 1];
     }
   }
 
   static getMonths() {
-    const meses: CustomizedMonth[] = [];
+    const monthes: CustomizedMonth[] = [];
     for (let i = 1; i <= 12; i++) {
-      meses.push(new CustomizedMonth(i));
+      monthes.push(new CustomizedMonth(i));
     }
-    return meses;
+    return monthes;
   }
 
   static monthsOfYear() {

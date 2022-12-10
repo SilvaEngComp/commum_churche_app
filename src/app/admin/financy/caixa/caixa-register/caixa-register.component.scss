@@ -118,3 +118,7 @@ ion-radio-group{
   display: flex;
 }
 
+ion-textarea{
+  border:1px dotted var(--ion-color-tertiary);
+  border-radius: 10px;
+}

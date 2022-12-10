@@ -68,6 +68,8 @@ export class CaixaService extends ServiceInterface {
 
     caixa.user = LoginService.getUser();
     caixa.amount = UiService.convertToNumber(String(caixa.amount));
+
+    console.log(JSON.stringify(caixa));
     return this.http
       .post<Responser>(`${environment.API2}/caixas`, caixa, {
         headers: LoginService.getHeaders(),

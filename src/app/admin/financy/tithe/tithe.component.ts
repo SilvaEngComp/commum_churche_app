@@ -1,3 +1,4 @@
+import { TitheFilter } from 'src/app/models/titheFilter';
 import { CustomizedMonth } from './../../../models/customizedMonth';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
@@ -36,6 +37,7 @@ export class TitheComponent implements OnInit {
   upperLimit: number;
   paginationNumber: number;
   tresholderPagination: number;
+  titheFilter: TitheFilter;
 
   constructor(
     private titheFacade: TitheFacade,
@@ -44,6 +46,10 @@ export class TitheComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.titheFilter = UiService.localGet(Constants.TITHE_FILTER);
+    if (!this.titheFilter) {
+      this.titheFilter = new TitheFilter();
+    }
     this.loadTithes();
 
     this.tresholderPagination = 10;
@@ -59,8 +65,8 @@ export class TitheComponent implements OnInit {
     this.paginationNumber = this.upperLimit / this.tresholderPagination;
     this.titheFacade.dataLoaded.subscribe((data) => {
       this.isLoading = false;
-      this.tithes = data.data.filter((tithe) => {
-        tithe.customizedMonth = new CustomizedMonth(tithe.month);
+      this.tithes = data.filter((tithe: Tithe) => {
+        tithe.customizedMonth = new CustomizedMonth(tithe?.customizedMonth?.id);
         return tithe;
       });
       UiService.localSet('upperTitheLimit', 10);
@@ -69,7 +75,6 @@ export class TitheComponent implements OnInit {
   }
 
   loadTithes() {
-    console.log('is loading');
     this.isLoading = true;
     this.titheFacade.load();
   }
