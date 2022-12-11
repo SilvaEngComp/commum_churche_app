@@ -24,6 +24,17 @@
 
                   <ion-card-title>R$ {{item?.amount | currencyBrl}}</ion-card-title>
                   <ion-note slot="end">{{item?.date | date:'dd/MM/YYYY'}}</ion-note>
+                  <ion-item lines="none">
+                    <ion-list (click)="edit(item)" slot="end">
+                      <ion-icon color="secondary" name="pencil-sharp"></ion-icon>
+                      <ion-label color="secondary">Editar</ion-label>
+                    </ion-list>
+
+                    <ion-list (click)="delete(item)" slot="end">
+                      <ion-icon color="danger" name="trash-outline"></ion-icon>
+                      <ion-label color="danger">Excluir</ion-label>
+                    </ion-list>
+                  </ion-item>
                 </ion-item>
               </ion-col>
 

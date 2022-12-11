@@ -35,34 +35,21 @@
 .input-small {
   width: 100%;
   border-radius: 10px;
-  border-bottom: 1px solid var(--ion-color-tertiary);
   margin-right: 2%;
 }
 
 .small-input-date {
   width: 100%;
   border-radius: 10px;
-  border-bottom: 1px solid var(--ion-color-tertiary);
 }
 .large-input-date {
-  width: 100%;
   ion-button{
     width: 100%;
   border-radius: 10px;
-  border-bottom: 1px solid var(--ion-color-tertiary);
   }
   margin-left: 8%;
 }
-.right-input-date {
-  width: 90%;
-  ion-button{
-    width: 100%;
-  border-radius: 10px;
-  border-bottom: 1px solid var(--ion-color-tertiary);
-  }
-  margin: 6%;
-  font-size: 14pt;
-}
+
 
 
 .input-item {

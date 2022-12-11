@@ -1,3 +1,5 @@
+import { UiService } from 'src/app/services/ui.service';
+import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
@@ -35,6 +37,7 @@ export class ReportComponent implements OnInit {
   showTitheDetail: boolean;
   showOfferDetail: boolean;
   showInputsDetail: boolean;
+  customizedMonth: CustomizedMonth;
 
   constructor(
     private financyService: FinancyService,
@@ -44,16 +47,25 @@ export class ReportComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.filter = UiService.localGet(Constants.FINANCY_SUMMARY_FILTER);
     if (!this.filter) {
       this.filter = new FinancySummaryFilter();
+      const datePipe = new DatePipe('en');
+      this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
+      this.onSelectMonth(this.monthYear);
+    } else {
+      this.customizedMonth = new CustomizedMonth(Number(this.filter?.month));
     }
-    this.inputSummary = new CaixaSummary();
-    this.outputSummary = new CaixaSummary();
-    this.titheSummary = new TitheSummary();
-    this.offerSummary = new TitheSummary();
-    const datePipe = new DatePipe('en');
-    this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
-    this.onSelectMonth(this.monthYear);
+
+    this.load();
+  }
+
+  saveFilter() {
+    UiService.localSet(Constants.FINANCY_SUMMARY_FILTER, this.filter);
+  }
+
+  receiveMantainceEmiter(ev: any) {
+    console.log('reload request received');
     this.load();
   }
 
@@ -64,7 +76,10 @@ export class ReportComponent implements OnInit {
       if (response?.data) {
         this.sumary = response.data;
       }
-      console.log(this.sumary);
+      this.inputSummary = new CaixaSummary();
+      this.outputSummary = new CaixaSummary();
+      this.titheSummary = new TitheSummary();
+      this.offerSummary = new TitheSummary();
       this.sumary.caixaSummary?.input?.filter(
         (caixaSummary) => (this.inputSummary.total += caixaSummary?.total)
       );
@@ -75,8 +90,6 @@ export class ReportComponent implements OnInit {
       this.titheSummary = this.sumary.titheSummary?.tithe;
       this.offerSummary = this.sumary.titheSummary?.offer;
     }
-
-    console.log(this.sumary);
   }
 
   setShowCaixaOutputDetail() {
@@ -103,6 +116,9 @@ export class ReportComponent implements OnInit {
     const dates = this.monthYear.split('-');
     this.filter.month = dates[1];
     this.filter.year = dates[0];
+    this.customizedMonth = new CustomizedMonth(Number(this.filter?.month));
+    this.saveFilter();
+    this.load();
   }
 
   async newCaixa() {

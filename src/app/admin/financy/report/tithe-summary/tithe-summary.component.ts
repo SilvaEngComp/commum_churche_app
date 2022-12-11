@@ -14,9 +14,7 @@ export class TitheSummaryComponent implements OnInit {
   headTitheList: string[] = ['Registrado por', 'Tipo', 'Motivo'];
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.titheSummary);
-  }
+  ngOnInit() {}
 
   setShowSummaryDetail() {
     this.titheSummary.showDetails = !this.titheSummary.showDetails;

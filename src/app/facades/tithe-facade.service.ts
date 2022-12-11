@@ -72,8 +72,9 @@ export class TitheFacade extends FacadeService {
   }
 
   async delete(tithe: Tithe) {
+    const tipo = tithe?.isTithe ? 'dízimo' : 'oferta';
     const alert = await this.alertCtrl.create({
-      message: 'Tem certeza que deseja exlcuir o dízimo ?',
+      message: `Tem certeza que deseja exlcuir este registro de ${tipo}?`,
       mode: 'ios',
       buttons: [
         {

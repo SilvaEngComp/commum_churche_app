@@ -1,3 +1,4 @@
+import { ConstantMessages } from 'src/app/models/messages';
 import { CaixaType } from './../../../../models/caixaType';
 import { CaixaTypeService } from './../../../../services/caixa-type.service';
 import { DatePipe } from '@angular/common';
@@ -26,6 +27,10 @@ export class CaixaRegisterComponent implements OnInit {
   days: string[] = [];
   day: string;
   caixaTypes: CaixaType[];
+  customizedMonth: CustomizedMonth;
+  year: string;
+  isEntry: string;
+  value: string;
   constructor(
     private caixaService: CaixaService,
     private caixaTypeService: CaixaTypeService,
@@ -37,6 +42,11 @@ export class CaixaRegisterComponent implements OnInit {
   ngOnInit() {
     if (!this.caixa) {
       this.caixa = new Caixa();
+      this.value = '';
+      this.isEntry = '1';
+    } else {
+      this.value = UiService.convertToCurrency(this.caixa?.amount);
+      this.isEntry = String(this.caixa?.isEntry);
     }
     this.isSmallDevice = this.platform.width() <= 500;
     const datePipe = new DatePipe('en');
@@ -58,6 +68,9 @@ export class CaixaRegisterComponent implements OnInit {
 
   onSelectMonth(value: any) {
     this.monthYear = value.substring(0, 7);
+    const dates = this.monthYear.split('-');
+    this.year = dates[0];
+    this.customizedMonth = new CustomizedMonth(Number(dates[1]));
     this.concatDate();
   }
 
@@ -68,17 +81,19 @@ export class CaixaRegisterComponent implements OnInit {
 
   async register(amount: any) {
     this.caixa.amount = UiService.convertToNumber(amount);
-    const tipo = this.caixa?.isEntry ? 'Entrada' : 'Saída';
+    if (this.isFormValid()) {
+      const tipo = this.caixa?.isEntry ? 'Entrada' : 'Saída';
 
-    if (this.caixa.id) {
-      await this.caixaService.update(this.caixa);
-      this.exceptionService.openLoading(`${tipo} alterada com Successo!`);
-    } else {
-      await this.caixaService.story(this.caixa);
-      this.exceptionService.openLoading(`${tipo} registrada com Successo!`);
+      if (this.caixa.id) {
+        await this.caixaService.update(this.caixa);
+        this.exceptionService.openLoading(`${tipo} alterada com Successo!`);
+      } else {
+        await this.caixaService.story(this.caixa);
+        this.exceptionService.openLoading(`${tipo} registrada com Successo!`);
+      }
+
+      this.back();
     }
-
-    this.back();
   }
 
   async openDay(ev: any) {
@@ -106,5 +121,38 @@ export class CaixaRegisterComponent implements OnInit {
       this.caixa.caixaType = new CaixaType();
     }
     this.caixa.caixaType.id = ev.target.value;
+  }
+
+  isFormValid() {
+    if (!this.caixa?.amount || this.caixa?.amount <= 0) {
+      this.exceptionService.alertDialog(ConstantMessages.AMOUNT_INVALID);
+      return;
+    }
+
+    const dates = this.caixa.date.split('-');
+    if (
+      !dates[0] ||
+      dates[0]?.length !== 4 ||
+      !dates[1] ||
+      dates[1]?.length !== 2
+    ) {
+      this.exceptionService.alertDialog(ConstantMessages.MONTH_YEAR_INVALID);
+      return;
+    }
+    if (!dates[2] || dates[2]?.length > 2) {
+      this.exceptionService.alertDialog(ConstantMessages.DAY_INVALID);
+      return;
+    }
+
+    if (!this.caixa?.caixaType?.id) {
+      this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
+      return;
+    }
+    if (!this.caixa?.isEntry) {
+      this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
+      return;
+    }
+
+    return true;
   }
 }

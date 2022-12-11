@@ -67,8 +67,9 @@ export class CaixaFacadeService extends FacadeService {
   }
 
   async delete(caixa: Caixa) {
+    const tipo = caixa?.isEntry ? 'entrada' : 'saída';
     const alert = await this.alertCtrl.create({
-      message: 'Tem certeza que deseja exlcuir o dízimo ?',
+      message: `Tem certeza que deseja exlcuir este registro de ${tipo}?`,
       mode: 'ios',
       buttons: [
         {
@@ -84,7 +85,7 @@ export class CaixaFacadeService extends FacadeService {
             this.caixaService
               .delete(caixa)
               .then((responser: Responser) => {
-                this.load();
+                this.dataLoaded.emit();
                 this.exceptionService.success(responser);
               })
               .catch((error) => this.exceptionService.error(error));

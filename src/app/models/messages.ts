@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export class ConstantMessages {
+  //User register
   static NAME_INVALID = 'Insira um nome válido (Nome e sobrenome)';
   static PHONE_INVALID = 'Insira um celular válido';
   static BIRTHDATE_INVALID = 'Insira sua data de nascimento';
@@ -19,4 +20,11 @@ export class ConstantMessages {
 
   static FINISHING_REGISTRATION_SUCCESS =
     'Parabéns! Você realizou seu cadastro com sucesso! Agora você pode clicar no menu LOGIN e acessar sua conta usando seu email e senha.';
+
+  //caixa register
+  static AMOUNT_INVALID = 'Digite um valor válido';
+  static DAY_INVALID = 'Selecione um dia válido';
+  static MONTH_YEAR_INVALID = 'Selecione um mês e ano válidos';
+  static CAIXA_TYPE_INVALID = 'Selecione um tipo';
+  static INPUT_OUTPUT_INVALID = 'Selecione se é ENTRADA ou SAÍDA';
 }

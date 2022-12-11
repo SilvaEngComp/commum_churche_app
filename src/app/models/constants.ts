@@ -31,6 +31,7 @@ export class Constants {
   static LOCAL_TITHE = 'localTithe';
   static TITHE_FILTER = 'titheFilter';
   static CAIXA_FILTER = 'caixaFilter';
+  static FINANCY_SUMMARY_FILTER = 'financySummaryFilter';
 
   static PAGE_FINANCY_CAIXA = '0';
   static PAGE_FINANCY_TITHE = '1';

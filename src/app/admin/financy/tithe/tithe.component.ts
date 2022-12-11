@@ -107,6 +107,9 @@ export class TitheComponent implements OnInit {
   async edit(tithe: Tithe) {
     this.titheFacade.registerTithe(false, tithe);
   }
+  delete(tithe: Tithe) {
+    this.titheFacade.delete(tithe);
+  }
   onSelectMonth(value: any) {
     this.monthYear = value.substring(0, 7);
     const dates = this.monthYear.split('-');
@@ -115,9 +118,6 @@ export class TitheComponent implements OnInit {
     UiService.localSet(Constants.TITHE_FILTER, this.filter);
     this.customizedMonth = new CustomizedMonth(Number(this.filter?.month));
     this.load();
-  }
-  delete(tithe: Tithe) {
-    this.titheFacade.delete(tithe);
   }
 
   back() {

@@ -1,13 +1,29 @@
 <ion-grid>
   <ion-row>
     <ion-col>
+      <ion-item lines="none" class="separated-date">
+        <ion-item lines="none" class="right-input-date">
+          <ion-button fill="outline" id="popover-button-month" expand="full">
+            <label>{{customizedMonth?.name}}/{{filter?.year}}</label>
+          </ion-button>
+
+          <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
+            <ng-template>
+              <ion-content>
+                <ion-datetime [showDefaultButtons]="true" [value]="monthYear" presentation="month-year"
+                  display-format="MM-YYYY" #timeMonth (ionChange)="onSelectMonth(timeMonth.value)" doneText="OK"
+                  cancelText="CANCELAR">
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
+        </ion-item>
+      </ion-item>
+    </ion-col>
+    <ion-col>
       <ion-item lines="none">
         <ion-button slot="end" fill="clear" color="primary" (click)="newCaixa()">
           <ion-label>Cadastrar</ion-label>
-          <ion-icon name="add"></ion-icon>
-        </ion-button>
-        <ion-button slot="end" fill="clear" color="primary" (click)="openFilter()">
-          <ion-label>Filtrar</ion-label>
           <ion-icon name="add"></ion-icon>
         </ion-button>
       </ion-item>
@@ -57,7 +73,7 @@
       </ion-item>
       <div [ngClass]="{'ocult-details': !showCaixaOutputDetail, 'show-details':showCaixaOutputDetail}">
         <app-caixa-summary *ngFor="let caixa of sumary?.caixaSummary?.output" [caixaSummary]="caixa"
-          [isEntry]="true"></app-caixa-summary>
+          (mantainceEmiter)="receiveMantainceEmiter($event)" [isEntry]="true"></app-caixa-summary>
       </div>
     </ion-col>
   </ion-row>
@@ -121,7 +137,8 @@
 
               <div [ngClass]="{'ocult-details': !showCaixaInputDetail, 'show-details':showCaixaInputDetail}"
                 *ngFor="let caixa of sumary?.caixaSummary?.input">
-                <app-caixa-summary [caixaSummary]="caixa" [isEntry]="true"></app-caixa-summary>
+                <app-caixa-summary [caixaSummary]="caixa" [isEntry]="true"
+                  (mantainceEmiter)="receiveMantainceEmiter($event)"></app-caixa-summary>
               </div>
             </ion-col>
           </ion-row>
