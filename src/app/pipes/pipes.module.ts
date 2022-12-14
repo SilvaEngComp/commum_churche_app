@@ -1,16 +1,11 @@
 import { CurrencyBrlPipe } from './currency-brl.pipe';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
+import { PhonePipe } from './phone.pipe';
 
 @NgModule({
-  declarations: [CurrencyBrlPipe],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    CurrencyBrlPipe
-  ]
+  declarations: [CurrencyBrlPipe, PhonePipe],
+  imports: [CommonModule],
+  exports: [CurrencyBrlPipe, PhonePipe],
 })
-export class PipesModule { }
+export class PipesModule {}
