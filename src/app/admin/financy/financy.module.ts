@@ -1,7 +1,4 @@
-import { TitheSummaryComponent } from './report/tithe-summary/tithe-summary.component';
-import { CaixaSummaryComponent } from './report/caixa-summary/caixa-summary.component';
-import { ReportComponent } from './report/report.component';
-import { CaixaComponent } from './caixa/caixa.component';
+import { TitheRegisterComponent } from './tithe/tithe-register/tithe-register.component';
 import { TitheComponent } from './tithe/tithe.component';
 import { CaixaModule } from './caixa/caixa.module';
 import { FinancyAdminComponent } from './financy-admin/financy-admin.component';
@@ -12,6 +9,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { BrMaskerModule } from 'br-mask';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { ReportComponent } from './financy-summary/financy-summary.component';
+import { CaixaSummaryComponent } from './financy-summary/caixa-summary/caixa-summary.component';
+import { TitheSummaryComponent } from './financy-summary/tithe-summary/tithe-summary.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +30,6 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     TitheModule,
     CaixaModule,
   ],
-  exports: [FinancyAdminComponent, TitheComponent],
+  exports: [FinancyAdminComponent, TitheComponent, TitheRegisterComponent],
 })
 export class FinancyModule {}

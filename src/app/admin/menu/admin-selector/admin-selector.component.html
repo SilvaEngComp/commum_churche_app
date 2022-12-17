@@ -4,11 +4,11 @@
 
 <ion-content ionScroll="true" #mainSmall *ngIf="!isLarge">
   <div [ngSwitch]="page">
-    <app-profile *ngSwitchCase="'0'"></app-profile>
-    <app-user-admin *ngSwitchCase="'1'"></app-user-admin>
+    <app-user-admin *ngSwitchCase="'0'" [subpage]="'0'"></app-user-admin>
+    <app-user-admin *ngSwitchCase="'1'" [subpage]="'1'"></app-user-admin>
     <app-more *ngSwitchCase="'2'" (returnPage)="onSelectPage($event)"></app-more>
-    <app-tithe *ngSwitchCase="'3'" (sessionPage)="onSelectPage($event)"></app-tithe>
-    <app-financy-admin *ngSwitchCase="'4'"></app-financy-admin>
+    <app-financy-admin *ngSwitchCase="'3'" [subpage]="'0'" (sessionPage)="onSelectPage($event)"></app-financy-admin>
+    <app-financy-admin *ngSwitchCase="'4'" [subpage]="'1'" (sessionPage)="onSelectPage($event)"></app-financy-admin>
   </div>
 </ion-content>
 <app-admin-small *ngIf="!isLarge" (selectedPage)="onSelectPage($event)"></app-admin-small>

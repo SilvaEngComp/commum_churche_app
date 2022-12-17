@@ -32,7 +32,7 @@
 
     <ion-col>
       <ion-item lines="none">
-        <ion-button slot="end" fill="clear" color="primary" (click)="newTithe()">
+        <ion-button slot="end" fill="clear" color="primary" (click)="titheMaintaince()">
           <ion-label>Cadastrar {{label}}</ion-label>
           <ion-icon name="add"></ion-icon>
         </ion-button>
@@ -47,10 +47,10 @@
       </ion-item>
     </ion-col>
   </ion-row>
-  <ion-row>
+  <ion-row *ngIf="tithes.length>0">
     <ion-col>
       <ion-card>
-        <table class="responsive-table highlight centered">
+        <table class=" responsive-table highlight centered">
           <thead>
             <tr>
               <th *ngFor="let item of headTitheList">{{item}}</th>
@@ -70,7 +70,7 @@
               <td>
 
                 <ion-item lines="none">
-                  <ion-list (click)="edit(tithe)" slot="end">
+                  <ion-list (click)="titheMaintaince(tithe)" slot="end">
                     <ion-icon color="secondary" name="pencil-sharp"></ion-icon>
                     <ion-label color="secondary">Editar</ion-label>
                   </ion-list>

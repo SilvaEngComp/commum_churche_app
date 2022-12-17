@@ -26,6 +26,9 @@ export class FilterTitheComponent implements OnInit {
   isSmallDevice: boolean;
   monthYear: string;
   months: CustomizedMonth[];
+  customizedMonth: CustomizedMonth;
+  year: string;
+
   constructor(private platform: Platform, private modalCtrl: ModalController) {}
 
   ngOnInit() {
@@ -64,6 +67,8 @@ export class FilterTitheComponent implements OnInit {
     const dates = value.substring(0, 7).split('-');
     this.filter.month = dates[1];
     this.filter.year = dates[0];
+    this.year = this.filter?.year;
+    this.customizedMonth = new CustomizedMonth(Number(this.filter?.month));
   }
 
   makeFilter() {

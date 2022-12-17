@@ -27,4 +27,7 @@ export class ConstantMessages {
   static MONTH_YEAR_INVALID = 'Selecione um mês e ano válidos';
   static CAIXA_TYPE_INVALID = 'Selecione um tipo';
   static INPUT_OUTPUT_INVALID = 'Selecione se é ENTRADA ou SAÍDA';
+  static TITHE_TYPE_INVALID = 'Selecione se é DÍZIMO ou OFERTA';
+
+  static MSG_MAX_LIMIT_LETTER = 'Limite atingido';
 }

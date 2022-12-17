@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
 
 @Component({
@@ -7,16 +7,18 @@ import { UiService } from 'src/app/services/ui.service';
   styleUrls: ['./financy-admin.component.scss'],
 })
 export class FinancyAdminComponent implements OnInit {
-  subpage: string;
+  @Input() subpage: string;
   defaultPageName = 'financy-subpage';
   constructor() {}
 
   ngOnInit() {
-    this.subpage = '0';
-    if (UiService.localGet(this.defaultPageName)) {
-      this.subpage = UiService.localGet(this.defaultPageName);
-    }
+    if (!this.subpage) {
+      this.subpage = '0';
 
+      if (UiService.localGet(this.defaultPageName)) {
+        this.subpage = UiService.localGet(this.defaultPageName);
+      }
+    }
     UiService.pageMenu.subscribe((menu) => {
       this.subpage = menu.subpage;
       this.save();
@@ -29,6 +31,7 @@ export class FinancyAdminComponent implements OnInit {
 
   onReceiveSession(subpage: string) {
     console.log(subpage);
+
     this.subpage = subpage;
     this.save();
   }

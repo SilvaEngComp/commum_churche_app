@@ -1,3 +1,4 @@
+import { ConstantMessages } from './../../models/messages';
 import { FilterComponent } from './filter/filter.component';
 import { ModalController } from '@ionic/angular';
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -45,6 +46,9 @@ export class UserPage implements OnInit {
   paginationNumber: number;
   tresholderPagination: number;
 
+  letterSize: string;
+  letterSizeConfig: number;
+
   @ViewChild('searchUser', { static: false }) inputSearch: IonInput;
 
   constructor(
@@ -55,8 +59,58 @@ export class UserPage implements OnInit {
 
   ngOnInit() {
     this.loadUsers();
+    this.letterSizeConfig = UiService.localGet(
+      Constants.USER_LETTER_SIZE_CONFIG
+    );
+    if (!this.letterSizeConfig) {
+      this.letterSizeConfig = 12;
+    }
 
+    this.letterSize = this.letterSizeConfig + 'pt';
+    this.userFacadeService.dataLoaded.subscribe((data) => {
+      this.setConfigPagination(true);
+      this.isLoading = false;
+      this.users = data.data;
+      this.checkImage();
+      UiService.localSet('upperUserLimit', 10);
+      UiService.localSet('inferiorUserLimit', 0);
+    });
+  }
+
+  setLetterSize(isUpper: boolean) {
+    if (this.letterSizeConfig < 5 && !isUpper) {
+      this.exceptionService.alertDialog(
+        'Alerta!',
+        ConstantMessages.MSG_MAX_LIMIT_LETTER
+      );
+    }
+    if (this.letterSizeConfig > 30 && isUpper) {
+      this.exceptionService.alertDialog(
+        'Alerta!',
+        ConstantMessages.MSG_MAX_LIMIT_LETTER
+      );
+    }
+    if (isUpper) {
+      this.letterSizeConfig++;
+    } else {
+      this.letterSizeConfig--;
+    }
+
+    this.letterSize = this.letterSizeConfig + 'pt';
+    UiService.localSet(
+      Constants.USER_LETTER_SIZE_CONFIG,
+      this.letterSizeConfig
+    );
+  }
+
+  setConfigPagination(isRestart = false) {
     this.tresholderPagination = 10;
+    if (isRestart) {
+      this.inferiorLimit = 0;
+      this.upperLimit = this.tresholderPagination;
+      this.paginationNumber = this.upperLimit / this.tresholderPagination;
+      return;
+    }
     this.inferiorLimit = UiService.localGet('inferiorUserLimit');
     this.upperLimit = UiService.localGet('upperUserLimit');
     if (!this.inferiorLimit) {
@@ -67,13 +121,6 @@ export class UserPage implements OnInit {
     }
 
     this.paginationNumber = this.upperLimit / this.tresholderPagination;
-    this.userFacadeService.dataLoaded.subscribe((data) => {
-      this.isLoading = false;
-      this.users = data.data;
-      this.checkImage();
-      UiService.localSet('upperUserLimit', 10);
-      UiService.localSet('inferiorUserLimit', 0);
-    });
   }
 
   loadUsers() {
@@ -108,6 +155,8 @@ export class UserPage implements OnInit {
   search(search: any) {
     this.users = null;
     this.users = this.userFacadeService.searchUser(search);
+    this.setConfigPagination(true);
+
     this.checkImage();
   }
 
@@ -115,21 +164,15 @@ export class UserPage implements OnInit {
     this.sessionPage.emit(Constants.PAGE_ADMIN_REGISTER);
   }
 
-  async edit(user: User) {
-    this.exceptionService.alertDialog(
-      Constants.IN_DEVELOPMENT,
-      Constants.IN_DEVELOPMENT_TITLE
-    );
-    // const modal = await this.modalCtrl.create({
-    //   component: UserRegisterComponent,
-    //   componentProps: { user, permission: this.permission, op: 'user-alter' },
-    // });
-
-    // await modal.present();
-
-    // await modal.onDidDismiss().then(() => this.loadUsers());
+  edit(user: User = null) {
+    if (!user) {
+      UiService.localRemove(Constants.USER_MAINTAINCE);
+    } else {
+      UiService.localSet(Constants.USER_MAINTAINCE, user);
+    }
+    UiService.localSet(Constants.HAS_BACK_PAGE, true);
+    this.sessionPage.emit(Constants.MENU_USER_OPTION_PROFILE);
   }
-
   delete(user: User) {
     this.userFacadeService.delete(user);
   }

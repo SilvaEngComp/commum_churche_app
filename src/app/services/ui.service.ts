@@ -80,14 +80,19 @@ export class UiService {
     return false;
   }
   static localRemove(key) {
-    key = btoa(key).substring(0, 8);
-    localStorage.removeItem(environment.LOCALSTORAGE + key);
+    const encriptedKey =
+      environment.LOCALSTORAGE +
+      btoa(key).substring(0, Constants.SIZE_ENCRIPTY_KEY);
+    console.log(encriptedKey);
+    localStorage.removeItem(encriptedKey);
+    UiService.localGet(key);
   }
   static localGet(key: string) {
     const encriptedKey =
       environment.LOCALSTORAGE +
       btoa(key).substring(0, Constants.SIZE_ENCRIPTY_KEY);
     const encrypted = localStorage.getItem(encriptedKey);
+    console.log(encriptedKey);
     if (encrypted) {
       const bytes = CriptoJs.AES.decrypt(encrypted, environment.PRIVATEKEY);
       return JSON.parse(bytes.toString(CriptoJs.enc.Utf8));

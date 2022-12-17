@@ -100,13 +100,15 @@ export class TitheComponent implements OnInit {
     this.tithes = this.titheFacade.searchTithe(search);
   }
 
-  async newTithe() {
-    this.titheFacade.registerTithe();
+  titheMaintaince(tithe: Tithe = null) {
+    if (!tithe) {
+      UiService.localRemove(Constants.TITHE_MAINTAINCE);
+    } else {
+      UiService.localSet(Constants.TITHE_MAINTAINCE, tithe);
+    }
+    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_TITHE_REGISTER);
   }
 
-  async edit(tithe: Tithe) {
-    this.titheFacade.registerTithe(false, tithe);
-  }
   delete(tithe: Tithe) {
     this.titheFacade.delete(tithe);
   }

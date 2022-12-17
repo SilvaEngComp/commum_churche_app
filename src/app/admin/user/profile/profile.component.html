@@ -1,20 +1,18 @@
+<ion-header *ngIf="hasBackPage">
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="back()">
+      <ion-icon name="arrow-undo-circle-outline"></ion-icon>
+    </ion-buttons>
+    <ion-item class="header" lines="none">
+      <ion-label>VOLTAR PARA LISTA</ion-label>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
 <ion-spinner name="bubbles" *ngIf="is_loading"></ion-spinner>
 
 <div class="div-body" *ngIf="!is_loading">
-  <div>
-    <ion-button (click)="setEdit()" *ngIf="edit">
-      <ion-icon src="./assets/icons/edit-light.svg"></ion-icon>
-      <ion-label>EDITAR</ion-label>
-    </ion-button>
-    <ion-button (click)="cancel()" *ngIf="!edit" color="danger">
-      <ion-icon name="close-circle-outline"></ion-icon>
-      <ion-label>CANCELAR</ion-label>
-    </ion-button>
-    <ion-button (click)="update()" *ngIf="!edit" color="success">
-      <ion-icon name="save-outline"></ion-icon>
-      <ion-label>SALVAR</ion-label>
-    </ion-button>
-  </div>
+
 
   <ion-grid *ngIf="!is_loading">
     <ion-row>
@@ -22,6 +20,20 @@
         <ion-avatar [ngClass]=" {'avatar-center': edit,'avatar-notcenter': !edit}">
           <ion-img [src]="user?.image"></ion-img>
         </ion-avatar>
+        <div>
+          <ion-button (click)="setEdit()" *ngIf="edit">
+            <ion-icon src="./assets/icons/edit-light.svg"></ion-icon>
+            <ion-label>EDITAR</ion-label>
+          </ion-button>
+          <ion-button (click)="cancel()" *ngIf="!edit" color="danger">
+            <ion-icon name="close-circle-outline"></ion-icon>
+            <ion-label>CANCELAR</ion-label>
+          </ion-button>
+          <ion-button (click)="update()" *ngIf="!edit" color="success">
+            <ion-icon name="save-outline"></ion-icon>
+            <ion-label>SALVAR</ion-label>
+          </ion-button>
+        </div>
       </ion-col>
       <!-- <ion-col *ngIf="!edit">
         <ion-button color="danger" fill="outline" (click)="deleteImage()">

@@ -47,6 +47,8 @@
           <ion-label>Filtrar</ion-label>
           <ion-icon name="add"></ion-icon>
         </ion-button>
+        <ion-button slot="end" color="medium" (click)="setLetterSize(false)">-A</ion-button>
+        <ion-button slot="end" color="medium" (click)="setLetterSize(true)">+A</ion-button>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -66,59 +68,70 @@
 
 
       <div [ngClass]="{'ocult-details': !user?.showDetails, 'show-details':user?.showDetails}">
+
         <ion-card>
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <ion-label><strong>Cod:</strong> {{user?.id}} </ion-label>
-              </ion-col>
-              <ion-col>
-                <ion-label><strong>Batizado:</strong> {{user?.isBaptized ? 'SIM':'NÃO'}} </ion-label>
-              </ion-col>
+          <ion-card-header>
 
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <ion-label><strong>Estado Civil:</strong> {{user?.maritalStatus?.name | uppercase}} </ion-label>
-              </ion-col>
-              <ion-col>
-                <ion-label><strong>Entrada por:</strong> {{user?.inputMethod?.name | uppercase}}</ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <ion-label><strong>Data de Nascimento:</strong> {{user?.birthDate| date:'dd/MM/yyyy'}} </ion-label>
-              </ion-col>
-              <ion-col>
-                <ion-label><strong>Endereço:</strong> Rua {{user?.contact?.street | uppercase}},
-                  {{user?.contact?.hauseNumber | uppercase}}, {{user?.contact?.district | uppercase}},
-                </ion-label>
-              </ion-col>
-            </ion-row> <ion-row>
-              <ion-col>
-                <ion-label><strong>Email:</strong> {{user?.email}} </ion-label>
-              </ion-col>
-              <ion-col>
-                <ion-label><strong>Telefone:</strong> {{user?.contact?.phone1 | phone}},
-                </ion-label>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <ion-item lines="none">
-                  <ion-list (click)="edit(user)" slot="end">
-                    <ion-icon color="secondary" name="pencil-sharp"></ion-icon>
-                    <ion-label color="secondary">Editar</ion-label>
-                  </ion-list>
+            <ion-item lines="none">
+              <ion-button slot="end" color="warning" (click)="edit(user)">
+                <ion-icon color="light" name="pencil-sharp"></ion-icon>
+              </ion-button>
 
-                  <ion-list (click)="delete(user)" slot="end">
-                    <ion-icon color="danger" name="trash-outline"></ion-icon>
-                    <ion-label color="danger">Excluir</ion-label>
-                  </ion-list>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+              <ion-button slot="end" color="danger" (click)="delete(user)">
+                <ion-icon color="light" name="trash-outline"></ion-icon>
+              </ion-button>
+
+            </ion-item>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-label [ngStyle]="{'font-size': letterSize}"><strong>Cod:</strong> {{user?.id}} </ion-label>
+                </ion-col>
+                <ion-col>
+                  <ion-label [ngStyle]="{'font-size': letterSize}"><strong>Batizado:</strong> {{user?.isBaptized ?
+                    'SIM':'NÃO'}} </ion-label>
+                </ion-col>
+
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-label [ngStyle]="{'font-size': letterSize}"><strong>Estado Civil:</strong>
+                    {{user?.maritalStatus?.name | uppercase}} </ion-label>
+                </ion-col>
+                <ion-col>
+                  <ion-label [ngStyle]="{'font-size': letterSize}"><strong>Entrada por:</strong>
+                    {{user?.inputMethod?.name
+                    | uppercase}}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-label [ngStyle]="{'font-size': letterSize}"><strong>Data de Nascimento:</strong>
+                    {{user?.birthDate|
+                    date:'dd/MM/yyyy'}} </ion-label>
+                </ion-col>
+                <ion-col>
+                  <ion-label [ngStyle]="{'font-size': letterSize}"><strong>Endereço:</strong> Rua
+                    {{user?.contact?.street
+                    | uppercase}},
+                    {{user?.contact?.hauseNumber | uppercase}}, {{user?.contact?.district | uppercase}},
+                  </ion-label>
+                </ion-col>
+              </ion-row> <ion-row>
+                <ion-col>
+                  <ion-label [ngStyle]="{'font-size': letterSize}"><strong>Email:</strong> {{user?.email}} </ion-label>
+                </ion-col>
+                <ion-col>
+                  <ion-label [ngStyle]="{'font-size': letterSize}"><strong>Telefone:</strong> {{user?.contact?.phone1 |
+                    phone}},
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+
+            </ion-grid>
+          </ion-card-content>
         </ion-card>
       </div>
 

@@ -16,8 +16,8 @@ import { CaixaSummary } from 'src/app/models/caixaSummary';
 
 @Component({
   selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss'],
+  templateUrl: './financy-summary.component.html',
+  styleUrls: ['./financy-summary.component.scss'],
 })
 export class ReportComponent implements OnInit {
   @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();

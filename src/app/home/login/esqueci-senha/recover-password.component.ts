@@ -29,7 +29,7 @@ export class RevoverPasswordComponent implements OnInit {
   }
 
   async backPage() {
-    this.selectedPage.emit(Constants.PAGE_REQUEST_EMAIL);
+    this.selectedPage.emit(Constants.PAGE_LOGIN);
   }
 
   async sendRequest() {

@@ -10,6 +10,7 @@ import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { CaixaService } from 'src/app/services/caixa.service';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
+import { Constants } from 'src/app/models/constants';
 
 @Component({
   selector: 'app-caixa-register',
@@ -43,7 +44,7 @@ export class CaixaRegisterComponent implements OnInit {
     if (!this.caixa) {
       this.caixa = new Caixa();
       this.value = '';
-      this.isEntry = '1';
+      this.isEntry = '0';
     } else {
       this.value = UiService.convertToCurrency(this.caixa?.amount);
       this.isEntry = String(this.caixa?.isEntry);
@@ -51,6 +52,7 @@ export class CaixaRegisterComponent implements OnInit {
     this.isSmallDevice = this.platform.width() <= 500;
     const datePipe = new DatePipe('en');
     this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
+    this.day = datePipe.transform(Date.now(), 'dd');
     this.onSelectMonth(this.monthYear);
     this.load();
   }
@@ -105,7 +107,6 @@ export class CaixaRegisterComponent implements OnInit {
     pop.present();
 
     const { data } = await pop.onDidDismiss();
-    console.log(data.day);
     if (data) {
       this.day = data.day;
       this.concatDate();
@@ -113,7 +114,7 @@ export class CaixaRegisterComponent implements OnInit {
   }
 
   back() {
-    this.sessionPage.emit('1');
+    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_SUMMARY);
   }
 
   setType(ev: any) {

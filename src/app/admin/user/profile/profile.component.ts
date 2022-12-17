@@ -1,3 +1,4 @@
+import { UiService } from 'src/app/services/ui.service';
 import { Constants } from 'src/app/models/constants';
 import { AfterViewInit } from '@angular/core';
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -26,6 +27,7 @@ import { MaritalStatusService } from 'src/app/services/marital-status.service';
 })
 export class ProfileComponent implements OnInit {
   @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
+
   is_loading: boolean;
   base_url: string = environment.IMAGE_URL;
   user: User;
@@ -52,6 +54,7 @@ export class ProfileComponent implements OnInit {
   days: string[] = [];
   day: string;
   monthYear: string;
+  hasBackPage: boolean;
   constructor(
     private userService: UserService,
     private alertCtrl: AlertController,
@@ -65,6 +68,12 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (UiService.localGet(Constants.HAS_BACK_PAGE)) {
+      this.hasBackPage = true;
+    } else {
+      this.hasBackPage = false;
+    }
+
     this.edit = true;
     this.section = 1;
     this.is_loading = true;
@@ -73,27 +82,33 @@ export class ProfileComponent implements OnInit {
     this.load();
   }
   async load() {
-    const response = await this.loginService.loggedUser();
-    this.user = response.data;
+    this.user = UiService.localGet(Constants.USER_MAINTAINCE);
+    if (!this.user) {
+      const response = await this.loginService.loggedUser();
+      this.user = response.data;
 
-    this.validUser();
-    const inputMethodResponser = await this.inputMethodService.get();
-    this.inputMethods = inputMethodResponser.data;
+      this.validUser();
+      const inputMethodResponser = await this.inputMethodService.get();
+      this.inputMethods = inputMethodResponser.data;
 
-    const maritalResponser = await this.maritalStatusService.get();
-    this.maritalStatuses = maritalResponser.data;
-    const churchResponser = await this.churchService.get();
-    this.churches = churchResponser.data;
-
+      const maritalResponser = await this.maritalStatusService.get();
+      this.maritalStatuses = maritalResponser.data;
+      const churchResponser = await this.churchService.get();
+      this.churches = churchResponser.data;
+    }
     this.is_loading = false;
   }
 
-  validUser() {
+  checkImageExists() {
     if (this.user?.gender?.toLocaleLowerCase().includes('masculino')) {
       this.localImage = Constants.MALE_PERSON;
     } else {
       this.localImage = Constants.FEMALE_PERSON;
     }
+  }
+
+  validUser() {
+    this.checkImageExists();
     if (!this.user.contact) {
       this.user.contact = new Contact();
     }
@@ -111,6 +126,7 @@ export class ProfileComponent implements OnInit {
   }
 
   setEdit() {
+    this.checkImageExists();
     this.edit = !this.edit;
     localStorage.setItem(
       environment.LOCALSTORAGE + 'edit',
@@ -136,10 +152,16 @@ export class ProfileComponent implements OnInit {
   }
 
   async back() {
-    this.returnPage.emit({ page: 'more' });
+    if (this.isSmallDevice) {
+      this.returnPage.emit({ page: 'more' });
+    } else {
+      this.returnPage.emit(Constants.MENU_USER_OPTION_MEMBERS);
+    }
   }
   segmentChanged(ev) {}
+
   cancel() {
+    this.checkImageExists();
     this.edit = !this.edit;
     this.user = this.userAux;
   }
@@ -227,6 +249,7 @@ export class ProfileComponent implements OnInit {
   }
 
   update() {
+    this.checkImageExists();
     if (this.onSubmit()) {
       this.setEdit();
       this.exceptionService.loadingFunction();

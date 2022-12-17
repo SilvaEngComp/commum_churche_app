@@ -11,5 +11,6 @@ export class Tithe {
   created_at: string;
   constructor() {
     this.customizedMonth = new CustomizedMonth();
+    this.isTithe = true;
   }
 }

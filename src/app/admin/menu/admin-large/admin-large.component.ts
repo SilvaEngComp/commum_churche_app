@@ -76,8 +76,6 @@ export class AdminLargeComponent implements OnInit {
 
   selectPage(page: any, item: Menu) {
     item.showSub = !item.showSub;
-    console.log(page);
-    console.log(this.menu_itens.length - 1);
     if (page !== this.menu_itens.length - 1) {
       this.page = page;
       UiService.localSet(this.defaultPageName, this.page);
@@ -85,6 +83,5 @@ export class AdminLargeComponent implements OnInit {
       localStorage.clear();
       this.nav.navigateForward('');
     }
-    this.content.scrollToTop(2000);
   }
 }

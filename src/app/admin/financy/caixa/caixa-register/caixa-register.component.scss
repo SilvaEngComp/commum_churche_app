@@ -106,6 +106,10 @@ ion-radio-group{
 }
 
 ion-textarea{
+  height:200px;
   border:1px dotted var(--ion-color-tertiary);
   border-radius: 10px;
+  text-align: justify;
+  font-size: Qanelas-bold;
+  padding: 2px;
 }

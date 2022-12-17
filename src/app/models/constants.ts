@@ -59,4 +59,15 @@ export class Constants {
   ];
 
   static ENDPOINT_TITHE = 'tithes';
+
+  static MENU_FINANCY_OPTION_TITHE = '0';
+  static MENU_FINANCY_OPTION_SUMMARY = '1';
+  static MENU_FINANCY_OPTION_CAIXA_REGISTER = '2';
+  static MENU_FINANCY_OPTION_TITHE_REGISTER = '3';
+  static TITHE_MAINTAINCE = 'titheMaintaince';
+  static USER_MAINTAINCE = 'userMaintaince';
+  static MENU_USER_OPTION_PROFILE = '0';
+  static MENU_USER_OPTION_MEMBERS = '1';
+  static HAS_BACK_PAGE = 'hasBackPage';
+  static USER_LETTER_SIZE_CONFIG = 'userLetterSizeConfig';
 }

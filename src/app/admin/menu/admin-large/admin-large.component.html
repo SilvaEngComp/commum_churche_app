@@ -51,8 +51,8 @@
         <app-profile *ngSwitchCase="'0'"></app-profile>
       </div>
       <div [ngSwitch]="page" *ngIf="!isMember">
-        <app-profile *ngSwitchCase="'0'"></app-profile>
-        <app-user-admin *ngSwitchCase="'1'"></app-user-admin>
+        <app-user-admin *ngSwitchCase="'0'" [subpage]="'0'"></app-user-admin>
+        <app-user-admin *ngSwitchCase="'1'" [subpage]="'1'"></app-user-admin>
         <app-financy-admin *ngSwitchCase="'2'"></app-financy-admin>
       </div>
     </ion-col>

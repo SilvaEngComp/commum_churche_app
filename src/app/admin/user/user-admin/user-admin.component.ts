@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
 import { environment } from 'src/environments/environment';
 
@@ -8,16 +8,19 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./user-admin.component.scss'],
 })
 export class UserAdminComponent implements OnInit {
-  subpage: string;
+  @Input() subpage: string;
   defaultPageName = 'user-subpage';
   constructor() {}
 
   ngOnInit() {
-    this.subpage = '0';
-    if (UiService.localGet(this.defaultPageName)) {
-      this.subpage = UiService.localGet(this.defaultPageName);
+    if (!this.subpage) {
+      if (UiService.localGet(this.defaultPageName)) {
+        this.subpage = UiService.localGet(this.defaultPageName);
+      }
+      if (!this.subpage) {
+        this.subpage = '0';
+      }
     }
-
     UiService.pageMenu.subscribe((menu) => {
       this.subpage = menu.subpage;
       this.save();

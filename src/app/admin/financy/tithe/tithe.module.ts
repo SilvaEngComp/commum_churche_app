@@ -20,6 +20,6 @@ import { DirectivesModule } from 'src/app/directives/directives.module';
     PipesModule,
     DirectivesModule,
   ],
-  exports: [TitheComponent],
+  exports: [TitheComponent, TitheRegisterComponent],
 })
 export class TitheModule {}
