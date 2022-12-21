@@ -16,6 +16,8 @@ import { ValidDateObj } from '../models/validDateObj';
 export class UiService {
   @Output()
   static pageMenu: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  static caixaAdminEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
   static toTop: EventEmitter<any> = new EventEmitter();
@@ -33,6 +35,12 @@ export class UiService {
   @Output()
   static loadImageEmitter: EventEmitter<any> = new EventEmitter<any>();
 
+  static stringNormalization(text: string) {
+    return text
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
+      .toLowerCase();
+  }
   static getCurrentDate() {
     if (UiService.localGet('currentyDate')) {
       return UiService.localGet('currentyDate');
@@ -83,7 +91,6 @@ export class UiService {
     const encriptedKey =
       environment.LOCALSTORAGE +
       btoa(key).substring(0, Constants.SIZE_ENCRIPTY_KEY);
-    console.log(encriptedKey);
     localStorage.removeItem(encriptedKey);
     UiService.localGet(key);
   }
@@ -92,7 +99,6 @@ export class UiService {
       environment.LOCALSTORAGE +
       btoa(key).substring(0, Constants.SIZE_ENCRIPTY_KEY);
     const encrypted = localStorage.getItem(encriptedKey);
-    console.log(encriptedKey);
     if (encrypted) {
       const bytes = CriptoJs.AES.decrypt(encrypted, environment.PRIVATEKEY);
       return JSON.parse(bytes.toString(CriptoJs.enc.Utf8));
@@ -116,7 +122,6 @@ export class UiService {
   }
 
   static convertToNumber(value: string) {
-    console.log(value);
     if (!value) {
       value = '0,0';
     }

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { TitheRegistrationComponent } from './tithe-register.component';
+import { TitheRegisterComponent } from './tithe-register.component';
 
-describe('TitheRegistrationComponent', () => {
-  let component: TitheRegistrationComponent;
-  let fixture: ComponentFixture<TitheRegistrationComponent>;
+describe('TitheRegisterComponent', () => {
+  let component: TitheRegisterComponent;
+  let fixture: ComponentFixture<TitheRegisterComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [TitheRegistrationComponent],
+      declarations: [TitheRegisterComponent],
       imports: [IonicModule.forRoot()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TitheRegistrationComponent);
+    fixture = TestBed.createComponent(TitheRegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

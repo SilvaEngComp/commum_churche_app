@@ -17,7 +17,7 @@
           <ion-col>
             <ion-item lines="none" class="input">
               <ion-label position="floating">*Valor: R$</ion-label>
-              <ion-input type="text" #inputAmount placeholder="Digite o valor" [value]="value"
+              <ion-input type="text" maxlength="15" #inputAmount placeholder="Digite o valor" [value]="value"
                 [brmasker]="{money: true, thousand: '.',  decimalCaracter: ','}">
               </ion-input>
             </ion-item>
@@ -90,10 +90,12 @@
         </ion-row>
         <ion-row>
           <ion-col>
+            <textarea inputmode="text" wrap="hard" maxlength="500" [(ngModel)]="caixa.description"
+              placeholder="Aqui você pode escrever algo importante sobre esse registro...(Obrigatório para saídas)">
+            </textarea>
+
             <ion-item lines="none">
-              <ion-textarea rows="10" cols="5" type="text" #inputAmount
-                placeholder="Aqui você pode escrever algo importante sobre esse registro...(Obrigatório para saídas)">
-              </ion-textarea>
+              <ion-note slot="end">{{caixa.description?.length}}/500</ion-note>
             </ion-item>
           </ion-col>
         </ion-row>

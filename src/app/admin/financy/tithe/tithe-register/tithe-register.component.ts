@@ -70,21 +70,24 @@ export class TitheRegisterComponent implements OnInit {
   async register(amount: any) {
     this.tithe.amount = UiService.convertToNumber(amount);
     if (this.isFormValid()) {
-      const tipo = this.tithe?.isTithe ? 'do dízimo' : 'da oferta';
+      const tipo = this.tithe?.isTithe === '1' ? 'do dízimo' : 'da oferta';
 
       if (!this.isNew) {
-        await this.titheService.update(this.tithe);
-        this.exceptionService.openLoading(
-          `Entrada ${tipo} alterado com Sucesso!`
-        );
-      } else {
-        await this.titheService.store(this.tithe);
-        this.exceptionService.openLoading(
-          `Entrada ${tipo} registrado com Sucesso!`
-        );
-      }
+        this.titheService.update(this.tithe).then(() => {
+          this.exceptionService.openLoading(
+            `Entrada ${tipo} alterada com Sucesso!`
+          );
 
-      this.back();
+          this.back();
+        });
+      } else {
+        await this.titheService.store(this.tithe).then(() => {
+          this.exceptionService.openLoading(
+            `Entrada ${tipo} registrada com Sucesso!`
+          );
+          this.back();
+        });
+      }
     }
   }
 

@@ -23,6 +23,13 @@ export class FinancyAdminComponent implements OnInit {
       this.subpage = menu.subpage;
       this.save();
     });
+
+    UiService.caixaAdminEmitter.subscribe((subpage) => {
+      this.subpage = subpage;
+      console.log(subpage);
+
+      this.save();
+    });
   }
 
   save() {
@@ -30,8 +37,6 @@ export class FinancyAdminComponent implements OnInit {
   }
 
   onReceiveSession(subpage: string) {
-    console.log(subpage);
-
     this.subpage = subpage;
     this.save();
   }

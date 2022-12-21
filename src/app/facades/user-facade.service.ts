@@ -47,7 +47,9 @@ export class UserFacadeService extends FacadeService {
   searchUser(name: string) {
     const users = UiService.localGet(this.localName);
     return users.filter((cliente) =>
-      cliente.name.toLowerCase().includes(name.toLowerCase())
+      UiService.stringNormalization(cliente.name).includes(
+        UiService.stringNormalization(name)
+      )
     );
   }
 

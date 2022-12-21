@@ -41,13 +41,16 @@ export class CaixaRegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.caixa = UiService.localGet(Constants.CAIXA_MAINTAINCE);
     if (!this.caixa) {
       this.caixa = new Caixa();
       this.value = '';
       this.isEntry = '0';
+      this.isNew = true;
     } else {
       this.value = UiService.convertToCurrency(this.caixa?.amount);
       this.isEntry = String(this.caixa?.isEntry);
+      this.isNew = false;
     }
     this.isSmallDevice = this.platform.width() <= 500;
     const datePipe = new DatePipe('en');
@@ -84,17 +87,19 @@ export class CaixaRegisterComponent implements OnInit {
   async register(amount: any) {
     this.caixa.amount = UiService.convertToNumber(amount);
     if (this.isFormValid()) {
-      const tipo = this.caixa?.isEntry ? 'Entrada' : 'Saída';
+      const tipo = this.caixa?.isEntry === '1' ? 'Entrada' : 'Saída';
 
-      if (this.caixa.id) {
-        await this.caixaService.update(this.caixa);
-        this.exceptionService.openLoading(`${tipo} alterada com Successo!`);
+      if (!this.isNew) {
+        this.caixaService.update(this.caixa).then(() => {
+          this.exceptionService.openLoading(`${tipo} alterada com Successo!`);
+          this.back();
+        });
       } else {
-        await this.caixaService.story(this.caixa);
-        this.exceptionService.openLoading(`${tipo} registrada com Successo!`);
+        this.caixaService.story(this.caixa).then(() => {
+          this.exceptionService.openLoading(`${tipo} registrada com Successo!`);
+          this.back();
+        });
       }
-
-      this.back();
     }
   }
 
@@ -151,6 +156,13 @@ export class CaixaRegisterComponent implements OnInit {
     }
     if (!this.caixa?.isEntry) {
       this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
+      return;
+    }
+
+    if (this.caixa.isEntry === '0' && this.caixa?.description?.length <= 0) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.CAIXA_DESCRIPTION_INVALID
+      );
       return;
     }
 

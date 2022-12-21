@@ -250,19 +250,17 @@ export class ProfileComponent implements OnInit {
 
   update() {
     this.checkImageExists();
-    if (this.onSubmit()) {
-      this.setEdit();
-      this.exceptionService.loadingFunction();
-      this.userService
-        .update(this.user)
-        .then((responser) => {
-          this.validUser();
-          this.edit = true;
-        })
-        .catch((erro) => {
-          this.exceptionService.error(erro.error.message);
-        });
-    }
+    this.setEdit();
+    this.exceptionService.loadingFunction();
+    this.userService
+      .update(this.user)
+      .then((responser) => {
+        this.validUser();
+        this.edit = true;
+      })
+      .catch((erro) => {
+        this.exceptionService.error(erro.error.message);
+      });
   }
 
   checkContact() {

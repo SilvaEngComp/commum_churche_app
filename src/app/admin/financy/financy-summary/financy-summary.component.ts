@@ -80,12 +80,23 @@ export class ReportComponent implements OnInit {
       this.outputSummary = new CaixaSummary();
       this.titheSummary = new TitheSummary();
       this.offerSummary = new TitheSummary();
-      this.sumary.caixaSummary?.input?.filter(
-        (caixaSummary) => (this.inputSummary.total += caixaSummary?.total)
-      );
-      this.sumary.caixaSummary?.output?.filter(
-        (caixaSummary) => (this.outputSummary.total += caixaSummary?.total)
-      );
+      this.sumary.caixaSummary?.input?.filter((caixaSummary) => {
+        if (caixaSummary?.isEntry) {
+          this.inputSummary.total += caixaSummary?.total;
+        }
+      });
+      console.clear();
+      this.sumary.caixaSummary?.output?.filter((caixaSummary) => {
+        console.log(caixaSummary);
+        console.log(!caixaSummary?.isEntry);
+        if (!caixaSummary?.isEntry) {
+          this.outputSummary.total += caixaSummary?.total;
+
+          console.log('total: ' + this.outputSummary.total);
+        }
+      });
+
+      console.log(this.outputSummary);
 
       this.titheSummary = this.sumary.titheSummary?.tithe;
       this.offerSummary = this.sumary.titheSummary?.offer;

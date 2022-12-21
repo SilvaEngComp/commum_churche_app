@@ -105,11 +105,10 @@ ion-radio-group{
   display: flex;
 }
 
-ion-textarea{
+textarea{
   height:200px;
   border:1px dotted var(--ion-color-tertiary);
   border-radius: 10px;
   text-align: justify;
-  font-size: Qanelas-bold;
-  padding: 2px;
+  font-family: Qanelas-bold;
 }

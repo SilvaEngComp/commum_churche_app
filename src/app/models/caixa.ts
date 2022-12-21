@@ -7,7 +7,7 @@ export class Caixa {
   date: string;
   caixaType: CaixaType;
   amount: number;
-  reason: string;
+  description: string;
   user: User;
   isEntry: string;
   created_at: string;
@@ -17,5 +17,6 @@ export class Caixa {
     this.caixaType = new CaixaType(name);
     this.user = new User();
     this.isEntry = '0';
+    this.description = '';
   }
 }

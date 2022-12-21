@@ -1,8 +1,9 @@
+import { Constants } from 'src/app/models/constants';
 import { CaixaFacadeService } from 'src/app/facades/caixa-facade.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Caixa } from 'src/app/models/caixa';
 import { CaixaSummary } from 'src/app/models/caixaSummary';
-import { FinancySummary } from 'src/app/models/fianancySummary';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-caixa-summary',
@@ -14,12 +15,17 @@ export class CaixaSummaryComponent implements OnInit {
   @Input() caixaSummary: CaixaSummary;
   @Input() isEntry: boolean;
   headCaixaList: string[] = ['Registrado por', 'Tipo', 'Motivo'];
+  total: number;
   constructor(private caixaFacade: CaixaFacadeService) {}
 
   ngOnInit() {
     this.caixaFacade.dataLoaded.subscribe((data) => {
       console.log('emiting request to reload');
       this.mantainceEmiter.emit();
+    });
+    this.total = 0;
+    this.caixaSummary?.caixas?.filter((caixaSummary) => {
+      this.total += caixaSummary?.amount;
     });
   }
 
@@ -34,7 +40,11 @@ export class CaixaSummaryComponent implements OnInit {
   }
 
   async edit(caixa: Caixa) {
-    this.caixaFacade.registerCaixa(false, caixa);
+    UiService.localSet(Constants.CAIXA_MAINTAINCE, caixa);
+
+    UiService.caixaAdminEmitter.emit(
+      Constants.MENU_FINANCY_OPTION_CAIXA_REGISTER
+    );
   }
   delete(caixa: Caixa) {
     this.caixaFacade.delete(caixa);

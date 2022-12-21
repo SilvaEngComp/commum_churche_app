@@ -198,3 +198,12 @@
     border-radius: 10px;
     border:1px solid var(--ion-color-primary);
   }
+
+  .description{
+    overflow: hidden;
+    max-width: 400px;
+    height: auto;
+  ion-label{
+    width: 100%;
+  }
+}

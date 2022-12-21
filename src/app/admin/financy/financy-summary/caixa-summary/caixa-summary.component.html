@@ -8,7 +8,7 @@
           (click)="setShowSummaryDetail(caixaSummary)"></ion-icon>
 
         <ion-card-title>{{ caixaSummary?.caixaType?.name}} </ion-card-title>
-        <ion-note slot="end">R$ {{caixaSummary?.total | currencyBrl}}</ion-note>
+        <ion-note slot="end">R$ {{total | currencyBrl}}</ion-note>
       </ion-item>
 
       <div [ngClass]="{'ocult-details': !caixaSummary?.showDetails, 'show-details':caixaSummary?.showDetails}">
@@ -54,7 +54,11 @@
                         <ion-label> {{item?.isEntry? 'Entrada':'Saída'}}</ion-label>
                       </td>
                       <td>
-                        <ion-label> {{item?.reason?item?.reason:' - '}}</ion-label>
+                        <div class="description">
+                          <p readonly="readonly" rows="10" cols="2" type="text">
+                            {{item.description}}
+                          </p>
+                        </div>
                       </td>
                     </tr>
                   </tbody>

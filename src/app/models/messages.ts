@@ -28,6 +28,7 @@ export class ConstantMessages {
   static CAIXA_TYPE_INVALID = 'Selecione um tipo';
   static INPUT_OUTPUT_INVALID = 'Selecione se é ENTRADA ou SAÍDA';
   static TITHE_TYPE_INVALID = 'Selecione se é DÍZIMO ou OFERTA';
+  static CAIXA_DESCRIPTION_INVALID = 'Digite o motivo do registro de saída';
 
   static MSG_MAX_LIMIT_LETTER = 'Limite atingido';
 }
