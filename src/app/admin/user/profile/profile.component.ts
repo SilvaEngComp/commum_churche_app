@@ -73,7 +73,7 @@ export class ProfileComponent implements OnInit {
     } else {
       this.hasBackPage = false;
     }
-
+    console.log('entrei profile');
     this.edit = true;
     this.section = 1;
     this.is_loading = true;
@@ -83,19 +83,23 @@ export class ProfileComponent implements OnInit {
   }
   async load() {
     this.user = UiService.localGet(Constants.USER_MAINTAINCE);
+    console.log(this.user);
     if (!this.user) {
       const response = await this.loginService.loggedUser();
       this.user = response.data;
 
       this.validUser();
-      const inputMethodResponser = await this.inputMethodService.get();
-      this.inputMethods = inputMethodResponser.data;
-
-      const maritalResponser = await this.maritalStatusService.get();
-      this.maritalStatuses = maritalResponser.data;
-      const churchResponser = await this.churchService.get();
-      this.churches = churchResponser.data;
     }
+
+    const inputMethodResponser = await this.inputMethodService.get();
+    this.inputMethods = inputMethodResponser.data;
+    console.log(this.inputMethods);
+    const maritalResponser = await this.maritalStatusService.get();
+    this.maritalStatuses = maritalResponser.data;
+    console.log(this.maritalStatuses);
+    const churchResponser = await this.churchService.get();
+    this.churches = churchResponser.data;
+    console.log(this.churches);
     this.is_loading = false;
   }
 

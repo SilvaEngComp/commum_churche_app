@@ -17,6 +17,7 @@ import { UiService } from 'src/app/services/ui.service';
 import { FeedService } from 'src/app/services/feed.service';
 import { PushNotify } from 'src/app/models/pushNotification';
 import { LoginService } from 'src/app/services/login.service';
+import { Constants } from 'src/app/models/constants';
 @Component({
   selector: 'app-admin-small',
   templateUrl: './admin-small.component.html',
@@ -48,6 +49,7 @@ export class AdminSmallComponent implements OnInit, AfterViewInit {
     }
   }
   async setPage(page: number) {
+    UiService.localRemove(Constants.USER_MAINTAINCE);
     this.selectedPage.emit(page);
     // UiService.localSet('tab-page', this.page_selected);
   }

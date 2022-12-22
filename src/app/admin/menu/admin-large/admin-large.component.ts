@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent, Platform, NavController } from '@ionic/angular';
+import { Constants } from 'src/app/models/constants';
 import { Menu } from 'src/app/models/menu';
 import { User } from 'src/app/models/user';
 import { LoginService } from 'src/app/services/login.service';
@@ -76,6 +77,12 @@ export class AdminLargeComponent implements OnInit {
 
   selectPage(page: any, item: Menu) {
     item.showSub = !item.showSub;
+    if (UiService.localGet(Constants.USER_MAINTAINCE)) {
+      UiService.localRemove(Constants.USER_MAINTAINCE);
+    }
+    if (this.page === page) {
+      window.location.reload();
+    }
     if (page !== this.menu_itens.length - 1) {
       this.page = page;
       UiService.localSet(this.defaultPageName, this.page);

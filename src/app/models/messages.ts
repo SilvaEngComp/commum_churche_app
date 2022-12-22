@@ -2,6 +2,8 @@
 export class ConstantMessages {
   //User register
   static NAME_INVALID = 'Insira um nome válido (Nome e sobrenome)';
+  static NAME_INVALID_SPACE =
+    'Existe um espaço a mais entre o nome e o sobrenome ou você esqueceu o sobrenome';
   static PHONE_INVALID = 'Insira um celular válido';
   static BIRTHDATE_INVALID = 'Insira sua data de nascimento';
   static MARITAL_STATUS_INVALID = 'Selecione um estado civil';

@@ -16,7 +16,7 @@
 
       <ion-item lines="none" class="input">
         <ion-label position="floating">Valor: R$</ion-label>
-        <ion-input type="text" #inputAmount placeholder="Digite o valor" [value]="value"
+        <ion-input type="text" maxlength="15" #inputAmount placeholder="Digite o valor" [value]="value"
           [brmasker]="{money: true, thousand: '.',  decimalCaracter: ','}">
         </ion-input>
       </ion-item>

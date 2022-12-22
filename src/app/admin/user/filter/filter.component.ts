@@ -47,6 +47,7 @@ export class FilterComponent implements OnInit {
     this.filter = new UserFilter();
     this.filterList = Constants.USER_FILTER_LIST;
     this.save();
+    this.makeFilter();
   }
   async load() {
     const inputMethodResponser = await this.inputMethodService.get();

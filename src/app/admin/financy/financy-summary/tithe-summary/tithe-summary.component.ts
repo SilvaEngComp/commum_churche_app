@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Tithe } from 'src/app/models/tithe';
 import { FinancySummary } from 'src/app/models/fianancySummary';
 import { TitheSummary } from 'src/app/models/tithesummary';
+import { CustomizedMonth } from 'src/app/models/customizedMonth';
 
 @Component({
   selector: 'app-tithe-summary',
@@ -11,12 +12,13 @@ import { TitheSummary } from 'src/app/models/tithesummary';
 export class TitheSummaryComponent implements OnInit {
   @Input() titheSummary: TitheSummary;
   @Input() isTithe: boolean;
-  headTitheList: string[] = ['Registrado por', 'Tipo', 'Motivo'];
+  headTitheList: string[] = ['Registrado por', 'Período'];
   constructor() {}
 
   ngOnInit() {}
 
   setShowSummaryDetail() {
+    console.log(this.titheSummary);
     this.titheSummary.showDetails = !this.titheSummary.showDetails;
   }
 

@@ -91,12 +91,18 @@ export class CaixaRegisterComponent implements OnInit {
 
       if (!this.isNew) {
         this.caixaService.update(this.caixa).then(() => {
-          this.exceptionService.openLoading(`${tipo} alterada com Successo!`);
+          this.exceptionService.toastHandler(
+            `${tipo} alterada com Successo!`,
+            5000
+          );
           this.back();
         });
       } else {
         this.caixaService.story(this.caixa).then(() => {
-          this.exceptionService.openLoading(`${tipo} registrada com Successo!`);
+          this.exceptionService.toastHandler(
+            `${tipo} registrada com Successo!`,
+            5000
+          );
           this.back();
         });
       }
@@ -126,7 +132,11 @@ export class CaixaRegisterComponent implements OnInit {
     if (!this.caixa.caixaType) {
       this.caixa.caixaType = new CaixaType();
     }
-    this.caixa.caixaType.id = ev.target.value;
+    this.caixaTypes.filter((type) => {
+      if (type?.id === ev.target.value) {
+        this.caixa.caixaType = type;
+      }
+    });
   }
 
   isFormValid() {

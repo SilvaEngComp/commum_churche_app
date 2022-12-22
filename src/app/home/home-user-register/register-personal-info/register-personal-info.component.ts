@@ -103,19 +103,21 @@ export class RegisterPersonalInfoComponent implements OnInit {
       return false;
     }
 
-    const nome: string[] = this.user.name.split(' ');
-    if (nome.length < 2) {
+    const validName: string[] = this.user.name.split(' ');
+    if (validName.length < 2) {
       this.exceptionService.alertDialog(ConstantMessages.NAME_INVALID, 'Erro');
       return false;
     } else {
-      if (nome[0].length <= 0 || nome[1].length <= 0) {
+      if (validName[0].length <= 0 || validName[1].length <= 0) {
         this.exceptionService.alertDialog(
-          ConstantMessages.NAME_INVALID,
+          ConstantMessages.NAME_INVALID_SPACE,
           'Erro'
         );
         return false;
       }
     }
+
+    console.log(this.user);
 
     if (
       !this.user?.contact?.phone1 ||

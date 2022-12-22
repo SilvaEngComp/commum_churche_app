@@ -62,7 +62,7 @@
                 <ion-label>R$ {{tithe?.amount | currencyBrl}}</ion-label>
               </td>
               <td>
-                <ion-label> {{tithe?.isTithe ? 'DÍZIMO':'OFERTA'}} </ion-label>
+                <ion-label> {{tithe?.isTithe==='1' ? 'DÍZIMO':'OFERTA'}} </ion-label>
               </td>
               <td>
                 <ion-label> {{tithe?.created_at | date:'dd/MM/YYYY'}} </ion-label>

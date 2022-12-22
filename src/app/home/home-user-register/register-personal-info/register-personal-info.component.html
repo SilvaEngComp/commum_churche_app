@@ -12,7 +12,8 @@
 
       <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
         <ion-label position="floating">*Celular: </ion-label>
-        <ion-input name="phone" (ionBlur)="save()" type="text" [brmasker]="{phone: true, type:'num'}">
+        <ion-input name="phone" (ionBlur)="save()" [(ngModel)]="this.user.contact.phone1" type="text"
+          [brmasker]="{phone: true, type:'num'}">
         </ion-input>
       </ion-item>
 

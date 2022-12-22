@@ -28,7 +28,8 @@
           <ion-col>
             <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
               <ion-label>*Tipo </ion-label>
-              <ion-select [value]="caixa?.caixaType?.id" interface="popover" (ionChange)="setType($event)">
+              <ion-select [value]="caixa?.caixaType?.id" [selectedText]="caixa?.caixaType?.name" interface="popover"
+                (ionChange)="setType($event)">
                 <ion-select-option [value]="item?.id" *ngFor="let item of caixaTypes">{{item?.name | uppercase}}
                 </ion-select-option>
               </ion-select>

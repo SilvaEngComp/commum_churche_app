@@ -62,7 +62,7 @@
           <ion-img [src]="user?.image"></ion-img>
         </ion-avatar>
         <ion-card-title>{{ user?.name }} </ion-card-title>
-        <ion-note slot="end">{{user?.church?.name | uppercase}}</ion-note>
+        <ion-note class="note-church" slot="end">{{user?.church?.name | uppercase}}</ion-note>
       </ion-item>
 
 
@@ -92,6 +92,16 @@
                 <ion-col>
                   <ion-label [ngStyle]="{'font-size': letterSize}"><strong>Batizado:</strong> {{user?.isBaptized ?
                     'SIM':'NÃO'}} </ion-label>
+                </ion-col>
+
+              </ion-row> <ion-row>
+                <ion-col>
+                  <ion-label [ngStyle]="{'font-size': letterSize}"><strong>Gênero:</strong> {{user?.gender}}
+                  </ion-label>
+                </ion-col>
+                <ion-col>
+                  <ion-label [ngStyle]="{'font-size': letterSize}"><strong>Profissão:</strong> {{user?.occupation}}
+                  </ion-label>
                 </ion-col>
 
               </ion-row>

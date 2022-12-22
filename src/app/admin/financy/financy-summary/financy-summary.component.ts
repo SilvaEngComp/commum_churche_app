@@ -65,7 +65,6 @@ export class ReportComponent implements OnInit {
   }
 
   receiveMantainceEmiter(ev: any) {
-    console.log('reload request received');
     this.load();
   }
 
@@ -85,21 +84,23 @@ export class ReportComponent implements OnInit {
           this.inputSummary.total += caixaSummary?.total;
         }
       });
-      console.clear();
       this.sumary.caixaSummary?.output?.filter((caixaSummary) => {
-        console.log(caixaSummary);
-        console.log(!caixaSummary?.isEntry);
         if (!caixaSummary?.isEntry) {
           this.outputSummary.total += caixaSummary?.total;
-
-          console.log('total: ' + this.outputSummary.total);
         }
       });
 
-      console.log(this.outputSummary);
-
       this.titheSummary = this.sumary.titheSummary?.tithe;
+
+      this.titheSummary?.tithes.filter((tithe) => {
+        tithe.customizedMonth = new CustomizedMonth(Number(tithe.month));
+      });
+
       this.offerSummary = this.sumary.titheSummary?.offer;
+
+      this.offerSummary?.tithes.filter((tithe) => {
+        tithe.customizedMonth = new CustomizedMonth(Number(tithe.month));
+      });
     }
   }
 
@@ -133,22 +134,8 @@ export class ReportComponent implements OnInit {
   }
 
   async newCaixa() {
+    UiService.localRemove(Constants.CAIXA_MAINTAINCE);
     this.sessionPage.emit('2');
-  }
-
-  async edit(caixa: Caixa) {
-    this.exceptionService.alertDialog(
-      Constants.IN_DEVELOPMENT,
-      Constants.IN_DEVELOPMENT_TITLE
-    );
-    // const modal = await this.modalCtrl.create({
-    //   component: CaixaRegisterComponent,
-    //   componentProps: { caixa, permission: this.permission, op: 'caixa-alter' },
-    // });
-
-    // await modal.present();
-
-    // await modal.onDidDismiss().then(() => this.loadCaixas());
   }
 
   delete(caixa: Caixa) {

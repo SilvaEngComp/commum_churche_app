@@ -82,6 +82,16 @@ strong{
 ion-card-title{
   font-family: Qanelas-bold;
   color: var(--ion-color-medium);
+  word-wrap: break-word;
+  max-width: 100px;
+}
+
+.note-church{
+  font-family: Qanelas-light;
+  color: var(--ion-color-tertiary);
+  word-wrap: break-word;
+  max-width: 80px;
+  text-align: right;
 }
 
 @media only screen and (min-width: 500px) {
