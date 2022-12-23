@@ -24,6 +24,8 @@ export class User {
   inputMethod: InputMethod;
   church: Church;
   showDetails: boolean;
+  registerMethod: string;
+  created_at: string;
   constructor(name: string = '', email: string = '') {
     this.role = Constants.ROLE_MEMBER;
     this.name = name;

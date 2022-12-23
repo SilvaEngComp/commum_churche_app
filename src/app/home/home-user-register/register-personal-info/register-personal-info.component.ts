@@ -117,8 +117,6 @@ export class RegisterPersonalInfoComponent implements OnInit {
       }
     }
 
-    console.log(this.user);
-
     if (
       !this.user?.contact?.phone1 ||
       this.user?.contact?.phone1?.length <= 0
@@ -149,7 +147,7 @@ export class RegisterPersonalInfoComponent implements OnInit {
       );
       return false;
     }
-    if (!this.user.gender) {
+    if (this.user?.gender?.length <= 0) {
       this.exceptionService.alertDialog(
         ConstantMessages.GENDER_INVALID,
         'Erro'
