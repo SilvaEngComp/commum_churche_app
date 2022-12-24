@@ -16,7 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { environment } from 'src/environments/environment';
-
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -33,6 +33,7 @@ import { environment } from 'src/environments/environment';
     UiModule,
   ],
   providers: [
+    SocialSharing,
     HttpClientModule,
     {
       provide: SwRegistrationOptions,

@@ -18,13 +18,18 @@ export class AdminSelectorComponent implements OnInit {
   constructor(private platform: Platform, private router: Router) {}
 
   ngOnInit() {
-    this.page = '0';
     this.isLarge = this.platform.width() > 500;
     this.user = LoginService.getUser();
-
-    if (UiService.localGet(this.defaultPageName)) {
-      this.page = UiService.localGet(this.defaultPageName);
+    if (
+      UiService.localGet(this.defaultPageName) > 0 &&
+      UiService.localGet(this.defaultPageName)
+    ) {
+      this.page = String(UiService.localGet(this.defaultPageName));
+    } else {
+      this.page = '0';
     }
+
+    console.log(this.page);
   }
 
   onSelectPage(page: any) {

@@ -1,0 +1,20 @@
+<!-- <div *ngIf="isLoading" class="spinner">
+  <ion-spinner name="dots"></ion-spinner>
+  <ion-label>Carregando</ion-label>
+  <ion-spinner name="dots"></ion-spinner>
+</div> -->
+
+
+<ion-grid>
+
+  <ion-row>
+    <ion-col *ngFor="let month of bibleProgram ">
+      <ion-label>{{month?.customizedMonth?.name}}</ion-label>
+      <ion-item *ngFor="let verse of month?.verses" color="medium">
+        <ion-label>{{verse?.day}}: {{verse?.startVerse?.book}}
+          {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}}/{{verse?.endVerse?.book}}
+          {{verse?.endVerse?.chapter}}:{{verse?.endVerse?.verse}}</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -51,6 +51,8 @@ export class AdminLargeComponent implements OnInit {
       this.menu_itens = Menu.getMenuMember();
       this.isMember = true;
     }
+
+    this.checkImage();
   }
 
   doRefresh(ev) {
@@ -66,6 +68,16 @@ export class AdminLargeComponent implements OnInit {
     return true;
   }
 
+  checkImage() {
+    if (!this.user?.image) {
+      if (this.user?.gender.toLocaleLowerCase().includes('masculino')) {
+        this.user.image = Constants.MALE_PERSON;
+      } else {
+        this.user.image = Constants.FEMALE_PERSON;
+      }
+    }
+  }
+
   setShowMenu() {
     this.showMenu = !this.showMenu;
   }
@@ -75,8 +87,11 @@ export class AdminLargeComponent implements OnInit {
     UiService.pageMenu.emit({ subpage });
   }
 
-  selectPage(page: any, item: Menu) {
-    item.showSub = !item.showSub;
+  selectPage(page: any, item?: Menu) {
+    if (item) {
+      item.showSub = !item.showSub;
+    }
+
     if (UiService.localGet(Constants.USER_MAINTAINCE)) {
       UiService.localRemove(Constants.USER_MAINTAINCE);
     }
@@ -89,6 +104,9 @@ export class AdminLargeComponent implements OnInit {
     } else {
       localStorage.clear();
       this.nav.navigateForward('');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     }
   }
 }

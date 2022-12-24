@@ -40,8 +40,12 @@
               <ion-img src="./assets/icon/favicon.png" class="menu-logo"></ion-img>
             </ion-item>
           </ion-buttons>
-          <ion-buttons slot="end" class="menu-right">
+          <ion-buttons slot="end" class="menu-right" (click)="selectPage(-1)">
+            <ion-avatar class="myAvatar">
+              <img [src]="user?.image" />
+            </ion-avatar>
             <ion-label>{{ user?.name }}</ion-label>
+
           </ion-buttons>
 
         </ion-toolbar>
@@ -49,11 +53,14 @@
 
       <div [ngSwitch]="page" *ngIf="isMember">
         <app-profile *ngSwitchCase="'0'"></app-profile>
+        <app-bible-program-admin *ngSwitchCase="'1'"></app-bible-program-admin>
       </div>
       <div [ngSwitch]="page" *ngIf="!isMember">
-        <app-user-admin *ngSwitchCase="'0'" [subpage]="'0'"></app-user-admin>
-        <app-user-admin *ngSwitchCase="'1'" [subpage]="'1'"></app-user-admin>
-        <app-financy-admin *ngSwitchCase="'2'"></app-financy-admin>
+        <app-user-admin *ngSwitchCase="'-1'" [subpage]="'0'"></app-user-admin>
+        <app-user-admin *ngSwitchCase="'0'" [subpage]="'1'"></app-user-admin>
+        <app-financy-admin *ngSwitchCase="'1'" [subpage]="'0'"></app-financy-admin>
+        <app-financy-admin *ngSwitchCase="'2'" [subpage]="'1'"></app-financy-admin>
+        <app-bible-program-admin *ngSwitchCase="'3'"></app-bible-program-admin>
       </div>
     </ion-col>
   </ion-row>

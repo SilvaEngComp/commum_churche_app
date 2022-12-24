@@ -58,6 +58,7 @@ export class TitheComponent implements OnInit {
         tithe.customizedMonth = new CustomizedMonth(tithe?.customizedMonth?.id);
         return tithe;
       });
+      console.log(this.tithes);
       UiService.localSet('upperTitheLimit', 10);
       UiService.localSet('inferiorTitheLimit', 0);
     });

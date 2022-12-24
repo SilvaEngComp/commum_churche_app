@@ -72,4 +72,13 @@ export class Constants {
   static MENU_USER_OPTION_MEMBERS = '1';
   static HAS_BACK_PAGE = 'hasBackPage';
   static USER_LETTER_SIZE_CONFIG = 'userLetterSizeConfig';
+  static LATERAL_MENU_PERFIL = 'PERFIL';
+  static LATERAL_MENU_TITHE_OFFER = 'DÍZIMOS E OFERTAS';
+  static LATERAL_MENU_BIBLE_READ = 'LEITURA BÍBLICA';
+  static LATERAL_MENU_OUT = 'SAIR';
+  static LATERAL_MENU_MEMBERS = 'MEMBROS';
+  static LATERAL_MENU_FINANCY = 'FINANCEIRO';
+  static LATERAL_SUBMENU_TITHE_OFFER = 'Dízimos e Ofertas';
+  static LATERAL_SUBMENU_SUMMARY = 'Resumo Financeiro';
+  static SELECTED_BIBLE_PROGRAM_MAP = 'selectedBibleProramMap';
 }

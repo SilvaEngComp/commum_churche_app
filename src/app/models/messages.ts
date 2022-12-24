@@ -33,4 +33,6 @@ export class ConstantMessages {
   static CAIXA_DESCRIPTION_INVALID = 'Digite o motivo do registro de saída';
 
   static MSG_MAX_LIMIT_LETTER = 'Limite atingido';
+  static WHATSAPP_INVITE_SHARE = `Olá! Que a paz do Senhor esteja com você! Clica ai no link e vem conhecer nosso App...
+    A Igreja Batista Nova Betel, uma família para você!`;
 }

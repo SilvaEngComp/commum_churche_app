@@ -18,6 +18,8 @@ export class UiService {
   static pageMenu: EventEmitter<any> = new EventEmitter<any>();
   @Output()
   static caixaAdminEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  static bibleProgramEmmiter: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
   static toTop: EventEmitter<any> = new EventEmitter();
