@@ -57,64 +57,25 @@ export class BibleProgramService extends ServiceInterface {
       .toPromise();
   }
 
-  async story(biblereaderprogram: BibleReaderProgram): Promise<Responser> {
-    if (!(await LoginService.getHeaders())) {
-      this.checkLogged();
-      return Promise.resolve(null);
-    }
-
-    console.log(JSON.stringify(biblereaderprogram));
+  async getVerse(verseDay: VerseDay): Promise<Responser> {
     return this.http
-      .post<Responser>(`${environment.API2}/bibles`, biblereaderprogram, {
+      .get<Responser>(`${environment.API2}/bibles/getVerse/${verseDay?.id}`, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();
   }
 
-  async update(biblereaderprogram: BibleReaderProgram): Promise<Responser> {
-    if (!(await LoginService.getHeaders())) {
-      this.checkLogged();
-      return Promise.resolve(null);
-    }
-
-    return this.http
-      .patch<Responser>(
-        `${environment.API2}/bibles/${biblereaderprogram.id}`,
-        biblereaderprogram,
-        {
-          headers: LoginService.getHeaders(),
-        }
-      )
-      .toPromise();
-  }
-
-  async delete(biblereaderprogram: BibleReaderProgram): Promise<Responser> {
-    if (!(await LoginService.getHeaders())) {
-      this.checkLogged();
-      return Promise.resolve(null);
-    }
-
-    return this.http
-      .delete<Responser>(
-        `${environment.API2}/bibles/${biblereaderprogram?.id}`,
-        {
-          headers: LoginService.getHeaders(),
-        }
-      )
-      .toPromise();
-  }
-
-  async setAsDone(verseDay: VerseDay): Promise<Responser> {
-    if (!(await LoginService.getHeaders())) {
-      this.checkLogged();
-      return Promise.resolve(null);
-    }
+  async setAsDone(
+    program: BibleReaderProgram,
+    verseDay: VerseDay
+  ): Promise<Responser> {
     const user = LoginService.getUser();
+    console.log(user);
     return this.http
       .get<Responser>(
-        `${environment.API2}/bibles/dailyRead/${verseDay.id}/user/${user.id}`,
+        `${environment.API2}/bibles/setAsReadUnread/bibleReaderProgram/${program?.id}/bibleReaderMap/${verseDay?.id}`,
         {
-          headers: await LoginService.getHeaders(),
+          headers: LoginService.getHeaders(),
         }
       )
       .toPromise();

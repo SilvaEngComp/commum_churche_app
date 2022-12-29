@@ -38,13 +38,13 @@ export class AdminLargeComponent implements OnInit {
 
     this.nivel = 3;
     this.permission = false;
-    this.page = '0';
+    this.user = LoginService.getUser();
+    this.menu_itens = Menu.getMenu(this.user?.role);
+    this.page = this.menu_itens[0]?.id;
+
     if (UiService.localGet(this.defaultPageName)) {
       this.page = UiService.localGet(this.defaultPageName);
     }
-
-    this.user = LoginService.getUser();
-    this.menu_itens = Menu.getMenu(this.user?.role);
 
     this.checkImage();
   }

@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="back()">
+      <ion-icon color="primary" name="arrow-undo-circle-outline"></ion-icon>
+    </ion-buttons>
+    <ion-item class="header" lines="none">
+      <ion-label color="light">VERSÍCULOS DO DIA {{verseDay?.startVerse?.book}}
+        {{verseDay?.startVerse?.chapter}}:{{verseDay?.startVerse?.verse}}/{{verseDay?.endVerse?.book}}
+        {{verseDay?.endVerse?.chapter}}:{{verseDay?.endVerse?.verse}}</ion-label>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <div class="open-div" [ngStyle]="{'height':height}" [innerHTML]="text">
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>

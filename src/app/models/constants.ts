@@ -98,4 +98,8 @@ export class Constants {
   static IS_ENTRY = 'isEntry';
 
   static MENU_PERFIL = '-1';
+
+  static SELECTED_VERSE_DAY = 'selectedVerseDay';
+  static BIBLE_PROGRAM_MENU_VERSE_DAY = '2';
+  static BIBLE_PROGRAM_MENU_READ_DAY = '1';
 }

@@ -1,14 +1,21 @@
+import { Constants } from './../../../models/constants';
+import { UiService } from './../../../services/ui.service';
 import { VerseDay } from './../../../models/verseDay';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { IonSlides, Platform } from '@ionic/angular';
 import { BibleProgramMap } from 'src/app/models/bibleProgramMap';
 import { ChallengeQuiz } from 'src/app/models/challengeQuiz';
 import { User } from 'src/app/models/User';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
-import { UiService } from 'src/app/services/ui.service';
 import { BibleProgramService } from 'src/app/services/bible-program.service';
 import { BibleReaderProgram } from 'src/app/models/bibleReaderProgram';
 // import { ClipboardService } from 'ngx-clipboard';
@@ -19,6 +26,8 @@ import { BibleReaderProgram } from 'src/app/models/bibleReaderProgram';
   styleUrls: ['./daily-reader.component.scss'],
 })
 export class DailyReaderComponent implements OnInit {
+  @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
+
   @ViewChild('monthSlides', { static: false }) slide: IonSlides;
   bibleprogram: BibleProgramMap[] = [];
 
@@ -31,18 +40,16 @@ export class DailyReaderComponent implements OnInit {
   before: number;
   selectedMonth: number;
   selectedDay: number;
+  currentMonth: number;
+  currentDay: number;
   next: number;
   showMonths: boolean;
-  isMonthInBibleProgram: boolean;
-  quiz: ChallengeQuiz;
-  vote: number;
-  selectedDescription: string;
   is_loading: boolean;
   selectedVerseDay: VerseDay;
   showVerseDayText: boolean;
   limitForQuiz: boolean;
   selectedProgram: BibleReaderProgram;
-  bibleProgram: BibleProgramMap[];
+  selectedProgramMonth: BibleProgramMap;
   constructor(
     private platfom: Platform,
     private bibleProgramService: BibleProgramService,
@@ -53,6 +60,9 @@ export class DailyReaderComponent implements OnInit {
     this.showMonths = true;
     this.confirm = false;
     this.width = Math.round(this.platfom.width() * 0.8) + 'px';
+    this.currentMonth = new Date().getMonth() + 1;
+    this.currentDay = new Date().getDate();
+
     this.selectedMonth = new Date().getMonth();
     this.selectedDay = new Date().getDate();
     this.user = LoginService.getUser();
@@ -66,7 +76,6 @@ export class DailyReaderComponent implements OnInit {
       .show()
       .then((responser) => {
         this.selectedProgram = responser.data;
-        this.bibleProgram = this.selectedProgram?.program;
         this.ajusteSlide();
 
         this.setSelectedMonth();
@@ -75,14 +84,22 @@ export class DailyReaderComponent implements OnInit {
   }
 
   ajusteSlide() {
-    console.log(this.bibleProgram);
     if (this.selectedProgram?.program.length > 0) {
+      const adaptedMonth = this.selectedMonth + 1;
       this.selectedProgram?.program?.filter((bibleProgramMonth) => {
         this.monthSlide.push(bibleProgramMonth.customizedMonth);
-        if (bibleProgramMonth.customizedMonth.id === this.selectedMonth) {
+        if (bibleProgramMonth.customizedMonth.id === adaptedMonth) {
+          this.selectedProgramMonth = bibleProgramMonth;
           bibleProgramMonth.verses.filter((verseDay) => {
-            if (Number(verseDay.day) === this.selectedDay) {
+            if (
+              bibleProgramMonth.customizedMonth.id === this.currentMonth &&
+              Number(verseDay.day) === this.currentDay
+            ) {
               this.selectedVerseDay = verseDay;
+              this.selectedDay = this.currentDay;
+              console.log(this.selectedDay);
+            } else {
+              this.selectedDay = -1;
             }
           });
         }
@@ -96,44 +113,67 @@ export class DailyReaderComponent implements OnInit {
     // this._clipboardService.copy(text);
     // this.exceptionService.toastHandler('Texto Copiado');
   }
-  quizReturn(obj: any) {
-    if (obj.bibleprogram) {
-      this.bibleprogram = obj.bibleprogram;
+
+  setSelectedDay(verseDay: VerseDay) {
+    this.selectedDay = verseDay?.day;
+    const adaptedMonth = this.selectedMonth + 1;
+    this.selectedProgram?.program.filter((programDay) => {
+      if (programDay?.customizedMonth?.id === adaptedMonth) {
+        programDay?.verses.filter((verse) => {
+          if (verse?.day === verseDay?.day) {
+            this.selectedVerseDay = verse;
+            console.log(this.selectedVerseDay);
+          }
+        });
+      }
+    });
+  }
+  setSelectedMonth() {
+    if (this.selectedMonth > 0 && this.selectedMonth < 11) {
+      this.before = this.selectedMonth - 1;
+      this.next = this.selectedMonth + 1;
+    } else if (this.selectedMonth === 11) {
+      this.before = 10;
+      this.next = 0;
+    } else if (this.selectedMonth > 11) {
+      this.before = 11;
+      this.selectedMonth = 0;
+      this.next = 1;
+    } else if (this.selectedMonth === 0) {
+      this.before = 11;
+      this.next = 1;
+    } else if (this.selectedMonth < 0) {
+      this.before = 10;
+      this.selectedMonth = 11;
+      this.next = 0;
     }
-    if (obj.quiz) {
-      this.quiz = obj.quiz;
-    }
+
     this.ajusteSlide();
   }
 
-  setSelectedDay(i) {
-    this.selectedDay = i;
-    // this.selectedVerseDay =
-    //   this.bibleprogram[this.selectedMonth].bibleProgramMap[i];
-  }
-  setSelectedMonth() {
-    if (this.selectedMonth >= 1) {
-      this.before = this.selectedMonth - 1;
-    } else {
-      this.before = 11;
-    }
-
-    if (this.selectedMonth < 11) {
-      this.next = this.selectedMonth + 1;
-    } else {
-      this.next = 0;
-    }
-  }
-
   gotoBeforeSlide() {
-    this.slide.slidePrev();
-    this.selectedMonth--;
-    this.setSelectedMonth();
+    console.log(this.selectedMonth);
+    if (this.selectedMonth > 1) {
+      this.slide.slidePrev();
+      this.selectedMonth--;
+      this.setSelectedMonth();
+    } else {
+      this.selectedMonth--;
+      this.slide.slideTo(this.monthSlide.length);
+      this.setSelectedMonth();
+    }
   }
   gotoNextSlide() {
-    this.slide.slideNext();
-    this.selectedMonth++;
-    this.setSelectedMonth();
+    console.log(this.selectedMonth);
+    if (this.selectedMonth < 11) {
+      this.slide.slideNext();
+      this.selectedMonth++;
+      this.setSelectedMonth();
+    } else {
+      this.selectedMonth++;
+      this.slide.slideTo(0);
+      this.setSelectedMonth();
+    }
   }
 
   async onScroll(slide: IonSlides) {
@@ -142,25 +182,33 @@ export class DailyReaderComponent implements OnInit {
 
     const is_end = await slide.isEnd();
 
-    if (is_end && this.quiz) {
-      this.showMonths = false;
-    } else {
-      this.showMonths = true;
+    this.showMonths = true;
 
-      this.setSelectedMonth();
-    }
+    this.setSelectedMonth();
   }
 
-  challengeDone(verseDay: VerseDay) {
+  setAsReadUnread(verseDay: VerseDay) {
     this.is_loading = true;
-    this.bibleProgramService.setAsDone(verseDay).then((responser) => {
-      this.bibleprogram = responser.data[0];
-      this.quiz = responser.data[1];
-      this.ajusteSlide();
-      this.is_loading = false;
-      this.setSelectedDay(this.selectedDay);
+    this.bibleProgramService
+      .setAsDone(this.selectedProgram, verseDay)
+      .then((responser) => {
+        const adaptedMonth = this.selectedMonth + 1;
+        this.selectedProgram?.program.filter((programDay) => {
+          if (programDay?.customizedMonth?.id === adaptedMonth) {
+            programDay?.verses.filter((verse) => {
+              if (verse?.day === verseDay?.day) {
+                verse.isRead = responser.data !== null ? true : false;
+                this.selectedVerseDay = verse;
+              }
+            });
+          }
+        });
+        this.exceptionService.success(responser);
+      });
+  }
 
-      this.exceptionService.success(responser);
-    });
+  readVerses() {
+    UiService.localSet(Constants.SELECTED_VERSE_DAY, this.selectedVerseDay);
+    this.sessionPage.emit(Constants.BIBLE_PROGRAM_MENU_VERSE_DAY);
   }
 }

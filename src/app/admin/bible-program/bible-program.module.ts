@@ -1,3 +1,4 @@
+import { BibleVersesComponent } from './bible-verses/bible-verses.component';
 import { DailyReaderComponent } from './daily-reader/daily-reader.component';
 import { BibleProgramAdminComponent } from './bible-program-admin/bible-program-admin.component';
 import { BibleProgramMapComponent } from './bible-program-map/bible-program-map.component';
@@ -15,6 +16,7 @@ import { UserPageRoutingModule } from '../user/user-routing.module';
     BibleProgramMapComponent,
     BibleProgramAdminComponent,
     DailyReaderComponent,
+    BibleVersesComponent,
   ],
   imports: [
     CommonModule,
