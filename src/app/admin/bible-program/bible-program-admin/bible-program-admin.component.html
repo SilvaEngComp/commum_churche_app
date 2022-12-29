@@ -1,4 +1,6 @@
 <div [ngSwitch]="subpage">
-  <app-bible-program *ngSwitchCase="'0'" (sessionPage)="onReceiveSession($event)"></app-bible-program>
-  <app-bible-program-map *ngSwitchCase="'1'" (sessionPage)="onReceiveSession($event)"></app-bible-program-map>
+  <!-- <app-bible-program *ngSwitchCase="'0'" (sessionPage)="onReceiveSession($event)"></app-bible-program> -->
+  <!-- <app-bible-program-map *ngSwitchCase="'1'" (sessionPage)="onReceiveSession($event)"></app-bible-program-map> -->
+  <app-daily-reader *ngSwitchCase="'1'" (sessionPage)="onReceiveSession($event)"></app-daily-reader>
+
 </div>

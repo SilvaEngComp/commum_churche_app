@@ -32,14 +32,16 @@ export class FinancyService extends ServiceInterface {
       return Promise.resolve(null);
     }
 
-    if (!filter?.month || !filter?.year) {
-      this.exceptionService.alertDialog('Selecione um mês e um ano', 'Erro');
-      return Promise.resolve(null);
-    }
-
+    console.log(
+      `${
+        environment.API2
+      }/financies/caixaSummary?${FinancySummaryFilter.getRequest(filter)}`
+    );
     return this.http
       .get<Responser>(
-        `${environment.API2}/financies/caixaSummary/month/${filter?.month}/year/${filter?.year}`,
+        `${
+          environment.API2
+        }/financies/caixaSummary?${FinancySummaryFilter.getRequest(filter)}`,
         {
           headers: LoginService.getHeaders(),
         }

@@ -26,10 +26,9 @@ export class User {
   showDetails: boolean;
   registerMethod: string;
   created_at: string;
-  constructor(name: string = '', email: string = '') {
+  constructor() {
+    this.password = '12345678';
     this.role = Constants.ROLE_MEMBER;
-    this.name = name;
-    this.email = email;
     this.contact = new Contact();
     this.maritalStatus = new MaritalStatus();
     this.inputMethod = new InputMethod();

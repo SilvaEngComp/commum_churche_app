@@ -69,6 +69,15 @@ export class UserService extends ServiceInterface {
       .toPromise();
   }
 
+  async emergencialStore(user: User): Promise<Responser> {
+    console.log(JSON.stringify(user));
+    return this.http
+      .post<Responser>(`${environment.API2}/users/emergencyStore`, user, {
+        headers: LoginService.getHeaders(),
+      })
+      .toPromise();
+  }
+
   async update(user: User): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();

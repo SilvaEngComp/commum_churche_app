@@ -11,6 +11,7 @@ export class Tithe {
   showDetails: boolean;
   created_at: string;
   user: User;
+  register: User;
   constructor() {
     this.customizedMonth = new CustomizedMonth();
     this.isTithe = '1';

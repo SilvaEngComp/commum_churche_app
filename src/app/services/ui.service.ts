@@ -81,8 +81,13 @@ export class UiService {
 
   static validPermissions(permission?: string) {
     const user = UiService.localGet(Constants.TOKEN).user;
+    console.log(user);
     const roleUserIndex = Constants.DEFAULT_ROLES.indexOf(user?.role);
+    console.log(roleUserIndex);
+
     const roleMinIndex = Constants.DEFAULT_ROLES.indexOf(permission);
+    console.log(roleMinIndex);
+
     if (roleUserIndex <= roleMinIndex) {
       return true;
     }

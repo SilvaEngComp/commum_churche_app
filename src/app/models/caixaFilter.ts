@@ -1,3 +1,5 @@
+import { CaixaGroup } from './caixaGroup';
+import { Church } from './church';
 import { User } from './User';
 
 export class CaixaFilter {
@@ -6,6 +8,8 @@ export class CaixaFilter {
   month: string;
   year: string;
   user: User;
+  church: Church;
+  caixaGroup: CaixaGroup;
 
   constructor() {}
   static getRequest(filter: CaixaFilter): string {

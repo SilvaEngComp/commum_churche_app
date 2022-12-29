@@ -1,0 +1,74 @@
+<div class="div-header">
+  <ion-item lines="none">
+    <ion-label slot="start" class="lb-title">
+      LEITURA BÍBLICA
+    </ion-label>
+
+  </ion-item>
+</div>
+
+<!-- <div *ngIf="is_loading" class="progress_bar_waitting_redirect">
+  <ion-spinner name="dots"></ion-spinner>
+
+  <ion-label>Aguarde um instante</ion-label>
+
+  <ion-spinner name="dots"></ion-spinner>
+</div> -->
+
+<div class="options-dashboard" [ngStyle]="{'width': width}">
+  <ion-grid>
+    <ion-row>
+      <ion-col [ngStyle]="{'width': width}" class="div-slide-bibleprogram">
+        <div class="div-months">
+          <p (click)="gotoBeforeSlide()">{{ monthSlide[before]?.abbreviation | uppercase}}</p>
+          <p>{{ monthSlide[selectedMonth]?.abbreviation | uppercase}}</p>
+          <p (click)="gotoNextSlide()">{{ monthSlide[next]?.abbreviation | uppercase}}</p>
+        </div>
+        <div>
+          <ion-slides [ngStyle]="{'width': width}" (ionSlideWillChange)="onScroll(monthSlides)" #monthSlides>
+            <ion-slide class="slide" *ngFor="let verseDay of selectedProgram?.program">
+              <div class="div-slide-challenge-month" *ngIf="verseDay?.customizedMonth?.id">
+                <div class="indicator"></div>
+
+                <div class="div-slide-challenge-month-header">
+                  <div>
+                    <ion-label [ngClass]="{'lb-selected-week': selectedDay===i}" (click)="setSelectedDay(i)"
+                      *ngFor="let verseDay of verseDay?.verses; let i=index">{{verseDay?.day}}</ion-label>
+                  </div>
+                </div>
+
+                <ion-item (click)="challengeDone(selectedVerseDay)" lines="none" class="item-challenge-done">
+                  <ion-checkbox [checked]="selectedVerseDay?.isRead"></ion-checkbox>
+                  <ion-label>Marcar como concluído</ion-label>
+                </ion-item>
+                <div (click)="copy(selectedVerseDay?.text)" class="div-slide-challenge-month-body">
+                  <ion-text class="lb-challenge-description">{{selectedVerseDay?.startVerse?.book}}
+                    {{selectedVerseDay?.startVerse?.chapter}}:{{selectedVerseDay?.startVerse?.verse}}/{{selectedVerseDay?.endVerse?.book}}
+                    {{selectedVerseDay?.endVerse?.chapter}}:{{selectedVerseDay?.endVerse?.verse}}</ion-text>
+                </div>
+
+                <!-- <div class="new-comment-message" *ngIf="showVerseDayText">
+                <ion-item>
+                  <ion-textarea maxlength="250" placeholder="O que você está pensando? Conta pra gente!"
+                    [value]="selectedVerseDay.text"></ion-textarea>
+                  <ion-button fill="clear" color="primary"
+                    (click)="sendChallengeWeekUpdate(selectedVerseDay)">{{selectedVerseDay?.id ? 'ALterar':
+                    'Enviar'}}</ion-button>
+                </ion-item>
+                <ion-note>{{ selectedVerseDay?.bibleprogramuggestion?.description?.length ?
+                  selectedVerseDay?.bibleprogramuggestion?.description?.length : 0}} / 250 caracteres</ion-note>
+              </div> -->
+
+              </div>
+              <!--
+       <app-quiz [quiz]="quiz" [user]="user" [width]="width" (quizReturn)="quizReturn($event)"
+              *ngIf="verseDay?.month===-1"></app-quiz>  -->
+
+            </ion-slide>
+          </ion-slides>
+        </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</div>

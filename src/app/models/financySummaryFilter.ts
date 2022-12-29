@@ -6,6 +6,8 @@ export class FinancySummaryFilter {
   month: string;
   year: string;
   user: User;
+  dateI: string;
+  dateF: string;
 
   constructor() {}
   static getRequest(filter: FinancySummaryFilter): string {
@@ -39,6 +41,18 @@ export class FinancySummaryFilter {
         request += '&';
       }
       request += 'user_id=' + filter.user?.id;
+    }
+    if (filter.dateI) {
+      if (request.length > 0) {
+        request += '&';
+      }
+      request += 'dateI=' + filter.dateI;
+    }
+    if (filter.dateF) {
+      if (request.length > 0) {
+        request += '&';
+      }
+      request += 'dateF=' + filter.dateF;
     }
 
     return request;

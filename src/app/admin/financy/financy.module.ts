@@ -1,3 +1,5 @@
+import { ChurchModule } from './../church/church.module';
+import { MenuSummaryComponent } from './financy-summary/menu-summary/menu-summary.component';
 import { TitheRegisterComponent } from './tithe/tithe-register/tithe-register.component';
 import { TitheComponent } from './tithe/tithe.component';
 import { CaixaModule } from './caixa/caixa.module';
@@ -19,6 +21,7 @@ import { TitheSummaryComponent } from './financy-summary/tithe-summary/tithe-sum
     ReportComponent,
     CaixaSummaryComponent,
     TitheSummaryComponent,
+    MenuSummaryComponent,
   ],
   imports: [
     CommonModule,
@@ -29,7 +32,9 @@ import { TitheSummaryComponent } from './financy-summary/tithe-summary/tithe-sum
     PipesModule,
     TitheModule,
     CaixaModule,
+    ChurchModule,
   ],
   exports: [FinancyAdminComponent, TitheComponent, TitheRegisterComponent],
+  providers: [],
 })
 export class FinancyModule {}

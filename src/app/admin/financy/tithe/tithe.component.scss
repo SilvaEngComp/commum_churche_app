@@ -1,10 +1,10 @@
-.page-title{
+.page-title {
   font-family: Qanelas-bold;
   font-size: 14pt;
   color: var(--ion-color-medium);
   text-align: center;
 }
-.date-title{
+.date-title {
   font-family: Qanelas-bold;
   font-size: 14pt;
   color: var(--ion-color-medium);
@@ -74,43 +74,42 @@ ion-spinner {
   color: var(--ion-color-medium);
 }
 
-
-.ocult-details{
+.ocult-details {
   display: none;
-
 }
-.show-details{
+.show-details {
   display: block;
-strong{
-  font-family: Qanelas-bold;
-  color:var(--ion-color-medium);
-  font-size: 8pt;
-}
-  ion-label{
-    font-family: Qanelas-light;
-    color:var(--ion-color-tertiary);
+  strong {
+    font-family: Qanelas-bold;
+    color: var(--ion-color-medium);
     font-size: 8pt;
   }
-
+  ion-label {
+    font-family: Qanelas-light;
+    color: var(--ion-color-tertiary);
+    font-size: 8pt;
+  }
 }
 
-ion-card-title{
+ion-card-title {
   font-family: Qanelas-bold;
   color: var(--ion-color-medium);
 }
 
 @media only screen and (min-width: 500px) {
-
 }
 @media only screen and (max-width: 500px) {
-  ion-card-title{
+  ion-card-title {
     font-size: 10pt;
   }
-
-
 }
 
-.separated-date{
+.separated-date {
   border-radius: 10px;
-  border:1px solid var(--ion-color-primary);
+  border: 1px solid var(--ion-color-primary);
+}
+.date-formated {
+  font-family: Qanelas-bold;
+  color: var(--ion-color-tertiary);
+  font-size: 12pt;
 }

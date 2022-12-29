@@ -4,7 +4,7 @@
       <ion-icon name="arrow-undo-circle-outline"></ion-icon>
     </ion-buttons>
     <ion-item class="header" lines="none">
-      <ion-label color="light">REGISTRAR DÍZIMO/OFERTA</ion-label>
+      <ion-label color="light">REGISTRAR {{tithe?.isTithe ? 'DÍZIMO':'OFERTA'}}</ion-label>
     </ion-item>
 
   </ion-toolbar>
@@ -22,10 +22,10 @@
       </ion-item>
     </ion-col>
     <ion-col>
-
       <ion-item lines="none" class="right-input-date">
+
         <ion-button fill="clear" id="popover-button-month" expand="block">
-          <label>Mês/Ano: {{customizedMonth?.name}}/{{year}}</label>
+          <label>{{customizedMonth?.name}}/{{year}}</label>
         </ion-button>
 
         <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
@@ -38,7 +38,14 @@
           </ng-template>
         </ion-popover>
       </ion-item>
-
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col *permission="'financial'">
+      <app-my-select-list [label]="'Usuarios'" [listName]="'users'" [create]="true"
+        (selectEmiter)="setUser($event)"></app-my-select-list>
+    </ion-col>
+    <!-- <ion-col>
       <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
         <ion-radio-group (click)="setIsTithe($event)" [value]="isTithe" [allowEmptySelection]="false">
           <ion-item lines="none">
@@ -52,8 +59,7 @@
           </ion-item>
         </ion-radio-group>
       </ion-item>
-
-    </ion-col>
+    </ion-col> -->
   </ion-row>
 </ion-grid>
 

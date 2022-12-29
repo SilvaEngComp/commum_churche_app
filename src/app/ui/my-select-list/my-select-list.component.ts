@@ -1,9 +1,19 @@
-import { UserFacadeService } from 'src/app/facades/user-facade.service';
-import { environment } from 'src/environments/environment';
-import { UiService } from 'src/app/services/ui.service';
+import { PopoverController } from '@ionic/angular';
+/* eslint-disable max-len */
+import { ChurchRegisterComponent } from './../../admin/church/church-register/church-register.component';
+import { CaixaTypeRegisterComponent } from './../../admin/financy/caixa/caixa-type-register/caixa-type-register.component';
+import { CaixaGroupRegisterComponent } from './../../admin/financy/caixa/caixa-group-register/caixa-group-register.component';
+import { EmergencyUserRegisterComponent } from '../../admin/user/user-register/emergency-user-register/emergency-user-register.component';
+import { ModalController } from '@ionic/angular';
+import { ChurchService } from './../../services/church.service';
+import { CaixaGroupService } from './../../services/caixa-group.service';
+import { UserService } from './../../services/user.service';
 /* eslint-disable @typescript-eslint/member-ordering */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MySelectAdapter } from 'src/app/models/mySelectAdapter';
+import { UserFilter } from 'src/app/models/userFilter';
+import { CaixaTypeService } from 'src/app/services/caixa-type.service';
 
 @Component({
   selector: 'app-my-select-list',
@@ -17,22 +27,35 @@ export class MySelectListComponent implements OnInit {
   @Input() create?: boolean;
   @Input() listName?: any;
   @Input() isRequired?: boolean;
-  @Input() showSelect?: boolean;
-
+  showSelect?: boolean;
+  isLoading: boolean;
   limit: number;
 
   apiResponse: any[] = [];
-  apiResponseAdapted: any[] = [];
+  filtredSearch: MySelectAdapter[] = [];
+  apiResponseAdapted: MySelectAdapter[] = [];
   listAux: any[] = [];
 
-  customPopoverOptions = {};
-  constructor(private userFacedeService: UserFacadeService) {}
+  customPopoverOptions = {
+    header: 'Teste',
+  };
+  constructor(
+    private userService: UserService,
+    private caixaGroupService: CaixaGroupService,
+    private caixaTypeService: CaixaTypeService,
+    private churchService: ChurchService,
+    private popCtrl: PopoverController
+  ) {}
 
   ngOnInit() {
     this.selected = '';
+    this.showSelect = false;
     this.load();
   }
 
+  setShowSelect() {
+    this.showSelect = !this.showSelect;
+  }
   onScroll(ev: any) {
     if (this.limit <= this.apiResponse.length) {
       if (
@@ -51,49 +74,50 @@ export class MySelectListComponent implements OnInit {
     );
   }
 
-  async load() {
-    // if (this.listName === 'brands') {
-    //   this.apiResponse = UiService.localGet('localBrands');
-    //   this.brandFacadeService.dataLoaded.subscribe((data) => {
-    //     this.apiResponse = data.list;
-    //     this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
-    //       this.apiResponse
-    //     );
-    //     this.listAux = this.apiResponseAdapted;
-    //   });
-    // } else if (this.listName === 'categories') {
-    //   this.apiResponse = UiService.localGet('localCategories');
-    //   this.categoryFacadeService.dataLoaded.subscribe((data) => {
-    //     this.apiResponse = data.list;
-    //     this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
-    //       this.apiResponse
-    //     );
-    //     this.listAux = this.apiResponseAdapted;
-    //   });
-    // } else if (this.listName === 'customers') {
-    //   this.apiResponse = UiService.localGet(environment.LOCAL_CUSTOMER);
-    //   this.userFacedeService.load();
-    //   this.userFacedeService.dataLoaded.subscribe((data) => {
-    //     this.apiResponse = data.list;
-    //     this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
-    //       this.apiResponse
-    //     );
-    //     this.listAux = this.apiResponseAdapted;
-    //   });
-    // }
-    // this.apiResponseAdapted = MySelectAdapter.toMySelectAny(this.apiResponse);
-    // this.listAux = this.apiResponseAdapted;
-    // if (this.apiResponse.length < this.limit) {
-    //   this.limit = this.apiResponse.length;
-    // } else {
-    //   this.limit = 10;
-    // }
+  async load(isReload: boolean = false) {
+    this.isLoading = true;
+
+    if (this.listName === 'users') {
+      // this.apiResponse = UiService.localGet('localUsers');
+      const responser = await this.userService.get(new UserFilter());
+      this.apiResponse = responser.data;
+    } else if (this.listName === 'groups') {
+      // this.apiResponse = UiService.localGet('localGroups');
+      const responser = await this.caixaGroupService.get();
+      this.apiResponse = responser.data;
+    } else if (this.listName === 'types') {
+      // this.apiResponse = UiService.localGet('localGroups');
+      const responser = await this.caixaTypeService.get();
+      this.apiResponse = responser.data;
+    } else if (this.listName === 'churches') {
+      // this.apiResponse = UiService.localGet('localGroups');
+      const responser = await this.churchService.get();
+      this.apiResponse = responser.data;
+    }
+
+    this.apiResponseAdapted = MySelectAdapter.toMySelectAny(this.apiResponse);
+    this.listAux = this.apiResponseAdapted;
+    this.apiResponseAdapted = MySelectAdapter.toMySelectAny(this.apiResponse);
+    this.listAux = this.apiResponseAdapted;
+    this.filtredSearch = this.apiResponseAdapted;
+    if (this.apiResponse.length < this.limit) {
+      this.limit = this.apiResponse.length;
+    } else {
+      this.limit = 10;
+    }
+
+    if (isReload) {
+      this.onSelect(
+        this.apiResponseAdapted[this.apiResponseAdapted?.length - 1]
+      );
+    }
+
+    this.isLoading = false;
   }
 
-  onSelect(ev) {
-    const value = ev.target.value;
+  onSelect(mySelectAdapter: MySelectAdapter) {
     const result = this.apiResponse.filter((obj) =>
-      obj.name.toLowerCase().includes(value.toLowerCase())
+      obj.name.toLowerCase().includes(mySelectAdapter.value.toLowerCase())
     );
 
     if (result) {
@@ -101,47 +125,31 @@ export class MySelectListComponent implements OnInit {
       this.selectEmiter.emit(obj);
       this.selected = obj.name;
     }
+    this.filtredSearch = this.apiResponseAdapted;
+    this.setShowSelect();
   }
-  onSelectSearch(ev: any) {
-    const value = ev.value;
-    const result = this.apiResponse.filter((obj) =>
-      obj.name.toLowerCase().includes(value.toLowerCase())
-    );
 
-    if (result) {
-      const obj = result[0];
-      this.selectEmiter.emit(obj);
-      this.selected = obj.name;
+  async createNew(event: any) {
+    let component = null;
+    if (this.listName === 'users') {
+      component = EmergencyUserRegisterComponent;
+    } else if (this.listName === 'groups') {
+      component = CaixaGroupRegisterComponent;
+    } else if (this.listName === 'types') {
+      component = CaixaTypeRegisterComponent;
+    } else if (this.listName === 'churches') {
+      component = ChurchRegisterComponent;
     }
-    this.filtredSearch = [];
-  }
+    const modal = await this.popCtrl.create({
+      component,
+      event,
+    });
 
-  createNew() {
-    // if (this.listName === 'brands') {
-    //   this.brandFacadeService.create();
-    //   this.brandFacadeService.dataLoaded.subscribe((data) => {
-    //     this.apiResponse = data.list;
-    //     if (this.apiResponse != null && this.apiResponse?.length > 0) {
-    //       this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
-    //         this.apiResponse
-    //       );
-    //       this.listAux = this.apiResponseAdapted;
-    //       this.onSelectTLastCreated();
-    //     }
-    //   });
-    // } else if (this.listName === 'categories') {
-    //   this.categoryFacadeService.create();
-    //   this.categoryFacadeService.dataLoaded.subscribe((data) => {
-    //     this.apiResponse = data.list;
-    //     if (this.apiResponse != null && this.apiResponse?.length > 0) {
-    //       this.apiResponseAdapted = MySelectAdapter.toMySelectAny(
-    //         this.apiResponse
-    //       );
-    //       this.onSelectTLastCreated();
-    //       this.listAux = this.apiResponseAdapted;
-    //     }
-    //   });
-    // }
+    await modal.present();
+
+    modal.onDidDismiss().then(() => {
+      this.load(true);
+    });
   }
 
   onSelectTLastCreated() {
@@ -157,10 +165,10 @@ export class MySelectListComponent implements OnInit {
       this.selected = obj.name;
     }
   }
-  filtredSearch: any[] = [];
 
   // função que consulta a lista de produtos
-  searchBar() {
+  searchBar(selcted: any) {
+    this.selected = selcted;
     if (this.selected.length > 0) {
       const values = this.apiResponseAdapted;
       if (values) {
@@ -181,7 +189,7 @@ export class MySelectListComponent implements OnInit {
         this.load();
       }
     } else {
-      this.filtredSearch = [];
+      this.filtredSearch = this.apiResponseAdapted;
     }
   }
 }

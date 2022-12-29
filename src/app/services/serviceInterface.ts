@@ -34,7 +34,6 @@ export class ServiceInterface {
 
   async store(data: any): Promise<any> {
     console.clear();
-    console.log(`${this.url}/${this.endpoint}`);
     console.log(JSON.stringify(data));
     return this.http
       .post<any>(`${this.url}/${this.endpoint}`, data, {

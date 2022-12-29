@@ -1,6 +1,7 @@
 export class CustomizedMonth {
   id: number;
   name: string;
+  abbreviation: string;
 
   constructor(id: number = null) {
     if (!id) {
@@ -24,6 +25,7 @@ export class CustomizedMonth {
       ];
       console.log(id);
       this.name = monthes[id - 1];
+      this.abbreviation = monthes[id - 1].substr(0, 3);
     }
   }
 

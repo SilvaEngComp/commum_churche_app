@@ -27,7 +27,7 @@ export class AdminLargeComponent implements OnInit {
   menu_size_right: string;
   height: number;
   defaultPageName = 'lastPage';
-  isMember: boolean;
+  // isMember: boolean;
   @ViewChild('main', { static: false }) content: IonContent;
 
   constructor(private platform: Platform, private nav: NavController) {}
@@ -44,13 +44,7 @@ export class AdminLargeComponent implements OnInit {
     }
 
     this.user = LoginService.getUser();
-    if (this?.user?.role !== 'member') {
-      this.menu_itens = Menu.getMenuAdmin();
-      this.isMember = false;
-    } else {
-      this.menu_itens = Menu.getMenuMember();
-      this.isMember = true;
-    }
+    this.menu_itens = Menu.getMenu(this.user?.role);
 
     this.checkImage();
   }
@@ -87,19 +81,23 @@ export class AdminLargeComponent implements OnInit {
     UiService.pageMenu.emit({ subpage });
   }
 
-  selectPage(page: any, item?: Menu) {
-    if (item) {
-      item.showSub = !item.showSub;
+  perfil() {
+    UiService.localSet(this.defaultPageName, Constants.MENU_PERFIL);
+  }
+
+  selectPage(menu: Menu) {
+    if (menu) {
+      menu.showSub = !menu.showSub;
     }
 
     if (UiService.localGet(Constants.USER_MAINTAINCE)) {
       UiService.localRemove(Constants.USER_MAINTAINCE);
     }
-    if (this.page === page) {
+    if (this.page === menu?.id) {
       window.location.reload();
     }
-    if (page !== this.menu_itens.length - 1) {
-      this.page = page;
+    if (menu?.name !== Constants.LATERAL_MENU_OUT) {
+      this.page = menu.id;
       UiService.localSet(this.defaultPageName, this.page);
     } else {
       localStorage.clear();

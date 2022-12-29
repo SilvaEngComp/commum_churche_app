@@ -1,3 +1,4 @@
+import { LoginService } from './../../../../services/login.service';
 import { Constants } from './../../../../models/constants';
 import { DatePipe } from '@angular/common';
 import { Tithe } from 'src/app/models/tithe';
@@ -8,6 +9,7 @@ import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
 import { TitheService } from 'src/app/services/tithe.service';
 import { ConstantMessages } from 'src/app/models/messages';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-tithe-register',
@@ -23,7 +25,6 @@ export class TitheRegisterComponent implements OnInit {
   months: CustomizedMonth[];
   isSmallDevice: boolean;
   value: string;
-  isTithe: string;
   customizedMonth: CustomizedMonth;
   year: string;
   constructor(
@@ -39,11 +40,10 @@ export class TitheRegisterComponent implements OnInit {
     if (!this.tithe) {
       this.tithe = new Tithe();
       this.value = '';
-      this.isTithe = '1';
+      this.tithe.isTithe = UiService.localGet(Constants.IS_TITHE);
       this.isNew = true;
     } else {
       this.value = UiService.convertToCurrency(this.tithe?.amount);
-      this.isTithe = String(this.tithe?.isTithe);
       this.isNew = false;
     }
     this.isSmallDevice = this.platform.width() <= 500;
@@ -74,16 +74,18 @@ export class TitheRegisterComponent implements OnInit {
 
       if (!this.isNew) {
         this.titheService.update(this.tithe).then(() => {
-          this.exceptionService.openLoading(
-            `Entrada ${tipo} alterada com Sucesso!`
+          this.exceptionService.toastHandler(
+            `Entrada ${tipo} alterada com Sucesso!`,
+            5000
           );
 
           this.back();
         });
       } else {
         await this.titheService.store(this.tithe).then(() => {
-          this.exceptionService.openLoading(
-            `Entrada ${tipo} registrada com Sucesso!`
+          this.exceptionService.toastHandler(
+            `Entrada ${tipo} registrada com Sucesso!`,
+            5000
           );
           this.back();
         });
@@ -102,15 +104,27 @@ export class TitheRegisterComponent implements OnInit {
       return;
     }
 
-    if (!this.tithe?.isTithe) {
-      this.exceptionService.alertDialog(ConstantMessages.TITHE_TYPE_INVALID);
-      return;
+    if (UiService.validPermissions(Constants.FINANCIAL)) {
+      if (!this.tithe?.user?.id) {
+        this.exceptionService.alertDialog(ConstantMessages.TITHE_TYPE_INVALID);
+        return;
+      }
+    } else {
+      this.tithe.user = LoginService.getUser();
     }
 
     return true;
   }
 
   back() {
-    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_TITHE);
+    this.sessionPage.emit(UiService.localGet(Constants.BACK_PAGE));
+  }
+
+  setUser(user: User) {
+    if (user) {
+      this.tithe.user = user;
+    } else {
+      this.tithe.user = null;
+    }
   }
 }

@@ -14,7 +14,7 @@ export class BibleProgramAdminComponent implements OnInit {
 
   ngOnInit() {
     if (!this.subpage) {
-      this.subpage = '0';
+      this.subpage = '1';
 
       if (UiService.localGet(this.defaultPageName)) {
         this.subpage = UiService.localGet(this.defaultPageName);

@@ -28,11 +28,16 @@ export class ConstantMessages {
   static DAY_INVALID = 'Selecione um dia válido';
   static MONTH_YEAR_INVALID = 'Selecione um mês e ano válidos';
   static CAIXA_TYPE_INVALID = 'Selecione um tipo';
+  static CAIXA_GROUP_INVALID = 'Selecione um grupo';
+  static CAIXA_CHURCH_INVALID = 'Selecione uma organização';
   static INPUT_OUTPUT_INVALID = 'Selecione se é ENTRADA ou SAÍDA';
   static TITHE_TYPE_INVALID = 'Selecione se é DÍZIMO ou OFERTA';
+  static TITHE_USER_INVALID = 'Selecione um usuário';
   static CAIXA_DESCRIPTION_INVALID = 'Digite o motivo do registro de saída';
 
   static MSG_MAX_LIMIT_LETTER = 'Limite atingido';
   static WHATSAPP_INVITE_SHARE = `Olá! Que a paz do Senhor esteja com você! Clica ai no link e vem conhecer nosso App...
     A Igreja Batista Nova Betel, uma família para você!`;
+
+  static GENERIC_NAME_INVALID = 'Insira um nome válido';
 }

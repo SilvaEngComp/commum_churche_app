@@ -12,9 +12,9 @@
   <ion-row>
     <ion-col>
       <ion-item lines="none" class="separated-date">
-        <ion-item lines="none" class="right-input-date">
+        <ion-item lines="none">
           <ion-button fill="clear" id="popover-button-month" expand="block">
-            <label>{{customizedMonth?.name}}/{{filter?.year}}</label>
+            <label class="date-formated">{{customizedMonth?.name}}/{{filter?.year}}</label>
           </ion-button>
 
           <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
@@ -40,13 +40,7 @@
       </ion-item>
     </ion-col>
   </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-item lines="none">
-        <ion-label class="date-title">{{customizedMonth?.name}}/{{filter?.year}}</ion-label>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+
   <ion-row *ngIf="tithes.length>0">
     <ion-col>
       <ion-card>

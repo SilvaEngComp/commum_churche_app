@@ -4,13 +4,44 @@
       <ion-icon name="arrow-undo-circle-outline"></ion-icon>
     </ion-buttons>
     <ion-item class="header" lines="none">
-      <ion-label color="light">REGISTRAR ENTRADA/SAÍDA</ion-label>
+      <ion-label color="light">REGISTRAR {{caixa?.isEntry ? 'ENTRADA':'SAÍDA'}}</ion-label>
     </ion-item>
   </ion-toolbar>
 </ion-header>
 
 <ion-grid>
   <ion-row>
+    <ion-col>
+      <ion-grid>
+
+        <ion-row>
+          <ion-col>
+            <app-my-select-list [label]="'Grupos'" [listName]="'groups'" [create]="true"
+              (selectEmiter)="setGroup($event)"></app-my-select-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <app-my-select-list [label]="'Tipos'" [listName]="'types'" [create]="true"
+              (selectEmiter)="setType($event)"></app-my-select-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <app-my-select-list [label]="'Usuarios'" [listName]="'users'" [create]="true"
+              (selectEmiter)="setUser($event)"></app-my-select-list>
+          </ion-col>
+        </ion-row> <ion-row>
+          <ion-col>
+            <app-my-select-list [label]="'Organização'" [listName]="'churches'" [create]="true"
+              (selectEmiter)="setChurch($event)"></app-my-select-list>
+          </ion-col>
+        </ion-row>
+
+
+      </ion-grid>
+
+    </ion-col>
     <ion-col>
       <ion-grid>
         <ion-row>
@@ -26,54 +57,16 @@
 
         <ion-row>
           <ion-col>
-            <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-              <ion-label>*Tipo </ion-label>
-              <ion-select [value]="caixa?.caixaType?.id" [selectedText]="caixa?.caixaType?.name" interface="popover"
-                (ionChange)="setType($event)">
-                <ion-select-option [value]="item?.id" *ngFor="let item of caixaTypes">{{item?.name | uppercase}}
-                </ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-
-        <ion-row>
-          <ion-col>
-            <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-              <ion-radio-group (click)="setIsEntry($event)" [value]="isEntry" [allowEmptySelection]="false">
-                <ion-item lines="none">
-                  <ion-label>Entrada</ion-label>
-                  <ion-radio slot="start" value="1"></ion-radio>
-                </ion-item>
-
-                <ion-item lines="none">
-                  <ion-label>Saída</ion-label>
-                  <ion-radio slot="start" value="0"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-      </ion-grid>
-
-    </ion-col>
-    <ion-col>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
             <ion-item lines="none" class="separated-date">
               <ion-item lines="none"
                 [ngClass]="{'large-input-date ': !isSmallDevice, 'small-input-date':isSmallDevice}">
-                <ion-button color="light" (click)="openDay($event)">
-                  <label>Dia: {{day}}</label>
+                <ion-button fill="outline" (click)="openDay($event)">
+                  <ion-label>Dia: {{day}}</ion-label>
                 </ion-button>
               </ion-item>
 
-
-              <ion-button color="light" id="popover-button-month">
-                <label color="primary">{{customizedMonth?.name}}/{{year}}</label>
+              <ion-button fill="outline" id="popover-button-month">
+                <ion-label>{{customizedMonth?.name}}/{{year}}</ion-label>
               </ion-button>
 
               <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
@@ -89,6 +82,26 @@
             </ion-item>
           </ion-col>
         </ion-row>
+
+
+
+        <!-- <ion-row>
+          <ion-col>
+            <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+              <ion-radio-group (click)="setIsEntry($event)" [value]="isEntry" [allowEmptySelection]="false">
+                <ion-item lines="none">
+                  <ion-label>Entrada</ion-label>
+                  <ion-radio slot="start" value="1"></ion-radio>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-label>Saída</ion-label>
+                  <ion-radio slot="start" value="0"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-item>
+          </ion-col>
+        </ion-row> -->
         <ion-row>
           <ion-col>
             <textarea inputmode="text" wrap="hard" maxlength="500" [(ngModel)]="caixa.description"
@@ -100,7 +113,12 @@
             </ion-item>
           </ion-col>
         </ion-row>
-
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" color="success" (click)="register(inputAmount.value)">{{isNew ?
+              'REGISTRAR':'ALTERAR'}}</ion-button>
+          </ion-col>
+        </ion-row>
       </ion-grid>
 
     </ion-col>
@@ -108,11 +126,3 @@
 
 
 </ion-grid>
-
-
-<ion-footer [translucent]="true">
-  <ion-toolbar>
-    <ion-button expand="block" color="medium" (click)="register(inputAmount.value)">{{isNew ?
-      'REGISTRAR':'ALTERAR'}}</ion-button>
-  </ion-toolbar>
-</ion-footer>

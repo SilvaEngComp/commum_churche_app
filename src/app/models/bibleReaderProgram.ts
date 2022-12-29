@@ -5,5 +5,7 @@ export class BibleReaderProgram {
   status: string;
   program: BibleProgramMap[];
 
-  constructor() {}
+  constructor() {
+    this.id = 1;
+  }
 }

@@ -39,7 +39,7 @@ export class CaixaTypeService extends ServiceInterface {
       .toPromise();
   }
 
-  async story(caixatype: CaixaType): Promise<Responser> {
+  async store(caixatype: CaixaType): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);

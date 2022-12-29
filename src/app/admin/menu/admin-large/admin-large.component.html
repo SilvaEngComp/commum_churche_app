@@ -4,10 +4,10 @@
       <ion-icon src="./assets/icons/menu.svg" (click)="showMenu = !showMenu"></ion-icon>
 
       <ion-grid>
-        <ion-row *ngFor="let item of menu_itens; let i=index">
+        <ion-row *ngFor="let item of menu_itens">
           <ion-col>
             <ion-item lines="none" color="primary">
-              <ion-button fill="clear" (click)="selectPage(i, item)">
+              <ion-button fill="clear" (click)="selectPage(item)">
                 <ion-label>{{item?.name}}</ion-label>
               </ion-button>
               <div *ngIf="item?.submenu.length>0">
@@ -20,7 +20,7 @@
 
             <ion-list *ngIf="item?.showSub">
               <ion-item lines="none" *ngFor="let sub of item?.submenu; let j=index">
-                <ion-button fill="clear" (click)="selectSubPage(i,j)">
+                <ion-button fill="clear" (click)="selectSubPage(item.id,j)">
                   <ion-label>{{sub}}</ion-label>
                 </ion-button>
               </ion-item>
@@ -40,7 +40,7 @@
               <ion-img src="./assets/icon/favicon.png" class="menu-logo"></ion-img>
             </ion-item>
           </ion-buttons>
-          <ion-buttons slot="end" class="menu-right" (click)="selectPage(-1)">
+          <ion-buttons slot="end" class="menu-right" (click)="perfil()">
             <ion-avatar class="myAvatar">
               <img [src]="user?.image" />
             </ion-avatar>
@@ -51,16 +51,13 @@
         </ion-toolbar>
       </ion-header>
 
-      <div [ngSwitch]="page" *ngIf="isMember">
-        <app-profile *ngSwitchCase="'0'"></app-profile>
-        <app-bible-program-admin *ngSwitchCase="'1'"></app-bible-program-admin>
-      </div>
-      <div [ngSwitch]="page" *ngIf="!isMember">
+      <div [ngSwitch]="page">
+
         <app-user-admin *ngSwitchCase="'-1'" [subpage]="'0'"></app-user-admin>
-        <app-user-admin *ngSwitchCase="'0'" [subpage]="'1'"></app-user-admin>
-        <app-financy-admin *ngSwitchCase="'1'" [subpage]="'0'"></app-financy-admin>
-        <app-financy-admin *ngSwitchCase="'2'" [subpage]="'1'"></app-financy-admin>
-        <app-bible-program-admin *ngSwitchCase="'3'"></app-bible-program-admin>
+        <app-user-admin *ngSwitchCase="'2'" [subpage]="'1'"></app-user-admin>
+        <app-financy-admin *ngSwitchCase="'3'" [subpage]="'0'"></app-financy-admin>
+        <app-financy-admin *ngSwitchCase="'4'" [subpage]="'1'"></app-financy-admin>
+        <app-bible-program-admin *ngSwitchCase="'5'"></app-bible-program-admin>
       </div>
     </ion-col>
   </ion-row>

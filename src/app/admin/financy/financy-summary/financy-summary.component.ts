@@ -1,8 +1,9 @@
+import { MenuSummaryComponent } from './menu-summary/menu-summary.component';
 import { UiService } from 'src/app/services/ui.service';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { CaixaFacadeService } from 'src/app/facades/caixa-facade.service';
 import { Caixa } from 'src/app/models/caixa';
 import { FinancySummary } from 'src/app/models/fianancySummary';
@@ -31,7 +32,8 @@ export class ReportComponent implements OnInit {
   outputSummary: CaixaSummary;
   titheSummary: TitheSummary;
   offerSummary: TitheSummary;
-  monthYear: string;
+  initialDate: string;
+  endDate: string;
   showCaixaOutputDetail: boolean;
   showCaixaInputDetail: boolean;
   showTitheDetail: boolean;
@@ -41,21 +43,24 @@ export class ReportComponent implements OnInit {
 
   constructor(
     private financyService: FinancyService,
-    private exceptionService: ExceptionService,
     private caixaFacade: CaixaFacadeService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private popCtrl: PopoverController,
+    private exeptionService: ExceptionService
   ) {}
 
   ngOnInit() {
-    this.filter = UiService.localGet(Constants.FINANCY_SUMMARY_FILTER);
-    if (!this.filter) {
-      this.filter = new FinancySummaryFilter();
-      const datePipe = new DatePipe('en');
-      this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
-      this.onSelectMonth(this.monthYear);
-    } else {
-      this.customizedMonth = new CustomizedMonth(Number(this.filter?.month));
-    }
+    // this.filter = UiService.localGet(Constants.FINANCY_SUMMARY_FILTER);
+    this.filter = new FinancySummaryFilter();
+    const datePipe = new DatePipe('en');
+    const date = new Date();
+    const primeiroDia = new Date(date.getFullYear(), date.getMonth(), 1);
+    const ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    this.initialDate = datePipe.transform(primeiroDia, 'YYYY-MM-dd');
+    this.endDate = datePipe.transform(ultimoDia, 'YYYY-MM-dd');
+
+    this.filter.dateI = this.initialDate;
+    this.filter.dateF = this.endDate;
 
     this.load();
   }
@@ -69,12 +74,15 @@ export class ReportComponent implements OnInit {
   }
 
   async load() {
-    if (this.filter?.month && this.filter?.year) {
-      const response = await this.financyService.caixaSummary(this.filter);
-
-      if (response?.data) {
-        this.sumary = response.data;
-      }
+    if (!this.filter?.dateI || !this.filter?.dateF) {
+      this.exeptionService.alertDialog(
+        'Selecione a data de inicio e fim da consulta',
+        'Alerta'
+      );
+    }
+    this.financyService.caixaSummary(this.filter).then((response) => {
+      this.sumary = response.data;
+      console.log(response);
       this.inputSummary = new CaixaSummary();
       this.outputSummary = new CaixaSummary();
       this.titheSummary = new TitheSummary();
@@ -101,7 +109,7 @@ export class ReportComponent implements OnInit {
       this.offerSummary?.tithes.filter((tithe) => {
         tithe.customizedMonth = new CustomizedMonth(Number(tithe.month));
       });
-    }
+    });
   }
 
   setShowCaixaOutputDetail() {
@@ -122,28 +130,37 @@ export class ReportComponent implements OnInit {
   }
   showMoreCaixaSummary(caixa: CaixaSummary) {}
 
-  onSelectMonth(value: any) {
-    console.clear();
-    this.monthYear = value.substring(0, 7);
-    const dates = this.monthYear.split('-');
-    this.filter.month = dates[1];
-    this.filter.year = dates[0];
-    this.customizedMonth = new CustomizedMonth(Number(this.filter?.month));
-    this.saveFilter();
-    this.load();
-  }
-
-  async newCaixa() {
+  async newCaixa(op: boolean) {
     UiService.localRemove(Constants.CAIXA_MAINTAINCE);
-    this.sessionPage.emit('2');
+
+    UiService.localSet(Constants.IS_ENTRY, op);
+    UiService.localSet(
+      Constants.BACK_PAGE,
+      Constants.MENU_FINANCY_OPTION_SUMMARY
+    );
+    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_CAIXA_REGISTER);
+  }
+  async newTithe(op: boolean) {
+    UiService.localRemove(Constants.TITHE_MAINTAINCE);
+    UiService.localSet(Constants.IS_TITHE, op);
+    UiService.localSet(
+      Constants.BACK_PAGE,
+      Constants.MENU_FINANCY_OPTION_SUMMARY
+    );
+    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_TITHE_REGISTER);
   }
 
   delete(caixa: Caixa) {
     this.caixaFacade.delete(caixa);
   }
 
-  back() {
-    this.sessionPage.emit(Constants.PAGE_FINANCY_CAIXA);
+  setIntialDate(date: any) {
+    this.initialDate = date.substring(0, 10);
+    this.filter.dateI = this.initialDate;
+  }
+  setEndDate(date: any) {
+    this.endDate = date.substring(0, 10);
+    this.filter.dateF = this.initialDate;
   }
 
   async openFilter() {
@@ -155,5 +172,25 @@ export class ReportComponent implements OnInit {
 
     const { data } = await (await modal).onWillDismiss();
     this.load();
+  }
+
+  async openMenuOption(ev: any, type: number, op: boolean) {
+    // const pop = await this.popCtrl.create({
+    //   component: MenuSummaryComponent,
+    //   event: ev,
+    // });
+
+    // pop.present();
+
+    // const { data } = await pop.onWillDismiss();
+
+    // if (data?.option === Constants.NEW_RETISTRATION) {
+    if (type === 1) {
+      this.newTithe(op);
+    } else {
+      this.newCaixa(op);
+    }
+    // } else if (data?.option === Constants.SHOW_GRAPH) {
+    // // }
   }
 }

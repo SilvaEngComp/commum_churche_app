@@ -1,3 +1,4 @@
+import { VerseDay } from './../models/verseDay';
 import { Responser } from './../models/responser';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -6,6 +7,7 @@ import { BibleReaderProgram } from '../models/bibleReaderProgram';
 import { ExceptionService } from './exception-service.service';
 import { LoginService } from './login.service';
 import { ServiceInterface } from './serviceInterface';
+import { BibleProgramMap } from '../models/bibleProgramMap';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +40,9 @@ export class BibleProgramService extends ServiceInterface {
       .toPromise();
   }
 
-  async show(bibleProgram: BibleReaderProgram): Promise<Responser> {
+  async show(
+    bibleProgram: BibleReaderProgram = new BibleReaderProgram()
+  ): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
@@ -95,6 +99,22 @@ export class BibleProgramService extends ServiceInterface {
         `${environment.API2}/bibles/${biblereaderprogram?.id}`,
         {
           headers: LoginService.getHeaders(),
+        }
+      )
+      .toPromise();
+  }
+
+  async setAsDone(verseDay: VerseDay): Promise<Responser> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+    const user = LoginService.getUser();
+    return this.http
+      .get<Responser>(
+        `${environment.API2}/bibles/dailyRead/${verseDay.id}/user/${user.id}`,
+        {
+          headers: await LoginService.getHeaders(),
         }
       )
       .toPromise();

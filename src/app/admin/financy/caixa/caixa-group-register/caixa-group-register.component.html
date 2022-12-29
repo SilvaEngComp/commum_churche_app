@@ -1,0 +1,25 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none" class="input">
+          <ion-label position="floating">*Nome: </ion-label>
+          <ion-input (keyup.enter)="register()" type="text" [(ngModel)]="caixaGroup.name" #name="ngModel"
+            name="caixagroupName" [ngModelOptions]="{standalone: true}" required></ion-input>
+          <ion-note *ngIf="!name?.valid && name?.touched" color="danger">Este campo é obrigatório</ion-note>
+        </ion-item>
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer [translucent]="true">
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-button color="success" (click)="register()">
+        <ion-label>CONFIRMAR</ion-label>
+      </ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

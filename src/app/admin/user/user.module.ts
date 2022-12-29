@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { FilterComponent } from './filter/filter.component';
 import { HomeUserRegisterModule } from './../../home/home-user-register/home-user-register.module';
 import { ProfileComponent } from './profile/profile.component';
@@ -17,6 +18,7 @@ import { UserPageRoutingModule } from './user-routing.module';
 import { UserPage } from './user.page';
 import { UserAdminComponent } from './user-admin/user-admin.component';
 import { UserSearchModule } from './user-search/user-search.module';
+import { EmergencyUserRegisterComponent } from './user-register/emergency-user-register/emergency-user-register.component';
 
 @NgModule({
   imports: [
@@ -36,6 +38,7 @@ import { UserSearchModule } from './user-search/user-search.module';
     UserRegisterComponent,
     ProfileComponent,
     FilterComponent,
+    EmergencyUserRegisterComponent,
   ],
   exports: [
     UserAdminComponent,

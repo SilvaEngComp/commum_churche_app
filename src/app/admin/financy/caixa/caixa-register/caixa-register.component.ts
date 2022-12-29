@@ -1,3 +1,5 @@
+import { CaixaGroup } from './../../../../models/caixaGroup';
+import { Church } from 'src/app/models/church';
 import { ConstantMessages } from 'src/app/models/messages';
 import { CaixaType } from './../../../../models/caixaType';
 import { CaixaTypeService } from './../../../../services/caixa-type.service';
@@ -11,6 +13,8 @@ import { CaixaService } from 'src/app/services/caixa.service';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
 import { Constants } from 'src/app/models/constants';
+import { ChurchService } from 'src/app/services/church.service';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-caixa-register',
@@ -32,20 +36,24 @@ export class CaixaRegisterComponent implements OnInit {
   year: string;
   isEntry: string;
   value: string;
+  churches: Church[];
+  caixaGroups: CaixaGroup[];
   constructor(
     private caixaService: CaixaService,
     private caixaTypeService: CaixaTypeService,
     private exceptionService: ExceptionService,
     private platform: Platform,
-    private popCtrl: PopoverController
+    private popCtrl: PopoverController,
+    private churchService: ChurchService
   ) {}
 
   ngOnInit() {
     this.caixa = UiService.localGet(Constants.CAIXA_MAINTAINCE);
+
     if (!this.caixa) {
       this.caixa = new Caixa();
       this.value = '';
-      this.isEntry = '0';
+      this.caixa.isEntry = UiService.localGet(Constants.IS_ENTRY);
       this.isNew = true;
     } else {
       this.value = UiService.convertToCurrency(this.caixa?.amount);
@@ -58,11 +66,15 @@ export class CaixaRegisterComponent implements OnInit {
     this.day = datePipe.transform(Date.now(), 'dd');
     this.onSelectMonth(this.monthYear);
     this.load();
+    console.log(this.caixa);
   }
 
   async load() {
     const inputMethodResponser = await this.caixaTypeService.get();
     this.caixaTypes = inputMethodResponser.data;
+
+    const churchResponser = await this.churchService.get();
+    this.churches = churchResponser.data;
   }
 
   setIsEntry(ev: any) {
@@ -125,21 +137,27 @@ export class CaixaRegisterComponent implements OnInit {
   }
 
   back() {
-    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_SUMMARY);
-  }
-
-  setType(ev: any) {
-    if (!this.caixa.caixaType) {
-      this.caixa.caixaType = new CaixaType();
-    }
-    this.caixaTypes.filter((type) => {
-      if (type?.id === ev.target.value) {
-        this.caixa.caixaType = type;
-      }
-    });
+    this.sessionPage.emit(UiService.localGet(Constants.BACK_PAGE));
   }
 
   isFormValid() {
+    if (!this.caixa?.caixaGroup?.id) {
+      this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
+      return;
+    }
+    if (!this.caixa?.caixaType?.id) {
+      this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
+      return;
+    }
+
+    if (!this.caixa?.church?.id) {
+      this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
+      return;
+    }
+    if (!this.caixa?.user?.id) {
+      this.exceptionService.alertDialog(ConstantMessages.TITHE_USER_INVALID);
+      return;
+    }
     if (!this.caixa?.amount || this.caixa?.amount <= 0) {
       this.exceptionService.alertDialog(ConstantMessages.AMOUNT_INVALID);
       return;
@@ -160,16 +178,7 @@ export class CaixaRegisterComponent implements OnInit {
       return;
     }
 
-    if (!this.caixa?.caixaType?.id) {
-      this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
-      return;
-    }
-    if (!this.caixa?.isEntry) {
-      this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
-      return;
-    }
-
-    if (this.caixa.isEntry === '0' && this.caixa?.description?.length <= 0) {
+    if (!this.caixa.isEntry && this.caixa?.description?.length <= 0) {
       this.exceptionService.alertDialog(
         ConstantMessages.CAIXA_DESCRIPTION_INVALID
       );
@@ -177,5 +186,36 @@ export class CaixaRegisterComponent implements OnInit {
     }
 
     return true;
+  }
+
+  setType(caixaType: CaixaType) {
+    if (caixaType) {
+      this.caixa.caixaType = caixaType;
+    } else {
+      this.caixa.caixaType = null;
+    }
+  }
+
+  setChurch(church: Church) {
+    if (church) {
+      this.caixa.church = church;
+    } else {
+      this.caixa.church = null;
+    }
+  }
+  setGroup(caixaGroup: CaixaGroup) {
+    if (caixaGroup) {
+      this.caixa.caixaGroup = caixaGroup;
+    } else {
+      this.caixa.caixaGroup = null;
+    }
+  }
+
+  setUser(user: User) {
+    if (user) {
+      this.caixa.user = user;
+    } else {
+      this.caixa.user = null;
+    }
   }
 }

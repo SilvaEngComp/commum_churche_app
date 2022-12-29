@@ -1,21 +1,18 @@
 .header {
   ion-label {
-      color: var(--ion-color-tertiary);
-      font-size: 12pt;
-      font-family: Qanelas-bold;
-      text-align: center;
+    color: var(--ion-color-tertiary);
+    font-size: 12pt;
+    font-family: Qanelas-bold;
+    text-align: center;
   }
 
-  ion-icon{
+  ion-icon {
     font-size: 40px;
   }
 }
 .input {
-  width: 80%;
   border-radius: 20px;
   border-bottom: 1px solid var(--ion-color-tertiary);
-  margin-left: 10%;
-  margin-top: 6%;
   padding: 2px;
 }
 
@@ -43,35 +40,33 @@
   border-radius: 10px;
 }
 .large-input-date {
-  ion-button{
+  ion-button {
     width: 100%;
-  border-radius: 10px;
+    border-radius: 10px;
   }
   margin-left: 8%;
 }
 
-
-
 .input-item {
-   border-radius: 20px;
-   border-bottom: 1px solid var(--ion-color-tertiary);
-   padding: 2px;
-   margin-left: 30%;
-   width: 80%;
+  border-radius: 20px;
+  border-bottom: 1px solid var(--ion-color-tertiary);
+  padding: 2px;
+  margin-left: 30%;
+  width: 80%;
 }
 
-.item-button{
-   padding: 2px;
-   margin-left: 10%;
-   width: 80%;
+.item-button {
+  padding: 2px;
+  margin-left: 10%;
+  width: 80%;
 
-   ion-button{
+  ion-button {
     --border-radius: 20px;
-    ion-label{
+    ion-label {
       font-size: 14pt;
       font-family: Qanelas-bold;
     }
-   }
+  }
 }
 
 .align-title {
@@ -83,32 +78,58 @@
   width: 100px;
 }
 
-
-
 .ng-invalid.ng-touched:not(form) {
   border-bottom: 1px solid red;
 }
 
-
-
-ion-radio-group{
+ion-radio-group {
   display: flex;
 }
 
-
-.isSmall{
+.isSmall {
   width: 0px;
   height: 0px;
 }
 
-.separated-date{
+.separated-date {
   display: flex;
 }
 
-textarea{
-  height:200px;
-  border:1px dotted var(--ion-color-tertiary);
+textarea {
+  height: 200px;
+  border: 1px dotted var(--ion-color-tertiary);
   border-radius: 10px;
   text-align: justify;
   font-family: Qanelas-bold;
+}
+
+.small-input-date {
+  width: 100%;
+  border-radius: 10px;
+  border-bottom: 1px solid var(--ion-color-tertiary);
+}
+.large-input-date {
+  width: 100%;
+  ion-button {
+    width: 100%;
+    border-radius: 10px;
+    --border-bottom: 1px solid var(--ion-color-tertiary);
+    ion-label {
+      color: var(--ion-color-primary);
+    }
+  }
+  margin-left: 8%;
+}
+.right-input-date {
+  width: 90%;
+  ion-button {
+    width: 100%;
+    border-radius: 10px;
+    border-bottom: 1px solid var(--ion-color-tertiary);
+    ion-label {
+      color: var(--ion-color-primary);
+    }
+  }
+  margin-left: 1%;
+  margin-right: 5%;
 }

@@ -4,14 +4,10 @@ import { PermissionDirective } from './permission.directive';
 import { CopyClipboardDirective } from './copy-clipboard.directive';
 import { IonicModule } from '@ionic/angular';
 
-
-
 @NgModule({
   declarations: [PermissionDirective, CopyClipboardDirective],
-  imports: [
-    CommonModule,
-    IonicModule,
-  ],
-  exports: [PermissionDirective, CopyClipboardDirective]
+  imports: [CommonModule, IonicModule],
+  exports: [PermissionDirective, CopyClipboardDirective],
+  providers: [PermissionDirective],
 })
-export class DirectivesModule { }
+export class DirectivesModule {}
