@@ -2,6 +2,9 @@ ion-grid {
   height: 100%;
 }
 
+ion-title {
+  text-align: center;
+}
 .menu-logo {
   width: 80px;
   height: 80px;
@@ -68,8 +71,7 @@ ion-segment ion-label {
   }
   ion-item {
     width: 200px;
-      word-wrap: break-word;
-
+    word-wrap: break-word;
   }
   ion-label {
     font-size: 14pt;
@@ -112,9 +114,9 @@ ion-segment ion-label {
   }
 }
 
-.myAvatar{
-img{
-  width: 40px;
-  height: 40px;
-}
+.myAvatar {
+  img {
+    width: 40px;
+    height: 40px;
+  }
 }

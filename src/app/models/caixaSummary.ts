@@ -1,9 +1,10 @@
+import { CaixaGroup } from './caixaGroup';
 import { Caixa } from './caixa';
 import { CaixaType } from './caixaType';
 
 export class CaixaSummary {
   total: number;
-  caixaType: CaixaType;
+  caixaGroup: CaixaGroup;
   caixas: Caixa[];
   showDetails: boolean;
   isEntry: boolean;

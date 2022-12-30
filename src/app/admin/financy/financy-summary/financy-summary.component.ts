@@ -40,7 +40,7 @@ export class ReportComponent implements OnInit {
   showOfferDetail: boolean;
   showInputsDetail: boolean;
   customizedMonth: CustomizedMonth;
-
+  noContent = 'Nenhum Registro';
   constructor(
     private financyService: FinancyService,
     private caixaFacade: CaixaFacadeService,
@@ -51,6 +51,11 @@ export class ReportComponent implements OnInit {
 
   ngOnInit() {
     // this.filter = UiService.localGet(Constants.FINANCY_SUMMARY_FILTER);
+    UiService.localSet(
+      Constants.TITLE_CURRENT_PAGE,
+      Constants.TITLE_SUMMARY_FINANCY
+    );
+    UiService.pageTitle.emit(Constants.TITLE_SUMMARY_FINANCY);
     this.filter = new FinancySummaryFilter();
     const datePipe = new DatePipe('en');
     const date = new Date();

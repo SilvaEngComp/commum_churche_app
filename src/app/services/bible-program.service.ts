@@ -69,8 +69,9 @@ export class BibleProgramService extends ServiceInterface {
     program: BibleReaderProgram,
     verseDay: VerseDay
   ): Promise<Responser> {
-    const user = LoginService.getUser();
-    console.log(user);
+    console.log(
+      `${environment.API2}/bibles/setAsReadUnread/bibleReaderProgram/${program?.id}/bibleReaderMap/${verseDay?.id}`
+    );
     return this.http
       .get<Responser>(
         `${environment.API2}/bibles/setAsReadUnread/bibleReaderProgram/${program?.id}/bibleReaderMap/${verseDay?.id}`,

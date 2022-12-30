@@ -1,3 +1,4 @@
+import { MenuCaixaSummaryComponent } from './financy-summary/menu-caixa-summary/menu-caixa-summary.component';
 import { ChurchModule } from './../church/church.module';
 import { MenuSummaryComponent } from './financy-summary/menu-summary/menu-summary.component';
 import { TitheRegisterComponent } from './tithe/tithe-register/tithe-register.component';
@@ -22,6 +23,7 @@ import { TitheSummaryComponent } from './financy-summary/tithe-summary/tithe-sum
     CaixaSummaryComponent,
     TitheSummaryComponent,
     MenuSummaryComponent,
+    MenuCaixaSummaryComponent,
   ],
   imports: [
     CommonModule,

@@ -57,6 +57,10 @@ export class DailyReaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    UiService.localSet(
+      Constants.TITLE_CURRENT_PAGE,
+      Constants.TITLE_DAILY_READER
+    );
     this.showMonths = true;
     this.confirm = false;
     this.width = Math.round(this.platfom.width() * 0.8) + 'px';
@@ -80,7 +84,7 @@ export class DailyReaderComponent implements OnInit {
 
         this.setSelectedMonth();
       })
-      .finally(() => (this.is_loading = false));
+      .catch(() => (this.is_loading = false));
   }
 
   ajusteSlide() {
@@ -107,7 +111,7 @@ export class DailyReaderComponent implements OnInit {
     } else {
       this.showMonths = false;
     }
-    console.log(this.selectedVerseDay);
+    this.is_loading = false;
   }
   copy(text: string) {
     // this._clipboardService.copy(text);
@@ -122,7 +126,6 @@ export class DailyReaderComponent implements OnInit {
         programDay?.verses.filter((verse) => {
           if (verse?.day === verseDay?.day) {
             this.selectedVerseDay = verse;
-            console.log(this.selectedVerseDay);
           }
         });
       }
@@ -204,7 +207,8 @@ export class DailyReaderComponent implements OnInit {
           }
         });
         this.exceptionService.success(responser);
-      });
+      })
+      .finally(() => (this.is_loading = false));
   }
 
   readVerses() {

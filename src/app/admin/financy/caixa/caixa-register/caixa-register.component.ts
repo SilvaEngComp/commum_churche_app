@@ -5,8 +5,7 @@ import { CaixaType } from './../../../../models/caixaType';
 import { CaixaTypeService } from './../../../../services/caixa-type.service';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Platform, PopoverController } from '@ionic/angular';
-import { DayToSelectComponent } from 'src/app/home/home-user-register/register-personal-info/day-to-select/day-to-select.component';
+import { AlertController, Platform } from '@ionic/angular';
 import { Caixa } from 'src/app/models/caixa';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { CaixaService } from 'src/app/services/caixa.service';
@@ -43,7 +42,7 @@ export class CaixaRegisterComponent implements OnInit {
     private caixaTypeService: CaixaTypeService,
     private exceptionService: ExceptionService,
     private platform: Platform,
-    private popCtrl: PopoverController,
+    private actionCtrl: AlertController,
     private churchService: ChurchService
   ) {}
 
@@ -57,14 +56,19 @@ export class CaixaRegisterComponent implements OnInit {
       this.isNew = true;
     } else {
       this.value = UiService.convertToCurrency(this.caixa?.amount);
-      this.isEntry = String(this.caixa?.isEntry);
       this.isNew = false;
     }
+    let pageTitle;
+    if (this.caixa.isEntry) {
+      pageTitle = Constants.TITLE_CAIXA_REGISTER_IN;
+    } else {
+      pageTitle = Constants.TITLE_CAIXA_REGISTER_OUT;
+    }
+    UiService.localSet(Constants.TITLE_CURRENT_PAGE, pageTitle);
+    UiService.pageTitle.emit(pageTitle);
     this.isSmallDevice = this.platform.width() <= 500;
     const datePipe = new DatePipe('en');
-    this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
-    this.day = datePipe.transform(Date.now(), 'dd');
-    this.onSelectMonth(this.monthYear);
+    this.caixa.date = datePipe.transform(Date.now(), 'yyyy-MM-dd');
     this.load();
     console.log(this.caixa);
   }
@@ -78,24 +82,39 @@ export class CaixaRegisterComponent implements OnInit {
   }
 
   setIsEntry(ev: any) {
+    console.clear();
     console.log(ev.target.value);
     this.caixa.isEntry = ev.target.value;
     console.log(this.caixa.isEntry);
   }
 
-  onSelectMonth(value: any) {
-    this.monthYear = value.substring(0, 7);
-    const dates = this.monthYear.split('-');
-    this.year = dates[0];
-    this.customizedMonth = new CustomizedMonth(Number(dates[1]));
-    this.concatDate();
+  onSetDate(value: any) {
+    console.log(value);
+    this.caixa.date = value.substring(0, 10);
   }
 
-  concatDate() {
-    console.clear();
-    this.caixa.date = this.monthYear + '-' + this.day;
-  }
+  async askNeedDoAgain() {
+    const action = await this.actionCtrl.create({
+      header: 'O que deseja fazer?',
+      subHeader: 'Deseja realizar outro registro ?',
+      buttons: [
+        {
+          text: 'Sim',
+          handler: () => {},
+        },
+        {
+          text: 'Não',
+          handler: () => {
+            this.back();
+          },
+        },
+      ],
+    });
 
+    await action.present();
+
+    const result = await action.onDidDismiss();
+  }
   async register(amount: any) {
     this.caixa.amount = UiService.convertToNumber(amount);
     if (this.isFormValid()) {
@@ -107,7 +126,7 @@ export class CaixaRegisterComponent implements OnInit {
             `${tipo} alterada com Successo!`,
             5000
           );
-          this.back();
+          this.askNeedDoAgain();
         });
       } else {
         this.caixaService.story(this.caixa).then(() => {
@@ -115,24 +134,9 @@ export class CaixaRegisterComponent implements OnInit {
             `${tipo} registrada com Successo!`,
             5000
           );
-          this.back();
+          this.askNeedDoAgain();
         });
       }
-    }
-  }
-
-  async openDay(ev: any) {
-    const pop = await this.popCtrl.create({
-      component: DayToSelectComponent,
-      event: ev,
-    });
-
-    pop.present();
-
-    const { data } = await pop.onDidDismiss();
-    if (data) {
-      this.day = data.day;
-      this.concatDate();
     }
   }
 
@@ -154,10 +158,7 @@ export class CaixaRegisterComponent implements OnInit {
       this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
       return;
     }
-    if (!this.caixa?.user?.id) {
-      this.exceptionService.alertDialog(ConstantMessages.TITHE_USER_INVALID);
-      return;
-    }
+
     if (!this.caixa?.amount || this.caixa?.amount <= 0) {
       this.exceptionService.alertDialog(ConstantMessages.AMOUNT_INVALID);
       return;

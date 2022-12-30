@@ -50,6 +50,14 @@ export class TitheRegisterComponent implements OnInit {
     const datePipe = new DatePipe('en');
     this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
     this.onSelectMonth(this.monthYear);
+    let pageTitle;
+    if (this.tithe.isTithe) {
+      pageTitle = Constants.TITLE_TITHE_REGISTER;
+    } else {
+      pageTitle = Constants.TITLE_OFFER_REGISTER;
+    }
+    UiService.localSet(Constants.TITLE_CURRENT_PAGE, pageTitle);
+    UiService.pageTitle.emit(pageTitle);
   }
 
   onSelectMonth(value: any) {

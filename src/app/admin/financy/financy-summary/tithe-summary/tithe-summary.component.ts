@@ -10,7 +10,13 @@ import { TitheSummary } from 'src/app/models/tithesummary';
 export class TitheSummaryComponent implements OnInit {
   @Input() titheSummary: TitheSummary;
   @Input() isTithe: boolean;
-  headTitheList: string[] = ['Registrado por', 'Referente a', 'Período'];
+  headTitheList: string[] = [
+    'valor',
+    'data',
+    'Registrado por',
+    'Referente a',
+    'Período',
+  ];
   constructor() {}
 
   ngOnInit() {}

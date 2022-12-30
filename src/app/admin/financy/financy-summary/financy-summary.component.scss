@@ -154,7 +154,12 @@ ion-spinner {
 
 ion-card-title {
   font-family: Qanelas-bold;
-  color: var(--ion-color-medium);
+  color: var(--ion-color-tertiary);
+}
+
+ion-note {
+  font-family: Qanelas-bold;
+  color: var(--ion-color-tertiary);
 }
 
 @media only screen and (min-width: 500px) {

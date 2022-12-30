@@ -55,109 +55,74 @@
 
   <ion-row>
     <ion-col>
-
-      <ion-item lines="none">
-        <ion-icon *ngIf="!showCaixaOutputDetail" name="caret-forward-outline"
-          (click)="setShowCaixaOutputDetail()"></ion-icon>
-        <ion-icon *ngIf="showCaixaOutputDetail" name="caret-down-outline"
-          (click)="setShowCaixaOutputDetail()"></ion-icon>
-
-        <ion-card-title>SEDE</ion-card-title>
-        <ion-note slot="end">{{outputSummary?.total | currencyBrl}}</ion-note>
-      </ion-item>
-      <div [ngClass]="{'ocult-details': !showCaixaOutputDetail, 'show-details':showCaixaOutputDetail}">
-
-        <ion-row>
-          <ion-col>
-            <ion-item lines="none">
-              <ion-icon *ngIf="!showCaixaOutputDetail" name="caret-forward-outline"
-                (click)="setShowCaixaOutputDetail()"></ion-icon>
-              <ion-icon *ngIf="showCaixaOutputDetail" name="caret-down-outline"
-                (click)="setShowCaixaOutputDetail()"></ion-icon>
-
-              <ion-card-title>Saídas</ion-card-title>
-              <ion-note slot="end">{{outputSummary?.total | currencyBrl}}</ion-note>
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light">
+            <ion-card-title color="primary">Saídas</ion-card-title>
+            <ion-note color="primary" slot="end">R$ {{outputSummary?.total | currencyBrl}}</ion-note>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <ion-item lines="none" *ngIf="sumary?.caixaSummary?.output.length===0 ">
+              <ion-title color="primary"> {{noContent}}</ion-title>
             </ion-item>
-            <div [ngClass]="{'ocult-details': !showCaixaOutputDetail, 'show-details':showCaixaOutputDetail}">
-              <app-caixa-summary *ngFor="let caixa of sumary?.caixaSummary?.output" [caixaSummary]="caixa"
-                (mantainceEmiter)="receiveMantainceEmiter($event)" [isEntry]="true"></app-caixa-summary>
+            <div *ngFor="let caixa of sumary?.caixaSummary?.output">
+              <app-caixa-summary [caixaSummary]="caixa" [isEntry]="false" *ngIf="sumary?.caixaSummary?.output.length>0"
+                (mantainceEmiter)="receiveMantainceEmiter($event)"></app-caixa-summary>
             </div>
-          </ion-col>
-        </ion-row>
+          </div>
 
-        <ion-row>
-          <ion-col>
-            <ion-item lines="none">
-              <ion-icon *ngIf="!showInputsDetail" name="caret-forward-outline"
-                (click)="setShowInputsDetail()"></ion-icon>
-              <ion-icon *ngIf="showInputsDetail" name="caret-down-outline" (click)="setShowInputsDetail()"></ion-icon>
-
-              <ion-card-title>Entradas</ion-card-title>
-              <ion-note slot="end">{{(inputSummary?.total + titheSummary?.total + offerSummary?.total) |
-                currencyBrl}}</ion-note>
+        </ion-accordion>
+        <ion-accordion value="second">
+          <ion-item slot="header" color="light">
+            <ion-card-title>Dízimos</ion-card-title>
+            <ion-note slot="end">R$ {{titheSummary?.total | currencyBrl}}</ion-note>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <ion-item lines="none" *ngIf="titheSummary?.tithes.length===0 ">
+              <ion-title color="primary"> {{noContent}}</ion-title>
             </ion-item>
-            <div [ngClass]="{'ocult-details': !showInputsDetail, 'show-details':showInputsDetail}">
-              <ion-grid>
 
-                <ion-row>
-                  <ion-col>
-                    <ion-item lines="none">
-                      <ion-icon *ngIf="!showTitheDetail" name="caret-forward-outline"
-                        (click)="setShowTitheDetail()"></ion-icon>
-                      <ion-icon *ngIf="showTitheDetail" name="caret-down-outline"
-                        (click)="setShowTitheDetail()"></ion-icon>
+            <app-tithe-summary [titheSummary]="titheSummary" [isTithe]="true"
+              *ngIf="titheSummary?.tithes.length>0"></app-tithe-summary>
+          </div>
+        </ion-accordion>
+        <ion-accordion value="third">
+          <ion-item slot="header" color="light">
+            <ion-card-title>Ofertas</ion-card-title>
+            <ion-note slot="end">R$ {{offerSummary?.total | currencyBrl}}</ion-note>
+          </ion-item>
+          <div class="ion-padding" slot="content">
 
-                      <ion-card-title>Dízimos</ion-card-title>
-                      <ion-note slot="end">{{titheSummary?.total | currencyBrl}}</ion-note>
-                    </ion-item>
-                    <div [ngClass]="{'ocult-details': !showTitheDetail, 'show-details':showTitheDetail}">
-                      <app-tithe-summary [titheSummary]="titheSummary" [isTithe]="true"></app-tithe-summary>
-                    </div>
-                  </ion-col>
-                </ion-row>
-
-                <ion-row>
-                  <ion-col>
-                    <ion-item lines="none">
-                      <ion-icon *ngIf="!showOfferDetail" name="caret-forward-outline"
-                        (click)="setShowOfferDetail()"></ion-icon>
-                      <ion-icon *ngIf="showOfferDetail" name="caret-down-outline"
-                        (click)="setShowOfferDetail()"></ion-icon>
-
-                      <ion-card-title>Ofertas</ion-card-title>
-                      <ion-note slot="end">{{offerSummary?.total | currencyBrl}}</ion-note>
-                    </ion-item>
-                    <div [ngClass]="{'ocult-details': !showOfferDetail, 'show-details':showOfferDetail}">
-                      <app-tithe-summary [titheSummary]="offerSummary" [isTithe]="false"></app-tithe-summary>
-                    </div>
-                  </ion-col>
-                </ion-row>
-
-                <ion-row>
-                  <ion-col>
-                    <ion-item lines="none">
-                      <ion-icon *ngIf="!showCaixaInputDetail" name="caret-forward-outline"
-                        (click)="setShowCaixaInputDetail()"></ion-icon>
-                      <ion-icon *ngIf="showCaixaInputDetail" name="caret-down-outline"
-                        (click)="setShowCaixaInputDetail()"></ion-icon>
-
-                      <ion-card-title>Outras Entradas</ion-card-title>
-                      <ion-note slot="end">{{inputSummary?.total | currencyBrl}}</ion-note>
-                    </ion-item>
-
-                    <div [ngClass]="{'ocult-details': !showCaixaInputDetail, 'show-details':showCaixaInputDetail}"
-                      *ngFor="let caixa of sumary?.caixaSummary?.input">
-                      <app-caixa-summary [caixaSummary]="caixa" [isEntry]="true"
-                        (mantainceEmiter)="receiveMantainceEmiter($event)"></app-caixa-summary>
-                    </div>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+            <ion-item lines="none" *ngIf="offerSummary?.tithes.length===0 ">
+              <ion-title color="primary"> {{noContent}}</ion-title>
+            </ion-item>
+            <div [ngClass]="{'ocult-details': !showOfferDetail, 'show-details':showOfferDetail}">
+              <app-tithe-summary [titheSummary]="offerSummary" [isTithe]="false"
+                *ngIf="offerSummary?.tithes.length>0"></app-tithe-summary>
             </div>
+          </div>
+        </ion-accordion> <ion-accordion value="fourth">
+          <ion-item slot="header" color="light">
+            <ion-card-title>Outras Entradas</ion-card-title>
+            <ion-note slot="end">R$ {{inputSummary?.total | currencyBrl}}</ion-note>
+          </ion-item>
+          <div class="ion-padding" slot="content">
 
-          </ion-col>
-        </ion-row>
-      </div>
+            <ion-item lines="none" *ngIf="sumary?.caixaSummary?.input?.length===0">
+              <ion-title color="primary"> {{noContent}}</ion-title>
+            </ion-item>
+            <div *ngFor="let caixa of sumary?.caixaSummary?.input">
+              <app-caixa-summary [caixaSummary]="caixa" [isEntry]="true" *ngIf="sumary?.caixaSummary?.input.length>0"
+                (mantainceEmiter)="receiveMantainceEmiter($event)"></app-caixa-summary>
+
+            </div>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
     </ion-col>
   </ion-row>
+
+
+
+
 </ion-grid>

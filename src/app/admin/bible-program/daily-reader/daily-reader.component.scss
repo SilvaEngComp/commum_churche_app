@@ -155,10 +155,6 @@ ion-toolbar {
   color: var(--ion-color-primary);
 }
 
-// .lb-selected-week {
-//     font-size: 24pt;
-//     color: var(--ion-color-success);
-// }
 //----------------medias
 @media only screen and (min-width: 500px) {
   .div-months {
@@ -175,4 +171,10 @@ ion-toolbar {
       transform: rotate(45deg);
     }
   }
+}
+
+.isRead {
+  text-decoration-line: line-through;
+  text-decoration-color: var(--ion-color-danger);
+  text-decoration-style: double;
 }

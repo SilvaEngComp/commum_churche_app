@@ -26,14 +26,16 @@ export class UiService {
 
   @Output()
   static feedPage: EventEmitter<any> = new EventEmitter<any>();
-  @Output()
+
   @Output()
   static emitirTo: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
   static emitirRefreshUserChat: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  static pageTitle: EventEmitter<any> = new EventEmitter<any>();
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+  // // eslint-disable-next-line @typescript-eslint/member-ordering
   @Output()
   static loadImageEmitter: EventEmitter<any> = new EventEmitter<any>();
 

@@ -27,12 +27,15 @@ export class AdminLargeComponent implements OnInit {
   menu_size_right: string;
   height: number;
   defaultPageName = 'lastPage';
+  title: string;
   // isMember: boolean;
   @ViewChild('main', { static: false }) content: IonContent;
 
   constructor(private platform: Platform, private nav: NavController) {}
 
   ngOnInit() {
+    this.title = UiService.localGet(Constants.TITLE_CURRENT_PAGE);
+    UiService.pageTitle.subscribe((title) => (this.title = title));
     this.height = this.platform.height();
     this.showMenu = true;
 

@@ -1,3 +1,5 @@
+import { MenuCaixaSummaryComponent } from './../menu-caixa-summary/menu-caixa-summary.component';
+import { PopoverController } from '@ionic/angular';
 import { Constants } from 'src/app/models/constants';
 import { CaixaFacadeService } from 'src/app/facades/caixa-facade.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
@@ -14,9 +16,19 @@ export class CaixaSummaryComponent implements OnInit {
   @Output() mantainceEmiter: EventEmitter<any> = new EventEmitter<any>();
   @Input() caixaSummary: CaixaSummary;
   @Input() isEntry: boolean;
-  headCaixaList: string[] = ['Registrado por', 'Tipo', 'Motivo'];
+  headCaixaList: string[] = [
+    'Tipo',
+    'Valor',
+    'Data',
+    'Registrado por',
+    'Organização',
+    'Motivo',
+  ];
   total: number;
-  constructor(private caixaFacade: CaixaFacadeService) {}
+  constructor(
+    private caixaFacade: CaixaFacadeService,
+    private popCtrl: PopoverController
+  ) {}
 
   ngOnInit() {
     this.caixaFacade.dataLoaded.subscribe((data) => {
@@ -48,5 +60,22 @@ export class CaixaSummaryComponent implements OnInit {
   }
   delete(caixa: Caixa) {
     this.caixaFacade.delete(caixa);
+  }
+
+  async openMenuOption(ev: any, caixa: Caixa) {
+    const pop = await this.popCtrl.create({
+      component: MenuCaixaSummaryComponent,
+      event: ev,
+    });
+
+    pop.present();
+
+    const { data } = await pop.onWillDismiss();
+
+    if (data?.option === Constants.OPTION_EDIT) {
+      this.edit(caixa);
+    } else {
+      this.delete(caixa);
+    }
   }
 }

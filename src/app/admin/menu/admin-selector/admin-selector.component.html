@@ -4,7 +4,7 @@
 
 <ion-content ionScroll="true" #mainSmall *ngIf="!isLarge">
   <div [ngSwitch]="page">
-    <app-user-admin *ngSwitchCase="'0'" [subpage]="'0'"></app-user-admin>
+    <app-bible-program-admin *ngSwitchCase="'0'" [subpage]="'1'"></app-bible-program-admin>
     <app-user-admin *ngSwitchCase="'1'" [subpage]="'1'"></app-user-admin>
     <app-more *ngSwitchCase="'2'" (returnPage)="onSelectPage($event)"></app-more>
     <app-financy-admin *ngSwitchCase="'3'" [subpage]="'0'" (sessionPage)="onSelectPage($event)"></app-financy-admin>

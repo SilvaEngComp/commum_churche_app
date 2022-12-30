@@ -24,10 +24,10 @@ export class Menu {
     const menu_itens: string[] = this.getMenuByPermission(permission);
     let cont = 0;
     for (let i = 0; i < menu_itens.length; i++) {
-      let submenu = [];
-      if (menu_itens[i] === Constants.LATERAL_MENU_FINANCY) {
-        submenu = [Constants.LATERAL_SUBMENU_SUMMARY];
-      }
+      const submenu = [];
+      // if (menu_itens[i] === Constants.LATERAL_MENU_FINANCY) {
+      //   submenu = [Constants.LATERAL_SUBMENU_SUMMARY];
+      // }
       const id = Menu.getMenuId(menu_itens[i]);
       menuGeral.push(new Menu(id, menu_itens[i], submenu));
       cont++;

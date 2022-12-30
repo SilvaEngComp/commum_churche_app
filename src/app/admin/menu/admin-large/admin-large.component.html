@@ -40,6 +40,9 @@
               <ion-img src="./assets/icon/favicon.png" class="menu-logo"></ion-img>
             </ion-item>
           </ion-buttons>
+          <ion-item lines="none">
+            <ion-title>{{title}}</ion-title>
+          </ion-item>
           <ion-buttons slot="end" class="menu-right" (click)="perfil()">
             <ion-avatar class="myAvatar">
               <img [src]="user?.image" />

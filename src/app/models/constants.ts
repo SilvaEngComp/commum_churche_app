@@ -91,6 +91,8 @@ export class Constants {
   static LATERAL_SUBMENU_TITHE_OFFER = 'Dízimos e Ofertas';
   static LATERAL_SUBMENU_SUMMARY = 'Resumo Financeiro';
   static SELECTED_BIBLE_PROGRAM_MAP = 'selectedBibleProramMap';
+  static OPTION_EDIT = 'EDITAR';
+  static OPTION_DELETE = 'EXCLUIR';
   static NEW_RETISTRATION = 'CADASTRAR NOVO';
   static SHOW_GRAPH = 'GRÁFICOS';
   static BACK_PAGE = 'backPage';
@@ -102,4 +104,16 @@ export class Constants {
   static SELECTED_VERSE_DAY = 'selectedVerseDay';
   static BIBLE_PROGRAM_MENU_VERSE_DAY = '2';
   static BIBLE_PROGRAM_MENU_READ_DAY = '1';
+
+  static TITLE_CURRENT_PAGE = 'currentPageTitle';
+  static TITLE_DAILY_READER = 'Leitura Bíblica';
+  static TITLE_SUMMARY_FINANCY = 'Resumo Financeiro';
+  static TITLE_USER_PROFILE = 'PERFIL';
+  static TITLE_USER_MEMBERS = 'LISTA DE MEMBROS';
+  static TITLE_TITHE_HISTORIC = 'DÍZIMOS E OFERTAS';
+  static TITLE_TITHE_HISTRIC = 'LISTA DE MEMBROS';
+  static TITLE_CAIXA_REGISTER_OUT = 'REGISTRAR SAÍDA';
+  static TITLE_CAIXA_REGISTER_IN = 'REGISTRAR ENTRADA';
+  static TITLE_TITHE_REGISTER = 'REGISTRAR DÍZIMO';
+  static TITLE_OFFER_REGISTER = 'REGISTRAR OFERTA';
 }

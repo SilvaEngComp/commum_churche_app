@@ -1,19 +1,10 @@
-<div class="div-header">
-  <ion-item lines="none">
-    <ion-label slot="start" class="lb-title">
-      LEITURA BÍBLICA
-    </ion-label>
-
-  </ion-item>
-</div>
-
-<!-- <div *ngIf="is_loading" class="progress_bar_waitting_redirect">
+<div *ngIf="is_loading" class="progress_bar_waitting_redirect">
   <ion-spinner name="dots"></ion-spinner>
 
   <ion-label>Aguarde um instante</ion-label>
 
   <ion-spinner name="dots"></ion-spinner>
-</div> -->
+</div>
 
 <div class="options-dashboard" [ngStyle]="{'width': width}">
   <ion-grid>
@@ -32,7 +23,8 @@
 
                 <div class="div-slide-challenge-month-header">
                   <div>
-                    <ion-label [ngClass]="{'lb-selected-week': selectedDay===(i+1)}" (click)="setSelectedDay(verseDay)"
+                    <ion-label [ngClass]="{'lb-selected-week': selectedDay===(i+1), 'isRead':verseDay?.isRead}"
+                      (click)="setSelectedDay(verseDay)"
                       *ngFor="let verseDay of selectedProgramMonth?.verses; let i=index">{{verseDay?.day}}</ion-label>
                   </div>
                 </div>
@@ -41,11 +33,13 @@
                   <ion-checkbox [checked]="selectedVerseDay?.isRead"></ion-checkbox>
                   <ion-label>Marcar como concluído</ion-label>
                 </ion-item>
-                <div (click)="readVerses()" class="div-slide-challenge-month-body">
-                  <ion-text class="lb-challenge-description">{{selectedVerseDay?.startVerse?.book}}
-                    {{selectedVerseDay?.startVerse?.chapter}}:{{selectedVerseDay?.startVerse?.verse}}/{{selectedVerseDay?.endVerse?.book}}
-                    {{selectedVerseDay?.endVerse?.chapter}}:{{selectedVerseDay?.endVerse?.verse}}</ion-text>
-                </div>
+                <ion-text slot="start" class="lb-challenge-description">{{selectedVerseDay?.startVerse?.book}}
+                  {{selectedVerseDay?.startVerse?.chapter}}:{{selectedVerseDay?.startVerse?.verse}}/{{selectedVerseDay?.endVerse?.book}}
+                  {{selectedVerseDay?.endVerse?.chapter}}:{{selectedVerseDay?.endVerse?.verse}}</ion-text>
+                <ion-item lines="none">
+                  <ion-button fill="outline" (click)="readVerses()" color="success">...LER
+                    AGORA...</ion-button>
+                </ion-item>
               </div>
             </ion-slide>
           </ion-slides>
