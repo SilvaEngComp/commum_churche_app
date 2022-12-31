@@ -102,8 +102,11 @@ export class Constants {
   static MENU_PERFIL = '-1';
 
   static SELECTED_VERSE_DAY = 'selectedVerseDay';
+  static SELECTED_MONTH_PROGRAM = 'monthProgram';
   static BIBLE_PROGRAM_MENU_VERSE_DAY = '2';
   static BIBLE_PROGRAM_MENU_READ_DAY = '1';
+  static BIBLE_PROGRAM_MENU_PLAN = '3';
+  static BIBLE_PROGRAM_MENU_MAP = '4';
 
   static TITLE_CURRENT_PAGE = 'currentPageTitle';
   static TITLE_DAILY_READER = 'Leitura Bíblica';
@@ -116,4 +119,5 @@ export class Constants {
   static TITLE_CAIXA_REGISTER_IN = 'REGISTRAR ENTRADA';
   static TITLE_TITHE_REGISTER = 'REGISTRAR DÍZIMO';
   static TITLE_OFFER_REGISTER = 'REGISTRAR OFERTA';
+  static FCM_TOKEN = 'fcmToken';
 }

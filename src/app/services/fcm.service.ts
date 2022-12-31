@@ -168,7 +168,7 @@ export class FcmService {
       'registration',
       (token: PushNotificationToken) => {
         // alert('Push registration success, token: ' + token.value);
-        this.messagingService.store(token.value, 2);
+        this.messagingService.store(token.value, 3);
         this.localPush();
         console.log('Push registration success, token: ' + token.value);
       }

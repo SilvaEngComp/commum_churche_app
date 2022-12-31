@@ -31,19 +31,24 @@ export class LoginService {
   }
 
   public static getUser(): User {
+    console.log(LoginService.getToken());
     return LoginService.getToken().user;
   }
   public static updateUserToken(user: User, reload: boolean = false) {
+    console.log(user);
     const token = LoginService.getToken();
+    console.log(token);
     token.user = user;
     LoginService.setToken(token);
     if (reload) {
       window.location.reload();
     }
+    console.log(LoginService.getUser());
   }
 
   public static getHeaders(formData?: boolean): HttpHeaders {
     const token = LoginService.getToken();
+    console.log(token);
     if (token) {
       let httpHeaders = new HttpHeaders();
       if (formData) {

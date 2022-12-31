@@ -1,14 +1,6 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start" (click)="back()">
-      <ion-icon name="arrow-undo-circle-outline"></ion-icon>
-    </ion-buttons>
-    <ion-item class="header" lines="none">
-      <ion-label color="light">REGISTRAR {{tithe?.isTithe ? 'DÍZIMO':'OFERTA'}}</ion-label>
-    </ion-item>
-
-  </ion-toolbar>
-</ion-header>
+<ion-buttons slot="start" (click)="back()" class="button-back">
+  <ion-icon name="arrow-undo-circle-outline"></ion-icon>
+</ion-buttons>
 
 <ion-grid>
   <ion-row>
@@ -45,28 +37,9 @@
       <app-my-select-list [label]="'Usuarios'" [listName]="'users'" [create]="true"
         (selectEmiter)="setUser($event)"></app-my-select-list>
     </ion-col>
-    <!-- <ion-col>
-      <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-        <ion-radio-group (click)="setIsTithe($event)" [value]="isTithe" [allowEmptySelection]="false">
-          <ion-item lines="none">
-            <ion-label>Dízimo</ion-label>
-            <ion-radio slot="start" value="1"></ion-radio>
-          </ion-item>
-
-          <ion-item lines="none">
-            <ion-label>Oferta</ion-label>
-            <ion-radio slot="start" value="0"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-      </ion-item>
-    </ion-col> -->
+    <ion-col>
+      <ion-button expand="block" color="success" (click)="register(inputAmount.value)">{{isNew ?
+        'REGISTRAR':'ALTERAR'}}</ion-button>
+    </ion-col>
   </ion-row>
 </ion-grid>
-
-
-<ion-footer [translucent]="true">
-  <ion-toolbar>
-    <ion-button expand="block" color="medium" (click)="register(inputAmount.value)">{{isNew ?
-      'REGISTRAR':'ALTERAR'}}</ion-button>
-  </ion-toolbar>
-</ion-footer>

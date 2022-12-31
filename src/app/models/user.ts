@@ -26,6 +26,9 @@ export class User {
   showDetails: boolean;
   registerMethod: string;
   created_at: string;
+  fcm_web_key: string;
+  fcm_mobile_key: string;
+  fcm_mobile_web_key: string;
   constructor() {
     this.password = '12345678';
     this.role = Constants.ROLE_MEMBER;

@@ -33,6 +33,10 @@ export class BibleProgramComponent implements OnInit {
 
   openProgram(program: BibleReaderProgram) {
     UiService.localSet(Constants.SELECTED_BIBLE_PROGRAM_MAP, program);
-    this.sessionPage.emit('1');
+    this.sessionPage.emit(Constants.BIBLE_PROGRAM_MENU_MAP);
+  }
+
+  back() {
+    this.sessionPage.emit(Constants.BIBLE_PROGRAM_MENU_READ_DAY);
   }
 }

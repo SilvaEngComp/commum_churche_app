@@ -16,8 +16,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { environment } from 'src/environments/environment';
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
-import { PermissionDirective } from './directives/permission.directive';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -34,7 +32,6 @@ import { PermissionDirective } from './directives/permission.directive';
     UiModule,
   ],
   providers: [
-    SocialSharing,
     HttpClientModule,
     {
       provide: SwRegistrationOptions,

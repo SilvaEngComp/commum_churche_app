@@ -83,12 +83,9 @@ export class UiService {
 
   static validPermissions(permission?: string) {
     const user = UiService.localGet(Constants.TOKEN).user;
-    console.log(user);
     const roleUserIndex = Constants.DEFAULT_ROLES.indexOf(user?.role);
-    console.log(roleUserIndex);
 
     const roleMinIndex = Constants.DEFAULT_ROLES.indexOf(permission);
-    console.log(roleMinIndex);
 
     if (roleUserIndex <= roleMinIndex) {
       return true;
@@ -109,15 +106,21 @@ export class UiService {
       btoa(key).substring(0, Constants.SIZE_ENCRIPTY_KEY);
     const encrypted = localStorage.getItem(encriptedKey);
     if (encrypted) {
-      const bytes = CriptoJs.AES.decrypt(encrypted, environment.PRIVATEKEY);
-      return JSON.parse(bytes.toString(CriptoJs.enc.Utf8));
+      try {
+        const bytes = CriptoJs.AES.decrypt(encrypted, environment.PRIVATEKEY);
+        return JSON.parse(bytes.toString(CriptoJs.enc.Utf8));
+      } catch (e) {
+        return null;
+      }
     }
     return null;
   }
 
   static localSet(key: string, data) {
     if (key === Constants.TOKEN) {
-      data = data.data;
+      if (data?.data) {
+        data = data.data;
+      }
     }
     const encriptedKey =
       environment.LOCALSTORAGE +

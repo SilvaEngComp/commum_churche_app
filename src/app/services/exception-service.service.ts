@@ -64,7 +64,7 @@ export class ExceptionService {
           header: msg.title,
           message: msg.body,
           mode: 'ios',
-          duration: 2000,
+          duration: 10000,
 
           buttons: [
             {
@@ -73,9 +73,9 @@ export class ExceptionService {
               handler: () => {
                 if (msg.click_action) {
                   if (msg.click_action.page) {
-                    UiService.pageMenu.emit(msg.click_action.page);
+                    //  UiService.pageMenu.emit(msg.click_action.page);
                   }
-                  UiService.emitirTo.emit(msg.click_action.chatConfig.sender);
+                  // UiService.emitirTo.emit(msg.click_action.chatConfig.sender);
                 }
               },
             },
@@ -84,15 +84,14 @@ export class ExceptionService {
 
         toast.present();
       } else {
-        if (localStorage.getItem(environment.LOCALSTORAGE + 'to')) {
-          if (
-            JSON.parse(localStorage.getItem(environment.LOCALSTORAGE + 'to'))
-              .id === msg.click_action.chatConfig.sender.id
-          ) {
-            UiService.emitirTo.emit(msg.click_action.chatConfig.sender);
-            return;
-          }
-        }
+        // const to = UiService.localGet('to');
+        // if (to) {
+        //   if (to.id === msg.click_action.chatConfig.sender.id
+        //   ) {
+        //     UiService.emitirTo.emit(msg.click_action.chatConfig.sender);
+        //     return;
+        //   }
+        // }
       }
     } else {
       const toast = await this.toastCtrl.create({
@@ -113,7 +112,7 @@ export class ExceptionService {
       toast.present();
     }
 
-    UiService.emitirRefreshUserChat.emit(msg.click_action.chatConfig.sender);
+    // UiService.emitirRefreshUserChat.emit(msg.click_action.chatConfig.sender);
   }
 
   async alertDialog(message: string, header: string = '', exit?: boolean) {

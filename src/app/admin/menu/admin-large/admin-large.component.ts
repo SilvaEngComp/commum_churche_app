@@ -52,10 +52,6 @@ export class AdminLargeComponent implements OnInit {
     this.checkImage();
   }
 
-  doRefresh(ev) {
-    window.location.reload();
-  }
-
   getConditions() {
     this.largura = window.innerWidth;
 
@@ -67,7 +63,7 @@ export class AdminLargeComponent implements OnInit {
 
   checkImage() {
     if (!this.user?.image) {
-      if (this.user?.gender.toLocaleLowerCase().includes('masculino')) {
+      if (this.user?.gender?.toLocaleLowerCase().includes('masculino')) {
         this.user.image = Constants.MALE_PERSON;
       } else {
         this.user.image = Constants.FEMALE_PERSON;

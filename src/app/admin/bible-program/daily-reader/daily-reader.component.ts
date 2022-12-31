@@ -1,4 +1,5 @@
-import { Constants } from './../../../models/constants';
+import { Constants } from 'src/app/models/constants';
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { UiService } from './../../../services/ui.service';
 import { VerseDay } from './../../../models/verseDay';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
@@ -18,8 +19,8 @@ import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import { BibleProgramService } from 'src/app/services/bible-program.service';
 import { BibleReaderProgram } from 'src/app/models/bibleReaderProgram';
-// import { ClipboardService } from 'ngx-clipboard';
-// npm i ngx-clipboard
+import { ClipboardService } from 'ngx-clipboard';
+
 @Component({
   selector: 'app-daily-reader',
   templateUrl: './daily-reader.component.html',
@@ -53,7 +54,8 @@ export class DailyReaderComponent implements OnInit {
   constructor(
     private platfom: Platform,
     private bibleProgramService: BibleProgramService,
-    private exceptionService: ExceptionService // private _clipboardService: ClipboardService
+    private exceptionService: ExceptionService, // private _clipboardService: ClipboardService
+    private clipboardService: ClipboardService
   ) {}
 
   ngOnInit() {
@@ -67,10 +69,17 @@ export class DailyReaderComponent implements OnInit {
     this.currentMonth = new Date().getMonth() + 1;
     this.currentDay = new Date().getDate();
 
-    this.selectedMonth = new Date().getMonth();
     this.selectedDay = new Date().getDate();
     this.user = LoginService.getUser();
-    this.selectedVerseDay = new VerseDay();
+
+    this.selectedVerseDay = UiService.localGet(Constants.SELECTED_VERSE_DAY);
+    if (!this.selectedVerseDay) {
+      this.selectedVerseDay = new VerseDay();
+    }
+    this.selectedMonth = UiService.localGet(Constants.SELECTED_MONTH_PROGRAM);
+    if (!this.selectedMonth) {
+      this.selectedMonth = new Date().getMonth();
+    }
     this.load();
   }
 
@@ -80,6 +89,7 @@ export class DailyReaderComponent implements OnInit {
       .show()
       .then((responser) => {
         this.selectedProgram = responser.data;
+
         this.ajusteSlide();
 
         this.setSelectedMonth();
@@ -94,31 +104,41 @@ export class DailyReaderComponent implements OnInit {
         this.monthSlide.push(bibleProgramMonth.customizedMonth);
         if (bibleProgramMonth.customizedMonth.id === adaptedMonth) {
           this.selectedProgramMonth = bibleProgramMonth;
-          bibleProgramMonth.verses.filter((verseDay) => {
-            if (
-              bibleProgramMonth.customizedMonth.id === this.currentMonth &&
-              Number(verseDay.day) === this.currentDay
-            ) {
-              this.selectedVerseDay = verseDay;
-              this.selectedDay = this.currentDay;
-              console.log(this.selectedDay);
-            } else {
-              this.selectedDay = -1;
-            }
-          });
+          if (!this.selectedVerseDay.id) {
+            bibleProgramMonth.verses.filter((verseDay) => {
+              if (
+                bibleProgramMonth.customizedMonth.id === this.currentMonth &&
+                Number(verseDay.day) === this.currentDay
+              ) {
+                this.selectedVerseDay = verseDay;
+                this.selectedDay = this.currentDay;
+                console.log(this.selectedDay);
+              } else {
+                this.selectedDay = -1;
+              }
+            });
+          }
         }
       });
     } else {
       this.showMonths = false;
     }
+    this.save();
+
     this.is_loading = false;
   }
-  copy(text: string) {
-    // this._clipboardService.copy(text);
-    // this.exceptionService.toastHandler('Texto Copiado');
+  copy() {
+    const text: string = `${this.selectedVerseDay?.startVerse?.book}
+    ${this.selectedVerseDay?.startVerse?.chapter}:${this.selectedVerseDay?.startVerse?.verse}/${this.selectedVerseDay?.endVerse?.book}
+    ${this.selectedVerseDay?.endVerse?.chapter}:${this.selectedVerseDay?.endVerse?.verse}`;
+    this.clipboardService.copy(text);
+    this.exceptionService.toastHandler('Texto Copiado');
   }
 
   setSelectedDay(verseDay: VerseDay) {
+    this.save();
+
+    console.log(verseDay);
     this.selectedDay = verseDay?.day;
     const adaptedMonth = this.selectedMonth + 1;
     this.selectedProgram?.program.filter((programDay) => {
@@ -212,7 +232,16 @@ export class DailyReaderComponent implements OnInit {
   }
 
   readVerses() {
-    UiService.localSet(Constants.SELECTED_VERSE_DAY, this.selectedVerseDay);
+    this.save();
     this.sessionPage.emit(Constants.BIBLE_PROGRAM_MENU_VERSE_DAY);
+  }
+
+  save() {
+    UiService.localSet(Constants.SELECTED_VERSE_DAY, this.selectedVerseDay);
+    UiService.localSet(Constants.SELECTED_MONTH_PROGRAM, this.selectedMonth);
+  }
+
+  setPlan() {
+    this.sessionPage.emit(Constants.BIBLE_PROGRAM_MENU_PLAN);
   }
 }

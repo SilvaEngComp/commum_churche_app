@@ -1,19 +1,23 @@
-ion-card{
-
+ion-card {
   width: 200px;
   height: 250px;
 
-  ion-card-title{
+  ion-card-title {
     font-family: Qanelas-bold;
     font-size: 16pt;
     color: var(--ion-color-secondary);
     text-align: center;
   }
 
-  ion-label{
+  ion-label {
     font-family: Qanelas-bold;
     font-size: 12pt;
     color: var(--ion-color-medium);
     text-align: justify;
+  }
+}
+.button-back {
+  ion-icon {
+    font-size: 40px;
   }
 }

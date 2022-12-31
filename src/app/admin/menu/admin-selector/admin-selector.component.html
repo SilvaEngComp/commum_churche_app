@@ -11,5 +11,11 @@
     <app-financy-admin *ngSwitchCase="'4'" [subpage]="'1'" (sessionPage)="onSelectPage($event)"></app-financy-admin>
     <app-bible-program-admin *ngSwitchCase="'5'"></app-bible-program-admin>
   </div>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Atualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
 </ion-content>
 <app-admin-small *ngIf="!isLarge" (selectedPage)="onSelectPage($event)"></app-admin-small>

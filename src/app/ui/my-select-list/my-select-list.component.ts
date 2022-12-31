@@ -142,14 +142,21 @@ export class MySelectListComponent implements OnInit {
     }
     const modal = await this.popCtrl.create({
       component,
+      componentProps: { apiResponse: this.apiResponse },
       event,
     });
 
     await modal.present();
 
-    modal.onDidDismiss().then(() => {
+    const { data } = await modal.onDidDismiss();
+    console.log(data);
+    if (data.obj) {
+      const selected = MySelectAdapter.toSingleMySelectAny(data.obj);
+      console.log(selected);
+      this.onSelect(selected);
+    } else {
       this.load(true);
-    });
+    }
   }
 
   onSelectTLastCreated() {

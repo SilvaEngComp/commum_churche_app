@@ -19,13 +19,13 @@ export const environment = {
   LOCALSTORAGE: 'ibnovabetel.',
 
   firebaseConfig: {
-    apiKey: 'AIzaSyC3wIqvObcuZKDO4QxAMQBN1v1-K8RqzBo',
-    authDomain: 'loved-husband.firebaseapp.com',
-    projectId: 'loved-husband',
-    storageBucket: 'loved-husband.appspot.com',
-    messagingSenderId: '559954006298',
-    appId: '1:559954006298:web:f47a7580839c3306d91ca3',
-    measurementId: 'G-1P07FE2V3K',
+    apiKey: 'AIzaSyC5dA_afnY3Psp55WOibvGPO5mXk5fIYGU',
+    authDomain: 'ibnb-commum.firebaseapp.com',
+    projectId: 'ibnb-commum',
+    storageBucket: 'ibnb-commum.appspot.com',
+    messagingSenderId: '93614175371',
+    appId: '1:93614175371:web:d36b4faf2f07fcbf49d08e',
+    measurementId: 'G-FDB5BKH636',
   },
 };
 

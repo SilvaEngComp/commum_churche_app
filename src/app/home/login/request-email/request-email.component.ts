@@ -54,6 +54,7 @@ export class RequestEmailComponent implements OnInit {
     this.loginService
       .login(this.user.email, this.user.password)
       .then((token) => {
+        console.clear();
         LoginService.setToken(token);
         this.router.navigate(['admin']);
       })

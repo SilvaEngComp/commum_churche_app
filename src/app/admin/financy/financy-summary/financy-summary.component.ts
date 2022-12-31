@@ -165,7 +165,7 @@ export class ReportComponent implements OnInit {
   }
   setEndDate(date: any) {
     this.endDate = date.substring(0, 10);
-    this.filter.dateF = this.initialDate;
+    this.filter.dateF = this.endDate;
   }
 
   async openFilter() {

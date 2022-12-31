@@ -1,3 +1,5 @@
+import { Platform } from '@ionic/angular';
+import { Responser } from './../models/responser';
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -8,8 +10,8 @@ import { environment } from 'src/environments/environment';
 import { LoginService } from './login.service';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 import { PushNotify } from '../models/pushNotification';
-import { User } from '../models/User';
 import { ExceptionService } from './exception-service.service';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +20,8 @@ export class MessagingService {
   constructor(
     private afMessaging: AngularFireMessaging,
     private exceptionService: ExceptionService,
+    private platform: Platform,
+
     private http: HttpClient
   ) {}
 
@@ -32,13 +36,31 @@ export class MessagingService {
   token = null;
   requestPermission() {
     return this.afMessaging.requestToken.pipe(
-      tap((token) =>
-        this.store(token, 1).then((user) => {
-          const token = LoginService.getToken();
-          token.user = user;
-          LoginService.setToken(token);
-        })
-      )
+      tap((token) => {
+        const user = LoginService.getUser();
+        const isSmall = this.platform.width() > 500;
+        let option: number;
+        let userToken;
+        if (isSmall) {
+          userToken = user?.fcm_mobile_web_key;
+          option = 1;
+        } else {
+          userToken = user.fcm_web_key;
+          option = 2;
+        }
+        if (userToken !== token) {
+          this.store(token, option).then((responser) => {
+            if (responser) {
+              if (responser?.data) {
+                console.clear();
+                console.log(responser.data);
+                const user: User = responser.data;
+                LoginService.updateUserToken(user);
+              }
+            }
+          });
+        }
+      })
     );
   }
 
@@ -53,20 +75,19 @@ export class MessagingService {
     }
   }
 
-  async store(token: string, op: number): Promise<User> {
-    if (!(await LoginService.getHeaders())) {
-      this.checkLogged();
-      return Promise.resolve(null);
-    }
+  async store(firebaseToken: string, op: number): Promise<Responser> {
     let object;
     if (op === 1) {
-      object = { fcm_web_key: token };
+      object = { fcm_web_key: firebaseToken };
+    } else if (op === 2) {
+      object = { fcm_mobile_web_key: firebaseToken };
     } else {
-      object = { fcm_mobile_key: token };
+      object = { fcm_mobile_key: firebaseToken };
     }
-    const user = LoginService.getToken().user;
+    const user = LoginService.getUser();
+
     return this.http
-      .post<User>(
+      .post<Responser>(
         `${environment.API2}/pushNotifications/user/${user.id}`,
         object,
         {
@@ -76,10 +97,10 @@ export class MessagingService {
       .toPromise();
   }
 
-  async send(push: PushNotify): Promise<User> {
+  async send(push: PushNotify): Promise<Responser> {
     console.log(JSON.stringify(push));
     return this.http
-      .post<User>(`${environment.API2}/pushNotifications/send`, push, {
+      .post<Responser>(`${environment.API2}/pushNotifications/send`, push, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();

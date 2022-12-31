@@ -21,4 +21,10 @@ export class MySelectAdapter {
     }
     return mySelect;
   }
+  static toSingleMySelectAny(obj?: any) {
+    if (obj) {
+      return new MySelectAdapter(obj.id, obj.name);
+    }
+    return null;
+  }
 }

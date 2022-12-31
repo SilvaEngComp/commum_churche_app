@@ -5,7 +5,10 @@
 
   <ion-spinner name="dots"></ion-spinner>
 </div>
+<ion-item *permission="'counselor'" lines="none" (click)="setPlan()">
+  <ion-icon color="tertiary" slot="end" name="settings-outline"></ion-icon>
 
+</ion-item>
 <div class="options-dashboard" [ngStyle]="{'width': width}">
   <ion-grid>
     <ion-row>
@@ -32,14 +35,22 @@
                 <ion-item (click)="setAsReadUnread(selectedVerseDay)" lines="none" class="item-challenge-done">
                   <ion-checkbox [checked]="selectedVerseDay?.isRead"></ion-checkbox>
                   <ion-label>Marcar como concluído</ion-label>
+
                 </ion-item>
-                <ion-text slot="start" class="lb-challenge-description">{{selectedVerseDay?.startVerse?.book}}
-                  {{selectedVerseDay?.startVerse?.chapter}}:{{selectedVerseDay?.startVerse?.verse}}/{{selectedVerseDay?.endVerse?.book}}
-                  {{selectedVerseDay?.endVerse?.chapter}}:{{selectedVerseDay?.endVerse?.verse}}</ion-text>
-                <ion-item lines="none">
-                  <ion-button fill="outline" (click)="readVerses()" color="success">...LER
-                    AGORA...</ion-button>
-                </ion-item>
+                <div class="bible-text" (click)="copy()">
+                  <ion-note slot="end">Leitura do dia {{selectedVerseDay?.day}} de
+                    {{selectedProgramMonth?.customizedMonth?.name}}</ion-note>
+                  <ion-text alt="Click uma vez para copiar o texto" slot="start"
+                    class="lb-challenge-description">{{selectedVerseDay?.startVerse?.book}}
+                    {{selectedVerseDay?.startVerse?.chapter}}:{{selectedVerseDay?.startVerse?.verse}}/{{selectedVerseDay?.endVerse?.book}}
+                    {{selectedVerseDay?.endVerse?.chapter}}:{{selectedVerseDay?.endVerse?.verse}}</ion-text>
+                  <ion-list (click)="readVerses()" fill="outline">
+
+                    <ion-icon name="book-outline"></ion-icon>
+                    <br>
+                    <ion-note>Ler Agora</ion-note>
+                  </ion-list>
+                </div>
               </div>
             </ion-slide>
           </ion-slides>

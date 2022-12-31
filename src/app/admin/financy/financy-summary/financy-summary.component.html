@@ -96,7 +96,7 @@
             <ion-item lines="none" *ngIf="offerSummary?.tithes.length===0 ">
               <ion-title color="primary"> {{noContent}}</ion-title>
             </ion-item>
-            <div [ngClass]="{'ocult-details': !showOfferDetail, 'show-details':showOfferDetail}">
+            <div>
               <app-tithe-summary [titheSummary]="offerSummary" [isTithe]="false"
                 *ngIf="offerSummary?.tithes.length>0"></app-tithe-summary>
             </div>

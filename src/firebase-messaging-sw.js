@@ -1,20 +1,20 @@
-importScripts("https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js");
-importScripts("https://www.gstatic.com/firebasejs/8.9.1/firebase-messaging.js");
+// importScripts("https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js");
+// importScripts("https://www.gstatic.com/firebasejs/8.9.1/firebase-messaging.js");
 
-// <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
 
-// <!-- TODO: Add SDKs for Firebase products that you want to use
-//      https://firebase.google.com/docs/web/setup#available-libraries -->
-// <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+// importScripts('https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js');
+// importScripts('https://www.gstatic.com/firebasejs/9.15.0/firebase-messaging.js');
 
 firebase.initializeApp({
-    apiKey: 'AIzaSyCYj0n-RKGnGBrI1Lj_2DO46cMKMz7LtCM',
-    authDomain: 'systematic-review-456d2.firebaseapp.com',
-    projectId: 'systematic-review-456d2',
-    storageBucket: 'systematic-review-456d2.appspot.com',
-    messagingSenderId: '447649419389',
-    appId: '1:447649419389:web:d19e30f463833fda66a114',
-    measurementId: 'G-EXX5970YFX'
+  apiKey: "AIzaSyC5dA_afnY3Psp55WOibvGPO5mXk5fIYGU",
+  authDomain: "ibnb-commum.firebaseapp.com",
+  projectId: "ibnb-commum",
+  storageBucket: "ibnb-commum.appspot.com",
+  messagingSenderId: "93614175371",
+  appId: "1:93614175371:web:d36b4faf2f07fcbf49d08e",
+  measurementId: "G-FDB5BKH636"
 });
 // Initialize Firebase
 

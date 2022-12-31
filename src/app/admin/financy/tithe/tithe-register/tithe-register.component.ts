@@ -78,7 +78,7 @@ export class TitheRegisterComponent implements OnInit {
   async register(amount: any) {
     this.tithe.amount = UiService.convertToNumber(amount);
     if (this.isFormValid()) {
-      const tipo = this.tithe?.isTithe === '1' ? 'do dízimo' : 'da oferta';
+      const tipo = this.tithe?.isTithe ? 'do dízimo' : 'da oferta';
 
       if (!this.isNew) {
         this.titheService.update(this.tithe).then(() => {
@@ -114,7 +114,7 @@ export class TitheRegisterComponent implements OnInit {
 
     if (UiService.validPermissions(Constants.FINANCIAL)) {
       if (!this.tithe?.user?.id) {
-        this.exceptionService.alertDialog(ConstantMessages.TITHE_TYPE_INVALID);
+        this.exceptionService.alertDialog(ConstantMessages.USER_INVALID);
         return;
       }
     } else {

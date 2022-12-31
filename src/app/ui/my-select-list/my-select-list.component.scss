@@ -13,6 +13,15 @@
   border-bottom: 1px solid var(--ion-color-tertiary);
 }
 
+.selected {
+  --background: var(--ion-color-primary);
+  border-radius: 20px;
+  border: 1px solid var(--ion-color-success);
+  color: var(--ion-color-light);
+  font-family: Qanelas-bold;
+  font-size: 14pt;
+}
+
 .open-div {
   height: auto;
   max-height: 200px;

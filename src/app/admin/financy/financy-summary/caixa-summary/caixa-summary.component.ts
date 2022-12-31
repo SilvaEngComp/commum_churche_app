@@ -74,7 +74,7 @@ export class CaixaSummaryComponent implements OnInit {
 
     if (data?.option === Constants.OPTION_EDIT) {
       this.edit(caixa);
-    } else {
+    } else if (data?.option === Constants.OPTION_DELETE) {
       this.delete(caixa);
     }
   }

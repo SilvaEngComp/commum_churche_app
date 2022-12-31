@@ -1,3 +1,4 @@
+import { ExceptionService } from './../services/exception-service.service';
 import { LoginService } from './../services/login.service';
 import { Injectable } from '@angular/core';
 import {
@@ -11,16 +12,33 @@ import {
   providedIn: 'root',
 })
 export class AuthGuardAdmin implements CanActivate {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private exceptionService: ExceptionService
+  ) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean> {
     return new Promise(async (resolve) => {
-      if (LoginService.getHeaders()) {
-        this.router.navigate(['admin']);
+      try {
+        if (LoginService.getHeaders()) {
+          this.router.navigate(['admin']);
+        }
+        resolve(true);
+      } catch (e) {
+        localStorage.clear();
+
+        this.router.navigate(['']);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+        this.exceptionService.openLoading(
+          'Erro!',
+          'Algo de errado aconteceu com sua conexão. Faça login novamente!',
+          false
+        );
       }
-      resolve(true);
     });
   }
 }

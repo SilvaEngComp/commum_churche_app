@@ -11,7 +11,7 @@ export class Caixa {
   amount: number;
   description: string;
   user: User;
-  isEntry: string;
+  isEntry: boolean;
   created_at: string;
   showDetails: boolean;
   church: Church;
@@ -21,7 +21,7 @@ export class Caixa {
     this.date = UiService.getCurrentDate();
     this.caixaType = new CaixaType(name);
     this.user = new User();
-    this.isEntry = '0';
+    this.isEntry = false;
     this.description = '';
   }
 }

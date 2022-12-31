@@ -46,7 +46,7 @@
           <ion-col>
             <ion-list class="open-div">
               <ion-item lines="none" detail (click)="onSelect(item)" class="item-search"
-                *ngFor="let item of filtredSearch">
+                [ngClass]="{'selected': selected===item?.value}" *ngFor="let item of filtredSearch">
                 {{ item?.value | uppercase}}</ion-item>
             </ion-list>
 

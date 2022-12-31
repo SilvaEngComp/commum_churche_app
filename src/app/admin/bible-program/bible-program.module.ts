@@ -1,3 +1,4 @@
+import { DirectivesModule } from './../../directives/directives.module';
 import { BibleVersesComponent } from './bible-verses/bible-verses.component';
 import { DailyReaderComponent } from './daily-reader/daily-reader.component';
 import { BibleProgramAdminComponent } from './bible-program-admin/bible-program-admin.component';
@@ -25,6 +26,7 @@ import { UserPageRoutingModule } from '../user/user-routing.module';
     UserPageRoutingModule,
     BrMaskerModule,
     ReactiveFormsModule,
+    DirectivesModule,
   ],
   exports: [BibleProgramAdminComponent],
 })

@@ -4,7 +4,7 @@ import { User } from './User';
 export class Tithe {
   id: number;
   amount: number;
-  isTithe: string;
+  isTithe: boolean;
   month: string;
   year: string;
   customizedMonth: CustomizedMonth;
@@ -14,6 +14,6 @@ export class Tithe {
   register: User;
   constructor() {
     this.customizedMonth = new CustomizedMonth();
-    this.isTithe = '1';
+    this.isTithe = true;
   }
 }

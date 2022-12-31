@@ -1,3 +1,7 @@
+<ion-buttons slot="start" (click)="back()" class="button-back">
+  <ion-icon color="primary" name="arrow-undo-circle-outline"></ion-icon>
+</ion-buttons>
+
 <div *ngIf="isLoading" class="spinner">
   <ion-spinner name="dots"></ion-spinner>
   <ion-label>Carregando</ion-label>

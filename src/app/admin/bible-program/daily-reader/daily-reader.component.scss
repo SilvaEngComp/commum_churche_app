@@ -150,7 +150,7 @@ ion-toolbar {
 
 .lb-challenge-description {
   margin: 15px;
-  font-size: 26pt;
+  font-size: 16pt;
   font-family: Qanelas-bold;
   color: var(--ion-color-primary);
 }
@@ -177,4 +177,9 @@ ion-toolbar {
   text-decoration-line: line-through;
   text-decoration-color: var(--ion-color-danger);
   text-decoration-style: double;
+}
+
+.bible-text {
+  display: grid;
+  align-content: space-between;
 }

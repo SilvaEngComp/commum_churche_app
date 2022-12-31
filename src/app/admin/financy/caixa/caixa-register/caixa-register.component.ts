@@ -118,7 +118,7 @@ export class CaixaRegisterComponent implements OnInit {
   async register(amount: any) {
     this.caixa.amount = UiService.convertToNumber(amount);
     if (this.isFormValid()) {
-      const tipo = this.caixa?.isEntry === '1' ? 'Entrada' : 'Saída';
+      const tipo = this.caixa?.isEntry ? 'Entrada' : 'Saída';
 
       if (!this.isNew) {
         this.caixaService.update(this.caixa).then(() => {
@@ -146,7 +146,7 @@ export class CaixaRegisterComponent implements OnInit {
 
   isFormValid() {
     if (!this.caixa?.caixaGroup?.id) {
-      this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
+      this.exceptionService.alertDialog(ConstantMessages.CAIXA_GROUP_INVALID);
       return;
     }
     if (!this.caixa?.caixaType?.id) {
@@ -155,7 +155,7 @@ export class CaixaRegisterComponent implements OnInit {
     }
 
     if (!this.caixa?.church?.id) {
-      this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
+      this.exceptionService.alertDialog(ConstantMessages.CAIXA_CHURCH_INVALID);
       return;
     }
 

@@ -21,7 +21,6 @@ export class BibleProgramMapComponent implements OnInit {
     this.selectedProgram = UiService.localGet(
       Constants.SELECTED_BIBLE_PROGRAM_MAP
     );
-    console.log(this.selectedProgram);
     if (!this.selectedProgram) {
       this.back();
     }
@@ -29,12 +28,14 @@ export class BibleProgramMapComponent implements OnInit {
   }
 
   async load() {
+    this.isLoading = true;
     const responser = await this.bibleProgramService.show(this.selectedProgram);
     const programList: BibleReaderProgram = responser.data;
     this.bibleProgram = programList.program;
+    this.isLoading = false;
   }
 
   back() {
-    this.sessionPage.emit('0');
+    this.sessionPage.emit(Constants.BIBLE_PROGRAM_MENU_PLAN);
   }
 }

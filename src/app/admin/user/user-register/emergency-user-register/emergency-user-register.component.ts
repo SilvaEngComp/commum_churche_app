@@ -1,10 +1,11 @@
 import { UserService } from '../../../../services/user.service';
 import { ExceptionService } from '../../../../services/exception-service.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { User } from 'src/app/models/User';
 import { ConstantMessages } from 'src/app/models/messages';
 import { DayToSelectComponent } from 'src/app/home/home-user-register/register-personal-info/day-to-select/day-to-select.component';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-emergency-user-register',
@@ -12,6 +13,7 @@ import { DayToSelectComponent } from 'src/app/home/home-user-register/register-p
   styleUrls: ['./emergency-user-register.component.scss'],
 })
 export class EmergencyUserRegisterComponent implements OnInit {
+  @Input() apiResponse: User[];
   user: User;
   days: string[] = [];
   day: string;
@@ -27,17 +29,21 @@ export class EmergencyUserRegisterComponent implements OnInit {
   }
 
   register() {
-    if (this.validForm()) {
-      this.exceptionService.loadingFunction();
+    if (!this.userIsAlreadyRegistred()) {
+      if (this.validForm()) {
+        this.exceptionService.loadingFunction();
 
-      this.userService
-        .emergencialStore(this.user)
-        .then(() => {
-          this.close();
-        })
-        .catch((erro) => {
-          this.exceptionService.error(erro);
-        });
+        this.userService
+          .emergencialStore(this.user)
+          .then(() => {
+            this.close();
+          })
+          .catch((erro) => {
+            this.exceptionService.error(erro);
+          });
+      }
+    } else {
+      this.close();
     }
   }
 
@@ -47,10 +53,15 @@ export class EmergencyUserRegisterComponent implements OnInit {
       return;
     }
 
+    if (!this.user?.birthDate) {
+      this.exceptionService.alertDialog(ConstantMessages.BIRTHDATE_INVALID);
+      return;
+    }
+
     return true;
   }
   close() {
-    this.popCtrl.dismiss();
+    this.popCtrl.dismiss({ obj: this.user });
   }
 
   setBirthdate() {
@@ -78,5 +89,26 @@ export class EmergencyUserRegisterComponent implements OnInit {
   onSelectMonth(value: any) {
     this.monthYear = value.substring(0, 7);
     this.setBirthdate();
+  }
+
+  userIsAlreadyRegistred() {
+    const users = this.apiResponse.filter((cliente) =>
+      UiService.stringNormalization(cliente.name).includes(
+        UiService.stringNormalization(this.user.name)
+      )
+    );
+    if (users?.length > 0) {
+      for (let i = 0; i < users?.length; i++) {
+        if (users[i]?.birthDate === this.user.birthDate) {
+          this.user = users[i];
+          this.exceptionService.alertDialog(
+            ConstantMessages.USER_ALREADY_EXISTS,
+            'Alerta'
+          );
+          return true;
+        }
+      }
+      return false;
+    }
   }
 }
