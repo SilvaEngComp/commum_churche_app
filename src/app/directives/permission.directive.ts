@@ -8,9 +8,7 @@ import { UiService } from '../services/ui.service';
 })
 export class PermissionDirective {
   @Input() set permission(name: string) {
-    console.log(name);
     const permissionResponse = UiService.validPermissions(name);
-    console.log(permissionResponse);
     if (permissionResponse) {
       this.viewContainerRef.createEmbeddedView(this.templateRef);
     } else {

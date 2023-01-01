@@ -60,12 +60,21 @@ export class DailyReaderComponent implements OnInit {
 
   ngOnInit() {
     UiService.localSet(
+      Constants.BIBLE_PROGRAM_SUBPAGE,
+      Constants.BIBLE_PROGRAM_MENU_READ_DAY
+    );
+
+    UiService.localSet(
       Constants.TITLE_CURRENT_PAGE,
       Constants.TITLE_DAILY_READER
     );
     this.showMonths = true;
     this.confirm = false;
-    this.width = Math.round(this.platfom.width() * 0.8) + 'px';
+    const width = this.platfom.width();
+    this.width =
+      width < 500
+        ? Math.round(this.platfom.width() * 0.9) + 'px'
+        : Math.round(this.platfom.width() * 0.8) + 'px';
     this.currentMonth = new Date().getMonth() + 1;
     this.currentDay = new Date().getDate();
 
@@ -83,14 +92,15 @@ export class DailyReaderComponent implements OnInit {
     this.load();
   }
 
+  doRefresh(ev) {
+    window.location.reload();
+  }
   async load() {
     this.is_loading = true;
     await this.bibleProgramService
       .show()
       .then((responser) => {
         this.selectedProgram = responser.data;
-
-        this.ajusteSlide();
 
         this.setSelectedMonth();
       })
@@ -112,9 +122,6 @@ export class DailyReaderComponent implements OnInit {
               ) {
                 this.selectedVerseDay = verseDay;
                 this.selectedDay = this.currentDay;
-                console.log(this.selectedDay);
-              } else {
-                this.selectedDay = -1;
               }
             });
           }
@@ -136,9 +143,6 @@ export class DailyReaderComponent implements OnInit {
   }
 
   setSelectedDay(verseDay: VerseDay) {
-    this.save();
-
-    console.log(verseDay);
     this.selectedDay = verseDay?.day;
     const adaptedMonth = this.selectedMonth + 1;
     this.selectedProgram?.program.filter((programDay) => {
@@ -150,6 +154,7 @@ export class DailyReaderComponent implements OnInit {
         });
       }
     });
+    this.save();
   }
   setSelectedMonth() {
     if (this.selectedMonth > 0 && this.selectedMonth < 11) {
@@ -171,11 +176,13 @@ export class DailyReaderComponent implements OnInit {
       this.next = 0;
     }
 
+    console.log(this.before);
+    console.log(this.selectedMonth);
+    console.log(this.next);
     this.ajusteSlide();
   }
 
   gotoBeforeSlide() {
-    console.log(this.selectedMonth);
     if (this.selectedMonth > 1) {
       this.slide.slidePrev();
       this.selectedMonth--;
@@ -187,7 +194,6 @@ export class DailyReaderComponent implements OnInit {
     }
   }
   gotoNextSlide() {
-    console.log(this.selectedMonth);
     if (this.selectedMonth < 11) {
       this.slide.slideNext();
       this.selectedMonth++;

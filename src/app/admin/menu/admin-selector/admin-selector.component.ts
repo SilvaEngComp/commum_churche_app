@@ -30,15 +30,15 @@ export class AdminSelectorComponent implements OnInit {
   ngOnInit() {
     this.isLarge = this.platform.width() > 500;
     this.user = LoginService.getUser();
-    if (
-      UiService.localGet(this.defaultPageName) > 0 &&
-      UiService.localGet(this.defaultPageName)
-    ) {
-      this.page = String(UiService.localGet(this.defaultPageName));
-    } else {
-      this.page = '0';
-    }
+    console.log(UiService.localGet(this.defaultPageName));
+    this.page = UiService.localGet(this.defaultPageName);
 
+    if (Number(this.page) < 0) {
+      this.page = '0';
+    } else {
+      this.page = String(this.page);
+    }
+    console.log(this.page);
     if (!this.platform.is('cordova')) {
       this.requestPermission();
     } else {

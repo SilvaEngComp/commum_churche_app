@@ -39,4 +39,8 @@ export class BibleProgramComponent implements OnInit {
   back() {
     this.sessionPage.emit(Constants.BIBLE_PROGRAM_MENU_READ_DAY);
   }
+
+  doRefresh(ev) {
+    window.location.reload();
+  }
 }

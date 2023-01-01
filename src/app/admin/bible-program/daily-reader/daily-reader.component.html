@@ -5,18 +5,25 @@
 
   <ion-spinner name="dots"></ion-spinner>
 </div>
-<ion-item *permission="'counselor'" lines="none" (click)="setPlan()">
-  <ion-icon color="tertiary" slot="end" name="settings-outline"></ion-icon>
-
+<ion-item lines="none">
+  <ion-icon *permission="'counselor'" color="tertiary" slot="end" name="settings-outline"
+    (click)="setPlan()"></ion-icon>
+  <ion-icon name="refresh-outline" slot="end" (click)="doRefresh($event)"></ion-icon>
 </ion-item>
-<div class="options-dashboard" [ngStyle]="{'width': width}">
+
+<ion-item *ngIf="!selectedProgram" lines="none">
+  <ion-label class="read-waiting-date">A LEITURA BÍBLICA INICIARÁ DIA 01 DE JANEIRO DE 2023</ion-label>
+</ion-item>
+<div class="options-dashboard" [ngStyle]="{'width': width}" *ngIf="selectedProgram">
   <ion-grid>
     <ion-row>
       <ion-col [ngStyle]="{'width': width}" class="div-slide-bibleprogram">
         <div class="div-months">
-          <p (click)="gotoBeforeSlide()">{{ monthSlide[before]?.abbreviation | uppercase}}</p>
+          <p (click)="gotoBeforeSlide()">{{ monthSlide[before]?.abbreviation
+            | uppercase}}</p>
           <p>{{ monthSlide[selectedMonth]?.abbreviation | uppercase}}</p>
-          <p (click)="gotoNextSlide()">{{ monthSlide[next]?.abbreviation | uppercase}}</p>
+          <p (click)="gotoNextSlide()">{{ monthSlide[next]?.abbreviation |
+            uppercase}}</p>
         </div>
         <div>
           <ion-slides [ngStyle]="{'width': width}" (ionSlideWillChange)="onScroll(monthSlides)" #monthSlides>
@@ -26,7 +33,8 @@
 
                 <div class="div-slide-challenge-month-header">
                   <div>
-                    <ion-label [ngClass]="{'lb-selected-week': selectedDay===(i+1), 'isRead':verseDay?.isRead}"
+                    <ion-label
+                      [ngClass]="{'lb-selected-week': selectedDay===verseDay?.day, 'isRead':verseDay?.isRead, 'label-up':true}"
                       (click)="setSelectedDay(verseDay)"
                       *ngFor="let verseDay of selectedProgramMonth?.verses; let i=index">{{verseDay?.day}}</ion-label>
                   </div>

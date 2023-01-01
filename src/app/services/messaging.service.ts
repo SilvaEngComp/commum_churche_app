@@ -52,8 +52,6 @@ export class MessagingService {
           this.store(token, option).then((responser) => {
             if (responser) {
               if (responser?.data) {
-                console.clear();
-                console.log(responser.data);
                 const user: User = responser.data;
                 LoginService.updateUserToken(user);
               }

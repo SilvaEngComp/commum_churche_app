@@ -1,3 +1,4 @@
+import { Constants } from './../../../models/constants';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
 
@@ -9,23 +10,21 @@ import { UiService } from 'src/app/services/ui.service';
 export class BibleProgramAdminComponent implements OnInit {
   @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
   @Input() subpage: string;
-  defaultPageName = 'bible-program-subpage';
   constructor() {}
 
   ngOnInit() {
+    if (UiService.localGet(Constants.BIBLE_PROGRAM_SUBPAGE)) {
+      this.subpage = UiService.localGet(Constants.BIBLE_PROGRAM_SUBPAGE);
+    }
     if (!this.subpage) {
-      this.subpage = '1';
-
-      if (UiService.localGet(this.defaultPageName)) {
-        this.subpage = UiService.localGet(this.defaultPageName);
-      }
+      this.subpage = Constants.BIBLE_PROGRAM_MENU_READ_DAY;
     }
 
     console.log(this.subpage);
   }
 
   save() {
-    UiService.localSet(this.defaultPageName, this.subpage);
+    UiService.localSet(Constants.BIBLE_PROGRAM_SUBPAGE, this.subpage);
   }
 
   onReceiveSession(subpage: any) {

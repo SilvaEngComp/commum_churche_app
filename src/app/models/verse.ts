@@ -1,3 +1,5 @@
+import { UserVerseMark } from './userVerseMark';
+
 export class Verse {
   id: number;
   version: string;
@@ -6,4 +8,6 @@ export class Verse {
   chapter: number;
   verse: number;
   text: string;
+  userVerseMark: UserVerseMark;
+  constructor() {}
 }

@@ -1,3 +1,4 @@
+import { ColorMarkerComponent } from '../../directives/color-marker/color-marker.component';
 import { DirectivesModule } from './../../directives/directives.module';
 import { BibleVersesComponent } from './bible-verses/bible-verses.component';
 import { DailyReaderComponent } from './daily-reader/daily-reader.component';

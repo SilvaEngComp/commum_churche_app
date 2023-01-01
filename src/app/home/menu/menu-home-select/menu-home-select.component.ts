@@ -22,4 +22,8 @@ export class MenuHomeSelectComponent implements OnInit {
   onSelectPage(page: any) {
     this.page = page;
   }
+
+  doRefresh(ev) {
+    window.location.reload();
+  }
 }

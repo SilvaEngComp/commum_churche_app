@@ -107,6 +107,7 @@ export class Constants {
   static BIBLE_PROGRAM_MENU_READ_DAY = '1';
   static BIBLE_PROGRAM_MENU_PLAN = '3';
   static BIBLE_PROGRAM_MENU_MAP = '4';
+  static BIBLE_PROGRAM_SUBPAGE = 'bible-program-subpage';
 
   static TITLE_CURRENT_PAGE = 'currentPageTitle';
   static TITLE_DAILY_READER = 'Leitura Bíblica';

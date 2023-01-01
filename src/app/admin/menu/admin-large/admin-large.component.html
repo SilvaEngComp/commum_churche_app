@@ -56,11 +56,12 @@
 
       <div [ngSwitch]="page">
 
+        <app-bible-program-admin *ngSwitchCase="'0'"></app-bible-program-admin>
         <app-user-admin *ngSwitchCase="'-1'" [subpage]="'0'"></app-user-admin>
         <app-user-admin *ngSwitchCase="'2'" [subpage]="'1'"></app-user-admin>
-        <app-financy-admin *ngSwitchCase="'3'" [subpage]="'0'"></app-financy-admin>
-        <app-financy-admin *ngSwitchCase="'4'" [subpage]="'1'"></app-financy-admin>
-        <app-bible-program-admin *ngSwitchCase="'5'"></app-bible-program-admin>
+        <app-financy-admin *ngSwitchCase="'4'" [subpage]="'0'"></app-financy-admin>
+        <app-financy-admin *ngSwitchCase="'5'" [subpage]="'1'"></app-financy-admin>
+
       </div>
     </ion-col>
   </ion-row>

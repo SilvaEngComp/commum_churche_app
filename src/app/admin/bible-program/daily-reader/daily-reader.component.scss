@@ -112,8 +112,9 @@ ion-toolbar {
         }
       }
       .lb-selected-week {
-        font-size: 24pt;
+        font-size: 26pt;
         text-decoration: underline;
+        color: var(--ion-color-success);
       }
     }
     .div-slide-challenge-month-body {
@@ -182,4 +183,16 @@ ion-toolbar {
 .bible-text {
   display: grid;
   align-content: space-between;
+}
+
+.read-waiting-date {
+  margin: 10;
+  font-family: Qanelas-bold;
+  font-size: 24pt;
+  text-align: center;
+  color: var(--ion-color-medium);
+}
+
+.label-up {
+  z-index: 200;
 }

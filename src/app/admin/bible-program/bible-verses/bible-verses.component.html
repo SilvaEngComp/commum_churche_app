@@ -2,19 +2,46 @@
   <ion-toolbar>
     <ion-buttons slot="start" (click)="back()">
       <ion-icon color="primary" name="arrow-undo-circle-outline"></ion-icon>
+    </ion-buttons> <ion-buttons slot="end" (click)="doRefresh($event)">
+      <ion-icon name="refresh-outline"></ion-icon>
     </ion-buttons>
-    <ion-item class="header" lines="none">
-      <ion-label color="light">VERSÍCULOS DO DIA {{verseDay?.startVerse?.book}}
-        {{verseDay?.startVerse?.chapter}}:{{verseDay?.startVerse?.verse}}/{{verseDay?.endVerse?.book}}
-        {{verseDay?.endVerse?.chapter}}:{{verseDay?.endVerse?.verse}}</ion-label>
-    </ion-item>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-text class="header" lines="none">
+      VERSÍCULOS DO DIA {{verseDay?.startVerse?.book}}
+      {{verseDay?.startVerse?.chapter}}:{{verseDay?.startVerse?.verse}}/{{verseDay?.endVerse?.book}}
+      {{verseDay?.endVerse?.chapter}}:{{verseDay?.endVerse?.verse}}
+    </ion-text>
   </ion-toolbar>
 </ion-header>
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <div class="open-div" [ngStyle]="{'height':height}" [innerHTML]="text">
-      </div>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<div class="open-div" [ngStyle]="{'height': height}">
+  <ion-grid>
+    <ion-row *ngFor="let item of verseDayTree; let bokPosition=index">
+      <ion-col>
+        <ion-item lines="none">
+          <ion-text class="book">{{item?.book}}</ion-text>
+        </ion-item>
+        <ion-grid>
+          <ion-row *ngFor="let chapter of item?.chapters; let chapterPosition=index">
+            <ion-col>
+              <ion-text class="chapter">Capítulo {{chapter?.chapter}}</ion-text>
+              <ion-grid>
+                <ion-row *ngFor="let verse of chapter?.verses; let versePosition=index">
+                  <ion-col>
+                    <ion-text [ngStyle]="{'background-color':verse?.userVerseMark?.color}" appLongPressAction
+                      [verse]="verse"
+                      [ngClass]="{'white-text':verse?.userVerseMark?.color!=='Yellow' && verse?.userVerseMark}">
+                      {{verse?.text}}</ion-text>
+                    <ion-icon (click)="openComment($event, verse,bokPosition,chapterPosition, versePosition)"
+                      *ngIf="(verse?.userVerseMark&&verse?.userVerseMark?.comment)"
+                      name="chatbox-ellipses-outline"></ion-icon>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
