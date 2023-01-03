@@ -2,6 +2,9 @@
 export class Constants {
   static ROLE_MEMBER = 'member';
   static ROLE_SUPER_ADMIN = 'super_admin';
+  static ROLE_FINANCIAL = 'financial';
+  static ROLE_SECRETARY = 'secretary';
+  static ROLE_MULTIMIDIA = 'multimidia';
   static MENU_HOME = 'menuHome';
 
   static LOCAL_USER = 'localUser';

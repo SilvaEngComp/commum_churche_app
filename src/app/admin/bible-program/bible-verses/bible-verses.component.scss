@@ -14,6 +14,7 @@ ion-header {
     }
   }
 }
+
 ion-card-title {
   font-family: Qanelas-bold;
   font-size: 14pt;
@@ -114,4 +115,12 @@ strong {
     bottom: 10%;
     right: 5px;
   }
+}
+
+.col-verses {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+ion-checkbox {
+  margin-right: 10px;
 }

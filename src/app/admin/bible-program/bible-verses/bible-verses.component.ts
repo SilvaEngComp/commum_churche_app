@@ -29,6 +29,7 @@ export class BibleVersesComponent implements OnInit {
   letterSize: string;
   letterSizeCap: string;
   letterSizeBook: string;
+  showCheckBox: boolean;
   constructor(
     private bibleProgramService: BibleProgramService,
     private platform: Platform,
@@ -38,6 +39,7 @@ export class BibleVersesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.showCheckBox = false;
     UiService.localSet(
       Constants.BIBLE_PROGRAM_SUBPAGE,
       Constants.BIBLE_PROGRAM_MENU_VERSE_DAY
@@ -148,5 +150,9 @@ export class BibleVersesComponent implements OnInit {
         });
       }
     }
+  }
+
+  setShowCheckBox() {
+    this.showCheckBox = !this.showCheckBox;
   }
 }

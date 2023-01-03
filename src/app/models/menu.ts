@@ -16,12 +16,9 @@ export class Menu {
     this.submenu = submenu;
   }
 
-  static getMenu(permissions?: string[], isHome: boolean = false) {
-    if (isHome) {
-      permissions = [Constants.MENU_HOME];
-    }
+  static getMenu(isHome: boolean = false) {
     const menuGeral: Menu[] = [];
-    const menu_itens: string[] = this.getMenuByPermission(permissions);
+    const menu_itens: string[] = this.getMenuByPermission(isHome);
     let cont = 0;
     for (let i = 0; i < menu_itens.length; i++) {
       const submenu = [];
@@ -36,22 +33,24 @@ export class Menu {
     return menuGeral;
   }
 
-  static getMenuByPermission(permissions: string[]) {
+  static getMenuByPermission(isHome: boolean) {
     const menu_itens: string[] = [];
     try {
-      permissions.filter((permission) => {
-        if (permission === Constants.MENU_HOME) {
-          menu_itens.push(Constants.SUPERIOR_MENU_REGISTER);
-          menu_itens.push(Constants.SUPERIOR_MENU_LOGIN);
-        } else if (permission === Constants.ROLE_MEMBER) {
-          menu_itens.push(Constants.LATERAL_MENU_BIBLE_READ);
-          menu_itens.push(Constants.LATERAL_MENU_TITHE_OFFER);
-        } else {
-          menu_itens.push(Constants.LATERAL_MENU_FEED);
-          menu_itens.push(Constants.LATERAL_MENU_MEMBERS);
-          menu_itens.push(Constants.LATERAL_MENU_FINANCY);
-        }
-      });
+      if (isHome) {
+        menu_itens.push(Constants.SUPERIOR_MENU_REGISTER);
+        menu_itens.push(Constants.SUPERIOR_MENU_LOGIN);
+      } else if (UiService.validPermissions(Constants.ROLE_MEMBER)) {
+        menu_itens.push(Constants.LATERAL_MENU_BIBLE_READ);
+        menu_itens.push(Constants.LATERAL_MENU_TITHE_OFFER);
+        menu_itens.push(Constants.LATERAL_MENU_FEED);
+      }
+
+      if (UiService.validPermissions(Constants.ROLE_SECRETARY)) {
+        menu_itens.push(Constants.LATERAL_MENU_MEMBERS);
+      }
+      if (UiService.validPermissions(Constants.ROLE_FINANCIAL)) {
+        menu_itens.push(Constants.LATERAL_MENU_FINANCY);
+      }
       menu_itens.push(Constants.LATERAL_MENU_OUT);
     } catch (e) {
       localStorage.clear();

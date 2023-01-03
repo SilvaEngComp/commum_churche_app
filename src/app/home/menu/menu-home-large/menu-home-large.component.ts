@@ -33,7 +33,7 @@ export class MenuHomeLargeComponent implements OnInit {
   ngOnInit() {
     this.height = this.platform.height();
     this.showMenu = true;
-    this.menu_itens = Menu.getMenu(null, true);
+    this.menu_itens = Menu.getMenu(true);
 
     this.nivel = 3;
     this.permission = false;

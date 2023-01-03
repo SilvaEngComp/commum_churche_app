@@ -57,6 +57,8 @@ export class CreateFeedComponent implements OnInit {
       const user = LoginService.getUser();
       this.feed.publisher = new User();
       this.feed.publisher.id = user.id;
+      this.feed.publisher.roles = user.roles;
+
       this.save();
     }
   }

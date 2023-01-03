@@ -44,10 +44,9 @@ export class LongPressActionDirective implements AfterViewInit {
     const gesture = await this.gestureCtrl.create(
       {
         el: this.el.nativeElement,
-        gestureName: 'long-press',
+        gestureName: '',
         threshold: 0,
         onStart: (ev) => {
-          console.log('started');
           this.onStart();
         },
         onEnd: (ev) => {
@@ -64,11 +63,11 @@ export class LongPressActionDirective implements AfterViewInit {
     if (this.active) {
       clearTimeout(this.action);
     }
-    this.action = setTimeout(async () => {
-      if (this.active) {
-        this.openColorMark(1);
-      }
-    }, 2000);
+    // this.action = setTimeout(async () => {
+    if (this.active) {
+      this.openColorMark(1);
+    }
+    // }, 2000);
   }
 
   async openColorMark(event: any) {

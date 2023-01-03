@@ -30,10 +30,12 @@
                 {{chapter?.chapter}}</ion-text>
               <ion-grid>
                 <ion-row *ngFor="let verse of chapter?.verses; let versePosition=index">
-                  <ion-col>
+                  <ion-col lass="col-verses">
+                    <ion-checkbox *ngIf="showCheckBox" appLongPressAction [verse]="verse"></ion-checkbox>
+
                     <ion-text class="verse"
                       [ngStyle]="{'background-color':verse?.userVerseMark?.color, 'font-size': letterSize}"
-                      appLongPressAction [verse]="verse" [ngClass]="{'white-text':checkWhiteText(verse)}">
+                      [ngClass]="{'white-text':checkWhiteText(verse)}">
                       <strong>{{verse?.verse}}</strong> {{verse?.text}}</ion-text>
                     <ion-icon (click)="openComment($event, verse,bokPosition,chapterPosition, versePosition)"
                       *ngIf="(verse?.userVerseMark&&verse?.userVerseMark?.comment)"
@@ -59,6 +61,9 @@
       <ion-fab-button (click)="setLetterSize(true)">
         <ion-label>A</ion-label>
         <ion-icon name="caret-up-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="setShowCheckBox()">
+        <ion-icon name="color-palette-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
