@@ -49,28 +49,28 @@
     </ion-list>
   </div>
 
-  <div class="div-body" *permission="'financial'">
+  <div class="div-body" *permission="'member'">
     <div>
       <ion-label class="lb-title">
         LEITURA BÍBLICA
       </ion-label>
     </div>
-    <ion-item lines="none" (click)="selectOption(5)" class="option">
+    <ion-item lines="none" (click)="selectOption(0)" class="option">
       <ion-icon name="extension-puzzle-outline"></ion-icon>
       <ion-label>Programa de leitura</ion-label>
     </ion-item>
   </div>
-  <div class="div-body" *permission="'financial'">
+  <div class="div-body">
     <div>
       <ion-label class="lb-title">
         FINANCEIRO
       </ion-label>
     </div>
-    <ion-item lines="none" (click)="selectOption(3)" class="option">
+    <ion-item lines="none" (click)="selectOption(4)" class="option">
       <ion-icon name="extension-puzzle-outline"></ion-icon>
       <ion-label>Dízimos e Ofertas</ion-label>
     </ion-item>
-    <ion-item lines="none" (click)="selectOption(4)" class="option">
+    <ion-item lines="none" (click)="selectOption(5)" class="option" *permission="'financial'">
       <ion-icon name="extension-puzzle-outline"></ion-icon>
       <ion-label>Resumo Financeiro</ion-label>
     </ion-item>

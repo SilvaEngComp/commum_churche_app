@@ -1,3 +1,4 @@
+import { FeedPageModule } from './feed/feed.module';
 import { BibleProgramModule } from './bible-program/bible-program.module';
 import { MorePageModule } from './more/more.module';
 import { FinancyModule } from './financy/financy.module';
@@ -26,6 +27,7 @@ import { UserPageModule } from './user/user.module';
     FinancyModule,
     MorePageModule,
     BibleProgramModule,
+    FeedPageModule,
   ],
   exports: [AdminSelectorComponent],
 })

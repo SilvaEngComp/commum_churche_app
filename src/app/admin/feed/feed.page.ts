@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/member-ordering */
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Constants } from 'src/app/models/constants';
 import { Feed } from 'src/app/models/feed';
 import { FeedService } from 'src/app/services/feed.service';
 import { UiService } from 'src/app/services/ui.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-feed',
@@ -11,25 +11,32 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./feed.page.scss'],
 })
 export class FeedPage implements OnInit {
-  constructor(private feedService: FeedService) {}
-
+  @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
+  @Input() subpage: string;
   feed: Feed;
   callbackPage: string;
+  constructor(private feedService: FeedService) {}
+
   ngOnInit() {
-    this.page = 'public';
-
-    if (UiService.localGet('feed-page')) {
-      this.page = UiService.localGet('feed-page');
+    UiService.localSet(
+      Constants.TITLE_CURRENT_PAGE,
+      Constants.TITLE_FEED_REGISTER
+    );
+    if (!this.subpage) {
+      UiService.localSet(Constants.FEED_SUBPAGE, Constants.FEED_PAGE_PUBLIC);
+      this.subpage = UiService.localGet(Constants.FEED_SUBPAGE);
+      if (!this.subpage) {
+        this.subpage = Constants.FEED_PAGE_PUBLIC;
+      }
     }
-
     UiService.feedPage.subscribe((obj) => {
-      if (obj.page) {
-        this.saveFeedPage(obj.page);
+      if (obj.subpage) {
+        this.saveFeedPage(obj.subpage);
       }
     });
-  }
 
-  page: string;
+    console.log(this.subpage);
+  }
 
   returnPage(obj) {
     if (obj.feed) {
@@ -37,29 +44,30 @@ export class FeedPage implements OnInit {
       this.saveFeed();
     }
     if (obj.files) {
+      console.log('reloading');
       this.feedService
         .upload(obj.files.formData, this.feed)
         .then((responser) => {
           this.feed.image = responser.data.image;
           this.saveFeed();
-          window.location.reload();
+          // window.location.reload();
         });
     }
     if (obj.callbackPage) {
       this.callbackPage = obj.callbackPage;
       UiService.localSet('callbackPage', this.callbackPage);
     }
-    if (obj.page) {
-      this.saveFeedPage(obj.page);
+    if (obj.subpage) {
+      this.saveFeedPage(obj.subpage);
     }
   }
   doRefresh() {
-    window.location.reload();
+    // window.location.reload();
   }
 
   saveFeedPage(page) {
-    this.page = page;
-    UiService.localSet('feed-page', this.page);
+    this.subpage = page;
+    UiService.localSet('feed-page', this.subpage);
   }
 
   saveFeed() {

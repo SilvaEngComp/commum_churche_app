@@ -12,8 +12,8 @@
               <th *ngFor="let item of headCaixaList">{{item | uppercase}}</th>
             </tr>
           </thead>
-          <tbody *ngFor="let item of caixaSummary?.caixas">
-            <tr>
+          <tbody>
+            <tr *ngFor="let item of caixaSummary?.caixas">
               <td>
                 <ion-label>{{item?.caixaType?.name | uppercase}}</ion-label>
               </td>

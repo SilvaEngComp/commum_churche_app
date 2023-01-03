@@ -46,5 +46,6 @@ import { ResourcesModule } from 'src/app/resources/resources.module';
     MessagingService,
     FeedCommentService,
   ],
+  exports: [FeedPage],
 })
 export class FeedPageModule {}

@@ -5,8 +5,8 @@
         <th *ngFor="let header of headTitheList">{{header | uppercase}}</th>
       </tr>
     </thead>
-    <tbody *ngFor="let item of titheSummary?.tithes">
-      <tr>
+    <tbody>
+      <tr *ngFor="let item of titheSummary?.tithes">
         <td>
           <ion-label>R$ {{item?.amount | currencyBrl}}</ion-label>
         </td>

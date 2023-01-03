@@ -1,17 +1,8 @@
-<!-- <ion-button (click)="openInLive()">AULA AO VIVO</ion-button> -->
-<ion-content>
+<div class="div-content" [ngSwitch]="subpage">
+  <app-public-feed *ngSwitchCase="'1'" (returnPage)="returnPage($event)"></app-public-feed>
+  <app-create-feed [feed]="feed" *ngSwitchCase="'2'" (returnPage)="returnPage($event)"></app-create-feed>
+  <app-publication [feed]="feed" [expandAll]="true" *ngSwitchCase="'3'"
+    (returnPage)="returnPage($event)"></app-publication>
+  <app-load-images [single]="true" *ngSwitchCase="'4'" (returnPage)="returnPage($event)"></app-load-images>
 
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh()">
-        <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Atualizando...">
-        </ion-refresher-content>
-    </ion-refresher>
-
-    <div class="div-content" [ngSwitch]="page">
-        <app-public-feed *ngSwitchCase="'public'" (returnPage)="returnPage($event)"></app-public-feed>
-        <app-create-feed [feed]="feed" *ngSwitchCase="'create'" (returnPage)="returnPage($event)"></app-create-feed>
-        <app-publication [feed]="feed" [expandAll]="true" *ngSwitchCase="'selected-feed'" (returnPage)="returnPage($event)"></app-publication>
-        <app-load-images [single]="true" *ngSwitchCase="'load-image'" (returnPage)="returnPage($event)"></app-load-images>
-
-    </div>
-
-</ion-content>
+</div>

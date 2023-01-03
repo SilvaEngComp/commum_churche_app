@@ -1,6 +1,6 @@
 ion-header {
   ion-toolbar {
-    ion-text {
+    ion-label {
       color: var(--ion-color-tertiary);
       font-size: 12pt;
       font-family: Qanelas-bold;
@@ -35,18 +35,27 @@ ion-label {
 .chapter {
   font-family: Qanelas-bold;
   font-size: 12pt;
-  color: var(--ion-color-tertiary);
+  color: var(--ion-color-dark);
 }
 
 .verse {
-  font-family: Qanelas-bold;
+  font-family: Qanelas;
   font-size: 12pt;
+  // color: var(--ion-color-dark);
+}
+
+strong {
+  font-family: Qanelas-bold;
+  font-size: 13pt;
   color: var(--ion-color-dark);
 }
 
 .white-text {
   font-family: Qanelas-bold;
   color: white;
+}
+.black-text {
+  font-family: Qanelas-bold;
 }
 
 .open-div {
@@ -97,4 +106,12 @@ ion-label {
   border-width: 8px 8px 0 8px;
   border-color: var(--ion-color-primary) var(--ion-color-light)
     var(--ion-color-light) var(--ion-color-light);
+}
+
+@media only screen and (min-width: 500px) {
+  ion-fab {
+    position: fixed;
+    bottom: 10%;
+    right: 5px;
+  }
 }

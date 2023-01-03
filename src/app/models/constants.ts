@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export class Constants {
   static ROLE_MEMBER = 'member';
+  static ROLE_SUPER_ADMIN = 'super_admin';
   static MENU_HOME = 'menuHome';
 
   static LOCAL_USER = 'localUser';
@@ -85,6 +86,7 @@ export class Constants {
   static SUPERIOR_MENU_LOGIN = 'LOGIN';
   static LATERAL_MENU_TITHE_OFFER = 'DÍZIMOS E OFERTAS';
   static LATERAL_MENU_BIBLE_READ = 'LEITURA BÍBLICA';
+  static LATERAL_MENU_FEED = 'Noticias';
   static LATERAL_MENU_OUT = 'SAIR';
   static LATERAL_MENU_MEMBERS = 'MEMBROS';
   static LATERAL_MENU_FINANCY = 'FINANCEIRO';
@@ -120,5 +122,16 @@ export class Constants {
   static TITLE_CAIXA_REGISTER_IN = 'REGISTRAR ENTRADA';
   static TITLE_TITHE_REGISTER = 'REGISTRAR DÍZIMO';
   static TITLE_OFFER_REGISTER = 'REGISTRAR OFERTA';
+  static TITLE_FEED_REGISTER = 'FEED NOTÍCIAS';
   static FCM_TOKEN = 'fcmToken';
+  static COLOR_TRANSPARENT = 'transparent';
+
+  static TITLE_FEED_CREATE_FEED = 'CRIAR NOVA PUBLICAÇÃO';
+
+  static FEED_SUBPAGE = 'bible-program-subpage';
+  static FEED_PAGE_PUBLIC = '1';
+  static FEED_PAGE_CREATE_FEED = '2';
+  static FEED_PAGE_PUBLICATION = '3';
+  static FEED_PAGE_LOAD_IMAGE = '4';
+  static FEED_ATTRIBUTES_FEED_OBJECT = 'storedFeed';
 }

@@ -1,62 +1,75 @@
 //header
-ion-toolbar {
-    width: 95%;
-    border-radius: 40px;
-    margin: 2%;
-    --background: rgba(157, 159, 166, 0.3)
+ion-header {
+  ion-toolbar {
+    ion-label {
+      color: var(--ion-color-tertiary);
+      font-size: 12pt;
+      font-family: Qanelas-bold;
+      text-align: center;
+      word-wrap: break-word;
+      margin: 1%;
+    }
+
+    ion-icon {
+      font-size: 40px;
+      margin-right: 10px;
+      --ionicon-stroke-width: 40px;
+      color: var(--ion-color-primary);
+    }
+  }
 }
 
 .geral {
-    display: grid;
-    grid-template-columns: auto;
+  display: grid;
+  grid-template-columns: auto;
 }
 
 .div-header {
-    width: 100%;
-    min-height: 70px;
-    box-shadow: 0.4px 0.2px 0.8px 0.2px var(--ion-color-medium);
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    display: grid;
-    align-items: center;
-    align-content: center;
-    align-self: center;
-    margin-bottom: 10px;
-    ion-icon {
-        font-size: 40px;
-        margin-right: 10px;
-        --ionicon-stroke-width: 40px;
-        color: var(--ion-color-primary);
-    }
+  width: 100%;
+  min-height: 70px;
+  box-shadow: 0.4px 0.2px 0.8px 0.2px var(--ion-color-medium);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: grid;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  margin-bottom: 10px;
+  ion-icon {
+    font-size: 40px;
+    margin-right: 10px;
+    --ionicon-stroke-width: 40px;
+    color: var(--ion-color-primary);
+  }
 }
 
 .div-body {
+  width: 100%;
+  min-height: 80px;
+  display: grid;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  margin-bottom: 10px;
+  div {
+    display: flex;
+  }
+  ion-grid {
     width: 100%;
-    min-height: 80px;
-    display: grid;
-    align-items: center;
-    align-content: center;
-    align-self: center;
-    margin-bottom: 10px;
-    div {
-        display: flex;
-    }
-    ion-grid {
-        width: 100%;
-    }
+  }
 }
 
-@media only screen and (min-width:500px) {
-    .geral {
-        width: 90%;
-        margin-left: 5%;
-        margin-right: 5%;
-        ion-grid {
-            width: 100%;
-            margin: 40%;
-        }
-        .div-body {
-            width: 100%;
-        }
+@media only screen and (min-width: 500px) {
+  .geral {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    ion-grid {
+      width: 100%;
+      margin: 40%;
     }
+    .div-body {
+      width: 100%;
+    }
+  }
 }

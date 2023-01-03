@@ -1,6 +1,6 @@
-import { Verse } from 'src/app/models/verse';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
 import { Component, Input, OnInit } from '@angular/core';
+import { Constants } from 'src/app/models/constants';
 
 @Component({
   selector: 'app-color-marker',
@@ -11,7 +11,6 @@ export class ColorMarkerComponent implements OnInit {
   @Input() isDirective: boolean;
   @Input() comment: string;
   colors = [
-    'CornflowerBlue',
     'blue',
     'blueviolet',
     'burlywood',
@@ -33,7 +32,8 @@ export class ColorMarkerComponent implements OnInit {
 
   constructor(private modalCtrl: PopoverController) {}
 
-  selectColor(color) {
+  selectColor(color = Constants.COLOR_TRANSPARENT) {
+    console.log(color);
     this.modalCtrl.dismiss({ color });
   }
   setComment() {

@@ -25,7 +25,6 @@ ion-list {
   justify-content: center;
   align-items: center;
   align-content: center;
-
 }
 .item-search {
   border-radius: 20px;
@@ -59,33 +58,30 @@ ion-spinner {
   color: var(--ion-color-medium);
 }
 
-
-.ocult-details{
+.ocult-details {
   display: none;
-
 }
-.show-details{
+.show-details {
   display: block;
-strong{
-  font-family: Qanelas-bold;
-  color:var(--ion-color-medium);
-  // font-size: 8pt;
-}
-  ion-label{
-    font-family: Qanelas-light;
-    color:var(--ion-color-tertiary);
+  strong {
+    font-family: Qanelas-bold;
+    color: var(--ion-color-medium);
     // font-size: 8pt;
   }
-
+  ion-label {
+    font-family: Qanelas-light;
+    color: var(--ion-color-tertiary);
+    // font-size: 8pt;
+  }
 }
 
-ion-card-title{
+ion-card-title {
   font-family: Qanelas-bold;
   color: var(--ion-color-medium);
   word-wrap: break-word;
 }
 
-.note-church{
+.note-church {
   font-family: Qanelas-light;
   color: var(--ion-color-tertiary);
   word-wrap: break-word;
@@ -93,19 +89,12 @@ ion-card-title{
   text-align: right;
 }
 
-@media only screen and (min-width: 500px) {
-
-}
 @media only screen and (max-width: 500px) {
-
-  ion-card-title{
+  ion-card-title {
     font-family: Qanelas-bold;
     color: var(--ion-color-medium);
     word-wrap: break-word;
     max-width: 100px;
     font-size: 10pt;
   }
-
-
-
 }

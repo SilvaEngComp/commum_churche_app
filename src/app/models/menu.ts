@@ -16,12 +16,12 @@ export class Menu {
     this.submenu = submenu;
   }
 
-  static getMenu(permission?: string, isHome: boolean = false) {
+  static getMenu(permissions?: string[], isHome: boolean = false) {
     if (isHome) {
-      permission = Constants.MENU_HOME;
+      permissions = [Constants.MENU_HOME];
     }
     const menuGeral: Menu[] = [];
-    const menu_itens: string[] = this.getMenuByPermission(permission);
+    const menu_itens: string[] = this.getMenuByPermission(permissions);
     let cont = 0;
     for (let i = 0; i < menu_itens.length; i++) {
       const submenu = [];
@@ -36,20 +36,27 @@ export class Menu {
     return menuGeral;
   }
 
-  static getMenuByPermission(permission: string) {
+  static getMenuByPermission(permissions: string[]) {
     const menu_itens: string[] = [];
-    if (permission === Constants.MENU_HOME) {
-      menu_itens.push(Constants.SUPERIOR_MENU_REGISTER);
-      menu_itens.push(Constants.SUPERIOR_MENU_LOGIN);
-    } else if (permission === Constants.ROLE_MEMBER) {
-      menu_itens.push(Constants.LATERAL_MENU_BIBLE_READ);
-      menu_itens.push(Constants.LATERAL_MENU_TITHE_OFFER);
-    } else {
-      menu_itens.push(Constants.LATERAL_MENU_BIBLE_READ);
-      menu_itens.push(Constants.LATERAL_MENU_MEMBERS);
-      menu_itens.push(Constants.LATERAL_MENU_FINANCY);
+    try {
+      permissions.filter((permission) => {
+        if (permission === Constants.MENU_HOME) {
+          menu_itens.push(Constants.SUPERIOR_MENU_REGISTER);
+          menu_itens.push(Constants.SUPERIOR_MENU_LOGIN);
+        } else if (permission === Constants.ROLE_MEMBER) {
+          menu_itens.push(Constants.LATERAL_MENU_BIBLE_READ);
+          menu_itens.push(Constants.LATERAL_MENU_TITHE_OFFER);
+        } else {
+          menu_itens.push(Constants.LATERAL_MENU_FEED);
+          menu_itens.push(Constants.LATERAL_MENU_MEMBERS);
+          menu_itens.push(Constants.LATERAL_MENU_FINANCY);
+        }
+      });
+      menu_itens.push(Constants.LATERAL_MENU_OUT);
+    } catch (e) {
+      localStorage.clear();
+      window.location.reload();
     }
-    menu_itens.push(Constants.LATERAL_MENU_OUT);
 
     return menu_itens;
   }
@@ -62,6 +69,7 @@ export class Menu {
       Constants.LATERAL_MENU_MEMBERS,
       Constants.LATERAL_MENU_TITHE_OFFER,
       Constants.LATERAL_MENU_FINANCY,
+      Constants.LATERAL_MENU_FEED,
       Constants.LATERAL_MENU_OUT,
     ];
 

@@ -23,7 +23,7 @@ import { Constants } from 'src/app/models/constants';
   templateUrl: './admin-small.component.html',
   styleUrls: ['./admin-small.component.scss'],
 })
-export class AdminSmallComponent implements OnInit, AfterViewInit {
+export class AdminSmallComponent implements OnInit {
   @Output() selectedPage: EventEmitter<any> = new EventEmitter<any>();
   page_selected: string;
   badge_feed: number;
@@ -40,14 +40,6 @@ export class AdminSmallComponent implements OnInit, AfterViewInit {
   @ViewChild('tabAdmin', { static: false }) tab!: IonTabs;
 
   ngOnInit() {}
-  ngAfterViewInit() {
-    this.user = LoginService.getUser();
-    if (this?.user?.role !== 'member') {
-      this.isMember = false;
-    } else {
-      this.isMember = true;
-    }
-  }
   async setPage(page: number) {
     UiService.localRemove(Constants.USER_MAINTAINCE);
     this.selectedPage.emit(page);

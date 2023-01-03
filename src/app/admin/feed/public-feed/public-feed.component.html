@@ -1,17 +1,15 @@
-<div class="geral">
-
-    <div class="div-header">
-        <ion-item lines="none">
-            <ion-label slot="start" class="lb-title">
-                FORÚM
-            </ion-label>
-            <ion-icon slot="end" name="add-circle-outline" (click)="newFeed()" *permission="'store_feed'"></ion-icon>
-        </ion-item>
-    </div>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-icon name="add-circle-outline" (click)="newFeed()" *permission="'multimidia'"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 
 
-    <div *ngIf="!is_loading" class="div-body">
-        <app-publication *ngFor="let feed of feeds" [feed]="feed" (returnSubPage)="returnSubPage($event)"></app-publication>
-    </div>
+
+
+<div *ngIf="!is_loading" class="div-body">
+  <app-publication *ngFor="let feed of feeds" [feed]="feed" (returnSubPage)="returnSubPage($event)"></app-publication>
 </div>

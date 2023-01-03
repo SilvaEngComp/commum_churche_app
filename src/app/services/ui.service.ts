@@ -83,16 +83,32 @@ export class UiService {
 
   static validPermissions(permission?: string) {
     const user = UiService.localGet(Constants.TOKEN).user;
-    const roleUserIndex = Constants.DEFAULT_ROLES.indexOf(user?.role);
+    let exist = user.roles.includes(Constants.ROLE_SUPER_ADMIN);
+    if (exist) {
+      return true;
+    }
 
-    const roleMinIndex = Constants.DEFAULT_ROLES.indexOf(permission);
+    exist = user.roles.includes(permission);
 
-    if (roleUserIndex <= roleMinIndex) {
+    if (exist) {
       return true;
     }
 
     return false;
   }
+  // }
+  // static validPermissions(permission?: string) {
+  //   const user = UiService.localGet(Constants.TOKEN).user;
+  //   const roleUserIndex = Constants.DEFAULT_ROLES.indexOf(user?.role);
+
+  //   const roleMinIndex = Constants.DEFAULT_ROLES.indexOf(permission);
+
+  //   if (roleUserIndex <= roleMinIndex) {
+  //     return true;
+  //   }
+
+  //   return false;
+  // }
   static localRemove(key) {
     const encriptedKey =
       environment.LOCALSTORAGE +

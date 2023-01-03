@@ -1,5 +1,8 @@
 <ion-grid>
   <ion-row *ngIf="isDirective">
+    <ion-col>
+      <ion-icon name="ban-outline" (click)="selectColor()"></ion-icon>
+    </ion-col>
     <ion-col *ngFor="let color of colors">
       <ion-icon (click)="selectColor(color)" name="ellipse-sharp" [ngStyle]="{'color': color}"></ion-icon>
     </ion-col>

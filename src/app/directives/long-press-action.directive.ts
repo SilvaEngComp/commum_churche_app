@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { LoginService } from './../services/login.service';
 import { UserVerseMarkService } from './../services/user-verse-mark.service';
 import {
@@ -13,6 +14,7 @@ import { GestureController, PopoverController } from '@ionic/angular';
 import { ColorMarkerComponent } from './color-marker/color-marker.component';
 import { Verse } from '../models/verse';
 import { UserVerseMark } from '../models/userVerseMark';
+import { Constants } from '../models/constants';
 
 @Directive({
   selector: '[appLongPressAction]',
@@ -22,6 +24,8 @@ export class LongPressActionDirective implements AfterViewInit {
   @Input() verse: Verse;
   private active: boolean;
   private action: any;
+  private lastOnStart = 0;
+  private DOUBLE_CLICK_THRESHOLD = 1500;
 
   constructor(
     private gestureCtrl: GestureController,
@@ -43,8 +47,8 @@ export class LongPressActionDirective implements AfterViewInit {
         gestureName: 'long-press',
         threshold: 0,
         onStart: (ev) => {
-          this.active = true;
-          this.longPressCheck();
+          console.log('started');
+          this.onStart();
         },
         onEnd: (ev) => {
           this.active = false;
@@ -64,10 +68,11 @@ export class LongPressActionDirective implements AfterViewInit {
       if (this.active) {
         this.openColorMark(1);
       }
-    }, 500);
+    }, 2000);
   }
 
   async openColorMark(event: any) {
+    this.renderer.setStyle(this.el.nativeElement, 'backgroundColor', 'gray');
     const modal = await this.modalCtrl.create({
       component: ColorMarkerComponent,
       componentProps: {
@@ -114,6 +119,45 @@ export class LongPressActionDirective implements AfterViewInit {
         this.verse.userVerseMark.verse_id = this.verse.id;
         this.userVerseMarkService.store(this.verse.userVerseMark);
       }
+      this.checkResetColor();
+    } else {
+      this.checkResetColor();
     }
+  }
+
+  checkResetColor() {
+    if (
+      this.verse?.userVerseMark?.color?.length > 0 &&
+      this.verse?.userVerseMark?.color !== Constants.COLOR_TRANSPARENT
+    ) {
+      console.log('entrou true');
+      this.renderer.setStyle(
+        this.el.nativeElement,
+        'backgroundColor',
+        this.verse?.userVerseMark?.color
+      );
+    } else {
+      console.log('entrou false');
+
+      this.renderer.setStyle(
+        this.el.nativeElement,
+        'backgroundColor',
+        Constants.COLOR_TRANSPARENT
+      );
+      this.renderer.setStyle(this.el.nativeElement, 'fontFamily', 'Qanelas');
+      this.renderer.setStyle(this.el.nativeElement, 'color', 'black');
+    }
+  }
+
+  private onStart() {
+    // const now = Date.now();
+
+    // if (Math.abs(now - this.lastOnStart) <= this.DOUBLE_CLICK_THRESHOLD) {
+    this.active = true;
+    this.longPressCheck();
+    //   this.lastOnStart = 0;
+    // } else {
+    //   this.lastOnStart = now;
+    // }
   }
 }

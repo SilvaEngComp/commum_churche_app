@@ -44,7 +44,6 @@ export class LoginService {
 
   public static getHeaders(formData?: boolean): HttpHeaders {
     const token = LoginService.getToken();
-    console.log(token);
     if (token) {
       let httpHeaders = new HttpHeaders();
       if (formData) {
@@ -80,7 +79,6 @@ export class LoginService {
   }
 
   async login(login: string, senha: string = ''): Promise<TokenAccess> {
-    console.log(`${environment.API}/auth/login`);
     return this.http
       .post<TokenAccess>(`${environment.API}/auth/login`, {
         email: login,
@@ -108,7 +106,6 @@ export class LoginService {
   }
 
   checkCod(cod: string): Promise<Responser> {
-    console.log(cod);
     return this.http
       .get<Responser>(`${environment.API}/auth/codeValidation/${cod}`, {
         headers: LoginService.getHeaders(),
@@ -123,7 +120,6 @@ export class LoginService {
   }
 
   updatePassword(user: User): Promise<Responser> {
-    console.log(user);
     return this.http
       .patch<Responser>(
         `${environment.API}/auth/updatePassword/user/${user.id}`,

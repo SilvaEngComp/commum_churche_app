@@ -14,7 +14,7 @@ export class User {
   isBaptizedString: string;
   birthDate: string;
   contact: Contact;
-  role: string;
+  roles: string[];
   password: string;
   policy: boolean;
   image: string;
@@ -31,7 +31,7 @@ export class User {
   fcm_mobile_web_key: string;
   constructor() {
     this.password = '12345678';
-    this.role = Constants.ROLE_MEMBER;
+    this.roles = [Constants.ROLE_MEMBER];
     this.contact = new Contact();
     this.maritalStatus = new MaritalStatus();
     this.inputMethod = new InputMethod();

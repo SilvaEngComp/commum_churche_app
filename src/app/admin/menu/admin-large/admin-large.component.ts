@@ -42,7 +42,7 @@ export class AdminLargeComponent implements OnInit {
     this.nivel = 3;
     this.permission = false;
     this.user = LoginService.getUser();
-    this.menu_itens = Menu.getMenu(this.user?.role);
+    this.menu_itens = Menu.getMenu(this.user?.roles);
     this.page = this.menu_itens[0]?.id;
 
     if (UiService.localGet(this.defaultPageName)) {
@@ -88,13 +88,12 @@ export class AdminLargeComponent implements OnInit {
     if (menu) {
       menu.showSub = !menu.showSub;
     }
+    console.log(menu);
 
     if (UiService.localGet(Constants.USER_MAINTAINCE)) {
       UiService.localRemove(Constants.USER_MAINTAINCE);
     }
-    if (this.page === menu?.id) {
-      window.location.reload();
-    }
+
     if (menu?.name !== Constants.LATERAL_MENU_OUT) {
       this.page = menu.id;
       UiService.localSet(this.defaultPageName, this.page);

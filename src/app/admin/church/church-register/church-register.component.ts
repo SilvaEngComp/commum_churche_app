@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
+import { CaixaGroup } from 'src/app/models/caixaGroup';
 import { Church } from 'src/app/models/church';
 import { ConstantMessages } from 'src/app/models/messages';
 import { ChurchService } from 'src/app/services/church.service';
 import { ExceptionService } from 'src/app/services/exception-service.service';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-church-register',
@@ -11,6 +13,8 @@ import { ExceptionService } from 'src/app/services/exception-service.service';
   styleUrls: ['./church-register.component.scss'],
 })
 export class ChurchRegisterComponent implements OnInit {
+  @Input() apiResponse: Church[];
+
   church: Church;
   constructor(
     private exceptionService: ExceptionService,
@@ -23,17 +27,21 @@ export class ChurchRegisterComponent implements OnInit {
   }
 
   register() {
-    if (this.validForm()) {
-      this.exceptionService.loadingFunction();
+    if (!this.objIsAlreadyRegistred()) {
+      if (this.validForm()) {
+        this.exceptionService.loadingFunction();
 
-      this.churchService
-        .store(this.church)
-        .then(() => {
-          this.close();
-        })
-        .catch((erro) => {
-          this.exceptionService.error(erro);
-        });
+        this.churchService
+          .store(this.church)
+          .then(() => {
+            this.close();
+          })
+          .catch((erro) => {
+            this.exceptionService.error(erro);
+          });
+      }
+    } else {
+      this.close();
     }
   }
 
@@ -46,7 +54,26 @@ export class ChurchRegisterComponent implements OnInit {
     return true;
   }
 
+  objIsAlreadyRegistred() {
+    const objects = this.apiResponse.filter((obj) =>
+      UiService.stringNormalization(obj.name).includes(
+        UiService.stringNormalization(this.church.name)
+      )
+    );
+    if (objects?.length > 0) {
+      for (let i = 0; i < objects?.length; i++) {
+        this.church = objects[i];
+        this.exceptionService.alertDialog(
+          ConstantMessages.USER_ALREADY_EXISTS,
+          'Alerta'
+        );
+        return true;
+      }
+    }
+    return false;
+  }
+
   close() {
-    this.popCtrl.dismiss();
+    this.popCtrl.dismiss({ obj: this.church });
   }
 }

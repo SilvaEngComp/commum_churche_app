@@ -150,8 +150,8 @@ export class MySelectListComponent implements OnInit {
 
     const { data } = await modal.onDidDismiss();
     console.log(data);
-    if (data.obj) {
-      const selected = MySelectAdapter.toSingleMySelectAny(data.obj);
+    if (data) {
+      const selected = MySelectAdapter.toSingleMySelectAny(data?.obj);
       console.log(selected);
       this.onSelect(selected);
     } else {

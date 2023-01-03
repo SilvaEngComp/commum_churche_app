@@ -1,3 +1,4 @@
+import { Constants } from 'src/app/models/constants';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -30,6 +31,7 @@ export class PublicFeedComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('public feed');
     this.user = LoginService.getUser();
     this.feedReaction = new FeedComment();
     this.load();
@@ -39,6 +41,7 @@ export class PublicFeedComponent implements OnInit {
     this.is_loading = true;
     this.exeptionService.loadingFunction();
     this.feeds = await this.feedService.get();
+    console.log(this.feeds);
     const datePipe = new DatePipe('en');
     const now = datePipe.transform(Date.now(), 'yyyy-MM-dd');
     const time = datePipe.transform(Date.now(), 'HH:mm:ss');
@@ -65,11 +68,15 @@ export class PublicFeedComponent implements OnInit {
   }
 
   newFeed() {
-    this.returnPage.emit({ page: 'create', feed: new Feed() });
+    console.log(Constants.FEED_PAGE_CREATE_FEED);
+    this.returnPage.emit({
+      subpage: Constants.FEED_PAGE_CREATE_FEED,
+      feed: new Feed(),
+    });
   }
 
   returnSubPage(obj: any) {
-    if (obj.page) {
+    if (obj.subpage) {
       this.returnPage.emit(obj);
     }
     if (obj.feeds) {

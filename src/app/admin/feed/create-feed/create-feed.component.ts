@@ -11,6 +11,7 @@ import { ExceptionService } from 'src/app/services/exception-service.service';
 import { Feed } from 'src/app/models/feed';
 import { User } from 'src/app/models/User';
 import { PushNotify } from 'src/app/models/pushNotification';
+import { Constants } from 'src/app/models/constants';
 
 @Component({
   selector: 'app-create-feed',
@@ -36,15 +37,15 @@ export class CreateFeedComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // UiService.localSet(
+    //   Constants.TITLE_CURRENT_PAGE,
+    //   Constants.TITLE_FEED_CREATE_FEED
+    // );
+
     this.image = new FormData();
+    this.feed = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
     if (!this.feed) {
-      if (localStorage.getItem(environment.LOCALSTORAGE + 'newFeed')) {
-        this.feed = JSON.parse(
-          localStorage.getItem(environment.LOCALSTORAGE + 'newFeed')
-        );
-      } else {
-        this.feed = new Feed();
-      }
+      this.feed = new Feed();
     }
 
     if (!this.feed.date) {
@@ -53,7 +54,9 @@ export class CreateFeedComponent implements OnInit {
     }
 
     if (!this.feed.publisher) {
-      this.feed.publisher = LoginService.getUser();
+      const user = LoginService.getUser();
+      this.feed.publisher = new User();
+      this.feed.publisher.id = user.id;
       this.save();
     }
   }
