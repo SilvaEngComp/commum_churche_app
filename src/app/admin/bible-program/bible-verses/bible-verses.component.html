@@ -14,6 +14,9 @@
         {{verseDay?.endVerse?.chapter}}:{{verseDay?.endVerse?.verse}}
       </ion-label>
     </ion-item>
+    <ion-buttons slot="end">
+      <ion-icon name="information-circle-outline" (click)="showTutorial($event)"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <div class="open-div" [ngStyle]="{'height': height}">
@@ -49,7 +52,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-fab vertical="bottom" horizontal="end">
+  <ion-fab vertical="bottom" horizontal="end" class="float-icon">
     <ion-fab-button>
       <ion-icon name="text-outline"></ion-icon>
     </ion-fab-button>

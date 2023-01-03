@@ -24,8 +24,6 @@ import { UserPageRoutingModule } from '../user/user-routing.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    UserPageRoutingModule,
-    BrMaskerModule,
     ReactiveFormsModule,
     DirectivesModule,
   ],

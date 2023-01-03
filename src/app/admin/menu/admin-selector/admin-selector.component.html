@@ -8,6 +8,7 @@
   </ion-item> -->
   <div [ngSwitch]="page">
     <app-bible-program-admin *ngSwitchCase="'0'" [subpage]="'1'"></app-bible-program-admin>
+    <app-user-admin *ngSwitchCase="'-1'" [subpage]="'0'"></app-user-admin>
     <app-user-admin *ngSwitchCase="'1'" [subpage]="'1'"></app-user-admin>
     <app-more *ngSwitchCase="'2'" (returnPage)="onSelectPage($event)"></app-more>
     <app-financy-admin *ngSwitchCase="'4'" [subpage]="'0'" (sessionPage)="onSelectPage($event)"></app-financy-admin>

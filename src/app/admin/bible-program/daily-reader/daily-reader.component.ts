@@ -11,7 +11,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { IonSlides, Platform } from '@ionic/angular';
+import { IonSlides, Platform, PopoverController } from '@ionic/angular';
 import { BibleProgramMap } from 'src/app/models/bibleProgramMap';
 import { ChallengeQuiz } from 'src/app/models/challengeQuiz';
 import { User } from 'src/app/models/User';
@@ -20,6 +20,8 @@ import { LoginService } from 'src/app/services/login.service';
 import { BibleProgramService } from 'src/app/services/bible-program.service';
 import { BibleReaderProgram } from 'src/app/models/bibleReaderProgram';
 import { ClipboardService } from 'ngx-clipboard';
+import { ConstantsMidia } from 'src/app/models/contantsMidia';
+import { TutorialComponent } from '../../tutorial/tutorial.component';
 
 @Component({
   selector: 'app-daily-reader',
@@ -55,7 +57,8 @@ export class DailyReaderComponent implements OnInit {
     private platfom: Platform,
     private bibleProgramService: BibleProgramService,
     private exceptionService: ExceptionService, // private _clipboardService: ClipboardService
-    private clipboardService: ClipboardService
+    private clipboardService: ClipboardService,
+    private popCtrl: PopoverController
   ) {}
 
   ngOnInit() {
@@ -92,6 +95,15 @@ export class DailyReaderComponent implements OnInit {
     this.load();
   }
 
+  async showTutorial(event: any) {
+    const pop = await this.popCtrl.create({
+      component: TutorialComponent,
+      event,
+      componentProps: { path: ConstantsMidia.TUTORIAL_BIBLE_READ },
+    });
+
+    pop.present();
+  }
   doRefresh(ev) {
     window.location.reload();
   }

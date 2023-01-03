@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment.prod';
 import { UiService } from './../services/ui.service';
 /* eslint-disable @typescript-eslint/prefer-for-of */
 
@@ -39,17 +40,21 @@ export class Menu {
       if (isHome) {
         menu_itens.push(Constants.SUPERIOR_MENU_REGISTER);
         menu_itens.push(Constants.SUPERIOR_MENU_LOGIN);
-      } else if (UiService.validPermissions(Constants.ROLE_MEMBER)) {
-        menu_itens.push(Constants.LATERAL_MENU_BIBLE_READ);
-        menu_itens.push(Constants.LATERAL_MENU_TITHE_OFFER);
-        menu_itens.push(Constants.LATERAL_MENU_FEED);
-      }
+      } else {
+        if (UiService.validPermissions(Constants.ROLE_MEMBER)) {
+          menu_itens.push(Constants.LATERAL_MENU_BIBLE_READ);
+          menu_itens.push(Constants.LATERAL_MENU_TITHE_OFFER);
+        }
 
-      if (UiService.validPermissions(Constants.ROLE_SECRETARY)) {
-        menu_itens.push(Constants.LATERAL_MENU_MEMBERS);
-      }
-      if (UiService.validPermissions(Constants.ROLE_FINANCIAL)) {
-        menu_itens.push(Constants.LATERAL_MENU_FINANCY);
+        if (environment.TEST) {
+          menu_itens.push(Constants.LATERAL_MENU_FEED);
+        }
+        if (UiService.validPermissions(Constants.ROLE_SECRETARY)) {
+          menu_itens.push(Constants.LATERAL_MENU_MEMBERS);
+        }
+        if (UiService.validPermissions(Constants.ROLE_FINANCIAL)) {
+          menu_itens.push(Constants.LATERAL_MENU_FINANCY);
+        }
       }
       menu_itens.push(Constants.LATERAL_MENU_OUT);
     } catch (e) {

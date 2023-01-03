@@ -77,7 +77,7 @@ export class AdminSelectorComponent implements OnInit {
   onSelectPage(page: any) {
     console.clear();
     console.log(page);
-    if (page < 0) {
+    if (page < -1) {
       localStorage.clear();
       this.router.navigate(['']);
     }

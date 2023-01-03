@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { User } from 'src/app/models/user';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -29,6 +30,7 @@ export class AdminSmallComponent implements OnInit {
   badge_feed: number;
   isMember: boolean;
   user: User;
+  isTest: boolean;
   constructor(
     // private fcmService: FcmService,
     private platform: Platform,
@@ -39,7 +41,10 @@ export class AdminSmallComponent implements OnInit {
 
   @ViewChild('tabAdmin', { static: false }) tab!: IonTabs;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isTest = environment.TEST;
+    console.log(this.isTest);
+  }
   async setPage(page: number) {
     UiService.localRemove(Constants.USER_MAINTAINCE);
     this.selectedPage.emit(page);

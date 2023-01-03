@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export const environment = {
   production: true,
-  // API: 'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
-  // API2: 'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
-  // IMAGE_URL:
-  //   'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/storage/',
-
-  API: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
-  API2: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
+  API: 'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
+  API2: 'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
   IMAGE_URL:
-    'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/storage/',
+    'https://apis2.enginydigitaleco.com/commum_ibnovabetel_api/public/storage/',
+  TEST: false,
+
+  // API: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
+  // API2: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
+  // IMAGE_URL:
+  //   'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/storage/',
+  // TEST: true,
 
   PRIVATEKEY: 'QUBjZW1lY2FkZUBlbmdpbnlkaWdpdGFsZWNvLmNvbQ==', // ...
 

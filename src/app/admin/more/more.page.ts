@@ -35,20 +35,6 @@ export class MorePage implements OnInit {
   }
 
   showInvitation() {
-    // this.socialSharing.canShareViaEmail().then(() => {
-    //   console.log('teeste email').
-    // }).catch(() => {
-    //   // Sharing via email is not possible
-    // });
-
-    // // Share via email
-    // this.socialSharing.shareViaEmail('Body', 'Subject', ['silvaengcomp@gmail.com']).then(() => {
-    //   // Success!
-    // }).catch(() => {
-    //   // Error!
-    // });
-    // Share via email
-
     this.socialSharing
       .share(
         'whatsapp',

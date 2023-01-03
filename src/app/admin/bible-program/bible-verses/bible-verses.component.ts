@@ -1,3 +1,4 @@
+import { TutorialComponent } from './../../tutorial/tutorial.component';
 import { ExceptionService } from './../../../services/exception-service.service';
 import { UserVerseMarkService } from './../../../services/user-verse-mark.service';
 import { Platform, PopoverController } from '@ionic/angular';
@@ -12,6 +13,7 @@ import { ColorMarkerComponent } from 'src/app/directives/color-marker/color-mark
 import { LoginService } from 'src/app/services/login.service';
 import { UserVerseMark } from 'src/app/models/userVerseMark';
 import { ConstantMessages } from 'src/app/models/messages';
+import { ConstantsMidia } from 'src/app/models/contantsMidia';
 
 @Component({
   selector: 'app-bible-verses',
@@ -49,6 +51,16 @@ export class BibleVersesComponent implements OnInit {
     this.height = Math.round(this.platform.height() * 0.8) + 'px';
     this.letterSizeConfig = 12;
     this.load();
+  }
+
+  async showTutorial(event: any) {
+    const pop = await this.popCtrl.create({
+      component: TutorialComponent,
+      event,
+      componentProps: { path: ConstantsMidia.TUTORIAL_VERSES_READ },
+    });
+
+    pop.present();
   }
 
   setLetterSize(isUpper: boolean) {

@@ -22,7 +22,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-button *ngIf="user" expand="block" class="btn-perfil" (click)="selectOption(0)">
+          <ion-button *ngIf="user" expand="block" class="btn-perfil" (click)="selectOption(-1)">
             <ion-label>VER PERFIL</ion-label>
           </ion-button>
         </ion-col>
@@ -96,7 +96,7 @@
       <ion-icon name="lock-closed-outline" color="primary"></ion-icon>
       <ion-label> Política de Privacidade</ion-label>
     </ion-item> -->
-    <ion-item lines="none" (click)="selectOption(-1)">
+    <ion-item lines="none" (click)="selectOption(-2)">
       <ion-icon src="./assets/icons/exit.svg" color="primary"></ion-icon>
       <ion-label> Sair</ion-label>
     </ion-item>
