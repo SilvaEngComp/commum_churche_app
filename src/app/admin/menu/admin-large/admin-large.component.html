@@ -40,8 +40,8 @@
               <ion-img src="./assets/icon/favicon.png" class="menu-logo"></ion-img>
             </ion-item>
           </ion-buttons>
-          <ion-item lines="none">
-            <ion-title>{{title}}</ion-title>
+          <ion-item lines="none" class="title">
+            <ion-title slot="end">{{title}}</ion-title>
           </ion-item>
           <ion-buttons slot="end" class="menu-right" (click)="perfil()">
             <ion-avatar class="myAvatar">
@@ -58,10 +58,11 @@
 
         <app-bible-program-admin *ngSwitchCase="'0'"></app-bible-program-admin>
         <app-user-admin *ngSwitchCase="'-1'" [subpage]="'0'"></app-user-admin>
-        <app-user-admin *ngSwitchCase="'2'" [subpage]="'1'"></app-user-admin>
+        <app-user-admin *ngSwitchCase="'3'" [subpage]="'1'"></app-user-admin>
         <app-financy-admin *ngSwitchCase="'4'" [subpage]="'0'"></app-financy-admin>
         <app-financy-admin *ngSwitchCase="'5'" [subpage]="'1'"></app-financy-admin>
         <app-feed *ngSwitchCase="'6'" [subpage]="'1'"></app-feed>
+        <app-church-schedule *ngSwitchCase="'7'" [subpage]="'1'"></app-church-schedule>
 
       </div>
     </ion-col>

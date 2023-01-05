@@ -22,6 +22,9 @@ export class FeedPage implements OnInit {
       Constants.TITLE_CURRENT_PAGE,
       Constants.TITLE_FEED_REGISTER
     );
+
+    UiService.pageTitle.emit(Constants.TITLE_FEED_REGISTER);
+
     if (!this.subpage) {
       UiService.localSet(Constants.FEED_SUBPAGE, Constants.FEED_PAGE_PUBLIC);
       this.subpage = UiService.localGet(Constants.FEED_SUBPAGE);
@@ -39,12 +42,12 @@ export class FeedPage implements OnInit {
   }
 
   returnPage(obj) {
+    console.log(obj);
     if (obj.feed) {
       this.feed = obj.feed;
       this.saveFeed();
     }
     if (obj.files) {
-      console.log('reloading');
       this.feedService
         .upload(obj.files.formData, this.feed)
         .then((responser) => {
@@ -67,10 +70,10 @@ export class FeedPage implements OnInit {
 
   saveFeedPage(page) {
     this.subpage = page;
-    UiService.localSet('feed-page', this.subpage);
+    UiService.localSet(Constants.FEED_SUBPAGE, this.subpage);
   }
 
   saveFeed() {
-    UiService.localSet('newFeed', JSON.stringify(this.feed));
+    UiService.localSet(Constants.FEED_ATTRIBUTES_FEED_OBJECT, this.feed);
   }
 }

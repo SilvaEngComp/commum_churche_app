@@ -89,7 +89,8 @@ export class Constants {
   static SUPERIOR_MENU_LOGIN = 'LOGIN';
   static LATERAL_MENU_TITHE_OFFER = 'DÍZIMOS E OFERTAS';
   static LATERAL_MENU_BIBLE_READ = 'LEITURA BÍBLICA';
-  static LATERAL_MENU_FEED = 'Noticias';
+  static LATERAL_MENU_FEED = 'FEED DE NOTÍCIAS';
+  static LATERAL_MENU_PROGRAM = 'PROGRAMAÇÕES';
   static LATERAL_MENU_OUT = 'SAIR';
   static LATERAL_MENU_MEMBERS = 'MEMBROS';
   static LATERAL_MENU_FINANCY = 'FINANCEIRO';
@@ -126,15 +127,23 @@ export class Constants {
   static TITLE_TITHE_REGISTER = 'REGISTRAR DÍZIMO';
   static TITLE_OFFER_REGISTER = 'REGISTRAR OFERTA';
   static TITLE_FEED_REGISTER = 'FEED NOTÍCIAS';
+  static TITLE_CHURCH_SCHEDULE_REGISTER = 'PROGRAMAÇÕES';
   static FCM_TOKEN = 'fcmToken';
   static COLOR_TRANSPARENT = 'transparent';
 
   static TITLE_FEED_CREATE_FEED = 'CRIAR NOVA PUBLICAÇÃO';
 
-  static FEED_SUBPAGE = 'bible-program-subpage';
+  static FEED_SUBPAGE = 'feed-subpage';
   static FEED_PAGE_PUBLIC = '1';
   static FEED_PAGE_CREATE_FEED = '2';
   static FEED_PAGE_PUBLICATION = '3';
-  static FEED_PAGE_LOAD_IMAGE = '4';
+  static FEED_PAGE_COMMENT = '4';
   static FEED_ATTRIBUTES_FEED_OBJECT = 'storedFeed';
+
+  static CHURCH_SCHEDULE_SUBPAGE = 'schedule-subpage';
+  static CHURCH_SCHEDULE_PAGE_PUBLIC = '1';
+  static CHURCH_SCHEDULE_PAGE_CREATE_SCHEDULE = '2';
+  static CHURCH_SCHEDULE_PAGE_PUBLICATION = '3';
+  static CHURCH_SCHEDULE_PAGE_COMMENT = '4';
+  static CHURCH_SCHEDULE_ATTRIBUTES_OBJECT = 'storedFeed';
 }

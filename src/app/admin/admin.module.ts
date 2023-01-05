@@ -1,4 +1,5 @@
-import { FeedPageModule } from './feed/feed.module';
+import { ChurchScheduleModule } from './church-schedule/church-schedule-admin/church-schedule.module';
+import { FeedPageModule } from './feed/feed-admin/feed.module';
 import { BibleProgramModule } from './bible-program/bible-program.module';
 import { MorePageModule } from './more/more.module';
 import { FinancyModule } from './financy/financy.module';
@@ -11,12 +12,14 @@ import { AdminSmallComponent } from './menu/admin-small/admin-small.component';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { UserPageModule } from './user/user.module';
+import { TutorialComponent } from './tutorial/tutorial.component';
 
 @NgModule({
   declarations: [
     AdminLargeComponent,
     AdminSelectorComponent,
     AdminSmallComponent,
+    TutorialComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +31,7 @@ import { UserPageModule } from './user/user.module';
     MorePageModule,
     BibleProgramModule,
     FeedPageModule,
+    ChurchScheduleModule,
   ],
   exports: [AdminSelectorComponent],
 })

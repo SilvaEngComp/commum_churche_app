@@ -2,9 +2,6 @@ ion-grid {
   height: 100%;
 }
 
-ion-title {
-  text-align: center;
-}
 .menu-logo {
   width: 80px;
   height: 80px;
@@ -37,6 +34,8 @@ ion-segment ion-label {
 }
 
 .menu-left {
+  text-align: center;
+
   ion-label {
     font-size: 1vw;
     color: white;
@@ -62,8 +61,19 @@ ion-segment ion-label {
     border-bottom-right-radius: 10px;
   }
 }
-
+ion-buttons {
+}
+.title {
+  ion-title {
+    margin-left: 20%;
+    text-align: center;
+    font-family: Qanelas-bold;
+    font-size: 26pt;
+    color: var(--ion-color-medium);
+  }
+}
 .menu-right {
+  width: 40%;
   ion-avatar {
     margin-right: 20px;
     width: 300px;

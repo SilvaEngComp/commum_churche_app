@@ -1,0 +1,10 @@
+<div class="div-content" [ngSwitch]="subpage">
+  <app-public-feed *ngSwitchCase="'1'" (returnPage)="returnPage($event)"></app-public-feed>
+  <app-create-feed [feed]="feed" *ngSwitchCase="'2'" (returnSubpage)="returnPage($event)"></app-create-feed>
+  <app-publication [feed]="feed" [expandAll]="true" *ngSwitchCase="'3'" (returnPage)="returnPage($event)"
+    (returnPage)="returnPage($event)"></app-publication>
+
+  <app-feed-comment [feed]="feed" *ngSwitchCase="'4'" (returnPage)="returnPage($event)"
+    (returnPage)="returnPage($event)"></app-feed-comment>
+
+</div>

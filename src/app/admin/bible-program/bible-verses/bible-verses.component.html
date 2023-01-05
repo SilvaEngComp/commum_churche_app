@@ -34,7 +34,8 @@
               <ion-grid>
                 <ion-row *ngFor="let verse of chapter?.verses; let versePosition=index">
                   <ion-col lass="col-verses">
-                    <ion-checkbox *ngIf="showCheckBox" appLongPressAction [verse]="verse"></ion-checkbox>
+                    <ion-checkbox color="tertiary" (ionChange)="setShowCheckBox()" mode="ios" *ngIf="showCheckBox"
+                      appLongPressAction [verse]="verse"></ion-checkbox>
 
                     <ion-text class="verse"
                       [ngStyle]="{'background-color':verse?.userVerseMark?.color, 'font-size': letterSize}"
@@ -66,7 +67,7 @@
         <ion-icon name="caret-up-outline"></ion-icon>
       </ion-fab-button>
       <ion-fab-button (click)="setShowCheckBox()">
-        <ion-icon name="color-palette-outline"></ion-icon>
+        <ion-icon color="secondary" name="color-palette-sharp"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>

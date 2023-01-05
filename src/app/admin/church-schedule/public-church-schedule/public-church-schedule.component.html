@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-icon name="add-circle-outline" (click)="newChurchSchedule()" *permission="'multimidia'"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-grid>
+  <ion-row *ngIf="!is_loading">
+    <ion-col>
+      <ion-accordion-group>
+        <ion-accordion [value]="churchSchedule?.id" *ngFor="let churchSchedule of churchSchedules">
+          <ion-item slot="header" color="light">
+            <ion-card-title>{{churchSchedule?.title}}</ion-card-title>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <app-publication-church-schedule [churchSchedule]="churchSchedule" (returnSubpage)="returnSubPage($event)"
+              [expandAll]="churchSchedule?.message?.length>500"></app-publication-church-schedule>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-col>
+  </ion-row>
+</ion-grid>

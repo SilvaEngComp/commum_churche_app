@@ -5,8 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 @NgModule({
-  declarations: [TutorialComponent],
+  declarations: [],
   imports: [CommonModule, FormsModule, IonicModule, ReactiveFormsModule],
-  exports: [TutorialComponent],
+  exports: [],
 })
 export class TutorialModule {}

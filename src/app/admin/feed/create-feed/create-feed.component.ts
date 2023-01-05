@@ -1,3 +1,4 @@
+import { ConstantMessages } from 'src/app/models/messages';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IonToggle } from '@ionic/angular';
@@ -19,7 +20,7 @@ import { Constants } from 'src/app/models/constants';
   styleUrls: ['./create-feed.component.scss'],
 })
 export class CreateFeedComponent implements OnInit {
-  @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
+  @Output() returnSubpage: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() feed: Feed;
   publisher: User;
@@ -30,6 +31,8 @@ export class CreateFeedComponent implements OnInit {
   maxDate: string;
   datePipe = new DatePipe('en');
   dateValue: string;
+  hasTime: boolean;
+  session: number;
   constructor(
     private feedService: FeedService,
     private messagingService: MessagingService,
@@ -37,12 +40,17 @@ export class CreateFeedComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // UiService.localSet(
-    //   Constants.TITLE_CURRENT_PAGE,
-    //   Constants.TITLE_FEED_CREATE_FEED
-    // );
-
+    this.session = 1;
     this.image = new FormData();
+    this.checkFeed();
+  }
+
+  setSession(ev: any) {
+    this.session = Number(ev.target.value);
+    this.checkFeed();
+  }
+
+  checkFeed() {
     this.feed = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
     if (!this.feed) {
       this.feed = new Feed();
@@ -58,97 +66,73 @@ export class CreateFeedComponent implements OnInit {
       this.feed.publisher = new User();
       this.feed.publisher.id = user.id;
       this.feed.publisher.roles = user.roles;
-
-      this.save();
     }
-  }
 
-  setDate(date) {
-    const validDateObj = UiService.validDate(date);
-    if (validDateObj) {
-      if (validDateObj.status) {
-        this.feed.date = validDateObj.date;
-        this.save();
-      } else {
-        this.exceptionService.alertDialog(validDateObj.message);
-      }
-    }
-  }
-  setTime(time) {
-    const validDateObj = UiService.validTime(time);
-    if (validDateObj) {
-      if (validDateObj.status) {
-        this.feed.date = validDateObj.date;
-        this.save();
-      } else {
-        this.exceptionService.alertDialog(validDateObj.message);
-      }
-    }
-  }
-
-  back() {
-    this.returnPage.emit({ page: 'public' });
-
-    localStorage.removeItem(environment.LOCALSTORAGE + 'newFeed');
-  }
-
-  async addImage() {
-    this.save();
-    this.returnPage.emit({
-      page: 'load-image',
-      callbackPage: 'create',
-      feed: this.feed,
-    });
-  }
-
-  setDateAsNow() {
-    this.feed.date = this.datePipe.transform(Date.now(), 'dd/MM/yyyy');
-    this.save();
-  }
-  setTimeAsNow() {
-    this.feed.time = this.datePipe.transform(Date.now(), 'HH::mm');
-    this.save();
-  }
-
-  publish(back: boolean = false) {
-    if (!this.feed.id) {
+    if (this.session === 1) {
       this.feed.published = false;
-    } else {
+    } else if (this.session === 3) {
       this.feed.published = true;
     }
-    this.feedService.store(this.feed).then((responser) => {
-      this.feed = responser.data;
-      if (back) {
-        const push: PushNotify = new PushNotify(
-          this.feed.title,
-          this.feed.message
-        );
-        this.messagingService.send(push);
-        this.back();
-      }
-    });
   }
 
-  onlineClass(toggle: IonToggle) {
-    this.feedService.onlineClass(this.feed, !toggle.checked).then((feed) => {
-      this.feed = feed;
-      this.save();
-    });
+  backSession() {
+    this.session--;
+    this.checkFeed();
+  }
+  back() {
+    console.log({ subpage: Constants.FEED_PAGE_PUBLIC });
+    this.returnSubpage.emit({ subpage: Constants.FEED_PAGE_PUBLIC });
+
+    UiService.localRemove(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
   }
   save() {
-    localStorage.setItem(
-      environment.LOCALSTORAGE + 'newFeed',
-      JSON.stringify(this.feed)
-    );
+    UiService.localSet(Constants.FEED_ATTRIBUTES_FEED_OBJECT, this.feed);
   }
 
-  onTypeTitle(title) {
-    this.feed.title = title;
-    this.save();
+  receiveSubpage(obj: any) {
+    if (obj.files) {
+      this.feedService
+        .upload(obj.files.formData, this.feed)
+        .then((responser) => {
+          this.feed.image = responser.data.image;
+          this.save();
+          // window.location.reload();
+        });
+    }
   }
 
-  onTypeMessage(ev) {
-    this.feed.message = ev.target.value;
-    this.save();
+  publish() {
+    this.checkFeed();
+
+    if (this.session !== 2) {
+      if (this.validForm()) {
+        this.feedService.store(this.feed).then((responser) => {
+          this.feed = responser.data;
+          if (this.session === 3) {
+            this.back();
+            const push: PushNotify = new PushNotify(
+              this.feed.title,
+              this.feed.message
+            );
+            this.messagingService.send(push);
+          } else {
+            this.session++;
+          }
+        });
+      }
+    } else {
+      this.session++;
+    }
+
+    console.log(this.session);
+  }
+
+  validForm() {
+    if (!this.feed?.title) {
+      this.exceptionService.alertDialog(ConstantMessages.TITILE_INVALID);
+      return;
+    }
+
+    return true;
   }
 }

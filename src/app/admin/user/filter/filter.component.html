@@ -1,105 +1,105 @@
-<ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-item lines="none">
-          <ion-label slot="start">Aniversariantes</ion-label>
-          <ion-button slot="end" fill="clear" (click)="clean()">
-            <ion-label>Limpar</ion-label>
-          </ion-button>
-        </ion-item>
-        <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-          <ion-select placeholder="Mês" [value]="filter?.birthdayMonth" interface="popover"
-            (ionChange)="setMonth($event)">
-            <ion-select-option [value]="item?.id" *ngFor="let item of months">{{item?.name | uppercase}}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-
-    <ion-row>
-      <ion-col>
-
-        <ion-item lines="none" [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}">
-          <ion-label>Batizados </ion-label>
-        </ion-item>
-        <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-          <ion-radio-group (click)="setIsBaptized($event)" [value]="filter?.isBaptized" [allowEmptySelection]="false">
-            <ion-item lines="none">
-              <ion-label>Não</ion-label>
-              <ion-radio slot="start" value="0"></ion-radio>
-            </ion-item>
-
-            <ion-item lines="none">
-              <ion-label>Sim</ion-label>
-              <ion-radio slot="start" value="1"></ion-radio>
-            </ion-item>
-          </ion-radio-group>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-
-        <ion-item lines="none" [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}">
-          <ion-label>*Gênero: </ion-label>
-        </ion-item>
-        <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-          <ion-radio-group (click)="setGender($event)" [value]="filter?.gender" [allowEmptySelection]="false">
-            <ion-item lines="none">
-              <ion-label>Masculino</ion-label>
-              <ion-radio slot="start" value="masculino"></ion-radio>
-            </ion-item>
-
-            <ion-item lines="none">
-              <ion-label>Feminino</ion-label>
-              <ion-radio slot="start" value="feminino"></ion-radio>
-            </ion-item>
-          </ion-radio-group>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-          <ion-label>*Qual seu estado civil? </ion-label>
-          <ion-select [value]="filter?.maritalStatus?.id" interface="popover" (ionChange)="setMaritalStatus($event)">
-            <ion-select-option [value]="item?.id" *ngFor="let item of maritalStatuses">{{item?.name | uppercase}}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-          <ion-label>*Como veio para a igreja? </ion-label>
-          <ion-select [value]="filter?.inputMethod?.id" interface="popover" (ionChange)="setInputMethod($event)">
-            <ion-select-option [value]="item?.id" *ngFor="let item of inputMethods">{{item?.name | uppercase}}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-          <ion-label>*Onde frequenta? </ion-label>
-          <ion-select [value]="filter?.church?.id" interface="popover" (ionChange)="setChurch($event)">
-            <ion-select-option [value]="item?.id" *ngFor="let item of churches">{{item?.name | uppercase}}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button fill="outline" color="primary" (click)="makeFilter()">
-          <ion-label>Aplicar Filtro</ion-label>
+<!-- <ion-content> -->
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-item lines="none">
+        <ion-label slot="start">Aniversariantes</ion-label>
+        <ion-button slot="end" fill="clear" (click)="clean()">
+          <ion-label>Limpar</ion-label>
         </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+      </ion-item>
+      <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+        <ion-select placeholder="Mês" [value]="filter?.birthdayMonth" interface="popover"
+          (ionChange)="setMonth($event)">
+          <ion-select-option [value]="item?.id" *ngFor="let item of months">{{item?.name | uppercase}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+
+  <ion-row>
+    <ion-col>
+
+      <ion-item lines="none" [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}">
+        <ion-label>Batizados </ion-label>
+      </ion-item>
+      <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+        <ion-radio-group (click)="setIsBaptized($event)" [value]="filter?.isBaptized" [allowEmptySelection]="false">
+          <ion-item lines="none">
+            <ion-label>Não</ion-label>
+            <ion-radio slot="start" value="0"></ion-radio>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label>Sim</ion-label>
+            <ion-radio slot="start" value="1"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+
+      <ion-item lines="none" [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}">
+        <ion-label>*Gênero: </ion-label>
+      </ion-item>
+      <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+        <ion-radio-group (click)="setGender($event)" [value]="filter?.gender" [allowEmptySelection]="false">
+          <ion-item lines="none">
+            <ion-label>Masculino</ion-label>
+            <ion-radio slot="start" value="masculino"></ion-radio>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label>Feminino</ion-label>
+            <ion-radio slot="start" value="feminino"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+        <ion-label>*Qual seu estado civil? </ion-label>
+        <ion-select [value]="filter?.maritalStatus?.id" interface="popover" (ionChange)="setMaritalStatus($event)">
+          <ion-select-option [value]="item?.id" *ngFor="let item of maritalStatuses">{{item?.name | uppercase}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+        <ion-label>*Como veio para a igreja? </ion-label>
+        <ion-select [value]="filter?.inputMethod?.id" interface="popover" (ionChange)="setInputMethod($event)">
+          <ion-select-option [value]="item?.id" *ngFor="let item of inputMethods">{{item?.name | uppercase}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+        <ion-label>*Onde frequenta? </ion-label>
+        <ion-select [value]="filter?.church?.id" interface="popover" (ionChange)="setChurch($event)">
+          <ion-select-option [value]="item?.id" *ngFor="let item of churches">{{item?.name | uppercase}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-button fill="outline" color="primary" (click)="makeFilter()">
+        <ion-label>Aplicar Filtro</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<!-- </ion-content> -->

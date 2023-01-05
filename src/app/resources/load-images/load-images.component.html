@@ -1,79 +1,70 @@
-<div class="geral">
-    <div class="div-header">
-        <ion-item lines="none" (click)="back()">
-            <ion-icon name="arrow-back-outline" color="dark"></ion-icon>
-            <ion-label> NOVO CURSO</ion-label>
+<div class="div-body">
+  <ion-item lines="none">
+    <ion-title class="title">ADICIONAR IMAGENS</ion-title>
+  </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="div-drop-image" ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+          (fileOver)="fileOverBase($event)" (onFileDrop)="onReceiveImage()" [uploader]="uploader">
+
+          <div *ngIf="!selectedImge">
+            <ion-icon src="./assets/icons/file-image.svg"></ion-icon>
+            <ion-icon src="./assets/icons/file-image.svg"></ion-icon>
+          </div>
+          <ion-img [src]="selectedImge" *ngIf="selectedImge" class="selected-image"></ion-img>
+
+          <ion-label>ARRASTE SUAS IMAGENS PARA AQUI</ion-label>
+
+          <label class="lb-input">
+            <ion-label slot="start">PROCURAR NO DISPOSITIVO</ion-label>
+            <input type='file' ng2FileSelect [uploader]="uploader" (onFileSelected)="onReceiveImage()" />
+
+          </label>
+        </div>
+
+      </ion-col>
+
+      <ion-col>
+        <div class="right-list">
+          <div class="observacao">
+            <ion-label>OBSERVAÇÕES</ion-label>
+          </div>
+          <div class="div-list">
+            <div>
+              <ion-label>TAMNHO MÁXIMO POR IMAGEM (2 Mb)</ion-label>
+              <ion-icon name="ellipse-sharp"></ion-icon>
+            </div>
+            <div>
+              <ion-label>IMAGENS NO FORMATO PNG OU JPEG/JPG</ion-label>
+              <ion-icon name="ellipse-sharp"></ion-icon>
+            </div>
+
+            <div>
+              <ion-label>LIMITE DE 10 (DEZ) IMAGENS POR PRODUTO</ion-label>
+              <ion-icon name="ellipse-sharp"></ion-icon>
+            </div>
+            <div>
+              <ion-label>EVITE COLOCAR IMAGENS COM POUCA QUALIDADE</ion-label>
+              <ion-icon name="ellipse-sharp"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item class="pass-button" lines="none">
+          <ion-button color="danger" (click)="excluir()" *ngIf="hasOneSelected">
+            <ion-label color="light">EXCLUIR</ion-label>
+          </ion-button>
+
+          <ion-button slot="end" slot="end" color="success" (click)="back()" *ngIf="showFinishButtton">
+            <ion-label>CONCLUIR</ion-label>
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </ion-button>
         </ion-item>
-    </div>
-
-
-    <div class="div-body">
-        <ion-item>
-            <ion-title class="title">ADICIONAR IMAGENS</ion-title>
-        </ion-item>
-        <ion-grid>
-            <ion-row>
-                <ion-col offset="1">
-                    <div class="div-drop-image" ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" (onFileDrop)="onReceiveImage()" [uploader]="uploader">
-
-                        <div *ngIf="!selectedImge">
-                            <ion-icon src="./assets/icons/file-image.svg"></ion-icon>
-                            <ion-icon src="./assets/icons/file-image.svg"></ion-icon>
-                        </div>
-                        <ion-img [src]="selectedImge" *ngIf="selectedImge" class="selected-image"></ion-img>
-
-                        <ion-label>ARRASTE SUAS IMAGENS PARA AQUI</ion-label>
-
-                        <label class="lb-input">
-   <ion-label slot="start" >PROCURAR NO DISPOSITIVO</ion-label>
-  <input  type='file' ng2FileSelect [uploader]="uploader"  (onFileSelected)="onReceiveImage()"/>
-
-  </label>
-                    </div>
-
-                </ion-col>
-
-                <ion-col>
-                    <div class="right-list">
-                        <div class="observacao">
-                            <ion-label>OBSERVAÇÕES</ion-label>
-                        </div>
-                        <div class="div-list">
-                            <div>
-                                <ion-label>TAMNHO MÁXIMO POR IMAGEM (2 Mb)</ion-label>
-                                <ion-icon name="ellipse-sharp"></ion-icon>
-                            </div>
-                            <div>
-                                <ion-label>IMAGENS NO FORMATO PNG OU JPEG/JPG</ion-label>
-                                <ion-icon name="ellipse-sharp"></ion-icon>
-                            </div>
-
-                            <div>
-                                <ion-label>LIMITE DE 10 (DEZ) IMAGENS POR PRODUTO</ion-label>
-                                <ion-icon name="ellipse-sharp"></ion-icon>
-                            </div>
-                            <div>
-                                <ion-label>EVITE COLOCAR IMAGENS COM POUCA QUALIDADE</ion-label>
-                                <ion-icon name="ellipse-sharp"></ion-icon>
-                            </div>
-                        </div>
-                    </div>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                    <ion-item class="pass-button" lines="none">
-                        <ion-button color="danger" (click)="excluir()" *ngIf="hasOneSelected">
-                            <ion-label color="light">EXCLUIR</ion-label>
-                        </ion-button>
-
-                        <ion-button slot="end" slot="end" color="success" (click)="back()">
-                            <ion-label>CONCLUIR</ion-label>
-                            <ion-icon name="checkmark-circle-outline"></ion-icon>
-                        </ion-button>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </div>

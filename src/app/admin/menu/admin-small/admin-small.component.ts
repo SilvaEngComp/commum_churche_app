@@ -88,7 +88,9 @@ export class AdminSmallComponent implements OnInit {
     );
   }
 
-  async load() {
-    this.badge_feed = await this.feedService.checkNewest();
+  load() {
+    this.feedService
+      .checkNewest()
+      .then((responser) => (this.badge_feed = responser.data));
   }
 }

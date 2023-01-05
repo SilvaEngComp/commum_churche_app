@@ -1,0 +1,16 @@
+ion-header {
+  ion-toolbar {
+    ion-label {
+      color: var(--ion-color-tertiary);
+      font-size: 12pt;
+      font-family: Qanelas-bold;
+      text-align: center;
+      word-wrap: break-word;
+      margin: 1%;
+    }
+
+    ion-icon {
+      font-size: 40px;
+    }
+  }
+}

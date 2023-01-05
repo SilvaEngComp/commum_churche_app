@@ -1,0 +1,25 @@
+<ion-toolbar *ngIf="is_a_selected_post">
+
+  <ion-buttons>
+    <ion-button (click)="back()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      VOLTAR</ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-item lines="none">
+        <ion-label class="lb-church-schedule-title">Inicio às {{ churchSchedule?.date +' '+churchSchedule?.time | date:
+          'dd/MM/yyyy HH:mm'
+          }}</ion-label>
+      </ion-item>
+      <div class="complete-message">{{ churchSchedule?.message }}</div>
+    </ion-col>
+
+    <ion-col *permission="'multimidia'">
+      <ion-icon (click)="menuPost(churchSchedule, $event)" name="ellipsis-vertical-outline"></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -1,0 +1,8 @@
+<div class="div-content" [ngSwitch]="subpage">
+  <app-public-church-schedule *ngSwitchCase="'1'" (returnPage)="returnPage($event)"></app-public-church-schedule>
+  <app-create-church-schedule [churchSchedule]="churchSchedule" *ngSwitchCase="'2'"
+    (returnSubpage)="returnPage($event)"></app-create-church-schedule>
+  <app-publication-church-schedule [churchSchedule]="churchSchedule" [expandAll]="true" *ngSwitchCase="'3'"
+    (returnPage)="returnPage($event)" (returnPage)="returnPage($event)"></app-publication-church-schedule>
+
+</div>

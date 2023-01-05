@@ -48,6 +48,7 @@ export class Menu {
 
         if (environment.TEST) {
           menu_itens.push(Constants.LATERAL_MENU_FEED);
+          menu_itens.push(Constants.LATERAL_MENU_PROGRAM);
         }
         if (UiService.validPermissions(Constants.ROLE_SECRETARY)) {
           menu_itens.push(Constants.LATERAL_MENU_MEMBERS);
@@ -74,6 +75,7 @@ export class Menu {
       Constants.LATERAL_MENU_TITHE_OFFER,
       Constants.LATERAL_MENU_FINANCY,
       Constants.LATERAL_MENU_FEED,
+      Constants.LATERAL_MENU_PROGRAM,
       Constants.LATERAL_MENU_OUT,
     ];
 

@@ -17,6 +17,8 @@ export class UiService {
   @Output()
   static pageMenu: EventEmitter<any> = new EventEmitter<any>();
   @Output()
+  static pageMenuHome: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
   static caixaAdminEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Output()
   static bibleProgramEmmiter: EventEmitter<any> = new EventEmitter<any>();
@@ -26,6 +28,9 @@ export class UiService {
 
   @Output()
   static feedPage: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  static schedulePage: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
   static emitirTo: EventEmitter<any> = new EventEmitter<any>();
@@ -237,9 +242,12 @@ export class UiService {
   }
 
   static socialNetworks(op: string) {
+    op = op.toLowerCase();
     switch (op) {
       case 'w':
-        window.open('https://api.whatsapp.com/send?phone=5575983256990');
+        window.open(
+          "https://api.whatsapp.com/send?phone=5575983256990&message='Olá! Gostaria de falar com a secretaria da Igreja Batista Nova Betel. Está disponível?'"
+        );
         break;
       case 'm':
         window.open('mailto:ibnovabetel@gmail.com');
@@ -250,6 +258,11 @@ export class UiService {
         break;
       case 'y':
         window.open('https://www.youtube.com/c/ibnovabetel');
+        break;
+      case 's':
+        window.open(
+          "https://api.whatsapp.com/send?phone=5575992466044&message='Olá! Está disponível?'"
+        );
         break;
     }
   }

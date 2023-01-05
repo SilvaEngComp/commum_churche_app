@@ -61,13 +61,18 @@ export class LongPressActionDirective implements AfterViewInit {
 
   longPressCheck() {
     if (this.active) {
+      console.log('clear' + this.active);
       clearTimeout(this.action);
     }
-    // this.action = setTimeout(async () => {
-    if (this.active) {
-      this.openColorMark(1);
-    }
-    // }, 2000);
+    this.action = setTimeout(async () => {
+      console.log('get into ' + this.active);
+
+      if (!this.active) {
+        console.log('show');
+
+        this.openColorMark(1);
+      }
+    }, 500);
   }
 
   async openColorMark(event: any) {

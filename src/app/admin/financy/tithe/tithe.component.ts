@@ -47,6 +47,12 @@ export class TitheComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    UiService.localSet(
+      Constants.TITLE_CURRENT_PAGE,
+      Constants.TITLE_TITHE_HISTORIC
+    );
+
+    UiService.pageTitle.emit(Constants.TITLE_TITHE_HISTORIC);
     this.filter = UiService.localGet(Constants.TITHE_FILTER);
     if (!this.filter) {
       this.filter = new TitheFilter();

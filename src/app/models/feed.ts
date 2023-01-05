@@ -8,20 +8,21 @@ export class Feed {
   title: string;
   message: string;
   image: string;
-  onlineClass: boolean;
   published: boolean;
   date: string;
   time: string;
   checkPublish: boolean;
   love: boolean;
   comments: FeedComment[];
+  hasTime: boolean;
+  showComment: boolean;
 
   constructor() {
     this.published = true;
-    this.onlineClass = false;
+    this.showComment = false;
     const datePipe = new DatePipe('en');
     this.date = datePipe.transform(Date.now(), 'yyyy-MM-dd');
-    this.time = datePipe.transform(Date.now(), 'HH:mm:ss');
+    this.time = datePipe.transform(Date.now(), 'HH:mm');
     this.comments = [];
   }
 }

@@ -54,9 +54,9 @@
                     class="lb-challenge-description">{{selectedVerseDay?.startVerse?.book}}
                     {{selectedVerseDay?.startVerse?.chapter}}:{{selectedVerseDay?.startVerse?.verse}}/{{selectedVerseDay?.endVerse?.book}}
                     {{selectedVerseDay?.endVerse?.chapter}}:{{selectedVerseDay?.endVerse?.verse}}</ion-text>
-                  <ion-list (click)="readVerses()" fill="outline">
+                  <ion-list fill="outline">
 
-                    <ion-icon name="book-outline"></ion-icon>
+                    <ion-icon name="book-outline" (click)="readVerses()"></ion-icon>
                     <br>
                     <ion-note>Ler Agora</ion-note>
                   </ion-list>

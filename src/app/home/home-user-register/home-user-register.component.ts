@@ -42,6 +42,10 @@ export class HomeUserRegisterComponent implements OnInit {
     }
 
     this.wouldShowBrads = this.platform.width() > 500 && this.session > 0;
+
+    UiService.pageMenuHome.subscribe((session) => {
+      this.session = session;
+    });
   }
 
   save() {
@@ -83,5 +87,9 @@ export class HomeUserRegisterComponent implements OnInit {
     UiService.localRemove(Constants.REGISTRING_USER);
     this.session = 0;
     this.save();
+  }
+
+  socialNetworks(option: string) {
+    UiService.socialNetworks(option);
   }
 }

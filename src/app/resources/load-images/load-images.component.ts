@@ -25,7 +25,7 @@ export class LoadImagesComponent implements OnInit {
   @Input() myFile: TempFile;
   user: User;
   @Input() single: boolean;
-  callbackPage: string;
+  @Input() showFinishButtton: boolean;
 
   hasOneSelected: boolean;
   selectedImge: string;
@@ -35,14 +35,8 @@ export class LoadImagesComponent implements OnInit {
     if (!this.localImages) {
       this.localImages = new ModelImgeUplod();
     }
-    if (UiService.localGet('callbackPage')) {
-      this.callbackPage = UiService.localGet('callbackPage');
-    }
 
     this.user = LoginService.getUser();
-    console.log(this.user);
-
-    console.log(this.callbackPage);
     this.localImages.images = [];
     this.selectedImge = null;
   }
@@ -111,6 +105,7 @@ export class LoadImagesComponent implements OnInit {
 
   async onReceiveImage() {
     const files: any[] = this.getFiles();
+    this.back();
   }
 
   hasSelected() {
@@ -162,15 +157,8 @@ export class LoadImagesComponent implements OnInit {
     this.uploader.queue.splice(reorderEvent.detail.to, 0, element);
   }
   back() {
-    if (this.localImages.images.length > 0) {
-      this.returnPage.emit({
-        page: this.callbackPage,
-        files: this.localImages,
-      });
-    } else {
-      this.returnPage.emit({
-        page: this.callbackPage,
-      });
-    }
+    this.returnPage.emit({
+      files: this.localImages,
+    });
   }
 }

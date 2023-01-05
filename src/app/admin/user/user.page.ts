@@ -58,6 +58,13 @@ export class UserPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    UiService.localSet(
+      Constants.TITLE_CURRENT_PAGE,
+      Constants.TITLE_USER_MEMBERS
+    );
+
+    UiService.pageTitle.emit(Constants.TITLE_USER_MEMBERS);
+
     this.loadUsers();
     this.letterSizeConfig = UiService.localGet(
       Constants.USER_LETTER_SIZE_CONFIG
@@ -195,14 +202,18 @@ export class UserPage implements OnInit {
     });
   }
 
-  async openFilter() {
-    const modal = this.modalController.create({
-      component: FilterComponent,
-    });
+  // async openFilter() {
+  //   const modal = this.modalController.create({
+  //     component: FilterComponent,
+  //   });
 
-    (await modal).present();
+  //   (await modal).present();
 
-    const { data } = await (await modal).onWillDismiss();
+  //   const { data } = await (await modal).onWillDismiss();
+  //   this.loadUsers();
+  // }
+
+  receiveFilter(ev: any) {
     this.loadUsers();
   }
 }

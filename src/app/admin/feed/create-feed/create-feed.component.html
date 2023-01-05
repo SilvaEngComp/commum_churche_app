@@ -8,77 +8,49 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-segment [value]="session" (ionChange)="setSession($event)">
+  <ion-segment-button value="1">
+    <ion-label>Texto</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="2">
+    <ion-label>Imagem</ion-label>
+  </ion-segment-button> <ion-segment-button value="3">
+    <ion-label>Revisar</ion-label>
+  </ion-segment-button>
+</ion-segment>
 
 <ion-spinner *ngIf="is_loading" name="bubbles"></ion-spinner>
-<div class="div-body" *ngIf="!is_loading">
-  <ion-grid>
+<ion-grid>
+  <ion-row>
+    <ion-col *ngIf="session===1">
+      <ion-card>
+        <app-edit-text-feed (returnSubpage)="receiveSubpage($event)"></app-edit-text-feed>
+      </ion-card>
+    </ion-col>
+    <ion-col *ngIf="session===2">
+      <app-load-images [single]="true" (returnPage)="receiveSubpage($event)"></app-load-images>
+    </ion-col>
+    <ion-col *ngIf="session===3">
+      <ion-card>
+        <app-review-feed (returnSubpage)="receiveSubpage($event)"></app-review-feed>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col *ngIf="session>1">
+      <ion-button expand="block" (click)="backSession()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
 
-    <ion-row *ngIf="feed?.id">
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">Data</ion-label>
-          <span title="data atual" slot="end">
-            <ion-icon slot="end" name="calendar-outline" (click)="setDateAsNow()"></ion-icon></span>
-          <ion-input [value]="feed?.date|date:'dd/MM/yyyy'" type="text" placeholder="dd/mm/aaaa"
-            (keyup)="setDate(inputDate.value)" #inputDate [brmasker]="{mask:'00/00/0000', type:'num'}"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">Hora</ion-label>
-          <span title="horário atual" slot="end">
-            <ion-icon name="time-outline" (click)="setTimeAsNow()"></ion-icon>
-          </span>
-          <ion-input [value]="feed?.time" type="text" placeholder="HH:MM" (keyup)="setTime(inputTime.value)" #inputTime
-            [brmasker]="{mask:'00:00', type:'num'}"></ion-input>
-        </ion-item>
-      </ion-col>
+        <ion-label>VOLTAR</ion-label>
+      </ion-button>
+    </ion-col>
 
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <div class="div-input-title">
-          <ion-item>
-            <ion-label position="floating">Título</ion-label>
-            <ion-input placeholder="Digite o título da publicação" [value]="feed?.title"
-              (keyup)="onTypeTitle(inputTitle.value)" #inputTitle placeholder="Digite o título da publicação"
-              type="text"></ion-input>
-
-          </ion-item>
-          <ion-button fill="clear" name="send-sharp" (click)="publish()" *ngIf="!feed?.id">
-            <ion-label>PRÓXIMO</ion-label>
+    <ion-col>
+      <ion-button expand="block" (click)="publish()">
+        <ion-label>{{session<3 ?'PRÓXIMO':'CONCLUIR'}} </ion-label>
             <ion-icon name="chevron-forward-outline"></ion-icon>
-          </ion-button>
-        </div>
-      </ion-col>
-      <ion-col *ngIf="feed?.id">
-        <ion-item lines="none" (click)="publish(true)" button>
-          <ion-label>Publicar</ion-label>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngIf="feed?.id">
-      <ion-col>
-        <ion-item class="item-img" lines="none" *ngIf="feed?.image">
-          <ion-img [src]="base_url + feed?.image"></ion-img>
-        </ion-item>
+      </ion-button>
+    </ion-col>
+  </ion-row>
 
-        <ion-item>
-          <ion-label position="floating">Menssagem</ion-label>
-          <ion-textarea (keyup)="onTypeMessage($event)" cols="10" rows="10"
-            placeholder="O que você está fazendo? Conta pra gente!" [(ngModel)]="feed.message"></ion-textarea>
-        </ion-item>
-        <ion-note>{{ feed?.message?.length ? feed?.message?.length : 0}} / 10000 caracteres</ion-note>
-
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button (click)="addImage()" *ngIf="feed?.id">
-          <ion-icon name="image-outline"></ion-icon>
-
-        </ion-button>
-      </ion-col>
-    </ion-row>
-
-  </ion-grid>
+</ion-grid>

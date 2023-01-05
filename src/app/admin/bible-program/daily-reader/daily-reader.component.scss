@@ -110,11 +110,19 @@ ion-toolbar {
           font-family: Qanelas-bold;
           color: var(--ion-color-light);
         }
-      }
-      .lb-selected-week {
-        font-size: 26pt;
-        text-decoration: underline;
-        color: var(--ion-color-success);
+
+        .lb-selected-week {
+          font-size: 26pt;
+          text-decoration: underline;
+          // color: var(--ion-color-success);
+        }
+
+        .isRead {
+          text-decoration-line: line-through;
+          text-decoration-color: var(--ion-color-danger);
+          color: var(--ion-color-medium);
+          text-decoration-style: double;
+        }
       }
     }
     .div-slide-challenge-month-body {
@@ -172,12 +180,6 @@ ion-toolbar {
       transform: rotate(45deg);
     }
   }
-}
-
-.isRead {
-  text-decoration-line: line-through;
-  text-decoration-color: var(--ion-color-danger);
-  text-decoration-style: double;
 }
 
 .bible-text {

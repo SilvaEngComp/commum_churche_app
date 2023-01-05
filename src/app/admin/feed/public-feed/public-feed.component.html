@@ -11,5 +11,6 @@
 
 
 <div *ngIf="!is_loading" class="div-body">
-  <app-publication *ngFor="let feed of feeds" [feed]="feed" (returnSubPage)="returnSubPage($event)"></app-publication>
+  <app-publication *ngFor="let feed of feeds" [feed]="feed" (returnSubpage)="returnSubPage($event)"
+    [expandAll]="feed?.message?.length>500"></app-publication>
 </div>

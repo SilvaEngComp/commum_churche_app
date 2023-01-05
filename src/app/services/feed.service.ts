@@ -7,15 +7,18 @@ import { FilterFeed } from '../models/filterFeed';
 import { Responser } from '../models/responser';
 import { ExceptionService } from './exception-service.service';
 import { LoginService } from './login.service';
+import { ServiceInterface } from './serviceInterface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FeedService {
+export class FeedService extends ServiceInterface {
   constructor(
-    private http: HttpClient,
-    private exceptionService: ExceptionService
-  ) {}
+    protected http: HttpClient,
+    protected exceptionService: ExceptionService
+  ) {
+    super(http, exceptionService);
+  }
   checkLogged() {
     this.exceptionService.alertDialog(
       'Infelizmente sua conexão expirou. Saia e faça login novamente',
@@ -24,24 +27,24 @@ export class FeedService {
     );
   }
 
-  async get(filter: FilterFeed = new FilterFeed()): Promise<Feed[]> {
+  async get(filter: FilterFeed): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
     return this.http
-      .get<Feed[]>(`${environment.API2}/feeds${filter.getRequest()}`, {
+      .get<Responser>(`${environment.API2}/feeds${filter.getRequest()}`, {
         headers: await LoginService.getHeaders(),
       })
       .toPromise();
   }
-  async checkNewest(): Promise<number> {
+  async checkNewest(): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
     return this.http
-      .get<number>(`${environment.API2}/feeds/newest`, {
+      .get<Responser>(`${environment.API2}/feeds/newest`, {
         headers: await LoginService.getHeaders(),
       })
       .toPromise();

@@ -166,5 +166,6 @@ export class BibleVersesComponent implements OnInit {
 
   setShowCheckBox() {
     this.showCheckBox = !this.showCheckBox;
+    console.log(this.showCheckBox);
   }
 }

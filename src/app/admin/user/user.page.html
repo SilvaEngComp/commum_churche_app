@@ -11,9 +11,24 @@
       <ion-item lines="none" class="item-search">
         <ion-input type="text" #searchInput (keyup)="search(searchInput.value)"></ion-input>
         <ion-icon color="secondary" name="search-outline"></ion-icon>
-        <ion-note slot="end" color="secondary">{{ users?.length }} {{ users?.length>1 ? 'registros' : 'registro' }}
-        </ion-note>
       </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light">
+            <ion-card-title color="primary">Filtrar</ion-card-title>
+            <ion-note slot="end" color="secondary">{{ users?.length }} {{ users?.length>1 ? 'registros' : 'registro'
+              }}</ion-note>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <app-filter (returnPage)="receiveFilter($event)"></app-filter>
+          </div>
+
+        </ion-accordion>
+      </ion-accordion-group>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -43,10 +58,7 @@
           <ion-label>Cadastrar {{label}}</ion-label>
           <ion-icon name="add"></ion-icon>
         </ion-button>
-        <ion-button slot="end" fill="clear" color="primary" (click)="openFilter()">
-          <ion-label>Filtrar</ion-label>
-          <ion-icon name="add"></ion-icon>
-        </ion-button>
+
         <ion-button slot="end" color="medium" (click)="setLetterSize(false)">-A</ion-button>
         <ion-button slot="end" color="medium" (click)="setLetterSize(true)">+A</ion-button>
       </ion-item>

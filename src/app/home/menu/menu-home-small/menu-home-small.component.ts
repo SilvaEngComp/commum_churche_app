@@ -9,6 +9,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { Platform, IonTabs } from '@ionic/angular';
+import { Constants } from 'src/app/models/constants';
 import { PushNotify } from 'src/app/models/pushNotification';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { FeedService } from 'src/app/services/feed.service';
@@ -84,6 +85,16 @@ export class MenuHomeSmallComponent implements OnInit, AfterViewInit {
   }
 
   async load() {
-    this.badge_feed = await this.feedService.checkNewest();
+    this.feedService
+      .checkNewest()
+      .then((responser) => (this.badge_feed = responser.data));
+  }
+
+  setSession(op: number) {
+    this.setPage(0);
+    UiService.localRemove(Constants.CURRENT_REGISTER_SESSION);
+    UiService.localRemove(Constants.REGISTRING_USER);
+    UiService.localSet(Constants.CURRENT_REGISTER_SESSION, op);
+    UiService.pageMenuHome.emit(op);
   }
 }

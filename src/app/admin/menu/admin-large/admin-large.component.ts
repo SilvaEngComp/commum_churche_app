@@ -81,6 +81,7 @@ export class AdminLargeComponent implements OnInit {
   }
 
   perfil() {
+    this.page = Constants.MENU_PERFIL;
     UiService.localSet(this.defaultPageName, Constants.MENU_PERFIL);
   }
 

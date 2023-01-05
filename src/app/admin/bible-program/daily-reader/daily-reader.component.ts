@@ -136,6 +136,8 @@ export class DailyReaderComponent implements OnInit {
                 this.selectedDay = this.currentDay;
               }
             });
+          } else {
+            this.selectedDay = this.selectedVerseDay.day;
           }
         }
       });

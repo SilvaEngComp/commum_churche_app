@@ -68,6 +68,13 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    UiService.localSet(
+      Constants.TITLE_CURRENT_PAGE,
+      Constants.TITLE_USER_PROFILE
+    );
+
+    UiService.pageTitle.emit(Constants.TITLE_USER_PROFILE);
+
     if (UiService.localGet(Constants.HAS_BACK_PAGE)) {
       this.hasBackPage = true;
     } else {

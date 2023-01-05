@@ -1,6 +1,15 @@
+import { AfterViewInit } from '@angular/core';
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { IonTextarea, PopoverController } from '@ionic/angular';
 import { UiService } from 'src/app/services/ui.service';
 import { MenuPostComponent } from '../menu-post/menu-post.component';
 import { FeedCommentService } from 'src/app/services/feed-reaction.service';
@@ -16,7 +25,8 @@ import { User } from 'src/app/models/User';
   templateUrl: './feed-comment.component.html',
   styleUrls: ['./feed-comment.component.scss'],
 })
-export class FeedCommentComponent implements OnInit {
+export class FeedCommentComponent implements OnInit, AfterViewInit {
+  @ViewChild('texAreaMessage', { read: ElementRef }) message: ElementRef;
   @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() feed: Feed;
@@ -32,6 +42,12 @@ export class FeedCommentComponent implements OnInit {
     private exeptionService: ExceptionService,
     private feedReactionService: FeedCommentService
   ) {}
+  ngAfterViewInit(): void {
+    console.clear();
+    console.log(this.message);
+    console.log(this.message.nativeElement.offsetBottom);
+    UiService.toTop.emit(this.message.nativeElement.offsetBottom);
+  }
 
   ngOnInit() {
     this.newComment = new FeedComment();

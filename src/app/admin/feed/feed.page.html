@@ -1,8 +1,0 @@
-<div class="div-content" [ngSwitch]="subpage">
-  <app-public-feed *ngSwitchCase="'1'" (returnPage)="returnPage($event)"></app-public-feed>
-  <app-create-feed [feed]="feed" *ngSwitchCase="'2'" (returnPage)="returnPage($event)"></app-create-feed>
-  <app-publication [feed]="feed" [expandAll]="true" *ngSwitchCase="'3'"
-    (returnPage)="returnPage($event)"></app-publication>
-  <app-load-images [single]="true" *ngSwitchCase="'4'" (returnPage)="returnPage($event)"></app-load-images>
-
-</div>

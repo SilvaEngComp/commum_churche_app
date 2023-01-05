@@ -1,54 +1,56 @@
 <ion-toolbar *ngIf="is_a_selected_post">
 
-    <ion-buttons>
-        <ion-button (click)="back()">
-            <ion-icon name="arrow-back-outline"></ion-icon>
-            VOLTAR</ion-button>
-    </ion-buttons>
+  <ion-buttons>
+    <ion-button (click)="back()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      VOLTAR</ion-button>
+  </ion-buttons>
 </ion-toolbar>
 
 <ion-grid>
-    <ion-row *ngIf="feed?.checkPublish">
-        <ion-col size="10">
-            <div class="div-publisher">
-                <ion-avatar>
-                    <ion-img [src]="base_url + feed?.publisher?.image"></ion-img>
-                </ion-avatar>
-                <div>
-                    <ion-label>{{ feed?.publisher?.name }}</ion-label>
-                </div>
-            </div>
-        </ion-col>
-        <ion-col>
-            <ion-icon [ngClass]="{'hidde-menu':!permission}" (click)="menuPost(feed, $event)" name="ellipsis-vertical-outline"></ion-icon>
-        </ion-col>
-    </ion-row>
-    <ion-row *ngIf="feed?.checkPublish">
-        <ion-col>
-            <div [ngClass]="{'feed-img-short': !expandAll, 'feed-img-large':expandAll}" *ngIf="feed?.image" (click)="setComment()">
-                <ion-img [src]=" base_url + feed?.image"></ion-img>
-            </div>
+  <ion-row *ngIf="feed?.checkPublish">
+    <ion-col size="10">
+      <div class="div-publisher">
+        <ion-avatar>
+          <ion-img [src]="feed?.publisher?.image"></ion-img>
+        </ion-avatar>
+        <div>
+          <ion-label>{{ feed?.publisher?.name }}</ion-label>
+        </div>
+      </div>
+    </ion-col>
+    <ion-col>
+      <ion-icon [ngClass]="{'hidde-menu':!permission}" (click)="menuPost(feed, $event)"
+        name="ellipsis-vertical-outline"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="feed?.checkPublish">
+    <ion-col *ngIf="feed?.image">
+      <div [ngClass]="{'feed-img-short': !expandAll, 'feed-img-large':expandAll}">
+        <ion-img [src]="feed?.image"></ion-img>
+      </div>
 
-        </ion-col>
-        <ion-col>
-            <div class="headers-reactions" *ngIf="feed?.date">
-                <ion-icon *ngIf="!feed?.love" name="heart-outline" (click)="setLove()"></ion-icon>
-                <ion-icon color="danger" *ngIf="feed?.love" name="heart-sharp" (click)="setLove()"></ion-icon>
-                <ion-icon name="chatbox-outline" (click)="setComment()"></ion-icon>
-                <ion-label>{{ feed?.date +' '+feed?.time | date: 'dd/MM/yyyy HH:mm:ss' }}</ion-label>
-            </div>
-            <div class="draft" *ngIf="!feed?.date">
-                <ion-label color="danger">Rascunho não publicado</ion-label>
-            </div>
-            <ion-item lines="none">
-                <p class="lb-feed-title">{{ feed?.title }}</p>
-            </ion-item>
-            <ion-text [ngClass]="{ 'short-message': !expandAll, 'complete-message': expandAll}">{{ feed?.message }}</ion-text>
+    </ion-col>
+    <ion-col>
+      <div class="headers-reactions" *ngIf="feed?.date">
+        <ion-icon *ngIf="!feed?.love" name="heart-outline" (click)="setLove()"></ion-icon>
+        <ion-icon color="danger" *ngIf="feed?.love" name="heart-sharp" (click)="setLove()"></ion-icon>
+        <ion-icon name="chatbox-outline" (click)="setComment()"></ion-icon>
+        <ion-label>{{ feed?.date +' '+feed?.time | date: 'dd/MM/yyyy HH:mm:ss' }}</ion-label>
+      </div>
+      <div class="draft" *ngIf="!feed?.date">
+        <ion-label color="danger">Rascunho não publicado</ion-label>
+      </div>
+      <ion-item lines="none">
+        <p class="lb-feed-title">{{ feed?.title }}</p>
+      </ion-item>
+      <div [ngClass]="{ 'short-message': !expandAll, 'complete-message': expandAll}">{{ feed?.message
+        }}</div>
 
-            <ion-item lines="none" *ngIf="feed?.message?.length>100">
-                <p class="p-as-a-link" (click)="showCompleteMessage()">{{expandAll ? 'MENOS': 'MAIS...'}}</p>
-            </ion-item>
-            <app-feed-comment [feed]="feed" class="show-comments" *ngIf="is_a_selected_post"></app-feed-comment>
-        </ion-col>
-    </ion-row>
+      <ion-item lines="none" *ngIf="feed?.message?.length>100">
+        <p class="p-as-a-link" (click)="showCompleteMessage()">{{expandAll ? 'MENOS': 'MAIS...'}}</p>
+      </ion-item>
+      <app-feed-comment [feed]="feed" class="show-comments" *ngIf="feed?.showComment"></app-feed-comment>
+    </ion-col>
+  </ion-row>
 </ion-grid>

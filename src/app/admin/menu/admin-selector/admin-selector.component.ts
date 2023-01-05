@@ -1,8 +1,8 @@
 import { ExceptionService } from './../../../services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import { UiService } from 'src/app/services/ui.service';
-import { Platform } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
+import { Platform, IonContent } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { Router } from '@angular/router';
 import { MessagingService } from 'src/app/services/messaging.service';
@@ -15,6 +15,7 @@ import { FcmService } from 'src/app/services/fcm.service';
   styleUrls: ['./admin-selector.component.scss'],
 })
 export class AdminSelectorComponent implements OnInit {
+  @ViewChild('mainSmall', { static: false }) ionContent: IonContent;
   isLarge: boolean;
   user: User;
   page: string;
@@ -42,6 +43,10 @@ export class AdminSelectorComponent implements OnInit {
     } else {
       this.fcmService.initPush();
     }
+
+    UiService.toTop.subscribe((value) =>
+      this.ionContent.scrollToPoint(0, value)
+    );
   }
 
   listenForMessages() {

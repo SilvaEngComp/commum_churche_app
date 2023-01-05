@@ -1,7 +1,7 @@
 import { CustomizedMonth } from './../../../models/customizedMonth';
 import { UserFilter } from 'src/app/models/userFilter';
 import { Constants } from './../../../models/constants';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Church } from 'src/app/models/church';
 import { InputMethod } from 'src/app/models/inputhMethod';
 import { MaritalStatus } from 'src/app/models/maritalStatus';
@@ -17,6 +17,7 @@ import { Platform, ModalController } from '@ionic/angular';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
+  @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
   filterList: string[];
   filter: UserFilter;
   maritalStatuses: MaritalStatus[];
@@ -116,6 +117,7 @@ export class FilterComponent implements OnInit {
   }
 
   makeFilter() {
-    this.modalCtrl.dismiss();
+    this.returnPage.emit();
+    // this.modalCtrl.dismiss();
   }
 }

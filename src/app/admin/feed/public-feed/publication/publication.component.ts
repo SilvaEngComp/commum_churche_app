@@ -12,6 +12,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { Feed } from 'src/app/models/feed';
 import { FeedComment } from 'src/app/models/feedReaction';
 import { User } from 'src/app/models/User';
+import { Constants } from 'src/app/models/constants';
 
 @Component({
   selector: 'app-publication',
@@ -19,11 +20,10 @@ import { User } from 'src/app/models/User';
   styleUrls: ['./publication.component.scss'],
 })
 export class PublicationComponent implements OnInit {
-  @Output() returnSubPage: EventEmitter<any> = new EventEmitter<any>();
+  @Output() returnSubpage: EventEmitter<any> = new EventEmitter<any>();
   @Input() expandAll: boolean;
   @Input() feed: Feed;
   user: User;
-  feeds: Feed[] = [];
   base_url: string = environment.IMAGE_URL;
   is_loading: boolean;
   showComments: boolean;
@@ -35,18 +35,15 @@ export class PublicationComponent implements OnInit {
     private feedService: FeedService,
     private popCtrl: PopoverController,
     private exeptionService: ExceptionService,
-    private feedReactionService: FeedCommentService,
-    private platform: Platform
+    private feedReactionService: FeedCommentService
   ) {}
 
   ngOnInit() {
     if (!this.feed) {
-      if (UiService.localGet('selected-feed')) {
-        this.feed = UiService.localGet('selected-feed');
-      }
+      this.feed = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
     }
 
-    if (UiService.localGet('feed-page') === 'selected-feed') {
+    if (UiService.localGet(Constants.FEED_SUBPAGE) === 'selected-feed') {
       this.is_a_selected_post = true;
     }
     this.user = LoginService.getUser();
@@ -67,11 +64,10 @@ export class PublicationComponent implements OnInit {
     });
   }
   setComment() {
-    UiService.localSet('selected-feed', this.feed);
-    this.returnSubPage.emit({ page: 'selected-feed', feed: this.feed });
+    this.feed.showComment = !this.feed?.showComment;
   }
   back() {
-    UiService.feedPage.emit({ page: 'public' });
+    UiService.feedPage.emit({ subpage: Constants.FEED_PAGE_PUBLIC });
   }
 
   showCompleteMessage() {
@@ -83,10 +79,7 @@ export class PublicationComponent implements OnInit {
     this.feedService
       .destroy(feed)
       .then((responser) => {
-        this.feeds = responser.data;
-        this.returnSubPage.emit({ feeds: responser.data });
-
-        this.exeptionService.success(responser);
+        this.returnSubpage.emit({ feeds: responser.data });
       })
       .catch((err) => this.exeptionService.error(err));
   }
@@ -104,8 +97,14 @@ export class PublicationComponent implements OnInit {
       const { data } = await pop.onDidDismiss();
 
       if (data) {
+        console.log(data);
         if (data === 'edit') {
-          this.returnSubPage.emit({ page: 'create', feed });
+          console.log(data);
+
+          this.returnSubpage.emit({
+            subpage: Constants.FEED_PAGE_CREATE_FEED,
+            feed,
+          });
         } else {
           this.delete(feed);
         }

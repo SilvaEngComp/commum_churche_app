@@ -1,0 +1,56 @@
+<ion-spinner *ngIf="is_loading" name="bubbles"></ion-spinner>
+<div class="div-body" *ngIf="!is_loading">
+  <ion-grid *ngIf="session===1">
+    <ion-row>
+      <ion-col>
+        <ion-card class="div-input-title">
+          <ion-item>
+            <ion-label position="floating">Título</ion-label>
+            <ion-input placeholder="Digite o título da publicação" [value]="feed?.title"
+              (keyup)="onTypeTitle(inputTitle.value)" #inputTitle placeholder="Digite o título da publicação"
+              type="text"></ion-input>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Data</ion-label>
+          <span title="data atual" slot="end">
+            <ion-icon slot="end" name="calendar-outline" (click)="setDateAsNow()"></ion-icon></span>
+          <ion-input [value]="feed?.date|date:'dd/MM/yyyy'" type="text" placeholder="dd/mm/aaaa"
+            (keyup)="setDate(inputDate.value)" #inputDate [brmasker]="{mask:'00/00/0000', type:'num'}"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <div class="div-time">
+          <ion-item>
+            <ion-label position="floating">Hora</ion-label>
+            <span title="horário atual" slot="end">
+              <ion-icon name="time-outline" (click)="setTimeAsNow()"></ion-icon>
+            </span>
+            <ion-input [disabled]="this.feed?.hasTime" [value]="feed?.time" type="text" placeholder="HH:MM"
+              (keyup)="setTime(inputTime.value)" #inputTime [brmasker]="{mask:'00:00', type:'num'}"></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-checkbox [checked]="this.feed?.hasTime" (ionChange)="setTimeExists()"></ion-checkbox>
+            <ion-label>Sem horário</ion-label>
+          </ion-item>
+        </div>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Menssagem</ion-label>
+        <ion-textarea (keyup)="onTypeMessage($event)" cols="10" rows="10" [value]="feed?.message"
+          placeholder="O que você está fazendo? Conta pra gente!"></ion-textarea>
+        <ion-note>{{ feed?.message?.length ? feed?.message?.length : 0}} / 10000 caracteres</ion-note>
+
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>

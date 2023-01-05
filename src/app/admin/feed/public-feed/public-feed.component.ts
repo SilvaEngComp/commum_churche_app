@@ -9,6 +9,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { Feed } from 'src/app/models/feed';
 import { FeedComment } from 'src/app/models/feedReaction';
 import { User } from 'src/app/models/User';
+import { FilterFeed } from 'src/app/models/filterFeed';
 
 @Component({
   selector: 'app-public-feed',
@@ -24,6 +25,7 @@ export class PublicFeedComponent implements OnInit {
   is_loading: boolean;
   showComment: boolean;
   feedReaction: FeedComment;
+  filterFeed: FilterFeed;
 
   constructor(
     private feedService: FeedService,
@@ -34,39 +36,52 @@ export class PublicFeedComponent implements OnInit {
     console.log('public feed');
     this.user = LoginService.getUser();
     this.feedReaction = new FeedComment();
+    this.filterFeed = new FilterFeed();
     this.load();
   }
 
-  async load() {
+  load() {
     this.is_loading = true;
     this.exeptionService.loadingFunction();
-    this.feeds = await this.feedService.get();
-    console.log(this.feeds);
-    const datePipe = new DatePipe('en');
-    const now = datePipe.transform(Date.now(), 'yyyy-MM-dd');
-    const time = datePipe.transform(Date.now(), 'HH:mm:ss');
-    if (this.feeds) {
-      this.feeds.filter((feed) => {
-        if (feed.date) {
-          if (feed.date < now) {
-            feed.checkPublish = true;
-          } else {
-            if (feed.time <= time) {
+    this.feedService.get(this.filterFeed).then((responser) => {
+      this.feeds = responser.data;
+      const datePipe = new DatePipe('en');
+      const now = datePipe.transform(Date.now(), 'yyyy-MM-dd');
+      const time = datePipe.transform(Date.now(), 'HH:mm:ss');
+      if (this.feeds) {
+        this.feeds.filter((feed) => {
+          feed.publisher = this.checkImage(feed?.publisher);
+          if (feed.date) {
+            if (feed.date < now) {
               feed.checkPublish = true;
+            } else {
+              if (feed.time <= time) {
+                feed.checkPublish = true;
+              }
+            }
+          } else {
+            if (feed.publisher.id === this.user.id) {
+              feed.checkPublish = true;
+            } else {
+              feed.checkPublish = false;
             }
           }
-        } else {
-          if (feed.publisher.id === this.user.id) {
-            feed.checkPublish = true;
-          } else {
-            feed.checkPublish = false;
-          }
-        }
-      });
-    }
-    this.is_loading = false;
+        });
+      }
+      this.is_loading = false;
+    });
   }
 
+  checkImage(user: User) {
+    if (!user?.image) {
+      if (user?.gender.toLocaleLowerCase().includes('masculino')) {
+        user.image = Constants.MALE_PERSON;
+      } else {
+        user.image = Constants.FEMALE_PERSON;
+      }
+    }
+    return user;
+  }
   newFeed() {
     console.log(Constants.FEED_PAGE_CREATE_FEED);
     this.returnPage.emit({
@@ -76,6 +91,7 @@ export class PublicFeedComponent implements OnInit {
   }
 
   returnSubPage(obj: any) {
+    console.log(obj);
     if (obj.subpage) {
       this.returnPage.emit(obj);
     }
