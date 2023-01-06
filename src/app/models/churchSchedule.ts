@@ -1,21 +1,18 @@
+import { Church } from './church';
 import { DatePipe } from '@angular/common';
+import { ScheduleTime } from './ScheduleTime';
 
 export class ChurchSchedule {
   id: number;
   title: string;
   message: string;
   image: string;
-  published: boolean;
-  date: string;
-  time: string;
-  checkPublish: boolean;
-  hasTime: boolean;
+  scheduleTimes: ScheduleTime[];
+  church: Church;
+  status: boolean;
 
   constructor() {
-    this.published = true;
-    this.hasTime = false;
-    const datePipe = new DatePipe('en');
-    this.date = datePipe.transform(Date.now(), 'yyyy-MM-dd');
-    this.time = datePipe.transform(Date.now(), 'HH:mm');
+    this.scheduleTimes = [];
+    this.church = new Church();
   }
 }

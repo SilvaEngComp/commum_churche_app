@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Constants } from 'src/app/models/constants';
-import { Feed } from 'src/app/models/feed';
-import { User } from 'src/app/models/User';
-import { LoginService } from 'src/app/services/login.service';
+import { ChurchSchedule } from 'src/app/models/churchschedule';
 import { UiService } from 'src/app/services/ui.service';
 
 @Component({
@@ -13,24 +11,19 @@ import { UiService } from 'src/app/services/ui.service';
 export class ReviewChurchScheduleComponent implements OnInit {
   @Input() expandAll: boolean;
 
-  feed: Feed;
+  churchSchedule: ChurchSchedule;
 
   constructor() {}
 
   ngOnInit() {
-    this.checkFeed();
+    this.checkChurchSchedule();
   }
-  checkFeed() {
-    this.feed = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
-    if (!this.feed) {
-      this.feed = new Feed();
-    }
-
-    if (!this.feed.publisher) {
-      const user = LoginService.getUser();
-      this.feed.publisher = new User();
-      this.feed.publisher.id = user.id;
-      this.feed.publisher.roles = user.roles;
+  checkChurchSchedule() {
+    this.churchSchedule = UiService.localGet(
+      Constants.CHURCH_SCHEDULE_ATTRIBUTES_OBJECT
+    );
+    if (!this.churchSchedule) {
+      this.churchSchedule = new ChurchSchedule();
     }
   }
   showCompleteMessage() {

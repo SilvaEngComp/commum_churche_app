@@ -1,3 +1,4 @@
+import { UiModule } from './../../../ui/ui.module';
 import { DirectivesModule } from 'src/app/directives/directives.module';
 import { ChurchScheduleComponent } from './church-schedule.component';
 import { NgModule } from '@angular/core';
@@ -31,6 +32,7 @@ import { ResourcesModule } from 'src/app/resources/resources.module';
     ReactiveFormsModule,
     ResourcesModule,
     DirectivesModule,
+    UiModule,
   ],
   exports: [ChurchScheduleComponent],
 })

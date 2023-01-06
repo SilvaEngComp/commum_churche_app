@@ -29,7 +29,10 @@ export class BibleProgramMapComponent implements OnInit {
 
   async load() {
     this.isLoading = true;
-    const responser = await this.bibleProgramService.show(this.selectedProgram);
+    const responser = await this.bibleProgramService.show(
+      this.selectedProgram,
+      0
+    );
     const programList: BibleReaderProgram = responser.data;
     this.bibleProgram = programList.program;
     this.isLoading = false;

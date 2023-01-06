@@ -10,11 +10,10 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <ion-item lines="none">
-        <ion-label class="lb-church-schedule-title">Inicio às {{ churchSchedule?.date +' '+churchSchedule?.time | date:
-          'dd/MM/yyyy HH:mm'
-          }}</ion-label>
-      </ion-item>
+      <ion-item *ngFor="let scheduleTime of churchSchedule?.scheduleTimes">{{scheduleTime?.day}} -
+        {{scheduleTime?.time}}</ion-item>
+    </ion-col>
+    <ion-col>
       <div class="complete-message">{{ churchSchedule?.message }}</div>
     </ion-col>
 

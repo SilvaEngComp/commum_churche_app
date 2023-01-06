@@ -57,20 +57,6 @@ export class CreateChurchScheduleComponent implements OnInit {
     if (!this.churchSchedule) {
       this.churchSchedule = new ChurchSchedule();
     }
-
-    if (!this.churchSchedule.date) {
-      this.churchSchedule.date = this.datePipe.transform(
-        Date.now(),
-        'dd/MM/yyyy'
-      );
-    } else {
-    }
-
-    if (this.session === 1) {
-      this.churchSchedule.published = false;
-    } else if (this.session === 3) {
-      this.churchSchedule.published = true;
-    }
   }
 
   backSession() {

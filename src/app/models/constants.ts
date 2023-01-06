@@ -146,4 +146,13 @@ export class Constants {
   static CHURCH_SCHEDULE_PAGE_PUBLICATION = '3';
   static CHURCH_SCHEDULE_PAGE_COMMENT = '4';
   static CHURCH_SCHEDULE_ATTRIBUTES_OBJECT = 'storedFeed';
+  static DAYS_OF_WEEK = [
+    'Segunda-Feira',
+    'Terça-Feira',
+    'Quarta-Feira',
+    'Quinta-Feira',
+    'Sexta-Feira',
+    'Sábado',
+    'Domingo',
+  ];
 }

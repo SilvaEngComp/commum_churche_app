@@ -6,6 +6,8 @@ import { ChurchSchedule } from 'src/app/models/churchschedule';
 import { User } from 'src/app/models/User';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
+import { ScheduleTime } from 'src/app/models/ScheduleTime';
+import { Church } from 'src/app/models/church';
 
 @Component({
   selector: 'app-edit-text-church-schedule',
@@ -25,6 +27,7 @@ export class EditTextChurchScheduleComponent implements OnInit {
   dateValue: string;
   hasTime: boolean;
   session: number;
+  daysOfWeek = Constants.DAYS_OF_WEEK;
   constructor(private exceptionService: ExceptionService) {}
 
   ngOnInit() {
@@ -33,10 +36,30 @@ export class EditTextChurchScheduleComponent implements OnInit {
     this.churchSchedule = UiService.localGet(
       Constants.CHURCH_SCHEDULE_ATTRIBUTES_OBJECT
     );
-    if (!this.churchSchedule?.hasTime) {
-      this.churchSchedule.hasTime = false;
+    if (!this.churchSchedule) {
+      this.churchSchedule = new ChurchSchedule();
     }
+
     console.log(this.churchSchedule);
+  }
+  setTime(time: any, position) {
+    this.churchSchedule.scheduleTimes[position].time = time;
+    this.save();
+  }
+  setChurch(church: Church) {
+    if (church) {
+      this.churchSchedule.church = church;
+    } else {
+      this.churchSchedule.church = null;
+    }
+
+    this.save();
+  }
+  addScheduleTime() {
+    if (!this.churchSchedule.scheduleTimes) {
+      this.churchSchedule.scheduleTimes = [];
+    }
+    this.churchSchedule.scheduleTimes.push(new ScheduleTime());
   }
 
   checkChurchSchedule() {
@@ -46,48 +69,24 @@ export class EditTextChurchScheduleComponent implements OnInit {
     if (!this.churchSchedule) {
       this.churchSchedule = new ChurchSchedule();
     }
-
-    if (!this.churchSchedule.date) {
-      this.churchSchedule.date = this.datePipe.transform(
-        Date.now(),
-        'dd/MM/yyyy'
-      );
-    } else {
-    }
-
-    if (this.session === 1) {
-      this.churchSchedule.published = false;
-    } else if (this.session === 3) {
-      this.churchSchedule.published = true;
-    }
   }
 
-  setTimeExists() {
-    this.hasTime = !this.hasTime;
-    this.churchSchedule.hasTime = this.hasTime;
+  setTimeAsNow(scheduleTime: ScheduleTime, position: number) {
+    scheduleTime.time = this.datePipe.transform(Date.now(), 'dd/MM/yyyy');
+    this.churchSchedule.scheduleTimes[position] = scheduleTime;
+    this.save();
   }
 
-  setDate(date) {
-    const validDateObj = UiService.validDate(date);
-    if (validDateObj) {
-      if (validDateObj.status) {
-        this.churchSchedule.date = validDateObj.date;
-        this.save();
-      } else {
-        this.exceptionService.alertDialog(validDateObj.message);
-      }
-    }
+  setTimeExists(position: number) {
+    this.churchSchedule.scheduleTimes[position].hasTime = !this.hasTime;
   }
-  setTime(time) {
-    const validDateObj = UiService.validTime(time);
-    if (validDateObj) {
-      if (validDateObj.status) {
-        this.churchSchedule.date = validDateObj.date;
-        this.save();
-      } else {
-        this.exceptionService.alertDialog(validDateObj.message);
-      }
-    }
+
+  setStatus(status: boolean) {
+    this.churchSchedule.status = status;
+  }
+
+  setScheduleTime(schueduleTime: ScheduleTime) {
+    this.churchSchedule.scheduleTimes.push(schueduleTime);
   }
 
   save() {
@@ -95,18 +94,6 @@ export class EditTextChurchScheduleComponent implements OnInit {
       Constants.CHURCH_SCHEDULE_ATTRIBUTES_OBJECT,
       this.churchSchedule
     );
-  }
-
-  setDateAsNow() {
-    this.churchSchedule.date = this.datePipe.transform(
-      Date.now(),
-      'dd/MM/yyyy'
-    );
-    this.save();
-  }
-  setTimeAsNow() {
-    this.churchSchedule.time = this.datePipe.transform(Date.now(), 'HH::mm');
-    this.save();
   }
 
   onTypeTitle(title) {

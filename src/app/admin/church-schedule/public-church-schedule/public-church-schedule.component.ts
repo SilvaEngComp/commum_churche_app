@@ -45,22 +45,6 @@ export class PublicChurchScheduleComponent implements OnInit {
       .then((responser) => {
         this.churchSchedules = responser.data;
         console.log(this.churchSchedules);
-        const datePipe = new DatePipe('en');
-        const now = datePipe.transform(Date.now(), 'yyyy-MM-dd');
-        const time = datePipe.transform(Date.now(), 'HH:mm:ss');
-        if (this.churchSchedules) {
-          this.churchSchedules.filter((churchSchedule) => {
-            if (churchSchedule.date) {
-              if (churchSchedule.date < now) {
-                churchSchedule.checkPublish = true;
-              } else {
-                if (churchSchedule.time <= time) {
-                  churchSchedule.checkPublish = true;
-                }
-              }
-            }
-          });
-        }
         this.is_loading = false;
       });
   }

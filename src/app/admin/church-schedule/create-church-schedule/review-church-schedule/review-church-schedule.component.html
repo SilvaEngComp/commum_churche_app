@@ -1,44 +1,11 @@
 <ion-grid>
   <ion-row>
-    <ion-col size="10">
-      <div class="div-publisher">
-        <ion-avatar>
-          <ion-img [src]="feed?.publisher?.image"></ion-img>
-        </ion-avatar>
-        <div>
-          <ion-label>{{ feed?.publisher?.name }}</ion-label>
-        </div>
-      </div>
-    </ion-col>
-
-  </ion-row>
-  <ion-row>
-    <ion-col *ngIf="feed?.image">
-      <div [ngClass]="{'feed-img-short': !expandAll, 'feed-img-large':expandAll}">
-        <ion-img [src]="feed?.image"></ion-img>
-      </div>
-
+    <ion-col>
+      <ion-item *ngFor="let scheduleTime of churchSchedule?.scheduleTimes">{{scheduleTime?.day}} -
+        {{scheduleTime?.time}}</ion-item>
     </ion-col>
     <ion-col>
-      <div class="headers-reactions" *ngIf="feed?.date">
-        <ion-icon *ngIf="!feed?.love" name="heart-outline"></ion-icon>
-        <ion-icon color="danger" *ngIf="feed?.love" name="heart-sharp"></ion-icon>
-        <ion-icon name="chatbox-outline"></ion-icon>
-        <ion-label>{{ feed?.date +' '+feed?.time | date: 'dd/MM/yyyy HH:mm:ss' }}</ion-label>
-      </div>
-      <div class="draft" *ngIf="!feed?.date">
-        <ion-label color="danger">Rascunho não publicado</ion-label>
-      </div>
-      <ion-item lines="none">
-        <p class="lb-feed-title">{{ feed?.title }}</p>
-      </ion-item>
-      <div [ngClass]="{ 'short-message': !expandAll, 'complete-message': expandAll}">{{ feed?.message
-        }}</div>
-
-      <ion-item lines="none" *ngIf="feed?.message?.length>100">
-        <p class="p-as-a-link" (click)="showCompleteMessage()">{{expandAll ? 'MENOS': 'MAIS...'}}</p>
-      </ion-item>
-      <app-feed-comment [feed]="feed" class="show-comments" *ngIf="feed?.showComment"></app-feed-comment>
+      <div class="complete-message">{{ churchSchedule?.message }}</div>
     </ion-col>
   </ion-row>
 </ion-grid>

@@ -14,16 +14,69 @@
 <ion-item lines="none">
   <ion-card-title class="title">PRORAMA DE LEITURA BÍBLICA</ion-card-title>
 </ion-item>
-<ion-grid>
 
-  <ion-row>
-    <ion-col *ngFor="let month of bibleProgram ">
-      <ion-label>{{month?.customizedMonth?.name}}</ion-label>
-      <ion-item *ngFor="let verse of month?.verses" color="medium">
-        <ion-label>{{verse?.day}}: {{verse?.startVerse?.book}}
-          {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}}/{{verse?.endVerse?.book}}
-          {{verse?.endVerse?.chapter}}:{{verse?.endVerse?.verse}}</ion-label>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<ion-accordion-group>
+  <ion-accordion [value]="month?.id" *ngFor="let month of bibleProgram ">
+    <ion-item slot="header" color="light">
+      <ion-card-title>{{month?.customizedMonth?.name | uppercase}}</ion-card-title>
+    </ion-item>
+    <div class="ion-padding" slot="content">
+
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-card-title>De {{month?.verses[0].day}} a {{month?.verses[6].day}} de {{month?.customizedMonth?.name
+              |
+              uppercase}}</ion-card-title>
+            <ion-card *ngFor="let verse of month?.verses | slice:0:7">
+              <ion-item color="medium">
+                <ion-label>{{verse?.day}}: {{verse?.startVerse?.book}}
+                  {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}} Até {{verse?.endVerse?.book}}
+                  {{verse?.endVerse?.chapter}}:{{verse?.endVerse?.verse}}</ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card-title>De {{month?.verses[7].day}} a {{month?.verses[13].day}} de {{month?.customizedMonth?.name
+              |
+              uppercase}}</ion-card-title>
+            <ion-card *ngFor="let verse of month?.verses | slice:7:14">
+              <ion-item color="medium">
+                <ion-label>{{verse?.day}}: {{verse?.startVerse?.book}}
+                  {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}} Até {{verse?.endVerse?.book}}
+                  {{verse?.endVerse?.chapter}}:{{verse?.endVerse?.verse}}</ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card-title>De {{month?.verses[14].day}} a {{month?.verses[20].day}} de {{month?.customizedMonth?.name
+              |
+              uppercase}}</ion-card-title>
+            <ion-card *ngFor="let verse of month?.verses | slice:14:21">
+              <ion-item color="medium">
+                <ion-label>{{verse?.day}}: {{verse?.startVerse?.book}}
+                  {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}} Até {{verse?.endVerse?.book}}
+                  {{verse?.endVerse?.chapter}}:{{verse?.endVerse?.verse}}</ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+          <ion-col>
+            <ion-card-title>De {{month?.verses[21].day}} a {{month?.verses[month?.verses?.length-1].day}} de
+              {{month?.customizedMonth?.name
+              |
+              uppercase}}</ion-card-title>
+            <ion-card *ngFor="let verse of month?.verses | slice:21">
+              <ion-item color="medium">
+                <ion-label>{{verse?.day}}: {{verse?.startVerse?.book}}
+                  {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}} Até {{verse?.endVerse?.book}}
+                  {{verse?.endVerse?.chapter}}:{{verse?.endVerse?.verse}}</ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+  </ion-accordion>
+</ion-accordion-group>

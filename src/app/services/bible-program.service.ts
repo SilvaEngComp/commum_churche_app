@@ -41,15 +41,19 @@ export class BibleProgramService extends ServiceInterface {
   }
 
   async show(
-    bibleProgram: BibleReaderProgram = new BibleReaderProgram()
+    bibleProgram: BibleReaderProgram = new BibleReaderProgram(),
+    getAll: number = 0
   ): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
+    console.log(
+      `${environment.API2}/bibles/getMapProgram/${bibleProgram?.id}/getAll/${getAll}`
+    );
     return this.http
       .get<Responser>(
-        `${environment.API2}/bibles/getMapProgram/${bibleProgram?.id}`,
+        `${environment.API2}/bibles/getMapProgram/${bibleProgram?.id}/getAll/${getAll}`,
         {
           headers: LoginService.getHeaders(),
         }

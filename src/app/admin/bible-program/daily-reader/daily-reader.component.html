@@ -50,9 +50,10 @@
                 <div class="bible-text" (click)="copy()">
                   <ion-note slot="end">Leitura do dia {{selectedVerseDay?.day}} de
                     {{selectedProgramMonth?.customizedMonth?.name}}</ion-note>
-                  <ion-text alt="Click uma vez para copiar o texto" slot="start"
-                    class="lb-challenge-description">{{selectedVerseDay?.startVerse?.book}}
-                    {{selectedVerseDay?.startVerse?.chapter}}:{{selectedVerseDay?.startVerse?.verse}}/{{selectedVerseDay?.endVerse?.book}}
+                  <ion-text alt="Click uma vez para copiar o texto" slot="start" class="lb-challenge-description">
+                    {{selectedVerseDay?.startVerse?.book}}
+                    {{selectedVerseDay?.startVerse?.chapter}}:{{selectedVerseDay?.startVerse?.verse}} Até
+                    {{selectedVerseDay?.endVerse?.book}}
                     {{selectedVerseDay?.endVerse?.chapter}}:{{selectedVerseDay?.endVerse?.verse}}</ion-text>
                   <ion-list fill="outline">
 

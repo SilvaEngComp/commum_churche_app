@@ -20,3 +20,16 @@ ion-header {
     }
   }
 }
+
+ion-card-title {
+  font-family: Qanelas-bold;
+  font-size: 18pt;
+  color: var(--ion-color-primary);
+  text-align: center;
+}
+
+ion-label {
+  color: var(--ion-color-light);
+  font-size: 14pt;
+  font-family: Qanelas-bold;
+}
