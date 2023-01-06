@@ -11,12 +11,9 @@
     <ion-label>Leitura</ion-label>
   </ion-tab-button>
 
-
-
-
-  <ion-tab-button tab="more" (click)="setPage(-2)">
-    <ion-icon name="power-outline"></ion-icon>
-    <ion-label>Sair</ion-label>
+  <ion-tab-button tab="more" (click)="setPage(7)" *ngIf="isTest">
+    <ion-icon name="calendar-number-outline"></ion-icon>
+    <ion-label>Programações</ion-label>
   </ion-tab-button>
 
   <ion-tab-button tab="more" (click)="setPage(2)">

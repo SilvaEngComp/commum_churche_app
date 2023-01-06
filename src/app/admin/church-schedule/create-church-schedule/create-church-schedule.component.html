@@ -13,8 +13,6 @@
     <ion-label>Texto</ion-label>
   </ion-segment-button>
   <ion-segment-button value="2">
-    <ion-label>Imagem</ion-label>
-  </ion-segment-button> <ion-segment-button value="3">
     <ion-label>Revisar</ion-label>
   </ion-segment-button>
 </ion-segment>
@@ -28,9 +26,6 @@
       </ion-card>
     </ion-col>
     <ion-col *ngIf="session===2">
-      <app-load-images [single]="true" (returnPage)="receiveSubpage($event)"></app-load-images>
-    </ion-col>
-    <ion-col *ngIf="session===3">
       <ion-card>
         <app-review-church-schedule (returnSubpage)="receiveSubpage($event)"></app-review-church-schedule>
       </ion-card>
@@ -46,7 +41,7 @@
     </ion-col>
 
     <ion-col>
-      <ion-button expand="block" (click)="publish()">
+      <ion-button expand="block" (click)="next()">
         <ion-label>{{session<3 ?'PRÓXIMO':'CONCLUIR'}} </ion-label>
             <ion-icon name="chevron-forward-outline"></ion-icon>
       </ion-button>

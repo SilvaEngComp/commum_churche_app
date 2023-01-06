@@ -83,7 +83,6 @@ export class PublicFeedComponent implements OnInit {
     return user;
   }
   newFeed() {
-    console.log(Constants.FEED_PAGE_CREATE_FEED);
     this.returnPage.emit({
       subpage: Constants.FEED_PAGE_CREATE_FEED,
       feed: new Feed(),

@@ -89,37 +89,37 @@ export class CreateChurchScheduleComponent implements OnInit {
     }
   }
 
-  publish() {
+  next() {
     this.checkChurchSchedule();
 
-    if (this.session !== 2) {
-      if (this.validForm()) {
-        this.churchscheduleService
-          .store(this.churchSchedule)
-          .then((responser) => {
-            this.churchSchedule = responser.data;
-            if (this.session === 3) {
-              this.back();
-              const push: PushNotify = new PushNotify(
-                this.churchSchedule.title,
-                this.churchSchedule.message
-              );
-              this.messagingService.send(push);
-            } else {
-              this.session++;
-            }
-          });
-      }
-    } else {
+    if (this.validForm()) {
       this.session++;
     }
+    if (this.session === 2) {
+      this.publish();
+    }
+  }
 
-    console.log(this.session);
+  publish() {
+    this.churchscheduleService.store(this.churchSchedule).then((responser) => {
+      this.churchSchedule = responser.data;
+      this.back();
+      const push: PushNotify = new PushNotify(
+        this.churchSchedule.title,
+        this.churchSchedule.message
+      );
+      this.messagingService.send(push);
+    });
   }
 
   validForm() {
     if (!this.churchSchedule?.title) {
       this.exceptionService.alertDialog(ConstantMessages.TITILE_INVALID);
+      return;
+    }
+
+    if (!this.churchSchedule?.church) {
+      this.exceptionService.alertDialog(ConstantMessages.CHURCH_INVALID);
       return;
     }
 

@@ -38,9 +38,15 @@
 }
 .headers-reactions {
   ion-label {
-    font-family: Qanelas-light;
+    font-family: Qanelas;
     font-size: 10pt;
     color: var(--ion-color-dark);
     text-align: center;
   }
+}
+
+ion-card-title {
+  font-family: Qanelas-bold;
+  font-size: 18pt;
+  color: var(--ion-color-medium);
 }

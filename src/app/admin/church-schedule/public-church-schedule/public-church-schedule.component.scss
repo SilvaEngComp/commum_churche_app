@@ -14,3 +14,44 @@ ion-header {
     }
   }
 }
+
+div {
+  font-family: Qanelas-bold;
+  font-size: 18pt;
+  color: var(--ion-color-medium);
+  text-align: center;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
+  word-wrap: break-word;
+}
+@media screen and (max-width: 500px) {
+  div {
+    font-size: 12pt;
+  }
+}
+
+.short-message {
+  max-height: 100px;
+  font-family: Qanelas;
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+
+.complete-message {
+  max-height: auto;
+  font-family: Qanelas;
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.p-as-a-link {
+  color: var(--ion-color-tertiary);
+  text-decoration: underline;
+  font-size: 10pt;
+  font-family: Qanelas;
+  cursor: pointer;
+}

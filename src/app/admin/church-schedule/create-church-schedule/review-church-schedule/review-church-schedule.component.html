@@ -1,8 +1,17 @@
 <ion-grid>
   <ion-row>
-    <ion-col>
-      <ion-item *ngFor="let scheduleTime of churchSchedule?.scheduleTimes">{{scheduleTime?.day}} -
-        {{scheduleTime?.time}}</ion-item>
+    <ion-col size="3" *ngFor="let scheduleTime of churchSchedule?.scheduleTimes">
+      <ion-card>
+        <ion-item lines="none">
+          <ion-label slot="start">{{scheduleTime?.day}}</ion-label>
+          <ion-label slot="end">{{scheduleTime?.time}}</ion-label>
+        </ion-item>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col *ngIf="churchSchedule?.image">
+      <ion-img [src]="churchSchedule?.image"></ion-img>
     </ion-col>
     <ion-col>
       <div class="complete-message">{{ churchSchedule?.message }}</div>

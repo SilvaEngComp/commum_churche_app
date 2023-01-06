@@ -3,7 +3,7 @@
   <ion-grid *ngIf="session===1">
     <ion-row>
       <ion-col>
-        <ion-item>
+        <ion-item class="input">
           <ion-label position="floating">Título</ion-label>
           <ion-input placeholder="Digite o título da publicação" [value]="churchSchedule?.title"
             (keyup)="onTypeTitle(inputTitle.value)" #inputTitle placeholder="Digite o título da publicação"
@@ -21,12 +21,18 @@
       <ion-col>
         <ion-item>
           <ion-label>Dias e Horários</ion-label>
-          <ion-icon name="add-circle-outline" (click)="addScheduleTime()" *permission="'multimidia'"></ion-icon>
+          <ion-button fill="outline" (click)="addScheduleTime()" expand="block">
+            <ion-label>Add Horário</ion-label>
+          </ion-button>
+          <!-- <ion-icon name="add-circle-outline"*permission="'multimidia'"></ion-icon> -->
         </ion-item>
-        <ion-grid>
+        <ion-item lines="none" *ngIf="churchSchedule.scheduleTimes.length<=0">
+          <ion-note color="primary">Nenhum Horário</ion-note>
+        </ion-item>
+        <ion-grid *ngIf="churchSchedule.scheduleTimes.length>0">
           <ion-row *ngFor="let scheduleTime of churchSchedule.scheduleTimes; let i=index">
             <ion-col>
-              <ion-item>
+              <ion-item class="input">
                 <ion-label>Dia da semana </ion-label>
                 <ion-select [value]="scheduleTime?.day" interface="popover" [(ngModel)]="scheduleTime.day">
                   <ion-select-option [value]="item" *ngFor="let item of daysOfWeek">{{item | uppercase}}
@@ -36,9 +42,8 @@
             </ion-col>
             <ion-col>
               <div class="div-time">
-                <ion-item>
+                <ion-item class="input">
                   <ion-label position="floating">Hora</ion-label>
-
                   <ion-input [disabled]="!scheduleTime?.hasTime" [value]="scheduleTime?.time"
                     (keyup)="setTime(inputTime?.value,i)" type="text" placeholder="HH:MM" #inputTime
                     [brmasker]="{mask:'00:00', type:'num', len:5}"></ion-input>

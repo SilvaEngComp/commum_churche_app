@@ -1,22 +1,38 @@
-<ion-header>
+<ion-header *permission="'multimidia'">
   <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-icon name="add-circle-outline" (click)="newChurchSchedule()" *permission="'multimidia'"></ion-icon>
+    <ion-buttons slot="end" (click)="newChurchSchedule()">
+      <ion-icon color="primary" name="add"></ion-icon>
+      <ion-label>Add</ion-label>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-grid>
+  <ion-row>
+    <ion-col>
+
+      <div [ngClass]="{ 'short-message': !expandAll, 'complete-message': expandAll}">Nesta tela você encontra a lista de
+        programações tanto da SEDE da Igreja Batista Nova Betel, como de
+        suas congregações.
+        Ah! Quando atualizamos a programação você recebe um aviso via push de notificação, aquela mensagezinha que
+        aparece quando você recebe mensagem. Assim você fica sempre por dentro!!</div>
+
+      <ion-item lines="none">
+        <p class="p-as-a-link" (click)="showCompleteMessage()">{{expandAll ? 'MENOS': 'MAIS...'}}</p>
+      </ion-item>
+    </ion-col>
+  </ion-row>
   <ion-row *ngIf="!is_loading">
     <ion-col>
       <ion-accordion-group>
         <ion-accordion [value]="churchSchedule?.id" *ngFor="let churchSchedule of churchSchedules">
           <ion-item slot="header" color="light">
             <ion-card-title>{{churchSchedule?.title}}</ion-card-title>
+            <ion-note slot="end">{{churchSchedule?.church?.name}}</ion-note>
           </ion-item>
           <div class="ion-padding" slot="content">
-            <app-publication-church-schedule [churchSchedule]="churchSchedule" (returnSubpage)="returnSubPage($event)"
-              [expandAll]="churchSchedule?.message?.length>500"></app-publication-church-schedule>
+            <app-publication-church-schedule [churchSchedule]="churchSchedule"
+              (returnSubpage)="returnSubPage($event)"></app-publication-church-schedule>
           </div>
         </ion-accordion>
       </ion-accordion-group>

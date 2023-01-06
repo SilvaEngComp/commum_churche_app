@@ -1,5 +1,4 @@
 import { Church } from './church';
-import { DatePipe } from '@angular/common';
 import { ScheduleTime } from './ScheduleTime';
 
 export class ChurchSchedule {

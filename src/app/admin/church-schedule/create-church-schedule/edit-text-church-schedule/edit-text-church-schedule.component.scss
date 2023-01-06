@@ -18,3 +18,12 @@ ion-textarea {
   height: 200px;
   border: 1px dotted var(--ion-color-tertiary);
 }
+
+ion-select {
+  height: 60px;
+}
+
+.input {
+  border-radius: 20px;
+  border-bottom: 1px solid var(--ion-color-tertiary);
+}

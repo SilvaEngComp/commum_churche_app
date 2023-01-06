@@ -1,3 +1,4 @@
+import { UiService } from './../../../services/ui.service';
 import { ChurchScheduleService } from 'src/app/services/churchSchedule.service';
 import { Constants } from 'src/app/models/constants';
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -17,7 +18,7 @@ import { FilterChurchSchedule } from 'src/app/models/filterChurchSchedule';
 })
 export class PublicChurchScheduleComponent implements OnInit {
   @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
-
+  expandAll: boolean;
   user: User;
   churchSchedules: ChurchSchedule[];
   base_url: string = environment.IMAGE_URL;
@@ -31,10 +32,13 @@ export class PublicChurchScheduleComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('public ChurchSchedule');
+    this.expandAll = false;
     this.user = LoginService.getUser();
     this.filterChurchSchedule = new FilterChurchSchedule();
     this.load();
+  }
+  showCompleteMessage() {
+    this.expandAll = !this.expandAll;
   }
 
   load() {
@@ -60,6 +64,7 @@ export class PublicChurchScheduleComponent implements OnInit {
     return user;
   }
   newChurchSchedule() {
+    UiService.localRemove(Constants.CHURCH_SCHEDULE_ATTRIBUTES_OBJECT);
     this.returnPage.emit({
       subpage: Constants.CHURCH_SCHEDULE_PAGE_CREATE_SCHEDULE,
       ChurchSchedule: new ChurchSchedule(),
@@ -70,6 +75,9 @@ export class PublicChurchScheduleComponent implements OnInit {
     console.log(obj);
     if (obj.subpage) {
       this.returnPage.emit(obj);
+    }
+    if (obj.refresh) {
+      this.load();
     }
     if (obj.ChurchSchedules) {
       this.churchSchedules = obj.ChurchSchedules;
