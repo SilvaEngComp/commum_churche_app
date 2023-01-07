@@ -22,6 +22,7 @@ import { BibleReaderProgram } from 'src/app/models/bibleReaderProgram';
 import { ClipboardService } from 'ngx-clipboard';
 import { ConstantsMidia } from 'src/app/models/contantsMidia';
 import { TutorialComponent } from '../../tutorial/tutorial.component';
+import { BibleProgramUserService } from 'src/app/services/bible-program-user.service';
 
 @Component({
   selector: 'app-daily-reader',
@@ -56,6 +57,7 @@ export class DailyReaderComponent implements OnInit {
   constructor(
     private platfom: Platform,
     private bibleProgramService: BibleProgramService,
+    private bibleProgramUserService: BibleProgramUserService,
     private exceptionService: ExceptionService, // private _clipboardService: ClipboardService
     private clipboardService: ClipboardService,
     private popCtrl: PopoverController
@@ -67,10 +69,8 @@ export class DailyReaderComponent implements OnInit {
       Constants.BIBLE_PROGRAM_MENU_READ_DAY
     );
 
-    UiService.localSet(
-      Constants.TITLE_CURRENT_PAGE,
-      Constants.TITLE_DAILY_READER
-    );
+    UiService.setCurrentPage(Constants.TITLE_DAILY_READER);
+
     this.showMonths = true;
     this.confirm = false;
     const width = this.platfom.width();
@@ -232,7 +232,7 @@ export class DailyReaderComponent implements OnInit {
 
   setAsReadUnread(verseDay: VerseDay) {
     this.is_loading = true;
-    this.bibleProgramService
+    this.bibleProgramUserService
       .setAsDone(this.selectedProgram, verseDay)
       .then((responser) => {
         const adaptedMonth = this.selectedMonth + 1;

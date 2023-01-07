@@ -137,6 +137,11 @@ export class UiService {
     return null;
   }
 
+  static setCurrentPage(page: string) {
+    UiService.localSet(Constants.TITLE_CURRENT_PAGE, page);
+    UiService.pageTitle.emit(page);
+  }
+
   static localSet(key: string, data) {
     if (key === Constants.TOKEN) {
       if (data?.data) {

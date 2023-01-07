@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="back()">
+      <ion-icon color="primary" name="arrow-undo-circle-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-item lines="none">
+        <ion-title>
+          Existem {{readers?.length}} leitores atuamente
+
+        </ion-title>
+      </ion-item>
+      <div class="open-div" [ngStyle]="{'height':height}">
+        <ion-grid>
+          <ion-row>
+            <ion-col class="header" *ngFor="let item of header"><ion-label>{{item}}</ion-label></ion-col>
+          </ion-row>
+
+          <ion-row *ngFor="let reader of readers">
+            <ion-col class="row">
+              <ion-label>{{ reader?.user?.name }} </ion-label>
+            </ion-col>
+            <ion-col class="row">
+              <ion-label>{{reader?.user?.church?.name | uppercase}}</ion-label>
+            </ion-col>
+            <ion-col class="row">
+              <ion-label>{{reader?.verseDay?.day}} de {{reader?.verseDay?.customizedMonth?.name}}</ion-label>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>

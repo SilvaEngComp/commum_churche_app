@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-grid>
-  <ion-row>
+  <!-- <ion-row>
     <ion-col>
 
       <div [ngClass]="{ 'short-message': !expandAll, 'complete-message': expandAll}">Nesta tela você encontra a lista de
@@ -21,7 +21,7 @@
         <p class="p-as-a-link" (click)="showCompleteMessage()">{{expandAll ? 'MENOS': 'MAIS...'}}</p>
       </ion-item>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
   <ion-row *ngIf="!is_loading">
     <ion-col>
       <ion-accordion-group>

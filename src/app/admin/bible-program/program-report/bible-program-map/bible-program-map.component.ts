@@ -1,4 +1,4 @@
-import { BibleProgramMap } from './../../../models/bibleProgramMap';
+import { BibleProgramMap } from '../../../../models/bibleProgramMap';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BibleReaderProgram } from 'src/app/models/bibleReaderProgram';
 import { BibleProgramService } from 'src/app/services/bible-program.service';

@@ -1,7 +1,8 @@
 <div [ngSwitch]="subpage">
-  <app-bible-program *ngSwitchCase="'3'" (sessionPage)="onReceiveSession($event)"></app-bible-program>
-  <app-bible-program-map *ngSwitchCase="'4'" (sessionPage)="onReceiveSession($event)"></app-bible-program-map>
   <app-daily-reader *ngSwitchCase="'1'" (sessionPage)="onReceiveSession($event)"></app-daily-reader>
   <app-bible-verses *ngSwitchCase="'2'" (sessionPage)="onReceiveSession($event)"></app-bible-verses>
+  <app-bible-program *ngSwitchCase="'3'" (sessionPage)="onReceiveSession($event)"></app-bible-program>
+  <app-bible-program-map *ngSwitchCase="'4'" (sessionPage)="onReceiveSession($event)"></app-bible-program-map>
+  <app-program-readers *ngSwitchCase="'5'" (sessionPage)="onReceiveSession($event)"></app-program-readers>
 
 </div>

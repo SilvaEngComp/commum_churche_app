@@ -18,13 +18,23 @@
 
   <ion-row>
     <ion-col>
-      <ion-card *ngFor="let proram of biblePrograms ">
+      <ion-card *ngFor="let proram of biblePrograms " (click)="openProgram(proram)">
         <ion-card-header>
-          <ion-img src="https://nossaigrejaenseada.files.wordpress.com/2015/08/biblia.jpg"></ion-img>
+          <ion-img src="./assets/images/biblia.jpg"></ion-img>
         </ion-card-header>
-        <ion-card-content (click)="openProgram(proram)">
+        <ion-card-content>
           <ion-card-title>{{ proram?.name }} </ion-card-title>
           <ion-label>Clique aqui para ter acesso ao programa de leitura</ion-label>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col>
+      <ion-card (click)="openReaders()">
+        <ion-card-header>
+          <ion-img src="./assets/images/readers.jpg"></ion-img>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-label>Clique aqui para ter acesso à lista de leitores programa de leitura</ion-label>
         </ion-card-content>
       </ion-card>
     </ion-col>

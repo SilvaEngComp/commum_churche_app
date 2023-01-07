@@ -97,6 +97,7 @@ export class Constants {
   static LATERAL_SUBMENU_TITHE_OFFER = 'Dízimos e Ofertas';
   static LATERAL_SUBMENU_SUMMARY = 'Resumo Financeiro';
   static SELECTED_BIBLE_PROGRAM_MAP = 'selectedBibleProramMap';
+  static SELECTED_BIBLE_PROGRAM_READERS = 'selectedBibleProramReaders';
   static OPTION_EDIT = 'EDITAR';
   static OPTION_DELETE = 'EXCLUIR';
   static NEW_RETISTRATION = 'CADASTRAR NOVO';
@@ -113,6 +114,7 @@ export class Constants {
   static BIBLE_PROGRAM_MENU_READ_DAY = '1';
   static BIBLE_PROGRAM_MENU_PLAN = '3';
   static BIBLE_PROGRAM_MENU_MAP = '4';
+  static BIBLE_PROGRAM_MENU_READERS = '5';
   static BIBLE_PROGRAM_SUBPAGE = 'bible-program-subpage';
 
   static TITLE_CURRENT_PAGE = 'currentPageTitle';

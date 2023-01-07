@@ -1,8 +1,8 @@
-import { UiService } from './../../services/ui.service';
-import { BibleProgramService } from './../../services/bible-program.service';
-import { BibleReaderProgram } from './../../models/bibleReaderProgram';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { BibleReaderProgram } from 'src/app/models/bibleReaderProgram';
 import { Constants } from 'src/app/models/constants';
+import { BibleProgramService } from 'src/app/services/bible-program.service';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-bible-program',
@@ -34,6 +34,10 @@ export class BibleProgramComponent implements OnInit {
   openProgram(program: BibleReaderProgram) {
     UiService.localSet(Constants.SELECTED_BIBLE_PROGRAM_MAP, program);
     this.sessionPage.emit(Constants.BIBLE_PROGRAM_MENU_MAP);
+  }
+
+  openReaders() {
+    this.sessionPage.emit(Constants.BIBLE_PROGRAM_MENU_READERS);
   }
 
   back() {

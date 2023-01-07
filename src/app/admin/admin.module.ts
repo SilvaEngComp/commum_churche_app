@@ -1,6 +1,6 @@
 import { ChurchScheduleModule } from './church-schedule/church-schedule-admin/church-schedule.module';
 import { FeedPageModule } from './feed/feed-admin/feed.module';
-import { BibleProgramModule } from './bible-program/bible-program.module';
+import { BibleProgramModule } from './bible-program/bible-program-admin/bible-program-admin.module';
 import { MorePageModule } from './more/more.module';
 import { FinancyModule } from './financy/financy.module';
 import { AdminPagePageRoutingModule } from './admin-page-routing.module';

@@ -40,6 +40,18 @@ export class BibleProgramService extends ServiceInterface {
       .toPromise();
   }
 
+  async getReaders(): Promise<Responser> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+    return this.http
+      .get<Responser>(`${environment.API2}/bibles/getReaders`, {
+        headers: LoginService.getHeaders(),
+      })
+      .toPromise();
+  }
+
   async show(
     bibleProgram: BibleReaderProgram = new BibleReaderProgram(),
     getAll: number = 0
@@ -66,23 +78,6 @@ export class BibleProgramService extends ServiceInterface {
       .get<Responser>(`${environment.API2}/bibles/getVerse/${verseDay?.id}`, {
         headers: LoginService.getHeaders(),
       })
-      .toPromise();
-  }
-
-  async setAsDone(
-    program: BibleReaderProgram,
-    verseDay: VerseDay
-  ): Promise<Responser> {
-    console.log(
-      `${environment.API2}/bibles/setAsReadUnread/bibleReaderProgram/${program?.id}/bibleReaderMap/${verseDay?.id}`
-    );
-    return this.http
-      .get<Responser>(
-        `${environment.API2}/bibles/setAsReadUnread/bibleReaderProgram/${program?.id}/bibleReaderMap/${verseDay?.id}`,
-        {
-          headers: LoginService.getHeaders(),
-        }
-      )
       .toPromise();
   }
 }

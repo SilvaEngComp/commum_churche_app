@@ -1,9 +1,9 @@
-import { TutorialComponent } from './../../tutorial/tutorial.component';
-import { ExceptionService } from './../../../services/exception-service.service';
-import { UserVerseMarkService } from './../../../services/user-verse-mark.service';
+import { TutorialComponent } from '../../../tutorial/tutorial.component';
+import { ExceptionService } from '../../../../services/exception-service.service';
+import { UserVerseMarkService } from '../../../../services/user-verse-mark.service';
 import { Platform, PopoverController } from '@ionic/angular';
-import { BibleProgramService } from './../../../services/bible-program.service';
-import { VerseDay } from './../../../models/verseDay';
+import { BibleProgramService } from '../../../../services/bible-program.service';
+import { VerseDay } from '../../../../models/verseDay';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Constants } from 'src/app/models/constants';
 import { UiService } from 'src/app/services/ui.service';

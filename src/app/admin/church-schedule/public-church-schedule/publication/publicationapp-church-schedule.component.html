@@ -17,14 +17,14 @@
       </ion-item>
     </ion-col>
   </ion-row>
-  <ion-row *ngIf="churchSchedule.scheduleTimes.length>0">
-    <ion-col size="3" *ngFor="let scheduleTime of churchSchedule?.scheduleTimes">
-      <ion-card>
-        <ion-item lines="none">
-          <ion-label slot="start">{{scheduleTime?.day}}</ion-label>
-          <ion-label slot="end">{{scheduleTime?.time}}</ion-label>
-        </ion-item>
-      </ion-card>
+  <ion-row *ngFor="let scheduleTime of churchSchedule?.scheduleTimes">
+    <ion-col>
+      <!-- <ion-card> -->
+      <ion-item lines="none">
+        <ion-label slot="start">{{scheduleTime?.day}}</ion-label>
+        <ion-label slot="end">{{scheduleTime?.time}}</ion-label>
+      </ion-item>
+      <!-- </ion-card> -->
     </ion-col>
   </ion-row>
   <ion-row>
