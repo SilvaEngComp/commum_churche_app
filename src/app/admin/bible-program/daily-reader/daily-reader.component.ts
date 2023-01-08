@@ -137,7 +137,30 @@ export class DailyReaderComponent implements OnInit {
               }
             });
           } else {
-            this.selectedDay = this.selectedVerseDay.day;
+            if (this.selectedVerseDay.isRead) {
+              const currentMonthPosition =
+                this.selectedProgram?.program?.indexOf(
+                  this.selectedProgramMonth
+                );
+              let nextDayPosition = this.selectedProgram?.program[
+                currentMonthPosition
+              ]?.verses.indexOf(this.selectedVerseDay);
+              if (nextDayPosition >= 0) {
+                nextDayPosition++;
+                this.selectedVerseDay =
+                  this.selectedProgram?.program[currentMonthPosition]?.verses[
+                    nextDayPosition
+                  ];
+                this.selectedDay =
+                  this.selectedProgram?.program[currentMonthPosition]?.verses[
+                    nextDayPosition
+                  ].day;
+              } else {
+                this.selectedDay = this.selectedVerseDay.day;
+              }
+            } else {
+              this.selectedDay = this.selectedVerseDay.day;
+            }
           }
         }
       });

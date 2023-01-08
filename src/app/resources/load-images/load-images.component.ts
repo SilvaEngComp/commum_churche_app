@@ -25,7 +25,7 @@ export class LoadImagesComponent implements OnInit {
   @Input() myFile: TempFile;
   user: User;
   @Input() single: boolean;
-  @Input() showFinishButtton: boolean;
+  @Input() confirmButton: boolean;
 
   hasOneSelected: boolean;
   selectedImge: string;
@@ -105,7 +105,9 @@ export class LoadImagesComponent implements OnInit {
 
   async onReceiveImage() {
     const files: any[] = this.getFiles();
-    this.back();
+    if (!this.confirmButton) {
+      this.back();
+    }
   }
 
   hasSelected() {
@@ -160,5 +162,8 @@ export class LoadImagesComponent implements OnInit {
     this.returnPage.emit({
       files: this.localImages,
     });
+  }
+  cancel() {
+    this.returnPage.emit();
   }
 }

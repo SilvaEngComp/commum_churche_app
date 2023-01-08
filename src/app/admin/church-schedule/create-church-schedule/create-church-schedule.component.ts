@@ -53,7 +53,6 @@ export class CreateChurchScheduleComponent implements OnInit {
     this.churchSchedule = UiService.localGet(
       Constants.CHURCH_SCHEDULE_ATTRIBUTES_OBJECT
     );
-    console.log(this.churchSchedule);
     if (!this.churchSchedule) {
       this.churchSchedule = new ChurchSchedule();
     }
@@ -92,11 +91,11 @@ export class CreateChurchScheduleComponent implements OnInit {
   next() {
     this.checkChurchSchedule();
 
-    if (this.validForm()) {
-      this.session++;
-    }
     if (this.session === 2) {
       this.publish();
+    }
+    if (this.validForm()) {
+      this.session++;
     }
   }
 

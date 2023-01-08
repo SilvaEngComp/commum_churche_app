@@ -108,6 +108,7 @@ export class CreateFeedComponent implements OnInit {
       if (this.validForm()) {
         this.feedService.store(this.feed).then((responser) => {
           this.feed = responser.data;
+          this.save();
           if (this.session === 3) {
             this.back();
             const push: PushNotify = new PushNotify(

@@ -1,21 +1,78 @@
-ion-avatar {
-  width: 100px;
-  height: 100px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 2px solid var(--ion-color-primary);
-  display: grid;
-  justify-content: center;
-}
+@media screen and (min-width: 500px) {
+  .div-avatar {
+    width: 200px;
+    height: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 100px;
+    border: 2px solid var(--ion-color-primary);
+    margin-left: 40%;
 
-.avatar-center {
-  margin-left: 40%;
-}
+    justify-content: center;
+    img {
+      border-radius: 100px;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+    div {
+      width: 100%;
+      position: absolute;
+      bottom: 60px;
+      left: 45%;
+      display: block;
+      z-index: 2000;
+      height: 40px;
+      background-color: rgba($color: #000000, $alpha: 0.8);
+      border-bottom-left-radius: 110px;
+      border-bottom-right-radius: 110px;
 
-.avatar-notcenter {
-  margin-left: 10px;
+      a {
+        color: var(--ion-color-light);
+        font-family: Qanelas-bold;
+        font-size: 10pt;
+      }
+    }
+  }
 }
+@media screen and (max-width: 500px) {
+  div {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    .div-avatar {
+      width: 100px;
+      height: 100px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border-radius: 100px;
+      border: 2px solid var(--ion-color-primary);
+      margin-left: 25%;
 
+      justify-content: center;
+      img {
+        border-radius: 100px;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+      }
+    }
+    .edit-image-buttons {
+      width: 200px;
+      display: block;
+      align-content: space-between;
+      z-index: 2000;
+      height: 40px;
+      border-bottom-left-radius: 110px;
+      border-bottom-right-radius: 110px;
+
+      a {
+        color: var(--ion-color-dark);
+        font-family: Qanelas-primary;
+        font-size: 14pt;
+      }
+    }
+  }
+}
 
 .div-body {
   background: var(--ion-color-light);
@@ -27,27 +84,27 @@ ion-avatar {
   align-self: center;
   margin-bottom: 10px;
   div {
-      display: flex;
-      justify-content: space-between;
-      ion-button {
-          ion-label {
-              color: var(--ion-color-light);
-              font-family: Qanelas;
-              font-weight: bold;
-              font-size: 8pt;
-              margin-left: 3px;
-          }
+    display: flex;
+    justify-content: space-between;
+    ion-button {
+      ion-label {
+        color: var(--ion-color-light);
+        font-family: Qanelas;
+        font-weight: bold;
+        font-size: 8pt;
+        margin-left: 3px;
       }
+    }
   }
   ion-item {
-      width: 100%;
-      ion-label {
-          font-size: 10pt;
-          color: var(--ion-color-medium);
-      }
+    width: 100%;
+    ion-label {
+      font-size: 10pt;
+      color: var(--ion-color-medium);
+    }
   }
-  ion-grid{
-    width: 70%;
+  ion-grid {
+    width: 90%;
   }
 }
 
@@ -67,18 +124,18 @@ ion-avatar {
   --border-radius: 40px;
   --background: var(--ion-color-medium);
   ion-label {
-      font-family: Qanelas;
-      font-weight: 900;
-      color: var(--ion-color-light);
+    font-family: Qanelas;
+    font-weight: 900;
+    color: var(--ion-color-light);
   }
 }
 
-.isSmall{
+.isSmall {
   width: 0px;
   height: 0px;
 }
 
-.separated-date{
+.separated-date {
   display: flex;
   width: 100%;
   border-radius: 20px;
@@ -86,38 +143,29 @@ ion-avatar {
 }
 
 .input {
+  width: 100%;
+  margin: 5px;
   border-radius: 20px;
   border-bottom: 1px solid var(--ion-color-tertiary);
 }
 
-
-
 .input-small {
+  width: 100%;
+  margin: 5px;
+  border-radius: 20px;
   border-bottom: 1px solid var(--ion-color-tertiary);
 }
 
-.small-input-date {
-  border-bottom: 1px solid var(--ion-color-tertiary);
-}
-.large-input-date {
-  width: 100%;
-  ion-button{
-    width: 100%;
-  border-radius: 10px;
-  border-bottom: 1px solid var(--ion-color-tertiary);
-  }
-  margin-left: 8%;
-}
-.right-input-date {
-  width: 100%;
-  ion-button{
-    width: 100%;
-  border-radius: 10px;
-  border-bottom: 1px solid var(--ion-color-tertiary);
-  }
-}
-
-ion-radio-group{
+ion-radio-group {
   width: 100%;
   display: flex;
+}
+
+.control-buttons {
+  ion-button {
+    ion-label {
+      color: var(--ion-color-light);
+      font-family: Qanelas-bold;
+    }
+  }
 }

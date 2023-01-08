@@ -29,7 +29,6 @@ export class ProfileComponent implements OnInit {
   @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
 
   is_loading: boolean;
-  base_url: string = environment.IMAGE_URL;
   user: User;
   userAux: User;
   op: string;
@@ -55,6 +54,8 @@ export class ProfileComponent implements OnInit {
   day: string;
   monthYear: string;
   hasBackPage: boolean;
+  isImageButtonVisible = false;
+  showLoadEditImage = false;
   constructor(
     private userService: UserService,
     private alertCtrl: AlertController,
@@ -90,23 +91,20 @@ export class ProfileComponent implements OnInit {
   }
   async load() {
     this.user = UiService.localGet(Constants.USER_MAINTAINCE);
-    console.log(this.user);
     if (!this.user) {
       const response = await this.loginService.loggedUser();
       this.user = response.data;
 
       this.validUser();
     }
+    console.log(this.user);
 
     const inputMethodResponser = await this.inputMethodService.get();
     this.inputMethods = inputMethodResponser.data;
-    console.log(this.inputMethods);
     const maritalResponser = await this.maritalStatusService.get();
     this.maritalStatuses = maritalResponser.data;
-    console.log(this.maritalStatuses);
     const churchResponser = await this.churchService.get();
     this.churches = churchResponser.data;
-    console.log(this.churches);
     this.is_loading = false;
   }
 
@@ -131,8 +129,6 @@ export class ProfileComponent implements OnInit {
     ) {
       this.user.image = this.localImage;
       this.is_localImage = true;
-    } else {
-      this.user.image = this.base_url + this.user?.image;
     }
   }
 
@@ -192,11 +188,18 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  async setImage() {
+  async editImage() {
     this.returnPage.emit({
       page: 'load-image',
       callbackPage: 'profile',
     });
+  }
+
+  setShowEditImageButtons() {
+    this.isImageButtonVisible = !this.isImageButtonVisible;
+  }
+  setshowLoadEditImage() {
+    this.showLoadEditImage = !this.showLoadEditImage;
   }
 
   onSetAddress(ev: any, op: number) {
@@ -219,6 +222,20 @@ export class ProfileComponent implements OnInit {
       this.user.contact.country = ev.target.value;
     }
   }
+
+  receiveSubpage(obj: any) {
+    if (obj) {
+      this.userService
+        .upload(obj.files.formData, this.user)
+        .then((responser) => {
+          this.user = responser.data;
+          this.validUser();
+          UiService.localSet(Constants.USER_MAINTAINCE, this.user);
+          LoginService.updateUserToken(this.user, true);
+        });
+    }
+    this.showLoadEditImage = false;
+  }
   async deleteImage() {
     const alert = await this.alertCtrl.create({
       header: 'Mensagem',
@@ -229,8 +246,9 @@ export class ProfileComponent implements OnInit {
         {
           text: 'SIM',
           handler: () => {
-            this.userService.deleteImage(this.user).then((user) => {
-              this.user = user;
+            this.userService.deleteImage(this.user).then((responser) => {
+              this.user = responser?.data;
+              console.log(this.user);
               this.exceptionService.toastHandler(
                 'Usuário deletado com sucesso!'
               );

@@ -32,8 +32,8 @@ export class AdminSelectorComponent implements OnInit {
     this.isLarge = this.platform.width() > 500;
     this.user = LoginService.getUser();
     this.page = UiService.localGet(this.defaultPageName);
-
-    if (!this.page || Number(this?.page) < 0) {
+    console.log(this.page);
+    if (!this.page) {
       this.page = '0';
     } else {
       this.page = String(this.page);
@@ -80,8 +80,6 @@ export class AdminSelectorComponent implements OnInit {
   }
 
   onSelectPage(page: any) {
-    console.clear();
-    console.log(page);
     if (page < -1) {
       localStorage.clear();
       this.router.navigate(['']);

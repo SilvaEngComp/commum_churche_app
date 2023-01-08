@@ -11,6 +11,8 @@ import { LoginService } from 'src/app/services/login.service';
 import { UiService } from 'src/app/services/ui.service';
 import { environment } from 'src/environments/environment';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { Constants } from 'src/app/models/constants';
+import { Contact } from 'src/app/models/contact';
 @Component({
   selector: 'app-more',
   templateUrl: './more.page.html',
@@ -19,9 +21,10 @@ import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 export class MorePage implements OnInit {
   @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
   is_invitting: boolean;
-  base_url: string = environment.IMAGE_URL;
-
+  is_localImage: boolean;
   user: User;
+  localImage: string;
+
   constructor(
     private modalCtrl: ModalController,
     private loginService: LoginService,
@@ -32,6 +35,29 @@ export class MorePage implements OnInit {
 
   ngOnInit() {
     this.user = LoginService.getToken().user;
+    this.validUser();
+  }
+  validUser() {
+    this.checkImageExists();
+    if (!this.user.contact) {
+      this.user.contact = new Contact();
+    }
+
+    if (
+      !this.user?.image ||
+      this.user?.image === Constants.MALE_PERSON ||
+      this.user?.image === Constants.FEMALE_PERSON
+    ) {
+      this.user.image = this.localImage;
+    }
+  }
+
+  checkImageExists() {
+    if (this.user?.gender?.toLocaleLowerCase().includes('masculino')) {
+      this.localImage = Constants.MALE_PERSON;
+    } else {
+      this.localImage = Constants.FEMALE_PERSON;
+    }
   }
 
   showInvitation() {

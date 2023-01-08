@@ -1,3 +1,5 @@
+import { ResourcesModule } from './../../resources/resources.module';
+import { LoadImagesComponent } from './../../resources/load-images/load-images.component';
 /* eslint-disable max-len */
 import { FilterComponent } from './filter/filter.component';
 import { HomeUserRegisterModule } from './../../home/home-user-register/home-user-register.module';
@@ -31,6 +33,7 @@ import { EmergencyUserRegisterComponent } from './user-register/emergency-user-r
     PipesModule,
     UserSearchModule,
     HomeUserRegisterModule,
+    ResourcesModule,
   ],
   declarations: [
     UserPage,

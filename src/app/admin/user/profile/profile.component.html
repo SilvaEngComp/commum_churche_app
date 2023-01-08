@@ -14,13 +14,40 @@
 <div class="div-body" *ngIf="!is_loading">
 
 
+
   <ion-grid *ngIf="!is_loading">
+    <ion-row *ngIf="!showLoadEditImage">
+      <ion-col>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div>
+                <ion-avatar class="div-avatar">
+                  <img [src]="user?.image" />
+                </ion-avatar>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="!edit">
+            <ion-col>
+              <ion-item lines="none" color="light">
+                <ion-button fill="clear" (click)="setshowLoadEditImage()">editar</ion-button>
+                <ion-button fill="clear" (click)="deleteImage()">deletar</ion-button>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col>
-        <ion-avatar [ngClass]=" {'avatar-center': edit,'avatar-notcenter': !edit}">
-          <ion-img [src]="user?.image"></ion-img>
-        </ion-avatar>
-        <div>
+        <app-load-images *ngIf="showLoadEditImage" [single]="true" (returnPage)="receiveSubpage($event)"
+          [confirmButton]="true"></app-load-images>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none" color="light" class="control-buttons">
           <ion-button (click)="setEdit()" *ngIf="edit">
             <ion-icon src="./assets/icons/edit-light.svg"></ion-icon>
             <ion-label>EDITAR</ion-label>
@@ -33,18 +60,11 @@
             <ion-icon name="save-outline"></ion-icon>
             <ion-label>SALVAR</ion-label>
           </ion-button>
-        </div>
+        </ion-item>
       </ion-col>
-      <!-- <ion-col *ngIf="!edit">
-        <ion-button color="danger" fill="outline" (click)="deleteImage()">
-          <ion-label>REMOVER FOTO</ion-label>
-        </ion-button>
-        <ion-button color="primary" fill="outline" (click)="setImage()">
-          <ion-label>CARREGAR FOTO</ion-label>
-        </ion-button>
-      </ion-col> -->
+
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="!showLoadEditImage">
       <ion-col>
         <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label position="floating">*NOME</ion-label>
@@ -63,19 +83,19 @@
         </ion-item>
 
 
-        <ion-list lines="none" [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}">
-          <ion-item>
+        <ion-list lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+          <ion-item lines="none">
             <ion-label>Data de Nascimento: {{user.birthDate | date: 'dd/MM/yyyy'}}</ion-label>
 
           </ion-item>
 
-          <ion-item lines="none" class="separated-date">
-            <ion-item lines="none" [ngClass]="{'large-input-date ': !isSmallDevice, 'small-input-date':isSmallDevice}">
+          <ion-item>
+            <ion-item lines="none">
               <ion-button [disabled]="edit" fill="clear" (click)="openDay($event)" expand="full">
                 <label>Dia: {{day}}</label>
               </ion-button>
             </ion-item>
-            <ion-item lines="none" class="right-input-date ">
+            <ion-item lines="none">
               <ion-button [disabled]="edit" fill="clear" id="popover-button-month" expand="block">
                 <label>Mês/Ano: {{monthYear | date: 'MM/yyyy'}}</label>
               </ion-button>
@@ -92,11 +112,11 @@
             </ion-item>
           </ion-item>
         </ion-list>
-        <ion-list>
-          <ion-item lines="none" [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}">
+        <ion-list lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+          <ion-item>
             <ion-label>*Já é Batizado? </ion-label>
           </ion-item>
-          <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+          <ion-item lines="none">
             <ion-radio-group (click)="setIsBaptized($event)" [value]="user?.isBaptized" [allowEmptySelection]="false">
               <ion-item lines="none">
                 <ion-radio [disabled]="edit" slot="start" value="0"></ion-radio>
@@ -110,18 +130,17 @@
             </ion-radio-group>
           </ion-item>
         </ion-list>
-        <ion-item lines="none" [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}">
-          <ion-label>*Gênero: </ion-label>
-        </ion-item>
+
         <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+
           <ion-radio-group (click)="setGender($event)" [value]="user?.gender" [allowEmptySelection]="false">
             <ion-item lines="none">
-              <ion-label>Masculino</ion-label>
+              <ion-label>Masc.</ion-label>
               <ion-radio [disabled]="edit" slot="start" value="masculino"></ion-radio>
             </ion-item>
 
             <ion-item lines="none">
-              <ion-label>Feminino</ion-label>
+              <ion-label>Femi.</ion-label>
               <ion-radio [disabled]="edit" slot="start" value="feminino"></ion-radio>
             </ion-item>
           </ion-radio-group>

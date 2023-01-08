@@ -25,7 +25,7 @@
 
       </ion-col>
 
-      <ion-col>
+      <!-- <ion-col class="isSmall">
         <div class="right-list">
           <div class="observacao">
             <ion-label>OBSERVAÇÕES</ion-label>
@@ -50,16 +50,19 @@
             </div>
           </div>
         </div>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
     <ion-row>
       <ion-col>
         <ion-item class="pass-button" lines="none">
           <ion-button color="danger" (click)="excluir()" *ngIf="hasOneSelected">
             <ion-label color="light">EXCLUIR</ion-label>
+
+          </ion-button> <ion-button color="warning" (click)="cancel()" *ngIf="confirmButton">
+            <ion-label color="light">CANCELAR</ion-label>
           </ion-button>
 
-          <ion-button slot="end" slot="end" color="success" (click)="back()" *ngIf="showFinishButtton">
+          <ion-button slot="end" slot="end" color="success" (click)="back()" *ngIf="confirmButton">
             <ion-label>CONCLUIR</ion-label>
             <ion-icon name="checkmark-circle-outline"></ion-icon>
           </ion-button>

@@ -109,13 +109,14 @@ export class UserService extends ServiceInterface {
       .toPromise();
   }
 
-  async upload(formData: FormData, user: User): Promise<User> {
+  async upload(formData: FormData, user: User): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
+    console.log(user);
     return this.http
-      .post<User>(`${environment.API2}/users/${user.id}/upload`, formData, {
+      .post<Responser>(`${environment.API2}/users/${user.id}/image`, formData, {
         headers: await LoginService.getHeaders(true),
       })
       .toPromise();
@@ -135,18 +136,15 @@ export class UserService extends ServiceInterface {
     return this.http.get<any>(`${environment.API}/cep/${cep}`).toPromise();
   }
 
-  async deleteImage(user: User): Promise<User> {
+  async deleteImage(user: User): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
     return this.http
-      .delete<User>(
-        `${environment.API2}/users/image/${user.id}/${user.image}`,
-        {
-          headers: await LoginService.getHeaders(),
-        }
-      )
+      .delete<Responser>(`${environment.API2}/users/${user.id}/image`, {
+        headers: await LoginService.getHeaders(),
+      })
       .toPromise();
   }
 }

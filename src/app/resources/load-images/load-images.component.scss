@@ -71,7 +71,7 @@
   justify-content: center;
   border: 2px solid var(--ion-color-medium);
   border-radius: 10px;
-  width: 300px;
+  width: 100%;
   min-height: 300px;
   div {
     display: flex;
@@ -212,5 +212,22 @@ ul {
       color: var(--ion-color-light);
       font-size: 10px;
     }
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .isSmall {
+    display: none;
+    width: 0px;
+    height: 0px;
+  }
+
+  .title {
+    font-size: 10pt;
+  }
+}
+@media screen and (max-width: 500px) {
+  .title {
+    font-size: 10pt;
   }
 }
