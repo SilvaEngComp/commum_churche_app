@@ -1,4 +1,3 @@
-import { AfterViewInit } from '@angular/core';
 /* eslint-disable @typescript-eslint/naming-convention */
 import {
   Component,
@@ -9,26 +8,26 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { IonTextarea, PopoverController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
 import { UiService } from 'src/app/services/ui.service';
 import { MenuPostComponent } from '../menu-post/menu-post.component';
 import { FeedCommentService } from 'src/app/services/feed-reaction.service';
 import { ExceptionService } from 'src/app/services/exception-service.service';
-import { LoginService } from 'src/app/services/login.service';
 import { environment } from 'src/environments/environment';
 import { Feed } from 'src/app/models/feed';
 import { FeedComment } from 'src/app/models/feedReaction';
 import { User } from 'src/app/models/User';
+import { Constants } from 'src/app/models/constants';
 
 @Component({
   selector: 'app-feed-comment',
   templateUrl: './feed-comment.component.html',
   styleUrls: ['./feed-comment.component.scss'],
 })
-export class FeedCommentComponent implements OnInit, AfterViewInit {
+export class FeedCommentComponent implements OnInit {
   @ViewChild('texAreaMessage', { read: ElementRef }) message: ElementRef;
-  @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
-
+  @Output() returnSubpage: EventEmitter<any> = new EventEmitter<any>();
+  @Input() expandAll: boolean;
   @Input() feed: Feed;
   feedReactions: FeedComment[] = [];
   is_loading: boolean;
@@ -42,19 +41,21 @@ export class FeedCommentComponent implements OnInit, AfterViewInit {
     private exeptionService: ExceptionService,
     private feedReactionService: FeedCommentService
   ) {}
-  ngAfterViewInit(): void {
-    console.clear();
-    console.log(this.message);
-    console.log(this.message.nativeElement.offsetBottom);
-    UiService.toTop.emit(this.message.nativeElement.offsetBottom);
+
+  back() {
+    this.returnSubpage.emit({ subpage: Constants.FEED_PAGE_PUBLIC });
+
+    UiService.localRemove(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
   }
 
   ngOnInit() {
     this.newComment = new FeedComment();
-    this.commenter = LoginService.getUser();
-    this.permission = UiService.validPermissions('store_feed');
+    this.feed = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
   }
 
+  showCompleteMessage() {
+    this.expandAll = !this.expandAll;
+  }
   setLove() {
     this.feed.love = !this.feed.love;
     this.feedReactionService.setLove(this.feed).catch((error) => {
@@ -81,7 +82,7 @@ export class FeedCommentComponent implements OnInit, AfterViewInit {
   }
 
   manageFeed(data) {
-    this.returnPage.emit(data);
+    this.returnSubpage.emit(data);
   }
 
   delete(feedReaction: FeedComment) {
@@ -127,7 +128,9 @@ export class FeedCommentComponent implements OnInit, AfterViewInit {
       this.feedReactionService
         .store(this.newComment, this.feed)
         .then((responser) => {
+          console.log(responser);
           this.feed.comments = responser.data;
+          console.log(this.feed.comments);
           this.newComment = new FeedComment();
           this.exeptionService.success(responser.data);
         })

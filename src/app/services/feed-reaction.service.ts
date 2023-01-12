@@ -40,8 +40,12 @@ export class FeedCommentService {
       this.checkLogged();
       return Promise.resolve(null);
     }
+    const user = LoginService.getUser();
+
     console.log(JSON.stringify(feedReaction));
-    const user = LoginService.getToken().user;
+    console.log(
+      `${environment.API2}/feedComments/feed/${feed.id}/user/${user.id}`
+    );
     return this.http
       .post<Responser>(
         `${environment.API2}/feedComments/feed/${feed.id}/user/${user.id}`,

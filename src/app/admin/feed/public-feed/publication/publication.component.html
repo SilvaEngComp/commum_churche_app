@@ -50,7 +50,6 @@
       <ion-item lines="none" *ngIf="feed?.message?.length>100">
         <p class="p-as-a-link" (click)="showCompleteMessage()">{{expandAll ? 'MENOS': 'MAIS...'}}</p>
       </ion-item>
-      <app-feed-comment [feed]="feed" class="show-comments" *ngIf="feed?.showComment"></app-feed-comment>
     </ion-col>
   </ion-row>
 </ion-grid>

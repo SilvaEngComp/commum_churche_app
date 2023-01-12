@@ -1,3 +1,4 @@
+import { NoPermissionDirective } from './no-permission.directive';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PermissionDirective } from './permission.directive';
@@ -13,6 +14,7 @@ import { ColorMarkerComponent } from './color-marker/color-marker.component';
     CopyClipboardDirective,
     LongPressActionDirective,
     ColorMarkerComponent,
+    NoPermissionDirective,
   ],
 
   imports: [CommonModule, FormsModule, IonicModule, ReactiveFormsModule],
@@ -20,6 +22,7 @@ import { ColorMarkerComponent } from './color-marker/color-marker.component';
     PermissionDirective,
     CopyClipboardDirective,
     LongPressActionDirective,
+    NoPermissionDirective,
   ],
   providers: [PermissionDirective],
 })

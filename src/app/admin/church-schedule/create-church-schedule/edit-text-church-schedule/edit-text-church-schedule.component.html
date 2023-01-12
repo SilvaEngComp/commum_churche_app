@@ -4,7 +4,7 @@
     <ion-row>
       <ion-col>
         <ion-item class="input">
-          <ion-label position="floating">Título</ion-label>
+          <ion-label position="floating">TÍTULO</ion-label>
           <ion-input placeholder="Digite o título da publicação" [value]="churchSchedule?.title"
             (keyup)="onTypeTitle(inputTitle.value)" #inputTitle placeholder="Digite o título da publicação"
             type="text"></ion-input>
@@ -20,9 +20,9 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-label>Dias e Horários</ion-label>
+          <ion-label>DIAS e HORÁRIOS</ion-label>
           <ion-button fill="outline" (click)="addScheduleTime()" expand="block">
-            <ion-label>Add Horário</ion-label>
+            <ion-label>Add HORÁRIO</ion-label>
           </ion-button>
           <!-- <ion-icon name="add-circle-outline"*permission="'multimidia'"></ion-icon> -->
         </ion-item>
@@ -31,6 +31,9 @@
         </ion-item>
         <ion-grid *ngIf="churchSchedule.scheduleTimes.length>0">
           <ion-row *ngFor="let scheduleTime of churchSchedule.scheduleTimes; let i=index">
+            <ion-col size="1">
+              <ion-icon name="trash-sharp" color="danger" (click)="deleteTime(i)"></ion-icon>
+            </ion-col>
             <ion-col>
               <ion-item class="input">
                 <ion-label>Dia da semana </ion-label>

@@ -21,18 +21,16 @@
         <ion-grid>
           <ion-row>
             <ion-col>
-              <div>
-                <ion-avatar class="div-avatar">
-                  <img [src]="user?.image" />
-                </ion-avatar>
-              </div>
+              <ion-avatar class="div-avatar">
+                <img [src]="user?.image" />
+              </ion-avatar>
             </ion-col>
           </ion-row>
           <ion-row *ngIf="!edit">
             <ion-col>
-              <ion-item lines="none" color="light">
-                <ion-button fill="clear" (click)="setshowLoadEditImage()">editar</ion-button>
-                <ion-button fill="clear" (click)="deleteImage()">deletar</ion-button>
+              <ion-item lines="none" color="light" class="edit-image-buttons">
+                <ion-button fill="clear" color="warning" (click)="setshowLoadEditImage()">editar</ion-button>
+                <ion-button fill="clear" color="danger" (click)="deleteImage()">deletar</ion-button>
               </ion-item>
             </ion-col>
           </ion-row>

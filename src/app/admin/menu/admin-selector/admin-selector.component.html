@@ -3,15 +3,15 @@
 </ion-content>
 
 <ion-content ionScroll="true" #mainSmall *ngIf="!isLarge">
-  <!-- <ion-item lines="none" (click)="doRefresh($event)">
+  <ion-item lines="none" (click)="doRefresh($event)">
     <ion-icon name="refresh-outline"></ion-icon>
-  </ion-item> -->
+  </ion-item>
   <div [ngSwitch]="page">
-    <app-bible-program-admin *ngSwitchCase="'0'" [subpage]="'1'"
+    <app-user-admin *ngSwitchCase="'0'" [subpage]="'0'" (sessionPage)="onSelectPage($event)"></app-user-admin>
+    <app-bible-program-admin *ngSwitchCase="'1'" [subpage]="'1'"
       (sessionPage)="onSelectPage($event)"></app-bible-program-admin>
-    <app-user-admin *ngSwitchCase="'-1'" [subpage]="'0'" (sessionPage)="onSelectPage($event)"></app-user-admin>
-    <app-user-admin *ngSwitchCase="'1'" [subpage]="'1'" (sessionPage)="onSelectPage($event)"></app-user-admin>
-    <app-more *ngSwitchCase="'2'" (returnPage)="onSelectPage($event)"></app-more>
+    <app-user-admin *ngSwitchCase="'2'" [subpage]="'1'" (sessionPage)="onSelectPage($event)"></app-user-admin>
+    <app-more *ngSwitchCase="'3'" (returnPage)="onSelectPage($event)"></app-more>
     <app-financy-admin *ngSwitchCase="'4'" [subpage]="'0'" (sessionPage)="onSelectPage($event)"></app-financy-admin>
     <app-financy-admin *ngSwitchCase="'5'" [subpage]="'1'" (sessionPage)="onSelectPage($event)"></app-financy-admin>
     <app-feed *ngSwitchCase="'6'"></app-feed>

@@ -1,0 +1,43 @@
+<div *ngIf="isLoading" class="spinner">
+  <ion-spinner name="dots"></ion-spinner>
+  <ion-label>Carregando</ion-label>
+  <ion-spinner name="dots"></ion-spinner>
+</div>
+<ion-item lines="none">
+  <ion-label>{{currentMonth?.name}}</ion-label>
+</ion-item>
+
+
+<ion-grid *ngIf="!isLoading">
+
+  <!-- <ion-row *ngFor="let user of users">
+    <ion-col>
+      <ion-item lines="none">
+        <ion-avatar>
+          <ion-img [src]="user?.image"></ion-img>
+        </ion-avatar>
+        <ion-card-title>{{ user?.name }} </ion-card-title>
+        <ion-icon slot="end" color="success" name="balloon-outline"></ion-icon>
+        <ion-note class="note-church" slot="end">Dia {{user?.birthDate | date:'dd'}}</ion-note>
+      </ion-item>
+
+    </ion-col>
+  </ion-row> -->
+  <ion-row>
+    <ion-col *ngFor="let user of users">
+      <ion-card>
+        <ion-card-header>
+          <ion-img [src]="user?.image"></ion-img>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item lines="none">
+            <ion-label class="note-church">Dia {{user?.birthDate | date:'dd'}}</ion-label>
+            <ion-icon color="success" slot="end" name="balloon-outline"></ion-icon>
+          </ion-item>
+          <ion-card-title class="title">{{ user?.name }} </ion-card-title>
+
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>

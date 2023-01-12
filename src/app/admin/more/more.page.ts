@@ -3,7 +3,7 @@ import { ConstantMessages } from './../../models/messages';
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, Platform } from '@ionic/angular';
 import { User } from 'src/app/models/User';
 import { PolicyComponent } from 'src/app/resources/policy/policy.component';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -24,20 +24,24 @@ export class MorePage implements OnInit {
   is_localImage: boolean;
   user: User;
   localImage: string;
+  height: string;
 
   constructor(
     private modalCtrl: ModalController,
     private loginService: LoginService,
     private router: Router,
     private exceptionService: ExceptionService,
-    private socialSharing: SocialSharing
+    private socialSharing: SocialSharing,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
-    this.user = LoginService.getToken().user;
+    this.height = this.platform.height() * 0.9 + 'px';
     this.validUser();
   }
   validUser() {
+    this.user = LoginService.getToken().user;
+
     this.checkImageExists();
     if (!this.user.contact) {
       this.user.contact = new Contact();

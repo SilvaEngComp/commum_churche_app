@@ -43,6 +43,7 @@ export class AdminLargeComponent implements OnInit {
     this.permission = false;
     this.user = LoginService.getUser();
     this.menu_itens = Menu.getMenu();
+    console.log(this.menu_itens);
     this.page = this.menu_itens[0]?.id;
 
     if (UiService.localGet(this.defaultPageName)) {
@@ -81,8 +82,14 @@ export class AdminLargeComponent implements OnInit {
   }
 
   perfil() {
-    this.page = Constants.MENU_PERFIL;
-    UiService.localSet(this.defaultPageName, Constants.MENU_PERFIL);
+    console.log(this.menu_itens);
+    this.menu_itens.filter((menu) => {
+      if (menu.name === Constants.LATERAL_MENU_PROFILE) {
+        this.page = menu.id;
+      }
+    });
+    console.log(this.page);
+    UiService.localSet(this.defaultPageName, Constants.LATERAL_MENU_PROFILE);
   }
 
   selectPage(menu: Menu) {

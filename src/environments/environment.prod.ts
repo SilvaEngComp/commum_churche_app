@@ -3,12 +3,14 @@ export const environment = {
   production: true,
   // API: 'https://apis3.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
   // API2: 'https://apis3.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
+  // API3: 'https://apis3.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v3',
   // IMAGE_URL:
   //   'https://apis3.enginydigitaleco.com/commum_ibnovabetel_api/public/storage/',
   // TEST: false,
 
   API: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
   API2: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
+  API3: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v3',
   IMAGE_URL:
     'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/storage/',
   TEST: true,

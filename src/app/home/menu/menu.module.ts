@@ -1,3 +1,4 @@
+import { BirthdaysComponent } from './../birthdays/birthdays.component';
 import { BrMaskerModule } from 'br-mask';
 import { LoginModule } from './../login/login.module';
 import { MenuHomeSmallComponent } from './menu-home-small/menu-home-small.component';
@@ -16,6 +17,7 @@ import { HomePageRoutingModule } from './app-routing.module';
     MenuHomeLargeComponent,
     MenuHomeSelectComponent,
     MenuHomeSmallComponent,
+    BirthdaysComponent,
   ],
   imports: [
     CommonModule,

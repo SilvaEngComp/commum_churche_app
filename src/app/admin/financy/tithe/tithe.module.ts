@@ -1,3 +1,4 @@
+import { MenuTitheComponent } from './menu-tithe/menu-tithe.component';
 import { UiModule } from './../../../ui/ui.module';
 import { FilterTitheComponent } from './filter-tithe/filter-tithe.component';
 import { TitheRegisterComponent } from './tithe-register/tithe-register.component';
@@ -9,10 +10,14 @@ import { IonicModule } from '@ionic/angular';
 import { BrMaskerModule } from 'br-mask';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { DirectivesModule } from 'src/app/directives/directives.module';
-import { PermissionDirective } from 'src/app/directives/permission.directive';
 
 @NgModule({
-  declarations: [TitheComponent, TitheRegisterComponent, FilterTitheComponent],
+  declarations: [
+    TitheComponent,
+    TitheRegisterComponent,
+    FilterTitheComponent,
+    MenuTitheComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,

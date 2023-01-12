@@ -91,11 +91,13 @@ export class CreateChurchScheduleComponent implements OnInit {
   next() {
     this.checkChurchSchedule();
 
-    if (this.session === 2) {
-      this.publish();
-    }
     if (this.validForm()) {
-      this.session++;
+      if (this.session === 2) {
+        this.publish();
+      }
+      if (this.validForm()) {
+        this.session++;
+      }
     }
   }
 
@@ -117,8 +119,10 @@ export class CreateChurchScheduleComponent implements OnInit {
       return;
     }
 
-    if (!this.churchSchedule?.church) {
-      this.exceptionService.alertDialog(ConstantMessages.CHURCH_INVALID);
+    if (!this.churchSchedule?.church?.id) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.CHURCH_SCHEDULE_INVALID_CHURCH
+      );
       return;
     }
 

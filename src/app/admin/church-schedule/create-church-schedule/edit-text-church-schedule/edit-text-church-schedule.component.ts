@@ -1,3 +1,4 @@
+import { ChurchScheduleService } from './../../../../services/churchSchedule.service';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -28,7 +29,10 @@ export class EditTextChurchScheduleComponent implements OnInit {
   hasTime: boolean;
   session: number;
   daysOfWeek = Constants.DAYS_OF_WEEK;
-  constructor(private exceptionService: ExceptionService) {}
+  constructor(
+    private exceptionService: ExceptionService,
+    private churchScheduleService: ChurchScheduleService
+  ) {}
 
   ngOnInit() {
     this.session = 1;
@@ -38,6 +42,7 @@ export class EditTextChurchScheduleComponent implements OnInit {
     );
     if (!this.churchSchedule) {
       this.churchSchedule = new ChurchSchedule();
+      this.addScheduleTime();
     }
 
     console.log(this.churchSchedule);
@@ -78,7 +83,23 @@ export class EditTextChurchScheduleComponent implements OnInit {
   }
 
   setTimeExists(position: number) {
-    this.churchSchedule.scheduleTimes[position].hasTime = !this.hasTime;
+    this.churchSchedule.scheduleTimes[position].hasTime =
+      !this.churchSchedule.scheduleTimes[position].hasTime;
+    this.save();
+  }
+
+  deleteTime(position: number) {
+    if (this.churchSchedule.scheduleTimes[position]?.id) {
+      this.churchScheduleService
+        .deleteScheduleTime(this.churchSchedule.scheduleTimes[position])
+        .then((responser) => {
+          this.churchSchedule.scheduleTimes.splice(position, 1);
+          this.save();
+        });
+    } else {
+      this.churchSchedule.scheduleTimes.splice(position, 1);
+      this.save();
+    }
   }
 
   setStatus(status: boolean) {

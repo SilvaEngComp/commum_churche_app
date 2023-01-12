@@ -45,5 +45,7 @@ export class ConstantMessages {
   static USER_ALREADY_EXISTS =
     'Usuário já está cadastrado e será selecionado automaticamente na lista ao fechar essa mensagem';
 
-  static TITILE_INVALID = 'Insira um título válido';
+  static TITILE_INVALID = 'Por favor, Insira um título válido';
+  static CHURCH_SCHEDULE_INVALID_CHURCH =
+    'Por favor, Selecione uma organização';
 }

@@ -10,7 +10,7 @@ export class CustomizedMonth {
     if (id >= 1 && id <= 12) {
       this.id = id;
       const monthes = [
-        'Jeneiro',
+        'Janeiro',
         'Fevereiro',
         'Março',
         'Abril',

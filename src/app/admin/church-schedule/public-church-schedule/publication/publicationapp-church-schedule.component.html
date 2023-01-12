@@ -1,12 +1,3 @@
-<!-- <ion-toolbar *ngIf="is_a_selected_post">
-
-  <ion-buttons>
-    <ion-button (click)="back()">
-      <ion-icon name="arrow-back-outline"></ion-icon>
-      VOLTAR</ion-button>
-  </ion-buttons>
-</ion-toolbar> -->
-
 <ion-grid>
   <ion-row>
     <ion-col>
@@ -22,7 +13,7 @@
       <!-- <ion-card> -->
       <ion-item lines="none">
         <ion-label slot="start">{{scheduleTime?.day}}</ion-label>
-        <ion-label slot="end">{{scheduleTime?.time}}</ion-label>
+        <ion-label slot="end" *ngIf="scheduleTime?.hasTime">{{scheduleTime?.time}}</ion-label>
       </ion-item>
       <!-- </ion-card> -->
     </ion-col>

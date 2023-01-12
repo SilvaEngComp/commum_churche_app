@@ -9,6 +9,7 @@ import { User } from '../models/user';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,18 @@ export class UserService extends ServiceInterface {
     return this.http
       .get<Responser>(
         `${environment.API2}/users?${UserFilter.getRequest(filter)}`,
+        {
+          headers: LoginService.getHeaders(),
+        }
+      )
+      .toPromise();
+  }
+  async getBirthdays(
+    filter: UserFilter = new UserFilter()
+  ): Promise<Responser> {
+    return this.http
+      .get<Responser>(
+        `${environment.API3}/users?${UserFilter.getRequest(filter)}`,
         {
           headers: LoginService.getHeaders(),
         }

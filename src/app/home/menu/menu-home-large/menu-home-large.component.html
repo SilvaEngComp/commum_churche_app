@@ -29,8 +29,9 @@
   <ion-row>
     <ion-col>
       <div [ngSwitch]="page">
-        <app-home-user-register *ngSwitchCase="'0'"></app-home-user-register>
-        <app-login *ngSwitchCase="'1'"></app-login>
+        <app-birthdays *ngSwitchCase="'0'"></app-birthdays>
+        <app-home-user-register *ngSwitchCase="'1'"></app-home-user-register>
+        <app-login *ngSwitchCase="'2'"></app-login>
       </div>
     </ion-col>
   </ion-row>

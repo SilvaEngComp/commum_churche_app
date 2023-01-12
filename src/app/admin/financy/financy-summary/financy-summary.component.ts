@@ -14,6 +14,7 @@ import { FinancyService } from 'src/app/services/financy-service.service';
 import { FilterCaixaComponent } from '../caixa/filter-caixa/filter-caixa.component';
 import { TitheSummary } from 'src/app/models/tithesummary';
 import { CaixaSummary } from 'src/app/models/caixaSummary';
+import { Tithe } from 'src/app/models/tithe';
 
 @Component({
   selector: 'app-report',
@@ -146,9 +147,10 @@ export class ReportComponent implements OnInit {
     );
     this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_CAIXA_REGISTER);
   }
-  async newTithe(op: boolean) {
-    UiService.localRemove(Constants.TITHE_MAINTAINCE);
-    UiService.localSet(Constants.IS_TITHE, op);
+  async newTithe(isTithe: boolean) {
+    const tithe: Tithe = new Tithe();
+    tithe.isTithe = isTithe;
+    UiService.localSet(Constants.TITHE_MAINTAINCE, tithe);
     UiService.localSet(
       Constants.BACK_PAGE,
       Constants.MENU_FINANCY_OPTION_SUMMARY

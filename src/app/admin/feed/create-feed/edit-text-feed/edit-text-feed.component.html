@@ -39,16 +39,22 @@
           </ion-item>
         </div>
       </ion-col>
-
     </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">URL da postagem</ion-label>
+        <ion-textarea class="url" (keyup)="onTypeUrl($event)" maxlength="255" [value]="feed?.url"
+          placeholder=""></ion-textarea>
+        <ion-note>{{ feed?.url?.length ? feed?.url?.length : 0}} / 255 caracteres</ion-note>
+      </ion-col>
+    </ion-row>+
 
     <ion-row>
       <ion-col>
         <ion-label position="floating">Menssagem</ion-label>
-        <ion-textarea (keyup)="onTypeMessage($event)" cols="10" rows="10" [value]="feed?.message"
-          placeholder="O que você está fazendo? Conta pra gente!"></ion-textarea>
-        <ion-note>{{ feed?.message?.length ? feed?.message?.length : 0}} / 10000 caracteres</ion-note>
-
+        <ion-textarea class="message" (keyup)="onTypeMessage($event)" maxlength="500" cols="10" rows="10"
+          [value]="feed?.message" placeholder="O que você está fazendo? Conta pra gente!"></ion-textarea>
+        <ion-note>{{ feed?.message?.length ? feed?.message?.length : 0}} / 500 caracteres</ion-note>
       </ion-col>
     </ion-row>
 

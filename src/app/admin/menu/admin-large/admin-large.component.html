@@ -55,14 +55,14 @@
       </ion-header>
 
       <div [ngSwitch]="page">
+        <app-user-admin *ngSwitchCase="'0'" [subpage]="'0'"></app-user-admin>
 
-        <app-bible-program-admin *ngSwitchCase="'0'"></app-bible-program-admin>
-        <app-user-admin *ngSwitchCase="'-1'" [subpage]="'0'"></app-user-admin>
-        <app-user-admin *ngSwitchCase="'3'" [subpage]="'1'"></app-user-admin>
-        <app-financy-admin *ngSwitchCase="'4'" [subpage]="'0'"></app-financy-admin>
-        <app-financy-admin *ngSwitchCase="'5'" [subpage]="'1'"></app-financy-admin>
-        <app-feed *ngSwitchCase="'6'" [subpage]="'1'"></app-feed>
-        <app-church-schedule *ngSwitchCase="'7'"></app-church-schedule>
+        <app-bible-program-admin *ngSwitchCase="'1'"></app-bible-program-admin>
+        <app-user-admin *ngSwitchCase="'2'" [subpage]="'1'"></app-user-admin>
+        <app-financy-admin *ngSwitchCase="'3'" [subpage]="'0'"></app-financy-admin>
+        <app-financy-admin *ngSwitchCase="'4'" [subpage]="'1'"></app-financy-admin>
+        <app-feed *ngSwitchCase="'5'" [subpage]="'1'"></app-feed>
+        <app-church-schedule *ngSwitchCase="'6'"></app-church-schedule>
 
       </div>
     </ion-col>

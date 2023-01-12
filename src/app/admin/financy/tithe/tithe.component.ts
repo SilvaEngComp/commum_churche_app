@@ -1,8 +1,9 @@
+import { MenuTitheComponent } from './menu-tithe/menu-tithe.component';
 import { TitheFilter } from './../../../models/titheFilter';
 import { CustomizedMonth } from './../../../models/customizedMonth';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { Constants } from 'src/app/models/constants';
 import { Tithe } from 'src/app/models/tithe';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -43,7 +44,8 @@ export class TitheComponent implements OnInit {
   customizedMonth: CustomizedMonth;
   constructor(
     private titheFacade: TitheFacade,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private popCtrl: PopoverController
   ) {}
 
   ngOnInit() {
@@ -107,15 +109,6 @@ export class TitheComponent implements OnInit {
     this.tithes = this.titheFacade.searchTithe(search);
   }
 
-  titheMaintaince(tithe: Tithe = null) {
-    if (!tithe) {
-      UiService.localRemove(Constants.TITHE_MAINTAINCE);
-    } else {
-      UiService.localSet(Constants.TITHE_MAINTAINCE, tithe);
-    }
-    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_TITHE_REGISTER);
-  }
-
   delete(tithe: Tithe) {
     this.titheFacade.delete(tithe);
   }
@@ -149,6 +142,42 @@ export class TitheComponent implements OnInit {
     const { data } = await (await modal).onWillDismiss();
     if (data.action) {
       this.load();
+    }
+  }
+
+  newTithe(isTithe: boolean) {
+    const tithe: Tithe = new Tithe();
+    tithe.isTithe = isTithe;
+    UiService.localSet(Constants.TITHE_MAINTAINCE, tithe);
+    UiService.localSet(
+      Constants.BACK_PAGE,
+      Constants.MENU_FINANCY_OPTION_TITHE
+    );
+    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_TITHE_REGISTER);
+  }
+  editTithe(tithe: Tithe) {
+    UiService.localSet(
+      Constants.BACK_PAGE,
+      Constants.MENU_FINANCY_OPTION_TITHE
+    );
+    UiService.localSet(Constants.TITHE_MAINTAINCE, tithe);
+    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_TITHE_REGISTER);
+  }
+
+  async openMenuOption(ev: any) {
+    const pop = await this.popCtrl.create({
+      component: MenuTitheComponent,
+      event: ev,
+    });
+
+    pop.present();
+
+    const { data } = await pop.onWillDismiss();
+
+    if (data?.option === Constants.TITHE_MENU_OPTION_TITHE) {
+      this.newTithe(true);
+    } else {
+      this.newTithe(false);
     }
   }
 }

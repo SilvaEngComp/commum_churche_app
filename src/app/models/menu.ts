@@ -26,7 +26,7 @@ export class Menu {
       // if (menu_itens[i] === Constants.LATERAL_MENU_FINANCY) {
       //   submenu = [Constants.LATERAL_SUBMENU_SUMMARY];
       // }
-      const id = Menu.getMenuId(menu_itens[i]);
+      const id = Menu.getMenuId(menu_itens[i], isHome);
       menuGeral.push(new Menu(id, menu_itens[i], submenu));
       cont++;
     }
@@ -38,15 +38,18 @@ export class Menu {
     const menu_itens: string[] = [];
     try {
       if (isHome) {
+        menu_itens.push(Constants.SUPERIOR_MENU_BIRTHDAYS);
         menu_itens.push(Constants.SUPERIOR_MENU_REGISTER);
         menu_itens.push(Constants.SUPERIOR_MENU_LOGIN);
       } else {
+        menu_itens.push(Constants.LATERAL_MENU_PROFILE);
+
         if (UiService.validPermissions(Constants.ROLE_MEMBER)) {
           menu_itens.push(Constants.LATERAL_MENU_BIBLE_READ);
-          menu_itens.push(Constants.LATERAL_MENU_TITHE_OFFER);
         }
 
         if (environment.TEST) {
+          menu_itens.push(Constants.LATERAL_MENU_TITHE_OFFER);
           menu_itens.push(Constants.LATERAL_MENU_FEED);
           menu_itens.push(Constants.LATERAL_MENU_PROGRAM);
         }
@@ -56,8 +59,8 @@ export class Menu {
         if (UiService.validPermissions(Constants.ROLE_FINANCIAL)) {
           menu_itens.push(Constants.LATERAL_MENU_FINANCY);
         }
+        menu_itens.push(Constants.LATERAL_MENU_OUT);
       }
-      menu_itens.push(Constants.LATERAL_MENU_OUT);
     } catch (e) {
       localStorage.clear();
       window.location.reload();
@@ -66,19 +69,26 @@ export class Menu {
     return menu_itens;
   }
 
-  static getMenuId(name: string) {
-    const menu_itens: string[] = [
-      Constants.LATERAL_MENU_BIBLE_READ,
-      Constants.SUPERIOR_MENU_LOGIN,
-      Constants.SUPERIOR_MENU_REGISTER,
-      Constants.LATERAL_MENU_MEMBERS,
-      Constants.LATERAL_MENU_TITHE_OFFER,
-      Constants.LATERAL_MENU_FINANCY,
-      Constants.LATERAL_MENU_FEED,
-      Constants.LATERAL_MENU_PROGRAM,
-      Constants.LATERAL_MENU_OUT,
-    ];
-
+  static getMenuId(name: string, isHome: boolean = false) {
+    let menu_itens: string[];
+    if (isHome) {
+      menu_itens = [
+        Constants.SUPERIOR_MENU_BIRTHDAYS,
+        Constants.SUPERIOR_MENU_REGISTER,
+        Constants.SUPERIOR_MENU_LOGIN,
+      ];
+    } else {
+      menu_itens = [
+        Constants.LATERAL_MENU_PROFILE,
+        Constants.LATERAL_MENU_BIBLE_READ,
+        Constants.LATERAL_MENU_MEMBERS,
+        Constants.LATERAL_MENU_TITHE_OFFER,
+        Constants.LATERAL_MENU_FINANCY,
+        Constants.LATERAL_MENU_FEED,
+        Constants.LATERAL_MENU_PROGRAM,
+        Constants.LATERAL_MENU_OUT,
+      ];
+    }
     const id = menu_itens.indexOf(name);
 
     return String(id);

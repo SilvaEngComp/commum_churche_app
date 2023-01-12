@@ -16,6 +16,7 @@ export class Feed {
   comments: FeedComment[];
   hasTime: boolean;
   showComment: boolean;
+  url: string;
 
   constructor() {
     this.published = true;

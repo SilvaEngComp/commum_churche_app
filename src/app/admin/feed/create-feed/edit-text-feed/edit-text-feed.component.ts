@@ -108,6 +108,11 @@ export class EditTextFeedComponent implements OnInit {
     this.save();
   }
 
+  onTypeUrl(ev) {
+    this.feed.url = ev.target.value;
+    this.save();
+  }
+
   onTypeMessage(ev) {
     this.feed.message = ev.target.value;
     this.save();

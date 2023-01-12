@@ -1,3 +1,4 @@
+import { ScheduleTime } from './../models/ScheduleTime';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -112,6 +113,20 @@ export class ChurchScheduleService extends ServiceInterface {
     return this.http
       .delete<Responser>(
         `${environment.API2}/churchSchedules/${churchschedule.id}`,
+        {
+          headers: await LoginService.getHeaders(),
+        }
+      )
+      .toPromise();
+  }
+  async deleteScheduleTime(scheduleTime: ScheduleTime): Promise<Responser> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+    return this.http
+      .delete<Responser>(
+        `${environment.API2}/scheduleTimes/${scheduleTime.id}`,
         {
           headers: await LoginService.getHeaders(),
         }

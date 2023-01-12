@@ -64,7 +64,9 @@ export class PublicationComponent implements OnInit {
     });
   }
   setComment() {
-    this.feed.showComment = !this.feed?.showComment;
+    // UiService.localSet(Constants.FEED_ATTRIBUTES_FEED_OBJECT, this.feed);
+    // UiService.feedPage.emit({ subpage: Constants.FEED_PAGE_COMMENT });
+    window.open(this?.feed?.url);
   }
   back() {
     UiService.feedPage.emit({ subpage: Constants.FEED_PAGE_PUBLIC });

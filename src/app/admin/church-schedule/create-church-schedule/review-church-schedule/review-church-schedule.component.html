@@ -1,20 +1,32 @@
-<ion-grid>
-  <ion-row>
-    <ion-col size="3" *ngFor="let scheduleTime of churchSchedule?.scheduleTimes">
-      <ion-card>
-        <ion-item lines="none">
-          <ion-label slot="start">{{scheduleTime?.day}}</ion-label>
-          <ion-label slot="end">{{scheduleTime?.time}}</ion-label>
-        </ion-item>
-      </ion-card>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col *ngIf="churchSchedule?.image">
-      <ion-img [src]="churchSchedule?.image"></ion-img>
-    </ion-col>
-    <ion-col>
-      <div class="complete-message">{{ churchSchedule?.message }}</div>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<ion-accordion-group>
+  <ion-accordion [value]="churchSchedule?.id">
+    <ion-item slot="header" color="light">
+      <ion-card-title>{{churchSchedule?.title}}</ion-card-title>
+      <ion-note slot="end">{{churchSchedule?.church?.name}}</ion-note>
+    </ion-item>
+    <div class="ion-padding" slot="content">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="none">
+              <ion-card-title>Horários</ion-card-title>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let scheduleTime of churchSchedule?.scheduleTimes">
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label slot="start">{{scheduleTime?.day}}</ion-label>
+              <ion-label slot="end" *ngIf="scheduleTime?.hasTime">{{scheduleTime?.time}}</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="complete-message">{{ churchSchedule?.message }}</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-accordion>
+</ion-accordion-group>

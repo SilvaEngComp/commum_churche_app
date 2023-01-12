@@ -1,72 +1,72 @@
 .geral {
-    display: grid;
-    grid-template-columns: auto;
-    background: var(--ion-color-light);
-    height: 100%;
+  display: grid;
+  grid-template-columns: auto;
+  background: var(--ion-color-light);
+  height: 100%;
 }
 
 .div-header {
-    width: 100%;
-    min-height: 80px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    display: grid;
-    align-items: center;
-    align-content: center;
-    align-self: center;
-    margin-bottom: 10px;
+  width: 100%;
+  min-height: 80px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: grid;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  margin-bottom: 10px;
 }
 
 .div-body {
+  width: 100%;
+  min-height: 80px;
+  display: grid;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  margin-bottom: 10px;
+  div {
+    display: flex;
+  }
+  ion-item {
+    --background: var(--ion-color-light);
     width: 100%;
-    min-height: 80px;
-    display: grid;
-    align-items: center;
-    align-content: center;
-    align-self: center;
-    margin-bottom: 10px;
-    div {
-        display: flex;
+    ion-label {
+      font-size: 12pt;
+      color: var(--ion-color-secondary);
+      margin-left: 10px;
     }
-    ion-item {
-        --background: var(--ion-color-light);
-        width: 100%;
-        ion-label {
-            font-size: 12pt;
-            color: var(--ion-color-secondary);
-            margin-left: 10px
-        }
-    }
+  }
 }
 
 .lb-title {
-    margin: 15px;
-    font-family: Qanelas-bold;
-    font-size: 14pt;
-    font-weight: 900;
-    color: var(--ion-color-dark);
+  margin: 15px;
+  font-family: Qanelas-bold;
+  font-size: 14pt;
+  font-weight: 900;
+  color: var(--ion-color-dark);
 }
 
 .title-name {
-    margin-bottom: 10px;
-    // margin-left: 25%;
+  margin-bottom: 10px;
+  // margin-left: 25%;
 }
 
 .btn-perfil {
-    // margin-left: 40%;
-    width: 200px;
-    --border-radius: 40px;
-    --background: var(--ion-color-primary);
-    ion-label {
-        font-family: Qanelas;
-        font-weight: 900;
-        color: var(--ion-color-light);
-    }
+  // margin-left: 40%;
+  width: 200px;
+  --border-radius: 40px;
+  --background: var(--ion-color-primary);
+  ion-label {
+    font-family: Qanelas;
+    font-weight: 900;
+    color: var(--ion-color-light);
+  }
 }
 
 .option {
-    ion-img {
-        width: 20px;
-        height: 20px;
-    }
+  ion-img {
+    width: 20px;
+    height: 20px;
+  }
 }

@@ -2,8 +2,8 @@ import { LoginService } from './../../../../services/login.service';
 import { Constants } from './../../../../models/constants';
 import { DatePipe } from '@angular/common';
 import { Tithe } from 'src/app/models/tithe';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PopoverController, Platform, ModalController } from '@ionic/angular';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
@@ -29,7 +29,6 @@ export class TitheRegisterComponent implements OnInit {
   year: string;
   constructor(
     private titheService: TitheService,
-    private modalCtrl: ModalController,
     private exceptionService: ExceptionService,
     private platform: Platform
   ) {}
@@ -38,14 +37,15 @@ export class TitheRegisterComponent implements OnInit {
     this.tithe = UiService.localGet(Constants.TITHE_MAINTAINCE);
     console.log(this.tithe);
     if (!this.tithe) {
-      this.tithe = new Tithe();
-      this.value = '';
-      this.tithe.isTithe = UiService.localGet(Constants.IS_TITHE);
-      this.isNew = true;
-    } else {
-      this.value = UiService.convertToCurrency(this.tithe?.amount);
+      this.exceptionService.alertDialog(Constants.INVALID_OPTION, 'Erro!');
+      this.back();
+    }
+    this.isNew = true;
+
+    if (this.tithe?.id) {
       this.isNew = false;
     }
+    console.log(this.tithe);
     this.isSmallDevice = this.platform.width() <= 500;
     const datePipe = new DatePipe('en');
     this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');

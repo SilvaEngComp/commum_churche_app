@@ -85,9 +85,11 @@ export class Constants {
   static MENU_USER_OPTION_MEMBERS = '1';
   static HAS_BACK_PAGE = 'hasBackPage';
   static USER_LETTER_SIZE_CONFIG = 'userLetterSizeConfig';
+  static SUPERIOR_MENU_BIRTHDAYS = 'ANIVERSARIANTES';
   static SUPERIOR_MENU_REGISTER = 'CADASTRO';
   static SUPERIOR_MENU_LOGIN = 'LOGIN';
   static LATERAL_MENU_TITHE_OFFER = 'DÍZIMOS E OFERTAS';
+  static LATERAL_MENU_PROFILE = 'PERFIL';
   static LATERAL_MENU_BIBLE_READ = 'LEITURA BÍBLICA';
   static LATERAL_MENU_FEED = 'FEED DE NOTÍCIAS';
   static LATERAL_MENU_PROGRAM = 'PROGRAMAÇÕES';
@@ -105,8 +107,6 @@ export class Constants {
   static BACK_PAGE = 'backPage';
   static IS_TITHE = 'isTithe';
   static IS_ENTRY = 'isEntry';
-
-  static MENU_PERFIL = '-1';
 
   static SELECTED_VERSE_DAY = 'selectedVerseDay';
   static SELECTED_MONTH_PROGRAM = 'monthProgram';
@@ -157,4 +157,8 @@ export class Constants {
     'Sábado',
     'Domingo',
   ];
+
+  static TITHE_MENU_OPTION_TITHE = 'DÍZIMO';
+  static TITHE_MENU_OPTION_OFFER = 'OFERTA';
+  static INVALID_OPTION = 'Opção inválida';
 }
