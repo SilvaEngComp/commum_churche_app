@@ -75,42 +75,21 @@ export class CreateChurchScheduleComponent implements OnInit {
     );
   }
 
-  receiveSubpage(obj: any) {
-    if (obj.files) {
-      this.checkChurchSchedule();
+  publish() {
+    this.checkChurchSchedule();
+    if (this.validForm()) {
       this.churchscheduleService
-        .upload(obj.files.formData, this.churchSchedule)
+        .store(this.churchSchedule)
         .then((responser) => {
-          this.churchSchedule.image = responser.data.image;
-          this.save();
-          // window.location.reload();
+          this.churchSchedule = responser.data;
+          this.back();
+          const push: PushNotify = new PushNotify(
+            this.churchSchedule.title,
+            this.churchSchedule.message
+          );
+          this.messagingService.send(push);
         });
     }
-  }
-
-  next() {
-    this.checkChurchSchedule();
-
-    if (this.validForm()) {
-      if (this.session === 2) {
-        this.publish();
-      }
-      if (this.validForm()) {
-        this.session++;
-      }
-    }
-  }
-
-  publish() {
-    this.churchscheduleService.store(this.churchSchedule).then((responser) => {
-      this.churchSchedule = responser.data;
-      this.back();
-      const push: PushNotify = new PushNotify(
-        this.churchSchedule.title,
-        this.churchSchedule.message
-      );
-      this.messagingService.send(push);
-    });
   }
 
   validForm() {

@@ -49,15 +49,7 @@ export class ChurchScheduleComponent implements OnInit {
       this.churchSchedule = obj.churchSchedule;
       this.saveChurchSchedule();
     }
-    if (obj.files) {
-      this.churchScheduleService
-        .upload(obj.files.formData, this.churchSchedule)
-        .then((responser) => {
-          this.churchSchedule.image = responser.data.image;
-          this.saveChurchSchedule();
-          // window.location.reload();
-        });
-    }
+
     if (obj.callbackPage) {
       this.callbackPage = obj.callbackPage;
       UiService.localSet('callbackPage', this.callbackPage);

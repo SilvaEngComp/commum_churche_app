@@ -19,6 +19,12 @@
     </ion-row>
     <ion-row>
       <ion-col>
+        <app-my-select-list [label]="'Tipo'" [listName]="'churcheScheduleTypes'" [create]="true"
+          (selectEmiter)="setChurchScheduleType($event)"></app-my-select-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
         <ion-item>
           <ion-label>DIAS e HORÁRIOS</ion-label>
           <ion-button fill="outline" (click)="addScheduleTime()" expand="block">

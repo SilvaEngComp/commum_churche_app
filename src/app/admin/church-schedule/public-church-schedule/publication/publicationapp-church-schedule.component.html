@@ -1,21 +1,10 @@
 <ion-grid>
-  <ion-row>
-    <ion-col>
-      <ion-item lines="none">
-        <ion-card-title>Horários</ion-card-title>
-        <ion-icon slot="end" name="settings-outline" (click)="menuPost(churchSchedule, $event)"
-          *permission="'multimidia'"></ion-icon>
-      </ion-item>
-    </ion-col>
-  </ion-row>
   <ion-row *ngFor="let scheduleTime of churchSchedule?.scheduleTimes">
     <ion-col>
-      <!-- <ion-card> -->
       <ion-item lines="none">
         <ion-label slot="start">{{scheduleTime?.day}}</ion-label>
         <ion-label slot="end" *ngIf="scheduleTime?.hasTime">{{scheduleTime?.time}}</ion-label>
       </ion-item>
-      <!-- </ion-card> -->
     </ion-col>
   </ion-row>
   <ion-row>

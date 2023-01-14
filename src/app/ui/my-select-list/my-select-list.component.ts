@@ -1,3 +1,6 @@
+import { ChurchScheduleTypeService } from 'src/app/services/church-schedule-type.service';
+import { ChurchScheduleFilter } from './../../models/churchScheduleFilter';
+import { UiService } from './../../services/ui.service';
 import { PopoverController } from '@ionic/angular';
 /* eslint-disable max-len */
 import { ChurchRegisterComponent } from './../../admin/church/church-register/church-register.component';
@@ -14,6 +17,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MySelectAdapter } from 'src/app/models/mySelectAdapter';
 import { UserFilter } from 'src/app/models/userFilter';
 import { CaixaTypeService } from 'src/app/services/caixa-type.service';
+import { ScheduleTypeRegisterComponent } from 'src/app/admin/church-schedule/schedule-type-register/schedule-type-register.component';
 
 @Component({
   selector: 'app-my-select-list',
@@ -27,6 +31,7 @@ export class MySelectListComponent implements OnInit {
   @Input() create?: boolean;
   @Input() listName?: any;
   @Input() isRequired?: boolean;
+  @Input() obj?: any;
   showSelect?: boolean;
   isLoading: boolean;
   limit: number;
@@ -44,6 +49,7 @@ export class MySelectListComponent implements OnInit {
     private caixaGroupService: CaixaGroupService,
     private caixaTypeService: CaixaTypeService,
     private churchService: ChurchService,
+    private churchScheduleTypeService: ChurchScheduleTypeService,
     private popCtrl: PopoverController
   ) {}
 
@@ -51,6 +57,18 @@ export class MySelectListComponent implements OnInit {
     this.selected = '';
     this.showSelect = false;
     this.load();
+
+    UiService.mySelectEmitter.subscribe((data) => {
+      console.log(data);
+      if (data?.obj) {
+        this.obj = data?.obj;
+      }
+      console.log(`${data?.listName} === ${this.listName}`);
+      if (data?.listName === this.listName) {
+        console.log(this.obj);
+        this.load(this.obj);
+      }
+    });
   }
 
   setShowSelect() {
@@ -74,7 +92,7 @@ export class MySelectListComponent implements OnInit {
     );
   }
 
-  async load(isReload: boolean = false) {
+  async load(obj: any = null, isReload: boolean = false) {
     this.isLoading = true;
 
     if (this.listName === 'users') {
@@ -92,6 +110,14 @@ export class MySelectListComponent implements OnInit {
     } else if (this.listName === 'churches') {
       // this.apiResponse = UiService.localGet('localGroups');
       const responser = await this.churchService.get();
+      this.apiResponse = responser.data;
+    } else if (this.listName === 'churchScheduleTypes') {
+      const filter: ChurchScheduleFilter = new ChurchScheduleFilter();
+      if (obj) {
+        console.log(obj);
+        filter.church = obj.church;
+      }
+      const responser = await this.churchScheduleTypeService.get(filter);
       this.apiResponse = responser.data;
     }
 
@@ -139,6 +165,8 @@ export class MySelectListComponent implements OnInit {
       component = CaixaTypeRegisterComponent;
     } else if (this.listName === 'churches') {
       component = ChurchRegisterComponent;
+    } else if (this.listName === 'churchScheduleTypes') {
+      component = ScheduleTypeRegisterComponent;
     }
     const modal = await this.popCtrl.create({
       component,

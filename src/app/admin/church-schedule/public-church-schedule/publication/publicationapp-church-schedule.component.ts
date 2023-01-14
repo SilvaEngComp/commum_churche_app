@@ -1,3 +1,6 @@
+import { ChurchScheduleTypeService } from './../../../../services/church-schedule-type.service';
+import { ChurchScheduleFilter } from './../../../../models/churchScheduleFilter';
+import { ChurchScheduleType } from './../../../../models/churchScheduleType';
 import { ChurchScheduleService } from '../../../../services/churchSchedule.service';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -9,6 +12,7 @@ import { MenuPostChurchScheduleComponent } from '../menu-post-church-schedule/me
 import { ChurchSchedule } from 'src/app/models/churchSchedule';
 import { User } from 'src/app/models/User';
 import { Constants } from 'src/app/models/constants';
+import { Church } from 'src/app/models/church';
 
 @Component({
   selector: 'app-publication-church-schedule',
@@ -25,8 +29,13 @@ export class PublicationChurchScheduleComponent implements OnInit {
   is_menu_oppened: boolean;
   is_a_selected_post: boolean;
   permission: boolean;
+  churchSchedules: ChurchSchedule[];
+  churchScheduleTypes: ChurchScheduleType[];
+  selectedSchedule: ChurchScheduleType;
+  filter: ChurchScheduleFilter;
   constructor(
-    private scheduleService: ChurchScheduleService,
+    private churchScheduleService: ChurchScheduleService,
+    private churchScheduleTypeService: ChurchScheduleTypeService,
     private popCtrl: PopoverController,
     private exeptionService: ExceptionService
   ) {}
@@ -56,16 +65,6 @@ export class PublicationChurchScheduleComponent implements OnInit {
     this.expandAll = !this.expandAll;
   }
 
-  delete(schedule: ChurchSchedule) {
-    this.exeptionService.loadingFunction();
-    this.scheduleService
-      .destroy(schedule)
-      .then((responser) => {
-        this.returnSubpage.emit({ refresh: true });
-      })
-      .catch((err) => this.exeptionService.error(err));
-  }
-
   async menuPost(churchSchedule: ChurchSchedule, ev) {
     if (!this.is_menu_oppened) {
       this.is_menu_oppened = true;
@@ -93,5 +92,13 @@ export class PublicationChurchScheduleComponent implements OnInit {
       }
       this.is_menu_oppened = false;
     }
+  }
+
+  delete(schedule: ChurchSchedule) {
+    this.exeptionService.loadingFunction();
+    this.churchScheduleService
+      .destroy(schedule)
+      .then(() => this.returnSubpage.emit())
+      .catch((err) => this.exeptionService.error(err));
   }
 }

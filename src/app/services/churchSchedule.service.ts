@@ -8,6 +8,7 @@ import { Responser } from '../models/responser';
 import { ExceptionService } from './exception-service.service';
 import { LoginService } from './login.service';
 import { ServiceInterface } from './serviceInterface';
+import { ChurchScheduleFilter } from '../models/churchScheduleFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -27,16 +28,22 @@ export class ChurchScheduleService extends ServiceInterface {
     );
   }
 
-  async get(filter: FilterChurchSchedule): Promise<Responser> {
+  async get(filter: ChurchScheduleFilter): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
+
+    console.log( `${environment.API2}/churchSchedules?${ChurchScheduleFilter?.getRequest(
+      filter
+    )}`);
     return this.http
       .get<Responser>(
-        `${environment.API2}/churchSchedules${filter.getRequest()}`,
+        `${environment.API2}/churchSchedules?${ChurchScheduleFilter?.getRequest(
+          filter
+        )}`,
         {
-          headers: await LoginService.getHeaders(),
+          headers: LoginService.getHeaders(),
         }
       )
       .toPromise();

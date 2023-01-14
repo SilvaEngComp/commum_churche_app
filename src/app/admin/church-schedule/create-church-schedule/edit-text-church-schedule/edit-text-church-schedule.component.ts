@@ -1,3 +1,4 @@
+import { ChurchScheduleType } from './../../../../models/churchScheduleType';
 import { ChurchScheduleService } from './../../../../services/churchSchedule.service';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { DatePipe } from '@angular/common';
@@ -56,6 +57,15 @@ export class EditTextChurchScheduleComponent implements OnInit {
       this.churchSchedule.church = church;
     } else {
       this.churchSchedule.church = null;
+    }
+
+    this.save();
+  }
+  setChurchScheduleType(churchScheduleType: ChurchScheduleType) {
+    if (churchScheduleType) {
+      this.churchSchedule.churchScheduleType = churchScheduleType;
+    } else {
+      this.churchSchedule.churchScheduleType = null;
     }
 
     this.save();

@@ -19,31 +19,18 @@
 
 <ion-spinner *ngIf="is_loading" name="bubbles"></ion-spinner>
 <ion-grid>
-  <ion-row>
-    <ion-col *ngIf="session===1">
-      <ion-card>
-        <app-edit-text-church-schedule (returnSubpage)="receiveSubpage($event)"></app-edit-text-church-schedule>
-      </ion-card>
-    </ion-col>
-    <ion-col *ngIf="session===2">
-      <ion-card>
-        <app-review-church-schedule (returnSubpage)="receiveSubpage($event)"></app-review-church-schedule>
-      </ion-card>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col *ngIf="session>1">
-      <ion-button expand="block" (click)="backSession()">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-
-        <ion-label>VOLTAR</ion-label>
-      </ion-button>
-    </ion-col>
-
+  <ion-grid>
     <ion-col>
-      <ion-button expand="block" (click)="next()">
-        <ion-label>{{session<2 ?'PRÓXIMO':'CONCLUIR'}} </ion-label>
-            <ion-icon name="chevron-forward-outline"></ion-icon>
+      <ion-card>
+        <app-edit-text-church-schedule></app-edit-text-church-schedule>
+      </ion-card>
+    </ion-col>
+  </ion-grid>ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-button expand="block" (click)="publish()">
+        <ion-label>CONCLUIR </ion-label>
+        <ion-icon name="chevron-forward-outline"></ion-icon>
       </ion-button>
     </ion-col>
   </ion-row>

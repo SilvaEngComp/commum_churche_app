@@ -40,9 +40,11 @@ export class UiService {
   @Output()
   static pageTitle: EventEmitter<any> = new EventEmitter<any>();
 
-  // // eslint-disable-next-line @typescript-eslint/member-ordering
   @Output()
   static loadImageEmitter: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  static mySelectEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   static stringNormalization(text: string) {
     return text
