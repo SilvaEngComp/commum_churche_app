@@ -72,6 +72,7 @@ export class Constants {
   ];
 
   static ENDPOINT_TITHE = 'tithes';
+  static ENDPOINT_CHURCH_SCHEDULE_TIME = 'churchScheduleTypes';
 
   static MENU_FINANCY_OPTION_TITHE = '0';
   static MENU_FINANCY_OPTION_SUMMARY = '1';
@@ -149,16 +150,17 @@ export class Constants {
   static CHURCH_SCHEDULE_PAGE_COMMENT = '4';
   static CHURCH_SCHEDULE_ATTRIBUTES_OBJECT = 'storedFeed';
   static DAYS_OF_WEEK = [
+    'Domingo',
     'Segunda-Feira',
     'Terça-Feira',
     'Quarta-Feira',
     'Quinta-Feira',
     'Sexta-Feira',
     'Sábado',
-    'Domingo',
   ];
 
   static TITHE_MENU_OPTION_TITHE = 'DÍZIMO';
   static TITHE_MENU_OPTION_OFFER = 'OFERTA';
   static INVALID_OPTION = 'Opção inválida';
+  static CHURCH_SCHEDULE_SELECTED_FILTER = 'churchScheduleSelectedFilter';
 }

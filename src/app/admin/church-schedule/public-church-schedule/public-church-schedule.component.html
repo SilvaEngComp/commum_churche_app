@@ -10,7 +10,7 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <app-my-select-list [label]="'Organização'" [listName]="'churches'" [create]="true"
+      <app-my-select-list [label]="'Organização'" [listName]="'churches'" [create]="false"
         (selectEmiter)="setChurch($event)"></app-my-select-list>
     </ion-col>
   </ion-row>
@@ -23,6 +23,12 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-datetime color="secondary" mode="ios" locale="pt-BR" presentation="date" [multiple]="true"
+        [value]="daysOfSchedule" (click)="selectDateEvent($event)"></ion-datetime>
     </ion-col>
   </ion-row>
   <ion-row *ngIf="!is_loading">

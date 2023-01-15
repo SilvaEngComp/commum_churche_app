@@ -31,7 +31,8 @@ export class CaixaGroupRegisterComponent implements OnInit {
 
         this.caixagroupService
           .store(this.caixaGroup)
-          .then(() => {
+          .then((responser) => {
+            this.caixaGroup = responser.data;
             this.close();
           })
           .catch((erro) => {

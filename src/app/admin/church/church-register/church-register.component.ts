@@ -33,7 +33,8 @@ export class ChurchRegisterComponent implements OnInit {
 
         this.churchService
           .store(this.church)
-          .then(() => {
+          .then((responser) => {
+            this.church = responser.data;
             this.close();
           })
           .catch((erro) => {

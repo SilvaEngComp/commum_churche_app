@@ -6,6 +6,10 @@
         <ion-label slot="end" *ngIf="scheduleTime?.hasTime">{{scheduleTime?.time}}</ion-label>
       </ion-item>
     </ion-col>
+    <ion-col>
+      <ion-icon [ngClass]="{'hidde-menu':!permission}" (click)="menuPost(churchSchedule, $event)"
+        name="ellipsis-vertical-outline"></ion-icon>
+    </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>

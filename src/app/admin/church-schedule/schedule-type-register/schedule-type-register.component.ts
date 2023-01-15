@@ -32,7 +32,8 @@ export class ScheduleTypeRegisterComponent implements OnInit {
 
         this.churchScheduleTypeService
           .store(this.churchScheduleType)
-          .then(() => {
+          .then((responser) => {
+            this.churchScheduleType = responser.data;
             this.close();
           })
           .catch((erro) => {

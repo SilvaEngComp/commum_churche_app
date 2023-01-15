@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 /* eslint-disable max-len */
 import { ChurchScheduleFilter } from './../../../models/churchScheduleFilter';
 import { UiService } from './../../../services/ui.service';
@@ -27,20 +28,19 @@ import { ChurchScheduleType } from 'src/app/models/churchScheduleType';
   styleUrls: ['./public-church-schedule.component.scss'],
 })
 export class PublicChurchScheduleComponent implements OnInit {
-  @ViewChild('divType', { static: false }) divType: ElementRef;
   @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
-  expandAll: boolean;
   user: User;
   churchSchedules: ChurchSchedule[];
-  base_url: string = environment.IMAGE_URL;
+  churchSchedulesFound: ChurchSchedule[];
   is_loading: boolean;
-  showComment: boolean;
   filterChurchSchedule: ChurchScheduleFilter;
   churchScheduleTypes: ChurchScheduleType[];
   selectedSchedule: ChurchScheduleType;
   filter: ChurchScheduleFilter;
   churchSchedule: ChurchSchedule;
   showTypes: boolean;
+  daysOfSchedule: string[] = [];
+  datePipe: DatePipe;
   constructor(
     private churchScheduleService: ChurchScheduleService,
     private churchScheduleTypeService: ChurchScheduleTypeService,
@@ -48,14 +48,14 @@ export class PublicChurchScheduleComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.expandAll = false;
-    this.user = LoginService.getUser();
-    this.filter = new ChurchScheduleFilter();
+    this.filter = UiService.localGet(Constants.CHURCH_SCHEDULE_SELECTED_FILTER);
+    if (!this.filter) {
+      this.filter = new ChurchScheduleFilter();
+    }
     this.selectedSchedule = new ChurchScheduleType();
     this.load();
-  }
-  showCompleteMessage() {
-    this.expandAll = !this.expandAll;
+    this.datePipe = new DatePipe('en');
+    this.daysOfSchedule.push(this.datePipe.transform(Date.now(), 'YYYY-MM-dd'));
   }
 
   load() {
@@ -87,29 +87,59 @@ export class PublicChurchScheduleComponent implements OnInit {
     }
 
     this.save();
+    this.getSchedules();
   }
 
   save() {
-    // UiService.localSet(Constants.CHURCH_SCHEDULE_SELECTED_FILTER, this.churchSchedule)
+    UiService.localSet(Constants.CHURCH_SCHEDULE_SELECTED_FILTER, this.filter);
   }
 
   setChurchScheduleType(ev: any) {
     this.filter.churchScheduleType.id = ev.target.value;
-    this.churchScheduleService.get(this.filter).then((responser) => {
-      this.churchSchedules = responser.data;
-      console.log(this.churchSchedules);
-    });
+    this.save();
+    this.getSchedules();
   }
 
-  checkImage(user: User) {
-    if (!user?.image) {
-      if (user?.gender.toLocaleLowerCase().includes('masculino')) {
-        user.image = Constants.MALE_PERSON;
-      } else {
-        user.image = Constants.FEMALE_PERSON;
-      }
+  getSchedules() {
+    if (this?.filter?.church?.id && this?.filter?.churchScheduleType?.id) {
+      this.churchScheduleService.get(this.filter).then((responser) => {
+        this.churchSchedulesFound = responser.data;
+        const daysOfSchedule: string[] = [];
+        daysOfSchedule.push(this.datePipe.transform(Date.now(), 'YYYY-MM-dd'));
+        this.churchSchedulesFound.filter((schedule) => {
+          // console.log(schedule);
+          if (schedule?.dates?.length > 0) {
+            schedule?.dates?.filter((date) => {
+              daysOfSchedule.push(date);
+            });
+          }
+        });
+        if (daysOfSchedule?.length > 0) {
+          this.daysOfSchedule = daysOfSchedule;
+        }
+      });
     }
-    return user;
+  }
+
+  selectDateEvent(ev: any) {
+    console.clear();
+    let selectedDay;
+    const values: string[] = ev.target.value;
+    this.daysOfSchedule.filter((selctedDate) => {
+      if (!values.includes(selctedDate)) {
+        selectedDay = selctedDate;
+      }
+    });
+
+    if (selectedDay) {
+      this.churchSchedules = this.churchSchedulesFound.filter(
+        (churchSchedule) => {
+          if (churchSchedule?.dates.includes(selectedDay)) {
+            return churchSchedule;
+          }
+        }
+      );
+    }
   }
   newChurchSchedule() {
     UiService.localRemove(Constants.CHURCH_SCHEDULE_ATTRIBUTES_OBJECT);
@@ -125,6 +155,10 @@ export class PublicChurchScheduleComponent implements OnInit {
       this.returnPage.emit(obj);
     }
     if (obj.refresh) {
+      this.getSchedules();
+    }
+    if (obj.clear) {
+      this.filter = new ChurchScheduleFilter();
       this.load();
     }
     if (obj.ChurchSchedules) {

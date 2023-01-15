@@ -56,6 +56,8 @@ export class CreateChurchScheduleComponent implements OnInit {
     if (!this.churchSchedule) {
       this.churchSchedule = new ChurchSchedule();
     }
+
+    console.log(this.churchSchedule);
   }
 
   backSession() {

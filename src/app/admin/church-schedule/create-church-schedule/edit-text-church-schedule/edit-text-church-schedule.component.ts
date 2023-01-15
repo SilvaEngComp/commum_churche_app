@@ -116,8 +116,11 @@ export class EditTextChurchScheduleComponent implements OnInit {
     this.churchSchedule.status = status;
   }
 
-  setScheduleTime(schueduleTime: ScheduleTime) {
-    this.churchSchedule.scheduleTimes.push(schueduleTime);
+  onSelectDayOfWeek(ev: any, position: number) {
+    const day = ev.target.value;
+    this.churchSchedule.scheduleTimes[position].day = day;
+    this.churchSchedule.scheduleTimes[position].numberOfDay =
+      this.daysOfWeek.indexOf(day);
   }
 
   save() {

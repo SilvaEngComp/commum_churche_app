@@ -13,7 +13,7 @@ export class ServiceInterface {
     protected exceptionService: ExceptionService
   ) {
     this.url = environment.API2;
-    this.endpoint = Constants.ENDPOINT_TITHE;
+    this.endpoint = Constants.ENDPOINT_CHURCH_SCHEDULE_TIME;
   }
 
   checkLogged() {

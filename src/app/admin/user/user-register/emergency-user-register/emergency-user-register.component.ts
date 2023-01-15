@@ -35,7 +35,8 @@ export class EmergencyUserRegisterComponent implements OnInit {
 
         this.userService
           .emergencialStore(this.user)
-          .then(() => {
+          .then((responser) => {
+            this.user = responser.data;
             this.close();
           })
           .catch((erro) => {

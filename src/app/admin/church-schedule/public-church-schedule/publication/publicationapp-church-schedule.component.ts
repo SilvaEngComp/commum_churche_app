@@ -98,7 +98,7 @@ export class PublicationChurchScheduleComponent implements OnInit {
     this.exeptionService.loadingFunction();
     this.churchScheduleService
       .destroy(schedule)
-      .then(() => this.returnSubpage.emit())
+      .then(() => this.returnSubpage.emit({ refresh: true }))
       .catch((err) => this.exeptionService.error(err));
   }
 }

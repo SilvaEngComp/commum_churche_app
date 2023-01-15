@@ -146,7 +146,7 @@ export class MySelectListComponent implements OnInit {
       obj.name.toLowerCase().includes(mySelectAdapter.value.toLowerCase())
     );
 
-    if (result) {
+    if (result?.length > 0) {
       const obj = result[0];
       this.selectEmiter.emit(obj);
       this.selected = obj.name;
@@ -179,6 +179,7 @@ export class MySelectListComponent implements OnInit {
     const { data } = await modal.onDidDismiss();
     console.log(data);
     if (data) {
+      this.load();
       const selected = MySelectAdapter.toSingleMySelectAny(data?.obj);
       console.log(selected);
       this.onSelect(selected);

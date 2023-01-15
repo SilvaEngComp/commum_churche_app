@@ -10,9 +10,11 @@ export class ChurchSchedule {
   church: Church;
   status: boolean;
   churchScheduleType: ChurchScheduleType;
+  dates: string[];
 
   constructor() {
     this.scheduleTimes = [];
+    this.dates = [];
     this.church = new Church();
     this.churchScheduleType = new ChurchScheduleType();
   }
