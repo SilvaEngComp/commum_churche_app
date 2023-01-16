@@ -5,9 +5,7 @@ import { IonContent, Platform, NavController } from '@ionic/angular';
 import { Constants } from 'src/app/models/constants';
 import { Menu } from 'src/app/models/menu';
 import { User } from 'src/app/models/User';
-import { LoginService } from 'src/app/services/login.service';
 import { UiService } from 'src/app/services/ui.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-menu-home-large',
@@ -20,7 +18,6 @@ export class MenuHomeLargeComponent implements OnInit {
   nivel: number;
   largura: number;
   page: string;
-  base_url: string = environment.IMAGE_URL;
   user: User;
   showMenu: boolean;
   menu_size_left: string;
@@ -34,10 +31,9 @@ export class MenuHomeLargeComponent implements OnInit {
     this.height = this.platform.height();
     this.showMenu = true;
     this.menu_itens = Menu.getMenu(true);
-
+    this.page = this.menu_itens[0].id;
     this.nivel = 3;
     this.permission = false;
-    this.page = '0';
     if (UiService.localGet(Constants.MENU_HOME_PAGE)) {
       this.page = UiService.localGet(Constants.MENU_HOME_PAGE);
     }
@@ -64,14 +60,11 @@ export class MenuHomeLargeComponent implements OnInit {
     this.showMenu = !this.showMenu;
   }
 
-  selectSubPage(page: any, subpage: any) {
-    this.page = page;
-    UiService.pageMenu.emit({ subpage });
-    this.content.scrollToTop(2000);
-  }
-
   selectPage(page: any, item: Menu) {
     this.page = page;
+    if (this.page === '0' || this.page === '1') {
+      UiService.localSet(Constants.CURRENT_REGISTER_SESSION, Number(this.page));
+    }
     UiService.localSet(Constants.MENU_HOME_PAGE, this.page);
   }
 

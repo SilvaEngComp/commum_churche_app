@@ -3,7 +3,7 @@ import { Platform } from '@ionic/angular';
 import { ConstantMessages } from 'src/app/models/messages';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Constants } from 'src/app/models/constants';
 import { User } from 'src/app/models/User';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -18,7 +18,7 @@ import { UserService } from 'src/app/services/user.service';
 export class HomeUserRegisterComponent implements OnInit {
   user: User;
   wouldShowBrads: boolean;
-  session: number;
+  @Input() session: number;
   constructor(
     private usuarioService: UserService,
     private exceptionService: ExceptionService,
@@ -26,7 +26,9 @@ export class HomeUserRegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.session = UiService.localGet(Constants.CURRENT_REGISTER_SESSION);
+    if (!this.session) {
+      this.session = UiService.localGet(Constants.CURRENT_REGISTER_SESSION);
+    }
     if (!this.session) {
       if (LoginService.getHeaders()) {
         this.session = 1;

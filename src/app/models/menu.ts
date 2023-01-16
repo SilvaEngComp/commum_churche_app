@@ -38,9 +38,12 @@ export class Menu {
     const menu_itens: string[] = [];
     try {
       if (isHome) {
-        menu_itens.push(Constants.SUPERIOR_MENU_BIRTHDAYS);
+        menu_itens.push(Constants.SUPERIOR_MENU_HOME);
         menu_itens.push(Constants.SUPERIOR_MENU_REGISTER);
         menu_itens.push(Constants.SUPERIOR_MENU_LOGIN);
+        if (environment.TEST) {
+          menu_itens.push(Constants.SUPERIOR_MENU_BIRTHDAYS);
+        }
       } else {
         menu_itens.push(Constants.LATERAL_MENU_PROFILE);
 

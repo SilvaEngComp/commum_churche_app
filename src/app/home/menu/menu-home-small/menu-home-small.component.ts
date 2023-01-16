@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
 import {
@@ -15,40 +16,26 @@ import { ExceptionService } from 'src/app/services/exception-service.service';
 import { FeedService } from 'src/app/services/feed.service';
 import { MessagingService } from 'src/app/services/messaging.service';
 import { UiService } from 'src/app/services/ui.service';
+import { Menu } from 'src/app/models/menu';
 
 @Component({
   selector: 'app-menu-home-small',
   templateUrl: './menu-home-small.component.html',
   styleUrls: ['./menu-home-small.component.scss'],
 })
-export class MenuHomeSmallComponent implements OnInit, AfterViewInit {
+export class MenuHomeSmallComponent implements OnInit {
   @Output() selectedPage: EventEmitter<any> = new EventEmitter<any>();
-  page_selected: string;
-  badge_feed: number;
   @ViewChild('tabHome', { static: false }) tab!: IonTabs;
 
+  isTest: boolean;
   constructor(
-    // private fcmService: FcmService,
-    private platform: Platform,
     private feedService: FeedService,
     private exceptionService: ExceptionService,
     private messagingService: MessagingService
   ) {}
 
-  ngOnInit() {}
-  ngAfterViewInit() {
-    // this.load();
-    // if (!this.platform.is('cordova')) {
-    //   this.requestPermission();
-    // } else {
-    //   this.fcmService.initPush();
-    // }
-    // if (UiService.localGet('tab-page')) {
-    //   this.page_selected = UiService.localGet('tab-page');
-    // } else {
-    //   this.page_selected = 'challenge';
-    // }
-    // this.tab.select(this.page_selected);
+  ngOnInit() {
+    this.isTest = environment.TEST;
   }
 
   async setPage(page: number) {
@@ -82,12 +69,6 @@ export class MenuHomeSmallComponent implements OnInit, AfterViewInit {
         this.exceptionService.alertDialog(err, 'Erro!');
       }
     );
-  }
-
-  async load() {
-    this.feedService
-      .checkNewest()
-      .then((responser) => (this.badge_feed = responser.data));
   }
 
   setSession(op: number) {

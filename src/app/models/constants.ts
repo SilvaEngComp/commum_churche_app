@@ -86,6 +86,7 @@ export class Constants {
   static MENU_USER_OPTION_MEMBERS = '1';
   static HAS_BACK_PAGE = 'hasBackPage';
   static USER_LETTER_SIZE_CONFIG = 'userLetterSizeConfig';
+  static SUPERIOR_MENU_HOME = 'HOME';
   static SUPERIOR_MENU_BIRTHDAYS = 'ANIVERSARIANTES';
   static SUPERIOR_MENU_REGISTER = 'CADASTRO';
   static SUPERIOR_MENU_LOGIN = 'LOGIN';

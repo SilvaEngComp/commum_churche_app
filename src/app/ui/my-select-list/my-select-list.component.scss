@@ -23,12 +23,14 @@
 }
 
 .open-div {
+  width: 100%;
   height: auto;
   max-height: 200px;
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 5px;
-  border: 1px dotted var(--ion-color-tertiary);
+  box-shadow: 4px 2px 2px 2px var(--ion-color-medium);
+  z-index: 2000;
 }
 
 //div que é expandida simulando o select list

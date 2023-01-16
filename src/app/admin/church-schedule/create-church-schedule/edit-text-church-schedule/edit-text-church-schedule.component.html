@@ -13,14 +13,14 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <app-my-select-list [label]="'Organização'" [listName]="'churches'" [selected]="churchSchedule?.church"
+        <app-my-select-list [label]="'Organização'" [listName]="'churches'" [selected]="churchSchedule?.church?.name"
           [create]="true" (selectEmiter)="setChurch($event)"></app-my-select-list>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <app-my-select-list [label]="'Tipo'" [listName]="'churchScheduleTypes'" [create]="true"
-          [selected]="churchSchedule?.churchScheduleType"
+          [selected]="churchSchedule?.churchScheduleType?.name"
           (selectEmiter)="setChurchScheduleType($event)"></app-my-select-list>
       </ion-col>
     </ion-row>

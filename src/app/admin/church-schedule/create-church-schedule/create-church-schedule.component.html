@@ -8,14 +8,7 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-segment [value]="session" (ionChange)="setSession($event)">
-  <ion-segment-button value="1">
-    <ion-label>Texto</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="2">
-    <ion-label>Revisar</ion-label>
-  </ion-segment-button>
-</ion-segment>
+
 
 <ion-spinner *ngIf="is_loading" name="bubbles"></ion-spinner>
 <ion-grid>
