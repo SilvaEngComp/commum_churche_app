@@ -30,7 +30,7 @@ export class User {
   fcm_mobile_key: string;
   fcm_mobile_web_key: string;
   constructor() {
-    this.password = '12345678';
+    this.password = '';
     this.roles = [Constants.ROLE_MEMBER];
     this.contact = new Contact();
     this.maritalStatus = new MaritalStatus();

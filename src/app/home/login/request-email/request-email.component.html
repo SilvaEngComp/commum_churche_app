@@ -14,7 +14,7 @@
     <ion-col>
       <ion-item class="item-input" lines="none">
         <ion-label position="floating">senha</ion-label>
-        <ion-input [type]="password" [(ngModel)]="user.password"></ion-input>
+        <ion-input [type]="password" [(ngModel)]="user.password" placeholder="123455678"></ion-input>
         <ion-button slot="end" expand="block" fill="clear" (click)="showPassword()">
           <ion-icon color="secondary" *ngIf="show" name="eye-outline"></ion-icon>
           <ion-icon color="secondary" *ngIf="!show" name="eye-off-outline"></ion-icon>
