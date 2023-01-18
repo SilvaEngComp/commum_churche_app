@@ -5,6 +5,7 @@ import { IonContent, Platform, NavController } from '@ionic/angular';
 import { Constants } from 'src/app/models/constants';
 import { Menu } from 'src/app/models/menu';
 import { User } from 'src/app/models/user';
+import { Verse } from 'src/app/models/verse';
 import { LoginService } from 'src/app/services/login.service';
 import { UiService } from 'src/app/services/ui.service';
 import { environment } from 'src/environments/environment';
@@ -28,6 +29,8 @@ export class AdminLargeComponent implements OnInit {
   height: number;
   defaultPageName = 'lastPage';
   title: string;
+  showColorMark: boolean;
+  verse: Verse;
   // isMember: boolean;
   @ViewChild('main', { static: false }) content: IonContent;
 
@@ -51,8 +54,22 @@ export class AdminLargeComponent implements OnInit {
     }
 
     this.checkImage();
+
+    UiService.showColorMarkEmitter.subscribe((data) => {
+      this.verse = data.verse;
+      // this.renderer = data.renderer;
+      this.setShowColorMark(data.status);
+    });
+
+    UiService.returnColorMaker.subscribe((data) => {
+      this.setShowColorMark(false);
+    });
   }
 
+  setShowColorMark(showcolorMark: boolean) {
+    this.showColorMark = showcolorMark;
+    UiService.localSet(Constants.IS_COLOR_MANAGER_OPPENED, this.showColorMark);
+  }
   getConditions() {
     this.largura = window.innerWidth;
 

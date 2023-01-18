@@ -20,6 +20,7 @@ export class AdminSelectorComponent implements OnInit {
   user: User;
   page: string;
   defaultPageName = 'menu-admin-page';
+  showColorMark: boolean;
   constructor(
     private exceptionService: ExceptionService,
     private platform: Platform,

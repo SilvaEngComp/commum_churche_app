@@ -1,4 +1,4 @@
-<ion-grid>
+d<ion-grid>
   <ion-row>
     <ion-col size="2" color="primary" class="menu-lateral" *ngIf="showMenu" [ngStyle]="{'height': 2*height+'px'}">
       <ion-icon src="./assets/icons/menu.svg" (click)="showMenu = !showMenu"></ion-icon>
@@ -68,3 +68,7 @@
     </ion-col>
   </ion-row>
 </ion-grid>
+<div class="footer" *ngIf="showColorMark">
+  <ion-toolbar>
+    <app-color-manager [verse]="verse"></app-color-manager> </ion-toolbar>
+</div>
