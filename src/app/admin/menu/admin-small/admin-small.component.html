@@ -1,3 +1,7 @@
+<ion-footer *ngIf="showColorMark">
+  <ion-toolbar>
+    <app-color-manager [element]="element"></app-color-manager> </ion-toolbar>
+</ion-footer>
 <ion-tab-bar slot="bottom" color="primary">
 
   <ion-tab-button tab="feed" (click)="setPage(6)" *ngIf="isTest">
@@ -6,7 +10,7 @@
     <ion-badge *ngIf="badge_feed">{{badge_feed}}</ion-badge>
   </ion-tab-button>
 
-  <ion-tab-button tab="bible" (click)="setPage(0)">
+  <ion-tab-button tab="bible" (click)="setPage(1)">
     <ion-icon name="home"></ion-icon>
     <ion-label>Leitura</ion-label>
   </ion-tab-button>

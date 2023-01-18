@@ -1,0 +1,13 @@
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-label>
+        Comentar
+      </ion-label>
+      <ion-textarea [(ngModel)]="comment" (keyup.enter)="setComment()"></ion-textarea>
+      <ion-button expand="block" (click)="setComment()">
+        <ion-label>OK</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

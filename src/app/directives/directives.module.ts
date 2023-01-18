@@ -6,14 +6,12 @@ import { CopyClipboardDirective } from './copy-clipboard.directive';
 import { IonicModule } from '@ionic/angular';
 import { LongPressActionDirective } from './long-press-action.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ColorMarkerComponent } from './color-marker/color-marker.component';
 
 @NgModule({
   declarations: [
     PermissionDirective,
     CopyClipboardDirective,
     LongPressActionDirective,
-    ColorMarkerComponent,
     NoPermissionDirective,
   ],
 
@@ -24,6 +22,6 @@ import { ColorMarkerComponent } from './color-marker/color-marker.component';
     LongPressActionDirective,
     NoPermissionDirective,
   ],
-  providers: [PermissionDirective],
+  providers: [PermissionDirective, LongPressActionDirective],
 })
 export class DirectivesModule {}

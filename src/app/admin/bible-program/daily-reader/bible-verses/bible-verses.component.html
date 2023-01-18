@@ -19,7 +19,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<div class="open-div" [ngStyle]="{'height': height}">
+<div class="open-div" [ngStyle]="{'height': height}" (scroll)="onWindowScroll($event)">
   <ion-grid>
     <ion-row *ngFor="let item of verseDayTree; let bokPosition=index">
       <ion-col>
@@ -33,10 +33,7 @@
                 {{chapter?.chapter}}</ion-text>
               <ion-grid>
                 <ion-row *ngFor="let verse of chapter?.verses; let versePosition=index">
-                  <ion-col lass="col-verses">
-                    <ion-checkbox color="tertiary" (ionChange)="setShowCheckBox()" mode="ios" *ngIf="showCheckBox"
-                      appLongPressAction [verse]="verse"></ion-checkbox>
-
+                  <ion-col lass="col-verses" appLongPressAction [verse]="verse">
                     <ion-text class="verse"
                       [ngStyle]="{'background-color':verse?.userVerseMark?.color, 'font-size': letterSize}"
                       [ngClass]="{'white-text':checkWhiteText(verse)}">

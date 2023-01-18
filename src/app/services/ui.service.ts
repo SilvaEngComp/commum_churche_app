@@ -46,6 +46,15 @@ export class UiService {
   @Output()
   static mySelectEmitter: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output()
+  static scrollVerseRead: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  static showColorMarkEmitter: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  static returnColorMaker: EventEmitter<any> = new EventEmitter<any>();
+
   static stringNormalization(text: string) {
     return text
       .normalize('NFD')

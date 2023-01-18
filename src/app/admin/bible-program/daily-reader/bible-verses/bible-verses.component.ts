@@ -1,19 +1,32 @@
+import { LongPressActionDirective } from './../../../../directives/long-press-action.directive';
+/* eslint-disable @typescript-eslint/naming-convention */
+import { CommentMakerComponent } from './../../../../resources/color-manager/comment-maker/comment-maker.component';
 import { TutorialComponent } from '../../../tutorial/tutorial.component';
 import { ExceptionService } from '../../../../services/exception-service.service';
 import { UserVerseMarkService } from '../../../../services/user-verse-mark.service';
-import { Platform, PopoverController } from '@ionic/angular';
+import { IonCol, Platform, PopoverController } from '@ionic/angular';
 import { BibleProgramService } from '../../../../services/bible-program.service';
 import { VerseDay } from '../../../../models/verseDay';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { Constants } from 'src/app/models/constants';
 import { UiService } from 'src/app/services/ui.service';
 import { VerseDayTree } from 'src/app/models/verseDayTree';
 import { Verse } from 'src/app/models/verse';
-import { ColorMarkerComponent } from 'src/app/directives/color-marker/color-marker.component';
 import { LoginService } from 'src/app/services/login.service';
 import { UserVerseMark } from 'src/app/models/userVerseMark';
 import { ConstantMessages } from 'src/app/models/messages';
 import { ConstantsMidia } from 'src/app/models/contantsMidia';
+import { fromEvent } from 'rxjs';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bible-verses',
@@ -32,13 +45,24 @@ export class BibleVersesComponent implements OnInit {
   letterSizeCap: string;
   letterSizeBook: string;
   showCheckBox: boolean;
+  active: boolean;
+  selectedVerse: Verse;
+  action: any;
+  DOUBLE_CLICK_THRESHOLD = 200;
   constructor(
     private bibleProgramService: BibleProgramService,
     private platform: Platform,
     private popCtrl: PopoverController,
     private userVerseMarkService: UserVerseMarkService,
-    private exceptionService: ExceptionService
+    private exceptionService: ExceptionService,
+    private element: ElementRef,
+    private renderer: Renderer2,
+    private longPress: LongPressActionDirective
   ) {}
+
+  public onClick(event: ElementRef, verse: Verse): void {
+    this.longPress.onClick();
+  }
 
   ngOnInit() {
     this.showCheckBox = false;
@@ -51,8 +75,63 @@ export class BibleVersesComponent implements OnInit {
     this.height = Math.round(this.platform.height() * 0.8) + 'px';
     this.letterSizeConfig = 12;
     this.load();
+    this.checkEventPress();
   }
 
+  checkEventPress() {
+    UiService.scrollVerseRead.subscribe((data) => {
+      this.active = data.status;
+    });
+
+    // UiService.returnColorMaker.subscribe((data) => {
+    //
+    //   if (data) {
+    //     this.el = data.element;
+    //     console.log(this.el.nativeElement);
+    //     if (!this.selectedVerse?.userVerseMark) {
+    //       this.selectedVerse.userVerseMark = new UserVerseMark();
+    //     }
+    //     if (data.color) {
+    //       this.selectedVerse.userVerseMark.color = data.color;
+    //       this.renderer.setStyle(
+    //         this.el.nativeElement,
+    //         'backgroundColor',
+    //         data.color
+    //       );
+
+    //       if (data.color !== 'Yellow') {
+    //         this.renderer.setStyle(this.el.nativeElement, 'color', 'white');
+    //       }
+    //       this.renderer.setStyle(
+    //         this.el.nativeElement,
+    //         'fontFamily',
+    //         'Qanelas-bold'
+    //       );
+    //     }
+
+    //     if (data.comment) {
+    //       this.selectedVerse.userVerseMark.comment = data.comment;
+    //     }
+
+    //     if (
+    //       this.selectedVerse.userVerseMark.color.length > 0 ||
+    //       this.selectedVerse.userVerseMark.comment.length > 0
+    //     ) {
+    //       const user = LoginService.getUser();
+    //       this.selectedVerse.userVerseMark.user_id = user.id;
+    //       this.selectedVerse.userVerseMark.verse_id = this.selectedVerse.id;
+    //       // this.userVerseMarkService.store(this.verse.userVerseMark);
+    //     }
+    //     this.checkResetColor();
+    //   } else {
+    //     this.checkResetColor();
+    //   }
+    // });
+  }
+
+  onWindowScroll(ev: any) {
+    UiService.scrollVerseRead.emit({ status: true });
+  }
   async showTutorial(event: any) {
     const pop = await this.popCtrl.create({
       component: TutorialComponent,
@@ -134,7 +213,7 @@ export class BibleVersesComponent implements OnInit {
     }
 
     const modal = await this.popCtrl.create({
-      component: ColorMarkerComponent,
+      component: CommentMakerComponent,
       componentProps: {
         isDirective: false,
         comment: verse.userVerseMark.comment,
@@ -168,4 +247,62 @@ export class BibleVersesComponent implements OnInit {
     this.showCheckBox = !this.showCheckBox;
     console.log(this.showCheckBox);
   }
+
+  // versePress(verse: Verse) {
+  //   this.selectedVerse = verse;
+  //   this.active = UiService.localGet(Constants.IS_COLOR_MANAGER_OPPENED);
+  //   if (this.active) {
+  //     UiService.showColorMarkEmitter.emit({ status: false });
+  //     this.clearFormat();
+  //   } else {
+  //     this.longPressCheck();
+  //   }
+  // }
+
+  // longPressCheck() {
+  //   if (this.active) {
+  //     clearTimeout(this.action);
+  //   }
+  //   this.action = setTimeout(() => {
+  //     if (!this.active) {
+  //       console.log(this.element.nativeElement);
+  //       this.renderer.setStyle(
+  //         this.el.nativeElement,
+  //         'backgroundColor',
+  //         'gray'
+  //       );
+  //       UiService.showColorMarkEmitter.emit({
+  //         status: true,
+  //         element: this.el,
+  //       });
+  //       // this.openColorMark(1);
+  //     }
+  //   }, this.DOUBLE_CLICK_THRESHOLD);
+  // }
+
+  // checkResetColor() {
+  //   if (
+  //     this.selectedVerse?.userVerseMark?.color?.length > 0 &&
+  //     this.selectedVerse?.userVerseMark?.color !== Constants.COLOR_TRANSPARENT
+  //   ) {
+  //     this.renderer.setStyle(
+  //       this.el.nativeElement,
+  //       'backgroundColor',
+  //       this.selectedVerse?.userVerseMark?.color
+  //     );
+  //   } else {
+  //     this.clearFormat();
+  //   }
+  // }
+
+  // clearFormat() {
+  //   this.renderer.setStyle(
+  //     this.element.nativeElement,
+  //     'backgroundColor',
+  //     Constants.COLOR_TRANSPARENT
+  //   );
+
+  //   this.renderer.setStyle(this.element.nativeElement, 'fontFamily', 'Qanelas');
+  //   this.renderer.setStyle(this.element.nativeElement, 'color', 'black');
+  // }
 }

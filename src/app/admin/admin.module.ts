@@ -1,3 +1,5 @@
+import { ResourcesModule } from 'src/app/resources/resources.module';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 import { ChurchScheduleModule } from './church-schedule/church-schedule-admin/church-schedule.module';
 import { FeedPageModule } from './feed/feed-admin/feed.module';
 import { BibleProgramModule } from './bible-program/bible-program-admin/bible-program-admin.module';
@@ -32,6 +34,8 @@ import { TutorialComponent } from './tutorial/tutorial.component';
     BibleProgramModule,
     FeedPageModule,
     ChurchScheduleModule,
+    DirectivesModule,
+    ResourcesModule,
   ],
   exports: [AdminSelectorComponent],
 })

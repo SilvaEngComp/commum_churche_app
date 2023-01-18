@@ -164,4 +164,5 @@ export class Constants {
   static TITHE_MENU_OPTION_OFFER = 'OFERTA';
   static INVALID_OPTION = 'Opção inválida';
   static CHURCH_SCHEDULE_SELECTED_FILTER = 'churchScheduleSelectedFilter';
+  static IS_COLOR_MANAGER_OPPENED = 'isColorManagerOppened';
 }

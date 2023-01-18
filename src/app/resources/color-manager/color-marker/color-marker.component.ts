@@ -1,5 +1,4 @@
-import { PopoverController } from '@ionic/angular';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Constants } from 'src/app/models/constants';
 
 @Component({
@@ -8,8 +7,9 @@ import { Constants } from 'src/app/models/constants';
   styleUrls: ['./color-marker.component.scss'],
 })
 export class ColorMarkerComponent implements OnInit {
+  @Output() retrurnAction: EventEmitter<any> = new EventEmitter<any>();
   @Input() isDirective: boolean;
-  @Input() comment: string;
+
   colors = [
     'blue',
     'blueviolet',
@@ -30,14 +30,10 @@ export class ColorMarkerComponent implements OnInit {
     'Yellow',
   ];
 
-  constructor(private modalCtrl: PopoverController) {}
+  constructor() {}
 
   selectColor(color = Constants.COLOR_TRANSPARENT) {
-    console.log(color);
-    this.modalCtrl.dismiss({ color });
-  }
-  setComment() {
-    this.modalCtrl.dismiss({ comment: this.comment });
+    this.retrurnAction.emit({ color });
   }
 
   ngOnInit() {}

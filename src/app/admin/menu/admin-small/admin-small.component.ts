@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { environment } from 'src/environments/environment';
 import { User } from 'src/app/models/user';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -6,6 +7,7 @@ import { ExceptionService } from 'src/app/services/exception-service.service';
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   EventEmitter,
   OnInit,
   Output,
@@ -26,11 +28,13 @@ import { Constants } from 'src/app/models/constants';
 })
 export class AdminSmallComponent implements OnInit {
   @Output() selectedPage: EventEmitter<any> = new EventEmitter<any>();
+  element: ElementRef;
   page_selected: string;
   badge_feed: number;
   isMember: boolean;
   user: User;
   isTest: boolean;
+  showColorMark: boolean;
   constructor(
     // private fcmService: FcmService,
     private platform: Platform,
@@ -43,7 +47,20 @@ export class AdminSmallComponent implements OnInit {
 
   ngOnInit() {
     this.isTest = environment.TEST;
-    console.log(this.isTest);
+    UiService.showColorMarkEmitter.subscribe((data) => {
+      this.element = data.element;
+      console.log(data);
+      this.setShowColorMark(data.status);
+    });
+
+    UiService.returnColorMaker.subscribe((data) => {
+      this.setShowColorMark(false);
+    });
+  }
+
+  setShowColorMark(showcolorMark: boolean) {
+    this.showColorMark = showcolorMark;
+    UiService.localSet(Constants.IS_COLOR_MANAGER_OPPENED, this.showColorMark);
   }
   async setPage(page: number) {
     UiService.localRemove(Constants.USER_MAINTAINCE);
