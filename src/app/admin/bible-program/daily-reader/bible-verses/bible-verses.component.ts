@@ -1,32 +1,16 @@
-import { LongPressActionDirective } from './../../../../directives/long-press-action.directive';
 /* eslint-disable @typescript-eslint/naming-convention */
-import { CommentMakerComponent } from './../../../../resources/color-manager/comment-maker/comment-maker.component';
 import { TutorialComponent } from '../../../tutorial/tutorial.component';
 import { ExceptionService } from '../../../../services/exception-service.service';
-import { UserVerseMarkService } from '../../../../services/user-verse-mark.service';
-import { IonCol, Platform, PopoverController } from '@ionic/angular';
+import { Platform, PopoverController } from '@ionic/angular';
 import { BibleProgramService } from '../../../../services/bible-program.service';
 import { VerseDay } from '../../../../models/verseDay';
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  OnInit,
-  Output,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Constants } from 'src/app/models/constants';
 import { UiService } from 'src/app/services/ui.service';
 import { VerseDayTree } from 'src/app/models/verseDayTree';
 import { Verse } from 'src/app/models/verse';
-import { LoginService } from 'src/app/services/login.service';
-import { UserVerseMark } from 'src/app/models/userVerseMark';
 import { ConstantMessages } from 'src/app/models/messages';
 import { ConstantsMidia } from 'src/app/models/contantsMidia';
-import { fromEvent } from 'rxjs';
-import { map, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bible-verses',
@@ -48,21 +32,12 @@ export class BibleVersesComponent implements OnInit {
   active: boolean;
   selectedVerse: Verse;
   action: any;
-  DOUBLE_CLICK_THRESHOLD = 200;
   constructor(
     private bibleProgramService: BibleProgramService,
     private platform: Platform,
     private popCtrl: PopoverController,
-    private userVerseMarkService: UserVerseMarkService,
-    private exceptionService: ExceptionService,
-    private element: ElementRef,
-    private renderer: Renderer2,
-    private longPress: LongPressActionDirective
+    private exceptionService: ExceptionService
   ) {}
-
-  public onClick(event: ElementRef, verse: Verse): void {
-    this.longPress.onClick();
-  }
 
   ngOnInit() {
     this.showCheckBox = false;
@@ -142,122 +117,18 @@ export class BibleVersesComponent implements OnInit {
   checkWhiteText(verse: Verse) {
     let flag = false;
     if (verse?.userVerseMark) {
-      if (verse?.userVerseMark?.color.includes('Yellow')) {
-        flag = false;
-      } else if (verse?.userVerseMark?.color.includes('transparent')) {
-        flag = false;
+      if (verse?.userVerseMark?.color) {
+        if (verse?.userVerseMark?.color?.includes('Yellow')) {
+          flag = false;
+        } else if (verse?.userVerseMark?.color?.includes('transparent')) {
+          flag = false;
+        } else {
+          flag = true;
+        }
       } else {
-        flag = true;
+        flag = false;
       }
-    } else {
-      flag = false;
     }
-
     return flag;
   }
-
-  async openComment(
-    event: any,
-    verse: Verse,
-    book: number,
-    chapter: number,
-    versePosition: number
-  ) {
-    if (!verse?.userVerseMark) {
-      verse.userVerseMark = new UserVerseMark();
-    }
-
-    const modal = await this.popCtrl.create({
-      component: CommentMakerComponent,
-      componentProps: {
-        isDirective: false,
-        comment: verse.userVerseMark.comment,
-      },
-      event,
-    });
-
-    modal.present();
-    const { data } = await modal.onDidDismiss();
-    if (data) {
-      if (data.comment) {
-        verse.userVerseMark.comment = data.comment;
-      }
-
-      if (
-        verse.userVerseMark.color.length > 0 ||
-        verse.userVerseMark.comment.length > 0
-      ) {
-        const user = LoginService.getUser();
-        verse.userVerseMark.user_id = user.id;
-        verse.userVerseMark.verse_id = verse.id;
-        this.userVerseMarkService.store(verse.userVerseMark).then(() => {
-          this.verseDayTree[book].chapters[chapter].verses[versePosition] =
-            verse;
-        });
-      }
-    }
-  }
-
-  setShowCheckBox() {
-    this.showCheckBox = !this.showCheckBox;
-    console.log(this.showCheckBox);
-  }
-
-  // versePress(verse: Verse) {
-  //   this.selectedVerse = verse;
-  //   this.active = UiService.localGet(Constants.IS_COLOR_MANAGER_OPPENED);
-  //   if (this.active) {
-  //     UiService.showColorMarkEmitter.emit({ status: false });
-  //     this.clearFormat();
-  //   } else {
-  //     this.longPressCheck();
-  //   }
-  // }
-
-  // longPressCheck() {
-  //   if (this.active) {
-  //     clearTimeout(this.action);
-  //   }
-  //   this.action = setTimeout(() => {
-  //     if (!this.active) {
-  //       console.log(this.element.nativeElement);
-  //       this.renderer.setStyle(
-  //         this.el.nativeElement,
-  //         'backgroundColor',
-  //         'gray'
-  //       );
-  //       UiService.showColorMarkEmitter.emit({
-  //         status: true,
-  //         element: this.el,
-  //       });
-  //       // this.openColorMark(1);
-  //     }
-  //   }, this.DOUBLE_CLICK_THRESHOLD);
-  // }
-
-  // checkResetColor() {
-  //   if (
-  //     this.selectedVerse?.userVerseMark?.color?.length > 0 &&
-  //     this.selectedVerse?.userVerseMark?.color !== Constants.COLOR_TRANSPARENT
-  //   ) {
-  //     this.renderer.setStyle(
-  //       this.el.nativeElement,
-  //       'backgroundColor',
-  //       this.selectedVerse?.userVerseMark?.color
-  //     );
-  //   } else {
-  //     this.clearFormat();
-  //   }
-  // }
-
-  // clearFormat() {
-  //   this.renderer.setStyle(
-  //     this.element.nativeElement,
-  //     'backgroundColor',
-  //     Constants.COLOR_TRANSPARENT
-  //   );
-
-  //   this.renderer.setStyle(this.element.nativeElement, 'fontFamily', 'Qanelas');
-  //   this.renderer.setStyle(this.element.nativeElement, 'color', 'black');
-  // }
 }

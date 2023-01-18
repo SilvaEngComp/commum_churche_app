@@ -165,4 +165,6 @@ export class Constants {
   static INVALID_OPTION = 'Opção inválida';
   static CHURCH_SCHEDULE_SELECTED_FILTER = 'churchScheduleSelectedFilter';
   static IS_COLOR_MANAGER_OPPENED = 'isColorManagerOppened';
+  static ELEMENT_MARKER_REF = 'elementMarkerRef';
+  static ELEMENT_MARKER_RENDERER = 'elementMarkerRenderer';
 }

@@ -12,6 +12,7 @@ import {
   EventEmitter,
   OnInit,
   Output,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
 import { IonTabs, Platform } from '@ionic/angular';
@@ -36,9 +37,8 @@ export class AdminSmallComponent implements OnInit {
   user: User;
   isTest: boolean;
   showColorMark: boolean;
+  renderer: Renderer2;
   constructor(
-    // private fcmService: FcmService,
-    private platform: Platform,
     private feedService: FeedService,
     private exceptionService: ExceptionService,
     private messagingService: MessagingService
@@ -50,7 +50,7 @@ export class AdminSmallComponent implements OnInit {
     this.isTest = environment.TEST;
     UiService.showColorMarkEmitter.subscribe((data) => {
       this.verse = data.verse;
-      console.log(data);
+      this.renderer = data.renderer;
       this.setShowColorMark(data.status);
     });
 
@@ -62,6 +62,9 @@ export class AdminSmallComponent implements OnInit {
   setShowColorMark(showcolorMark: boolean) {
     this.showColorMark = showcolorMark;
     UiService.localSet(Constants.IS_COLOR_MANAGER_OPPENED, this.showColorMark);
+    if (!this.showColorMark) {
+      UiService.returnColorMaker.emit({ renderer: this.renderer });
+    }
   }
   async setPage(page: number) {
     UiService.localRemove(Constants.USER_MAINTAINCE);

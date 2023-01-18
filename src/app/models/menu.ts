@@ -47,9 +47,9 @@ export class Menu {
       } else {
         menu_itens.push(Constants.LATERAL_MENU_PROFILE);
 
-        if (UiService.validPermissions(Constants.ROLE_MEMBER)) {
-          menu_itens.push(Constants.LATERAL_MENU_BIBLE_READ);
-        }
+        // if (UiService.validPermissions(Constants.ROLE_MEMBER)) {
+        menu_itens.push(Constants.LATERAL_MENU_BIBLE_READ);
+        // }
 
         if (environment.TEST) {
           menu_itens.push(Constants.LATERAL_MENU_TITHE_OFFER);
@@ -92,8 +92,10 @@ export class Menu {
         Constants.LATERAL_MENU_OUT,
       ];
     }
-    const id = menu_itens.indexOf(name);
+    console.log(name);
 
+    const id = menu_itens.indexOf(name);
+    console.log(id);
     return String(id);
   }
 }

@@ -6,11 +6,10 @@
   <ion-spinner name="dots"></ion-spinner>
 </div>
 <ion-item lines="none">
-  <ion-icon name="information-circle-outline" (click)="showTutorial($event)"></ion-icon>
+  <ion-icon name="help-sharp" (click)="showTutorial($event)"></ion-icon>
 
   <ion-icon *permission="'counselor'" color="tertiary" slot="end" name="settings-outline"
     (click)="setPlan()"></ion-icon>
-  <ion-icon name="refresh-outline" slot="end" (click)="doRefresh($event)"></ion-icon>
 </ion-item>
 
 <ion-item *ngIf="!selectedProgram" lines="none">

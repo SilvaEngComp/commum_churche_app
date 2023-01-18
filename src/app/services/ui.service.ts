@@ -99,18 +99,13 @@ export class UiService {
 
   static validPermissions(permission?: string) {
     const user = UiService.localGet(Constants.TOKEN).user;
-    let exist = user.roles.includes(Constants.ROLE_SUPER_ADMIN);
+    const exist = user.roles.includes(Constants.ROLE_SUPER_ADMIN);
     if (exist) {
       return true;
     }
 
-    exist = user.roles.includes(permission);
-
-    if (exist) {
-      return true;
-    }
-
-    return false;
+    console.log(permission);
+    return user.roles.includes(permission);
   }
   // }
   // static validPermissions(permission?: string) {

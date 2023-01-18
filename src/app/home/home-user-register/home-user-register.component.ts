@@ -26,10 +26,16 @@ export class HomeUserRegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!this.session) {
+    console.log(this.session);
+    if (this?.session === null) {
       this.session = UiService.localGet(Constants.CURRENT_REGISTER_SESSION);
+    } else {
+      if (this.session === 0) {
+        console.log('cleaning');
+        this.clear();
+      }
     }
-    if (!this.session) {
+    if (this?.session === null) {
       if (LoginService.getHeaders()) {
         this.session = 1;
       } else {

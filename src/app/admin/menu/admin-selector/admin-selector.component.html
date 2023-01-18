@@ -3,9 +3,7 @@
 </ion-content>
 
 <ion-content ionScroll="true" #mainSmall *ngIf="!isLarge">
-  <ion-item lines="none" (click)="doRefresh($event)">
-    <ion-icon name="refresh-outline"></ion-icon>
-  </ion-item>
+
   <div [ngSwitch]="page">
     <app-user-admin *ngSwitchCase="'0'" [subpage]="'0'" (sessionPage)="onSelectPage($event)"></app-user-admin>
     <app-bible-program-admin *ngSwitchCase="'1'" [subpage]="'1'"
@@ -19,5 +17,8 @@
 
   </div>
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 </ion-content>
 <app-admin-small *ngIf="!isLarge" (selectedPage)="onSelectPage($event)"></app-admin-small>

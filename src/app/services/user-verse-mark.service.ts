@@ -34,7 +34,8 @@ export class UserVerseMarkService extends ServiceInterface {
       })
       .toPromise();
   }
-  async delete(userversemark: UserVerseMark): Promise<Responser> {
+  async destroy(userversemark: UserVerseMark): Promise<Responser> {
+    console.log(`${environment.API2}/userVerseMarks/${userversemark.id}`);
     return this.http
       .delete<Responser>(
         `${environment.API2}/userVerseMarks/${userversemark.id}`,

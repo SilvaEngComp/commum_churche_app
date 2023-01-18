@@ -1,13 +1,26 @@
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <ion-label>
-        Comentar
-      </ion-label>
-      <ion-textarea [(ngModel)]="comment" (keyup.enter)="setComment()"></ion-textarea>
-      <ion-button expand="block" (click)="setComment()">
-        <ion-label>OK</ion-label>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-label>
+          Comentar
+        </ion-label>
+        <ion-textarea rows="5" cols="5" autofocus placeholder="Digite seu comentário..." [(ngModel)]="comment"
+          (keyup.enter)="setComment()"></ion-textarea>
+
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none">
+          <ion-button color="danger" expand="block" (click)="delete()">
+            <ion-label>EXCLUIR</ion-label>
+          </ion-button>
+          <ion-button color="success" expand="block" (click)="setComment()">
+            <ion-label>CONFIRMAR</ion-label>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

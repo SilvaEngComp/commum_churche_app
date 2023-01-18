@@ -1,10 +1,12 @@
+import { ExceptionService } from 'src/app/services/exception-service.service';
 import { environment } from 'src/environments/environment';
 import { Verse } from 'src/app/models/verse';
 import { CommentMakerComponent } from './comment-maker/comment-maker.component';
-import { ModalController } from '@ionic/angular';
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { ModalController, PopoverController } from '@ionic/angular';
+import { Component, Input, OnInit } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
 import { Share } from '@capacitor/share';
+import { ClipboardService } from 'ngx-clipboard';
 @Component({
   selector: 'app-color-manager',
   templateUrl: './color-manager.component.html',
@@ -12,21 +14,23 @@ import { Share } from '@capacitor/share';
 })
 export class ColorManagerComponent implements OnInit {
   @Input() verse: Verse;
-  constructor(private modalCtrl: ModalController) {}
+  text: string;
+  constructor(
+    private popCtrl: PopoverController,
+    private clipboardService: ClipboardService,
+    private exceptionService: ExceptionService
+  ) {}
 
   ngOnInit() {
-    console.log(this.verse);
-  }
+    this.text = `${this.verse?.book} ${this.verse?.chapter}:${this.verse?.verse} ${this.verse?.text}
 
-  receiveReturn(data) {
-    UiService.returnColorMaker.emit({
-      color: data.color,
-    });
+${environment.BASE_URL}`;
   }
 
   async comment() {
-    const modal = await this.modalCtrl.create({
+    const modal = await this.popCtrl.create({
       component: CommentMakerComponent,
+      componentProps: { verse: this.verse },
     });
 
     modal.present();
@@ -34,7 +38,7 @@ export class ColorManagerComponent implements OnInit {
     const { data } = await modal.onDidDismiss();
     if (data) {
       UiService.returnColorMaker.emit({
-        comment: data?.comment,
+        verse: this.verse,
       });
     }
   }
@@ -43,9 +47,14 @@ export class ColorManagerComponent implements OnInit {
     const title = `${this.verse?.book} ${this.verse?.chapter}:${this.verse?.verse}`;
     await Share.share({
       title,
-      text: this.verse?.text,
+      text: this.text,
       url: environment.BASE_URL,
       dialogTitle: 'Igreja Batista Nova Betel',
     });
+  }
+
+  copy() {
+    this.clipboardService.copy(this.text);
+    this.exceptionService.toastHandler('Texto Copiado');
   }
 }

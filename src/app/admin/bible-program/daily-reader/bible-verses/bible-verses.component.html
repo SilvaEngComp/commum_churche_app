@@ -1,9 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start" (click)="back()">
-      <ion-icon color="primary" name="arrow-undo-circle-outline"></ion-icon>
-    </ion-buttons> <ion-buttons slot="end" (click)="doRefresh($event)">
-      <ion-icon name="refresh-outline"></ion-icon>
+      <ion-icon color="primary" name="chevron-back-circle-sharp"></ion-icon>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-icon name="help-sharp" (click)="showTutorial($event)"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
@@ -14,9 +15,7 @@
         {{verseDay?.endVerse?.chapter}}:{{verseDay?.endVerse?.verse}}
       </ion-label>
     </ion-item>
-    <ion-buttons slot="end">
-      <ion-icon name="information-circle-outline" (click)="showTutorial($event)"></ion-icon>
-    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 <div class="open-div" [ngStyle]="{'height': height}" (scroll)="onWindowScroll($event)">
@@ -38,8 +37,7 @@
                       [ngStyle]="{'background-color':verse?.userVerseMark?.color, 'font-size': letterSize}"
                       [ngClass]="{'white-text':checkWhiteText(verse)}">
                       <strong>{{verse?.verse}}</strong> {{verse?.text}}</ion-text>
-                    <ion-icon (click)="openComment($event, verse,bokPosition,chapterPosition, versePosition)"
-                      *ngIf="(verse?.userVerseMark&&verse?.userVerseMark?.comment)"
+                    <ion-icon *ngIf="(verse?.userVerseMark?.comment?.length>0)"
                       name="chatbox-ellipses-outline"></ion-icon>
                   </ion-col>
                 </ion-row>
@@ -62,9 +60,6 @@
       <ion-fab-button (click)="setLetterSize(true)">
         <ion-label>A</ion-label>
         <ion-icon name="caret-up-outline"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button (click)="setShowCheckBox()">
-        <ion-icon color="secondary" name="color-palette-sharp"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>

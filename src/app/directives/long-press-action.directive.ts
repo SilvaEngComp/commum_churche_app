@@ -6,12 +6,10 @@ import {
   Directive,
   ElementRef,
   AfterViewInit,
-  EventEmitter,
-  Output,
   Input,
   Renderer2,
 } from '@angular/core';
-import { GestureController, PopoverController } from '@ionic/angular';
+import { GestureController } from '@ionic/angular';
 import { Verse } from '../models/verse';
 import { UserVerseMark } from '../models/userVerseMark';
 import { Constants } from '../models/constants';
@@ -20,7 +18,6 @@ import { Constants } from '../models/constants';
   selector: '[appLongPressAction]',
 })
 export class LongPressActionDirective implements AfterViewInit {
-  @Output() pressed: EventEmitter<Verse> = new EventEmitter<Verse>();
   @Input() verse: Verse;
   private active: boolean;
   private action: any;
@@ -34,26 +31,13 @@ export class LongPressActionDirective implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    console.log('initiated');
     this.initGesture();
     UiService.scrollVerseRead.subscribe((data) => {
       this.active = data.status;
     });
   }
 
-  onClick() {
-    this.active = UiService.localGet(Constants.IS_COLOR_MANAGER_OPPENED);
-    if (this.active) {
-      UiService.showColorMarkEmitter.emit({ status: false });
-      this.clearFormat();
-    } else {
-      this.longPressCheck();
-    }
-  }
-
   async initGesture() {
-    console.log('initiated');
-
     const gesture = await this.gestureCtrl.create(
       {
         el: this.el.nativeElement,
@@ -62,15 +46,18 @@ export class LongPressActionDirective implements AfterViewInit {
         onStart: () => {
           this.active = UiService.localGet(Constants.IS_COLOR_MANAGER_OPPENED);
           if (this.active) {
-            UiService.showColorMarkEmitter.emit({ status: false });
+            UiService.showColorMarkEmitter.emit({
+              status: false,
+              renderer: this.renderer,
+            });
             this.clearFormat();
+            this.checkResetColor();
           } else {
             this.longPressCheck();
           }
         },
         onEnd: () => {
           UiService.showColorMarkEmitter.emit({ status: false });
-          // UiService.returnColorMaker.unsubscribe();
         },
       },
       true
@@ -85,7 +72,6 @@ export class LongPressActionDirective implements AfterViewInit {
     }
     this.action = setTimeout(async () => {
       if (!this.active) {
-        console.log(this.el.nativeElement);
         this.renderer.setStyle(
           this.el.nativeElement,
           'backgroundColor',
@@ -106,45 +92,33 @@ export class LongPressActionDirective implements AfterViewInit {
       if (!isReceived) {
         isReceived = true;
         if (data) {
-          // this.el = data.element;
-          // console.log(this.el.nativeElement);
-          if (!this.verse?.userVerseMark) {
-            this.verse.userVerseMark = new UserVerseMark();
-          }
+          this.verse = data.verse;
           if (data.color) {
-            this.verse.userVerseMark.color = data.color;
-            this.renderer.setStyle(
-              this.el.nativeElement,
-              'backgroundColor',
-              data.color
-            );
+            if (data.color !== Constants.COLOR_TRANSPARENT) {
+              this.renderer.setStyle(
+                this.el.nativeElement,
+                'backgroundColor',
+                data.color
+              );
 
-            if (data.color !== 'Yellow') {
-              this.renderer.setStyle(this.el.nativeElement, 'color', 'white');
+              if (data.color !== 'Yellow') {
+                this.renderer.setStyle(this.el.nativeElement, 'color', 'white');
+              }
+              this.renderer.setStyle(
+                this.el.nativeElement,
+                'fontFamily',
+                'Qanelas-bold'
+              );
             }
-            this.renderer.setStyle(
-              this.el.nativeElement,
-              'fontFamily',
-              'Qanelas-bold'
-            );
+          }
+          if (data.renderer) {
+            this.renderer = this.renderer;
           }
 
-          if (data.comment) {
-            this.verse.userVerseMark.comment = data.comment;
-          }
-
-          if (
-            this.verse.userVerseMark.color.length > 0 ||
-            this.verse.userVerseMark.comment.length > 0
-          ) {
-            const user = LoginService.getUser();
-            this.verse.userVerseMark.user_id = user.id;
-            this.verse.userVerseMark.verse_id = this.verse.id;
-            this.userVerseMarkService.store(this.verse.userVerseMark);
-          }
           this.checkResetColor();
         } else {
           this.checkResetColor();
+          this.clearFormat();
         }
       }
     });
