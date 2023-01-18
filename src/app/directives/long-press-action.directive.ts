@@ -93,10 +93,9 @@ export class LongPressActionDirective implements AfterViewInit {
         );
         UiService.showColorMarkEmitter.emit({
           status: true,
-          element: this.el,
+          verse: this.verse,
         });
         this.receiveReturn();
-        // this.openColorMark(1);
       }
     }, this.DOUBLE_CLICK_THRESHOLD);
   }
@@ -107,8 +106,8 @@ export class LongPressActionDirective implements AfterViewInit {
       if (!isReceived) {
         isReceived = true;
         if (data) {
-          this.el = data.element;
-          console.log(this.el.nativeElement);
+          // this.el = data.element;
+          // console.log(this.el.nativeElement);
           if (!this.verse?.userVerseMark) {
             this.verse.userVerseMark = new UserVerseMark();
           }

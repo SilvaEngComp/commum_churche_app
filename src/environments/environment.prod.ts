@@ -18,7 +18,7 @@ export const environment = {
   PRIVATEKEY: 'QUBjZW1lY2FkZUBlbmdpbnlkaWdpdGFsZWNvLmNvbQ==', // ...
 
   LOCALSTORAGE: 'ibnovabetel.',
-
+  BASE_URL: 'https://www.ibnovabetel.enginydigitaleco.com',
   firebaseConfig: {
     apiKey: 'AIzaSyC5dA_afnY3Psp55WOibvGPO5mXk5fIYGU',
     authDomain: 'ibnb-commum.firebaseapp.com',

@@ -1,3 +1,4 @@
+import { Verse } from 'src/app/models/verse';
 import { element } from 'protractor';
 import { environment } from 'src/environments/environment';
 import { User } from 'src/app/models/user';
@@ -28,7 +29,7 @@ import { Constants } from 'src/app/models/constants';
 })
 export class AdminSmallComponent implements OnInit {
   @Output() selectedPage: EventEmitter<any> = new EventEmitter<any>();
-  element: ElementRef;
+  verse: Verse;
   page_selected: string;
   badge_feed: number;
   isMember: boolean;
@@ -48,7 +49,7 @@ export class AdminSmallComponent implements OnInit {
   ngOnInit() {
     this.isTest = environment.TEST;
     UiService.showColorMarkEmitter.subscribe((data) => {
-      this.element = data.element;
+      this.verse = data.verse;
       console.log(data);
       this.setShowColorMark(data.status);
     });

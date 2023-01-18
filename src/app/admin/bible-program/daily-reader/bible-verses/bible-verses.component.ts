@@ -82,51 +82,6 @@ export class BibleVersesComponent implements OnInit {
     UiService.scrollVerseRead.subscribe((data) => {
       this.active = data.status;
     });
-
-    // UiService.returnColorMaker.subscribe((data) => {
-    //
-    //   if (data) {
-    //     this.el = data.element;
-    //     console.log(this.el.nativeElement);
-    //     if (!this.selectedVerse?.userVerseMark) {
-    //       this.selectedVerse.userVerseMark = new UserVerseMark();
-    //     }
-    //     if (data.color) {
-    //       this.selectedVerse.userVerseMark.color = data.color;
-    //       this.renderer.setStyle(
-    //         this.el.nativeElement,
-    //         'backgroundColor',
-    //         data.color
-    //       );
-
-    //       if (data.color !== 'Yellow') {
-    //         this.renderer.setStyle(this.el.nativeElement, 'color', 'white');
-    //       }
-    //       this.renderer.setStyle(
-    //         this.el.nativeElement,
-    //         'fontFamily',
-    //         'Qanelas-bold'
-    //       );
-    //     }
-
-    //     if (data.comment) {
-    //       this.selectedVerse.userVerseMark.comment = data.comment;
-    //     }
-
-    //     if (
-    //       this.selectedVerse.userVerseMark.color.length > 0 ||
-    //       this.selectedVerse.userVerseMark.comment.length > 0
-    //     ) {
-    //       const user = LoginService.getUser();
-    //       this.selectedVerse.userVerseMark.user_id = user.id;
-    //       this.selectedVerse.userVerseMark.verse_id = this.selectedVerse.id;
-    //       // this.userVerseMarkService.store(this.verse.userVerseMark);
-    //     }
-    //     this.checkResetColor();
-    //   } else {
-    //     this.checkResetColor();
-    //   }
-    // });
   }
 
   onWindowScroll(ev: any) {
