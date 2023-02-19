@@ -1,6 +1,16 @@
 <ion-content ionScroll="true" #main *ngIf="isLarge">
   <app-admin-large></app-admin-large>
 </ion-content>
+<div class="div-header" *ngIf="!isLarge">
+  <ion-avatar class="left">
+    <img src="./assets/images/logo.png" />
+  </ion-avatar>
+
+  <ion-title>{{pageTile}}</ion-title>
+  <ion-avatar class="right">
+    <img src="./assets/images/help.png" />
+  </ion-avatar>
+</div>
 
 <ion-content ionScroll="true" #mainSmall *ngIf="!isLarge">
 
@@ -17,7 +27,7 @@
 
   </div>
 
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher slot="fixed" #ionRefresh (ionRefresh)="doRefresh($event, ionRefresh)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 </ion-content>

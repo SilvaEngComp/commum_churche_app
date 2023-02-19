@@ -48,6 +48,8 @@ export class BibleVersesComponent implements OnInit {
       Constants.BIBLE_PROGRAM_MENU_VERSE_DAY
     );
 
+    UiService.setCurrentPage(Constants.BIBLE_PROGRAM_MENU_VERSE_DAY);
+
     this.verseDay = UiService.localGet(Constants.SELECTED_VERSE_DAY);
     this.height = Math.round(this.platform.height() * 0.8) + 'px';
     this.letterSizeConfig = 12;

@@ -3,4 +3,6 @@
   <app-tithe *ngSwitchCase="'0'" (sessionPage)="onReceiveSession($event)"></app-tithe>
   <app-caixa-register *ngSwitchCase="'2'" (sessionPage)="onReceiveSession($event)"></app-caixa-register>
   <app-tithe-register *ngSwitchCase="'3'" (sessionPage)="onReceiveSession($event)"></app-tithe-register>
+  <app-balance *ngSwitchCase="'4'" (sessionPage)="onReceiveSession($event)"></app-balance>
+  <app-expense *ngSwitchCase="'5'" (sessionPage)="onReceiveSession($event)"></app-expense>
 </div>

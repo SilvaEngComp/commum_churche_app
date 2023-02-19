@@ -1,7 +1,7 @@
-.page-title {
-  font-family: Qanelas-bold;
+.item-page-title {
+  font-family: Qanelas;
   font-size: 14pt;
-  color: var(--ion-color-medium);
+  color: var(--ion-color-primary);
   text-align: center;
 }
 
@@ -72,25 +72,50 @@ ion-spinner {
   padding: 2px;
 }
 
-.title {
-  font-family: Qanelas-bold;
-  color: var(--ion-color-medium);
-}
-
 .ocult-details {
   display: none;
 }
+.filter-date {
+  ion-button {
+    margin-left: 20%;
+    --border-radius: 20px;
 
-// .show-item-details{
-//   margin-top: 20px;
-//   display: grid;
-//   align-items: center;
-//   align-self: center;
-//   align-content: center;
-//   width: 100%;
-//   max-height: 200px;
-//   overflow: auto;
-// }
+    ion-label {
+      font-family: Qanelas-bold;
+    }
+  }
+  text-align: center;
+}
+
+.balance {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  .balance-label {
+    font-family: Qanelas-bold;
+    color: var(--ion-color-primary);
+    text-align: center;
+  }
+  .balance-value {
+    font-family: Qanelas-bold;
+    font-size: 28pt;
+    color: var(--ion-color-primary);
+    word-wrap: break-word;
+    text-align: center;
+  }
+}
+.input-output-div {
+  ion-icon {
+    font-size: 60px;
+  }
+  ion-label {
+    font-size: 14pt;
+  }
+  display: flex;
+  flex-direction: row;
+  font-family: Qanelas-bold;
+}
+
 .show-details {
   display: block;
   width: 100%;

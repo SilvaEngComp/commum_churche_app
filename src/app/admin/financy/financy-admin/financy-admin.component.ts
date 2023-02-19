@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Constants } from 'src/app/models/constants';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
 
 @Component({
@@ -7,6 +8,8 @@ import { UiService } from 'src/app/services/ui.service';
   styleUrls: ['./financy-admin.component.scss'],
 })
 export class FinancyAdminComponent implements OnInit {
+  @Output()
+  sessionPage: EventEmitter<string> = new EventEmitter<string>();
   @Input() subpage: string;
   defaultPageName = 'financy-subpage';
   constructor() {}
@@ -37,6 +40,9 @@ export class FinancyAdminComponent implements OnInit {
   }
 
   onReceiveSession(subpage: string) {
+    if (subpage === '-1') {
+      this.sessionPage.emit(Constants.MENU_GENERAL_OPTION_MORE);
+    }
     this.subpage = subpage;
     this.save();
   }

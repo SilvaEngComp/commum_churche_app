@@ -49,50 +49,23 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <div class="balance">
-        <ion-label class="balance-label">Saldo em Conta</ion-label>
-        <ion-label class="balance-value">{{balance | currencyBrl}}</ion-label>
-      </div>
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light">
+            <ion-card-title color="primary">Saídas</ion-card-title>
+            <ion-note color="primary" slot="end">R$ {{outputSummary?.total | currencyBrl}}</ion-note>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <ion-item lines="none" *ngIf="sumary?.caixaSummary?.output.length===0 ">
+              <ion-title color="primary"> {{noContent}}</ion-title>
+            </ion-item>
+            <div *ngFor="let caixa of sumary?.caixaSummary?.output">
+              <app-caixa-summary [caixaSummary]="caixa" [isEntry]="false" *ngIf="sumary?.caixaSummary?.output.length>0"
+                (mantainceEmiter)="receiveMantainceEmiter($event)"></app-caixa-summary>
+            </div>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
     </ion-col>
   </ion-row>
-  <ion-row>
-
-    <ion-col>
-      <div class="input-output-div" (click)="goToBalance()">
-        <ion-icon color="success" name="arrow-up-circle-sharp"></ion-icon>
-        <div>
-          <ion-label class="balance-label">Receitas</ion-label><br>
-          <ion-label color="success" class="balance-value">{{( inputSummary?.total +
-            offerSummary?.total +
-            titheSummary?.total ) | currencyBrl}}</ion-label>
-        </div>
-      </div>
-    </ion-col>
-    <ion-col>
-      <div class="input-output-div" (click)="goToExpence()">
-        <ion-icon color="danger" name="arrow-up-circle-sharp"></ion-icon>
-        <div>
-          <ion-label class="balance-label">Saídas</ion-label><br>
-          <ion-label color="danger" class="balance-value">{{outputSummary?.total| currencyBrl}}</ion-label>
-        </div>
-      </div>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-img src="./assets/images/tithes-admin.png"></ion-img>
-    </ion-col>
-
-    <ion-col>
-      <ion-img src="./assets/images/offers-admin.png"></ion-img>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-img src="./assets/images/inputs-admin.png"></ion-img>
-    </ion-col> <ion-col>
-      <ion-img src="./assets/images/outputs-admin.png"></ion-img>
-    </ion-col>
-  </ion-row>
-
 </ion-grid>

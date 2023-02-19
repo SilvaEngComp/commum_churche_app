@@ -74,10 +74,15 @@ export class Constants {
   static ENDPOINT_TITHE = 'tithes';
   static ENDPOINT_CHURCH_SCHEDULE_TIME = 'churchScheduleTypes';
 
+  static MENU_BACK = '-1';
+  static MENU_GENERAL_OPTION_MORE = '3';
+
   static MENU_FINANCY_OPTION_TITHE = '0';
   static MENU_FINANCY_OPTION_SUMMARY = '1';
   static MENU_FINANCY_OPTION_CAIXA_REGISTER = '2';
   static MENU_FINANCY_OPTION_TITHE_REGISTER = '3';
+  static MENU_FINANCY_OPTION_BALANCE = '4';
+  static MENU_FINANCY_OPTION_EXPENSE = '5';
 
   static TITHE_MAINTAINCE = 'titheMaintaince';
   static CAIXA_MAINTAINCE = 'caixatitheMaintaince';
@@ -121,7 +126,10 @@ export class Constants {
 
   static TITLE_CURRENT_PAGE = 'currentPageTitle';
   static TITLE_DAILY_READER = 'Leitura Bíblica';
-  static TITLE_SUMMARY_FINANCY = 'Resumo Financeiro';
+  static TITLE_SUMMARY_FINANCY_SUB = 'Resumo Financeiro';
+  static TITLE_SUMMARY_BALANCE = 'Receitas';
+  static TITLE_SUMMARY_EXPANSE = 'Saídas';
+  static TITLE_SUMMARY_FINANCY = 'Tesouraria';
   static TITLE_USER_PROFILE = 'PERFIL';
   static TITLE_USER_MEMBERS = 'LISTA DE MEMBROS';
   static TITLE_TITHE_HISTORIC = 'DÍZIMOS E OFERTAS';

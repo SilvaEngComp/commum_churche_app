@@ -1,7 +1,8 @@
+import { Constants } from 'src/app/models/constants';
 import { ExceptionService } from './../../../services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import { UiService } from 'src/app/services/ui.service';
-import { Platform, IonContent } from '@ionic/angular';
+import { Platform, IonContent, IonRefresher } from '@ionic/angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { Router } from '@angular/router';
@@ -21,6 +22,8 @@ export class AdminSelectorComponent implements OnInit {
   page: string;
   defaultPageName = 'menu-admin-page';
   showColorMark: boolean;
+  isBibleOppened: boolean;
+  pageTile: string;
   constructor(
     private exceptionService: ExceptionService,
     private platform: Platform,
@@ -33,7 +36,6 @@ export class AdminSelectorComponent implements OnInit {
     this.isLarge = this.platform.width() > 500;
     this.user = LoginService.getUser();
     this.page = UiService.localGet(this.defaultPageName);
-    console.log(this.page);
     if (!this.page) {
       this.page = '0';
     } else {
@@ -44,10 +46,20 @@ export class AdminSelectorComponent implements OnInit {
     } else {
       this.fcmService.initPush();
     }
+    this.pageTile = UiService.localGet(Constants.TITLE_CURRENT_PAGE);
 
-    UiService.toTop.subscribe((value) =>
-      this.ionContent.scrollToPoint(0, value)
-    );
+    // UiService.toTop.subscribe((value) =>
+    //   this.ionContent.scrollToPoint(0, value)
+    // );
+
+    UiService.pageTitle.subscribe((title) => {
+      console.log(this.pageTile);
+      if (title === Constants.BIBLE_PROGRAM_MENU_VERSE_DAY) {
+        this.isBibleOppened = true;
+      } else {
+        this.isBibleOppened = false;
+      }
+    });
   }
 
   listenForMessages() {
@@ -92,7 +104,13 @@ export class AdminSelectorComponent implements OnInit {
     UiService.localSet(this.defaultPageName, this.page);
   }
 
-  doRefresh(ev) {
-    window.location.reload();
+  doRefresh(ev, ionRefresh: IonRefresher) {
+    setTimeout(() => {
+      if (!this.isBibleOppened) {
+        window.location.reload();
+      } else {
+        ionRefresh.complete();
+      }
+    }, 500);
   }
 }

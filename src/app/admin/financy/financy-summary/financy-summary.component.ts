@@ -2,8 +2,14 @@ import { MenuSummaryComponent } from './menu-summary/menu-summary.component';
 import { UiService } from 'src/app/services/ui.service';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { IonPopover, ModalController, PopoverController } from '@ionic/angular';
 import { CaixaFacadeService } from 'src/app/facades/caixa-facade.service';
 import { Caixa } from 'src/app/models/caixa';
 import { FinancySummary } from 'src/app/models/fianancySummary';
@@ -22,7 +28,8 @@ import { Tithe } from 'src/app/models/tithe';
   styleUrls: ['./financy-summary.component.scss'],
 })
 export class ReportComponent implements OnInit {
-  @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
+  @Output()
+  sessionPage: EventEmitter<string> = new EventEmitter<string>();
 
   filter: FinancySummaryFilter;
   sumary: FinancySummary;
@@ -41,12 +48,13 @@ export class ReportComponent implements OnInit {
   showOfferDetail: boolean;
   showInputsDetail: boolean;
   customizedMonth: CustomizedMonth;
-  noContent = 'Nenhum Registro';
+
+  localPageTitle: string;
+  balance: number;
   constructor(
     private financyService: FinancyService,
     private caixaFacade: CaixaFacadeService,
     private modalController: ModalController,
-    private popCtrl: PopoverController,
     private exeptionService: ExceptionService
   ) {}
 
@@ -56,7 +64,8 @@ export class ReportComponent implements OnInit {
       Constants.TITLE_CURRENT_PAGE,
       Constants.TITLE_SUMMARY_FINANCY
     );
-    UiService.pageTitle.emit(Constants.TITLE_SUMMARY_FINANCY);
+    this.localPageTitle = Constants.TITLE_SUMMARY_FINANCY_SUB;
+    UiService.pageTitle.emit(Constants.MENU_FINANCY_OPTION_SUMMARY);
     this.filter = new FinancySummaryFilter();
     const datePipe = new DatePipe('en');
     const date = new Date();
@@ -79,6 +88,10 @@ export class ReportComponent implements OnInit {
     this.load();
   }
 
+  selectDateInterval(popover: IonPopover) {
+    popover?.dismiss();
+  }
+
   async load() {
     if (!this.filter?.dateI || !this.filter?.dateF) {
       this.exeptionService.alertDialog(
@@ -88,7 +101,6 @@ export class ReportComponent implements OnInit {
     }
     this.financyService.caixaSummary(this.filter).then((response) => {
       this.sumary = response.data;
-      console.log(response);
       this.inputSummary = new CaixaSummary();
       this.outputSummary = new CaixaSummary();
       this.titheSummary = new TitheSummary();
@@ -116,26 +128,22 @@ export class ReportComponent implements OnInit {
       this.offerSummary?.tithes.filter((tithe) => {
         tithe.customizedMonth = new CustomizedMonth(Number(tithe.month));
       });
+
+      this.balance =
+        this.inputSummary.total +
+        this.offerSummary.total +
+        this.titheSummary.total +
+        this.outputSummary.total;
     });
   }
 
-  setShowCaixaOutputDetail() {
-    this.showCaixaOutputDetail = !this.showCaixaOutputDetail;
-  }
-  setShowCaixaInputDetail() {
-    this.showCaixaInputDetail = !this.showCaixaInputDetail;
-  }
-  setShowTitheDetail() {
-    this.showTitheDetail = !this.showTitheDetail;
-  }
-  setShowOfferDetail() {
-    this.showOfferDetail = !this.showOfferDetail;
+  goToBalance() {
+    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_BALANCE);
   }
 
-  setShowInputsDetail() {
-    this.showInputsDetail = !this.showInputsDetail;
+  goToExpence() {
+    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_EXPENSE);
   }
-  showMoreCaixaSummary(caixa: CaixaSummary) {}
 
   async newCaixa(op: boolean) {
     UiService.localRemove(Constants.CAIXA_MAINTAINCE);
@@ -183,22 +191,14 @@ export class ReportComponent implements OnInit {
   }
 
   async openMenuOption(ev: any, type: number, op: boolean) {
-    // const pop = await this.popCtrl.create({
-    //   component: MenuSummaryComponent,
-    //   event: ev,
-    // });
-
-    // pop.present();
-
-    // const { data } = await pop.onWillDismiss();
-
-    // if (data?.option === Constants.NEW_RETISTRATION) {
     if (type === 1) {
       this.newTithe(op);
     } else {
       this.newCaixa(op);
     }
-    // } else if (data?.option === Constants.SHOW_GRAPH) {
-    // // }
+  }
+
+  back() {
+    this.sessionPage.emit(Constants.MENU_BACK);
   }
 }
