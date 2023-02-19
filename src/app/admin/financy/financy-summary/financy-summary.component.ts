@@ -190,7 +190,7 @@ export class ReportComponent implements OnInit {
     this.load();
   }
 
-  async openMenuOption(ev: any, type: number, op: boolean) {
+  async openMenuOption(type: number, op: boolean) {
     if (type === 1) {
       this.newTithe(op);
     } else {

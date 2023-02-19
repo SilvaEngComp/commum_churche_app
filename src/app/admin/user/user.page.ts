@@ -47,6 +47,7 @@ export class UserPage implements OnInit {
   tresholderPagination: number;
 
   letterSize: string;
+  localPageTitle: string;
   letterSizeConfig: number;
 
   @ViewChild('searchUser', { static: false }) inputSearch: IonInput;
@@ -62,6 +63,8 @@ export class UserPage implements OnInit {
       Constants.TITLE_CURRENT_PAGE,
       Constants.TITLE_USER_MEMBERS
     );
+
+    this.localPageTitle = Constants.TITLE_USER_MEMBERS;
 
     UiService.pageTitle.emit(Constants.TITLE_USER_MEMBERS);
 
@@ -110,6 +113,9 @@ export class UserPage implements OnInit {
     );
   }
 
+  back() {
+    this.sessionPage.emit(Constants.MENU_BACK);
+  }
   setConfigPagination(isRestart = false) {
     this.tresholderPagination = 10;
     if (isRestart) {

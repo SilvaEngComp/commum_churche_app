@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Constants } from 'src/app/models/constants';
 import { UiService } from 'src/app/services/ui.service';
 import { environment } from 'src/environments/environment';
 
@@ -8,6 +9,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./user-admin.component.scss'],
 })
 export class UserAdminComponent implements OnInit {
+  @Output()
+  sessionPage: EventEmitter<string> = new EventEmitter<string>();
   @Input() subpage: string;
   defaultPageName = 'user-subpage';
   constructor() {}
@@ -32,7 +35,9 @@ export class UserAdminComponent implements OnInit {
   }
 
   onReceiveSession(subpage: string) {
-    console.log(subpage);
+    if (subpage === '-1') {
+      this.sessionPage.emit(Constants.MENU_GENERAL_OPTION_MORE);
+    }
     this.subpage = subpage;
     this.save();
   }

@@ -1,4 +1,4 @@
-d<ion-grid>
+<ion-grid>
   <ion-row>
     <ion-col size="2" color="primary" class="menu-lateral" *ngIf="showMenu" [ngStyle]="{'height': 2*height+'px'}">
       <ion-icon src="./assets/icons/menu.svg" (click)="showMenu = !showMenu"></ion-icon>
@@ -32,7 +32,7 @@ d<ion-grid>
     </ion-col>
 
     <ion-col>
-      <ion-header>
+      <!-- <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start" class="menu-left">
             <ion-icon *ngIf="!showMenu" color="primary" name="menu-sharp" (click)="setShowMenu()"></ion-icon>
@@ -52,7 +52,20 @@ d<ion-grid>
           </ion-buttons>
 
         </ion-toolbar>
-      </ion-header>
+      </ion-header> -->
+
+      <div class="div-header">
+        <ion-icon *ngIf="!showMenu" color="primary" name="menu-sharp" (click)="setShowMenu()"></ion-icon>
+        <ion-avatar class="left">
+          <img src="./assets/images/logo.png" />
+        </ion-avatar>
+
+        <ion-title>{{pageTile}}</ion-title>
+        <ion-avatar class="right">
+          <img src="./assets/images/help.png" />
+        </ion-avatar>
+      </div>
+
 
       <div [ngSwitch]="page">
         <app-user-admin *ngSwitchCase="'0'" [subpage]="'0'"></app-user-admin>
@@ -61,7 +74,7 @@ d<ion-grid>
         <app-user-admin *ngSwitchCase="'2'" [subpage]="'1'"></app-user-admin>
         <app-financy-admin *ngSwitchCase="'3'" [subpage]="'0'"></app-financy-admin>
         <app-financy-admin *ngSwitchCase="'4'" [subpage]="'1'"></app-financy-admin>
-        <app-feed *ngSwitchCase="'5'" [subpage]="'1'"></app-feed>
+        <app-feed-admin *ngSwitchCase="'5'" [subpage]="'1'"></app-feed-admin>
         <app-church-schedule *ngSwitchCase="'6'"></app-church-schedule>
 
       </div>

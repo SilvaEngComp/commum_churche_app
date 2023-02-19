@@ -28,7 +28,7 @@ export class AdminLargeComponent implements OnInit {
   menu_size_right: string;
   height: number;
   defaultPageName = 'lastPage';
-  title: string;
+  pageTile: string;
   showColorMark: boolean;
   verse: Verse;
   // isMember: boolean;
@@ -37,8 +37,8 @@ export class AdminLargeComponent implements OnInit {
   constructor(private platform: Platform, private nav: NavController) {}
 
   ngOnInit() {
-    this.title = UiService.localGet(Constants.TITLE_CURRENT_PAGE);
-    UiService.pageTitle.subscribe((title) => (this.title = title));
+    this.pageTile = UiService.localGet(Constants.TITLE_CURRENT_PAGE);
+    UiService.pageTitle.subscribe((title) => (this.pageTile = title));
     this.height = this.platform.height();
     this.showMenu = true;
 

@@ -9,9 +9,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FeedPageRoutingModule } from './feed-routing.module';
+import { FeedAdminPageRoutingModule } from './feed-routing.module';
 
-import { FeedPage } from './feed.page';
+import { FeedAdminPage } from './feed.page';
 import { DatabaseService } from 'src/app/services/database.service';
 import { LoginService } from 'src/app/services/login.service';
 import { MessagingService } from 'src/app/services/messaging.service';
@@ -28,14 +28,14 @@ import { ResourcesModule } from 'src/app/resources/resources.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    FeedPageRoutingModule,
+    FeedAdminPageRoutingModule,
     ResourcesModule,
     AngularFireMessagingModule,
     BrMaskerModule,
     DirectivesModule,
   ],
   declarations: [
-    FeedPage,
+    FeedAdminPage,
     CreateFeedComponent,
     PublicFeedComponent,
     MenuPostComponent,
@@ -50,6 +50,6 @@ import { ResourcesModule } from 'src/app/resources/resources.module';
     MessagingService,
     FeedCommentService,
   ],
-  exports: [FeedPage],
+  exports: [FeedAdminPage],
 })
-export class FeedPageModule {}
+export class FeedAdminPageModule {}

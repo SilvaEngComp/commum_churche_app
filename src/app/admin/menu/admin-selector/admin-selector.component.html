@@ -1,7 +1,8 @@
-<ion-content ionScroll="true" #main *ngIf="isLarge">
+<!-- <ion-content ionScroll="true" #main *ngIf="isLarge">
   <app-admin-large></app-admin-large>
-</ion-content>
-<div class="div-header" *ngIf="!isLarge">
+</ion-content> -->
+<app-admin-small *ngIf="isLarge" (selectedPage)="onSelectPage($event)"></app-admin-small>
+<div class="div-header">
   <ion-avatar class="left">
     <img src="./assets/images/logo.png" />
   </ion-avatar>
@@ -12,7 +13,8 @@
   </ion-avatar>
 </div>
 
-<ion-content ionScroll="true" #mainSmall *ngIf="!isLarge">
+<!-- <ion-content ionScroll="true" #mainSmall *ngIf="!isLarge"> -->
+<ion-content ionScroll="true" #mainSmall>
 
   <div [ngSwitch]="page">
     <app-user-admin *ngSwitchCase="'0'" [subpage]="'0'" (sessionPage)="onSelectPage($event)"></app-user-admin>
@@ -22,7 +24,7 @@
     <app-more *ngSwitchCase="'3'" (returnPage)="onSelectPage($event)"></app-more>
     <app-financy-admin *ngSwitchCase="'4'" [subpage]="'0'" (sessionPage)="onSelectPage($event)"></app-financy-admin>
     <app-financy-admin *ngSwitchCase="'5'" [subpage]="'1'" (sessionPage)="onSelectPage($event)"></app-financy-admin>
-    <app-feed *ngSwitchCase="'6'"></app-feed>
+    <app-feed-admin *ngSwitchCase="'6'" (sessionPage)="onSelectPage($event)"></app-feed-admin>
     <app-church-schedule *ngSwitchCase="'7'"></app-church-schedule>
 
   </div>

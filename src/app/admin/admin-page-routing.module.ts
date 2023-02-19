@@ -16,7 +16,9 @@ const routes: Routes = [
       {
         path: 'feed',
         loadChildren: () =>
-          import('./feed/feed-admin/feed.module').then((m) => m.FeedPageModule),
+          import('./feed/feed-admin/feed.module').then(
+            (m) => m.FeedAdminPageModule
+          ),
       },
 
       {

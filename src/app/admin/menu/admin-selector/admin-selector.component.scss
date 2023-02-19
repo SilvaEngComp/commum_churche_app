@@ -1,3 +1,67 @@
+@media only screen and (min-width: 500px) {
+  .div-header {
+    background-image: url(".../../../../../../assets/images/header.png");
+    background-position: 0;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+
+    .left {
+      border: 2px solid var(--ion-color-light);
+    }
+
+    ion-title {
+      margin-bottom: 30px;
+      color: var(--ion-color-light);
+      font-family: Qanelas-bold;
+      text-align: center;
+    }
+    .right {
+      margin-left: 85%;
+    }
+
+    ion-avatar {
+      margin-top: 10px;
+      max-width: 30px;
+      max-height: 30px;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .div-header {
+    background-image: url(".../../../../../../assets/images/header.png");
+    background-position: 0;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+
+    .left {
+      border: 2px solid var(--ion-color-light);
+    }
+
+    ion-title {
+      margin-bottom: 30px;
+      color: var(--ion-color-light);
+      font-family: Qanelas-bold;
+      text-align: center;
+    }
+    .right {
+      margin-left: 70%;
+    }
+
+    ion-avatar {
+      margin-top: 10px;
+      max-width: 30px;
+      max-height: 30px;
+    }
+  }
+}
+
 ion-grid {
   height: 100%;
 }
@@ -6,36 +70,6 @@ ion-grid {
   color: white;
   font-family: Qanelas;
   height: 40px;
-}
-
-.div-header {
-  background-image: url(".../../../../../../assets/images/header.png");
-  background-position: 0;
-  background-size: 100% 100%;
-  width: 100%;
-  height: 100px;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-
-  .left {
-    border: 2px solid var(--ion-color-light);
-  }
-
-  ion-title {
-    margin-bottom: 30px;
-    color: var(--ion-color-light);
-    font-family: Qanelas-bold;
-    text-align: center;
-  }
-  .right {
-    margin-left: 85px;
-  }
-
-  ion-avatar {
-    margin-top: 10px;
-    max-width: 30px;
-    max-height: 30px;
-  }
 }
 
 .center {

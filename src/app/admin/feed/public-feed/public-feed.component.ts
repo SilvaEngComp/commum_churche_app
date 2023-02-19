@@ -26,18 +26,22 @@ export class PublicFeedComponent implements OnInit {
   showComment: boolean;
   feedReaction: FeedComment;
   filterFeed: FilterFeed;
-
+  localPageTitle: string;
   constructor(
     private feedService: FeedService,
     private exeptionService: ExceptionService
   ) {}
 
   ngOnInit() {
-    console.log('public feed');
+    this.localPageTitle = Constants.TITLE_FEED_NEWS_FEED;
     this.user = LoginService.getUser();
     this.feedReaction = new FeedComment();
     this.filterFeed = new FilterFeed();
     this.load();
+  }
+
+  back() {
+    this.returnPage.emit({ page: Constants.MENU_BACK });
   }
 
   load() {

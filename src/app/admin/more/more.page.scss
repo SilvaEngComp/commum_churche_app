@@ -33,3 +33,12 @@
 ion-grid {
   margin-top: 5%;
 }
+
+.card-options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}

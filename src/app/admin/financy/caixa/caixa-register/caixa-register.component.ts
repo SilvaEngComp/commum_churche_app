@@ -37,6 +37,7 @@ export class CaixaRegisterComponent implements OnInit {
   value: string;
   churches: Church[];
   caixaGroups: CaixaGroup[];
+  localPageTitle: string;
   constructor(
     private caixaService: CaixaService,
     private caixaTypeService: CaixaTypeService,
@@ -58,14 +59,14 @@ export class CaixaRegisterComponent implements OnInit {
       this.value = UiService.convertToCurrency(this.caixa?.amount);
       this.isNew = false;
     }
-    let pageTitle;
+
     if (this.caixa.isEntry) {
-      pageTitle = Constants.TITLE_CAIXA_REGISTER_IN;
+      this.localPageTitle = Constants.TITLE_CAIXA_REGISTER_IN;
     } else {
-      pageTitle = Constants.TITLE_CAIXA_REGISTER_OUT;
+      this.localPageTitle = Constants.TITLE_CAIXA_REGISTER_OUT;
     }
-    UiService.localSet(Constants.TITLE_CURRENT_PAGE, pageTitle);
-    UiService.pageTitle.emit(pageTitle);
+    UiService.localSet(Constants.TITLE_CURRENT_PAGE, this.localPageTitle);
+    UiService.pageTitle.emit(this.localPageTitle);
     this.isSmallDevice = this.platform.width() <= 500;
     const datePipe = new DatePipe('en');
     this.caixa.date = datePipe.transform(Date.now(), 'yyyy-MM-dd');

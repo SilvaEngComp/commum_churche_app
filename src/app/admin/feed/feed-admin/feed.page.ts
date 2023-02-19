@@ -6,11 +6,11 @@ import { FeedService } from 'src/app/services/feed.service';
 import { UiService } from 'src/app/services/ui.service';
 
 @Component({
-  selector: 'app-feed',
+  selector: 'app-feed-admin',
   templateUrl: './feed.page.html',
   styleUrls: ['./feed.page.scss'],
 })
-export class FeedPage implements OnInit {
+export class FeedAdminPage implements OnInit {
   @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
   @Input() subpage: string;
   feed: Feed;
@@ -42,12 +42,14 @@ export class FeedPage implements OnInit {
   }
 
   returnPage(obj) {
-    console.log(obj);
-    if (obj.feed) {
+    if (obj?.page === '-1') {
+      this.sessionPage.emit(Constants.MENU_GENERAL_OPTION_MORE);
+    }
+    if (obj?.feed) {
       this.feed = obj.feed;
       this.saveFeed();
     }
-    if (obj.files) {
+    if (obj?.files) {
       this.feedService
         .upload(obj.files.formData, this.feed)
         .then((responser) => {
@@ -56,11 +58,11 @@ export class FeedPage implements OnInit {
           // window.location.reload();
         });
     }
-    if (obj.callbackPage) {
+    if (obj?.callbackPage) {
       this.callbackPage = obj.callbackPage;
       UiService.localSet('callbackPage', this.callbackPage);
     }
-    if (obj.subpage) {
+    if (obj?.subpage) {
       this.saveFeedPage(obj.subpage);
     }
   }

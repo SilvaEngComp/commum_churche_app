@@ -144,6 +144,7 @@ export class Constants {
   static COLOR_TRANSPARENT = 'transparent';
 
   static TITLE_FEED_CREATE_FEED = 'CRIAR NOVA PUBLICAÇÃO';
+  static TITLE_FEED_NEWS_FEED = 'Novidades';
 
   static FEED_SUBPAGE = 'feed-subpage';
   static FEED_PAGE_PUBLIC = '1';

@@ -27,6 +27,7 @@ export class TitheRegisterComponent implements OnInit {
   value: string;
   customizedMonth: CustomizedMonth;
   year: string;
+  localPageTitle: string;
   constructor(
     private titheService: TitheService,
     private exceptionService: ExceptionService,
@@ -50,14 +51,13 @@ export class TitheRegisterComponent implements OnInit {
     const datePipe = new DatePipe('en');
     this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
     this.onSelectMonth(this.monthYear);
-    let pageTitle;
     if (this.tithe.isTithe) {
-      pageTitle = Constants.TITLE_TITHE_REGISTER;
+      this.localPageTitle = Constants.TITLE_TITHE_REGISTER;
     } else {
-      pageTitle = Constants.TITLE_OFFER_REGISTER;
+      this.localPageTitle = Constants.TITLE_OFFER_REGISTER;
     }
-    UiService.localSet(Constants.TITLE_CURRENT_PAGE, pageTitle);
-    UiService.pageTitle.emit(pageTitle);
+    UiService.localSet(Constants.TITLE_CURRENT_PAGE, this.localPageTitle);
+    UiService.pageTitle.emit(this.localPageTitle);
   }
 
   onSelectMonth(value: any) {
