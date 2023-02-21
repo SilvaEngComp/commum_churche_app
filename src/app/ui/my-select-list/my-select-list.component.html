@@ -20,7 +20,7 @@
       <div>
         <div class="button-controls flex-container">
           <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="setShowSelect()"></ion-icon>
-          <div *ngIf="create" class="right">
+          <div *ngIf="create" class="right flex-container">
             <ion-icon (click)="createNew($event)" color="primary" name="add-circle-outline"></ion-icon>
             <ion-label>Novo</ion-label>
           </div>
@@ -31,13 +31,13 @@
         </ion-input>
         <div class="open-div">
           <ion-label *ngIf="filtredSearch?.length===0">Lista vazia</ion-label>
-          <ul>
+          <ol>
             <li *ngFor="let item of filtredSearch">
               <ion-label detail (click)="onSelect(item)" class="item-search"
                 [ngClass]="{'selected': selected===item?.value}">
                 {{ item?.value | uppercase}}</ion-label>
             </li>
-          </ul>
+          </ol>
 
         </div>
       </div>

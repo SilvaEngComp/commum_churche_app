@@ -1,91 +1,5 @@
-.button-back {
-  ion-icon {
-    font-size: 40px;
-  }
-}
-.input {
-  border-radius: 20px;
-  border-bottom: 1px solid var(--ion-color-tertiary);
-  padding: 2px;
-}
-
-.label {
-  width: 80%;
-  border-radius: 20px;
-  margin-left: 10%;
-  padding: 2px;
-}
-
-.label-small {
-  width: 100%;
-  border-radius: 10px;
-  margin-right: 2%;
-}
-
-.input-small {
-  width: 100%;
-  border-radius: 10px;
-  margin-right: 2%;
-}
-
-.small-input-date {
-  width: 100%;
-  border-radius: 10px;
-}
-.large-input-date {
-  ion-button {
-    width: 100%;
-    border-radius: 10px;
-  }
-  margin-left: 8%;
-}
-
-.input-item {
-  border-radius: 20px;
-  border-bottom: 1px solid var(--ion-color-tertiary);
-  padding: 2px;
-  margin-left: 30%;
-  width: 80%;
-}
-
-.item-button {
-  padding: 2px;
-  margin-left: 10%;
-  width: 80%;
-
-  ion-button {
-    --border-radius: 20px;
-    ion-label {
-      font-size: 14pt;
-      font-family: Qanelas-bold;
-    }
-  }
-}
-
-.align-title {
-  text-align: center;
-}
-
-.img-item-user {
-  height: 100px;
-  width: 100px;
-}
-
 .ng-invalid.ng-touched:not(form) {
   border-bottom: 1px solid red;
-}
-
-ion-radio-group {
-  display: flex;
-}
-
-.isSmall {
-  width: 0px;
-  height: 0px;
-}
-
-.separated-date {
-  display: flex;
 }
 
 textarea {
@@ -96,42 +10,15 @@ textarea {
   font-family: Qanelas-bold;
 }
 
-.small-input-date {
-  width: 100%;
-  border-radius: 10px;
-  border-bottom: 1px solid var(--ion-color-tertiary);
-}
-.large-input-date {
-  width: 100%;
-  ion-button {
-    width: 100%;
-    border-radius: 10px;
-    --border-bottom: 1px solid var(--ion-color-tertiary);
-    ion-label {
-      color: var(--ion-color-primary);
-    }
-  }
-  margin-left: 8%;
-}
-.right-input-date {
-  width: 90%;
-  ion-button {
-    width: 100%;
-    border-radius: 10px;
-    border-bottom: 1px solid var(--ion-color-tertiary);
-    ion-label {
-      color: var(--ion-color-primary);
-    }
-  }
-  margin-left: 1%;
-  margin-right: 5%;
-}
-
 ion-grid {
   background-color: var(--ion-color-secondary);
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
-  height: 100%;
+  height: 80%;
+  width: 98%;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
 }
 
 .flex-container-row {
@@ -157,11 +44,35 @@ ion-grid {
   font-size: 40px;
   color: var(--ion-color-light);
 }
+.icon-fomat-date {
+  font-size: 40px;
+  color: var(--ion-color-light);
+  margin-top: 2%;
+  margin-right: 5%;
+}
 
+.amount-label {
+  ion-label {
+    font-family: Qanelas-bold;
+    color: var(--ion-color-primary);
+    font-size: 12pt;
+    margin: 5%;
+  }
+}
 .date-options {
   ion-label {
     font-family: Qanelas-bold;
     color: var(--ion-color-light);
+  }
+}
+
+.date-options-label {
+  text-align: center;
+
+  ion-label {
+    font-family: Qanelas-bold;
+    color: var(--ion-color-light);
+    margin: 5%;
   }
 }
 

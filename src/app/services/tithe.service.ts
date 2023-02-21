@@ -59,6 +59,18 @@ export class TitheService extends ServiceInterface {
       })
       .toPromise();
   }
+  async store(tithe: Tithe): Promise<Responser> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+    console.log(JSON.stringify(tithe));
+    return this.http
+      .post<Responser>(`${environment.API2}/tithes`, tithe, {
+        headers: LoginService.getHeaders(),
+      })
+      .toPromise();
+  }
 
   async delete(tithe: Tithe): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {

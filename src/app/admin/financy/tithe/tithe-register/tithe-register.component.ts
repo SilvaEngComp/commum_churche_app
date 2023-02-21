@@ -28,6 +28,9 @@ export class TitheRegisterComponent implements OnInit {
   customizedMonth: CustomizedMonth;
   year: string;
   localPageTitle: string;
+  datePipe: DatePipe;
+  lastMonth: string;
+  currentMonth: string;
   constructor(
     private titheService: TitheService,
     private exceptionService: ExceptionService,
@@ -36,7 +39,6 @@ export class TitheRegisterComponent implements OnInit {
 
   ngOnInit() {
     this.tithe = UiService.localGet(Constants.TITHE_MAINTAINCE);
-    console.log(this.tithe);
     if (!this.tithe) {
       this.exceptionService.alertDialog(Constants.INVALID_OPTION, 'Erro!');
       this.back();
@@ -48,9 +50,15 @@ export class TitheRegisterComponent implements OnInit {
     }
     console.log(this.tithe);
     this.isSmallDevice = this.platform.width() <= 500;
-    const datePipe = new DatePipe('en');
-    this.monthYear = datePipe.transform(Date.now(), 'YYYY-MM');
-    this.onSelectMonth(this.monthYear);
+    this.datePipe = new DatePipe('en');
+    this.monthYear = this.datePipe.transform(Date.now(), 'YYYY-MM');
+    this.onSetDate(this.monthYear);
+    this.currentMonth = new CustomizedMonth(Number(this?.tithe?.month))?.name;
+    const yesterday = new Date(new Date().setMonth(new Date().getMonth() - 1));
+    this.lastMonth = new CustomizedMonth(
+      Number(this.datePipe.transform(yesterday, 'MM'))
+    )?.name;
+
     if (this.tithe.isTithe) {
       this.localPageTitle = Constants.TITLE_TITHE_REGISTER;
     } else {
@@ -58,6 +66,26 @@ export class TitheRegisterComponent implements OnInit {
     }
     UiService.localSet(Constants.TITLE_CURRENT_PAGE, this.localPageTitle);
     UiService.pageTitle.emit(this.localPageTitle);
+  }
+
+  onSetDate(value: any, option: number = 0) {
+    let date: string;
+    if (value) {
+      date = value.substring(0, 10);
+    } else {
+      if (option === 1) {
+        date = this.datePipe.transform(Date.now(), 'MM-yyyy');
+      } else {
+        const yesterday = new Date(
+          new Date().setMonth(new Date().getMonth() - 1)
+        );
+        date = this.datePipe.transform(yesterday, 'MM-yyyy');
+      }
+    }
+
+    const dates = date.split('-');
+    this.tithe.month = dates[1];
+    this.tithe.year = dates[0];
   }
 
   onSelectMonth(value: any) {

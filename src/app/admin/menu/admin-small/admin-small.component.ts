@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Verse } from 'src/app/models/verse';
 import { element } from 'protractor';
 import { environment } from 'src/environments/environment';
@@ -41,7 +42,9 @@ export class AdminSmallComponent implements OnInit {
   constructor(
     private feedService: FeedService,
     private exceptionService: ExceptionService,
-    private messagingService: MessagingService
+    private messagingService: MessagingService,
+    private loginService: LoginService,
+    private router: Router
   ) {}
 
   @ViewChild('tabAdmin', { static: false }) tab!: IonTabs;

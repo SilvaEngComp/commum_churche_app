@@ -54,7 +54,7 @@ export class CaixaRegisterComponent implements OnInit {
 
     if (!this.caixa) {
       this.caixa = new Caixa();
-      this.value = '';
+      this.value = '0,0';
       this.caixa.isEntry = UiService.localGet(Constants.IS_ENTRY);
       this.isNew = true;
     } else {
@@ -73,7 +73,6 @@ export class CaixaRegisterComponent implements OnInit {
     this.datePipe = new DatePipe('en');
     this.caixa.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
     this.load();
-    console.log(this.caixa);
   }
 
   async load() {

@@ -2,23 +2,26 @@
   <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="back()"></ion-icon>
   <ion-title>{{localPageTitle}}</ion-title>
 </ion-item>
-<ion-label position="floating">*Valor</ion-label>
+<div class="amount-label">
+  <ion-label position="floating">*Digite o valor</ion-label>
+</div>
 <ion-item lines="none" class="input-amount">
   <ion-label>R$ </ion-label>
-  <ion-input type="text" maxlength="15" #inputAmount placeholder="Digite o valor" [value]="value"
+  <ion-input type="text" maxlength="15" #inputAmount [value]="value"
     [brmasker]="{money: true, thousand: '.',  decimalCaracter: ','}">
   </ion-input>
 </ion-item>
+
 <ion-grid>
   <ion-row>
     <ion-col>
-      <div class="flex-container-row date-options item-format">
-        <ion-icon name="calendar-clear-outline"></ion-icon>
+      <div class="flex-container-row date-options ">
+        <ion-icon class="icon-fomat-date" name="calendar-clear-outline"></ion-icon>
         <ion-button color="secondary" (click)="onSetDate(null, 1)"><ion-label>Hoje</ion-label></ion-button>
         <ion-button color="secondary" (click)="onSetDate(null, 2)"><ion-label>Ontem</ion-label></ion-button>
         <ion-button color="secondary" id="popover-button-month"><ion-label>Outro</ion-label></ion-button>
       </div>
-      <div class="date-options">
+      <div class="date-options-label">
         <ion-label>{{caixa?.date | date:'dd/MM/yyyy'}}</ion-label>
       </div>
       <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
@@ -76,20 +79,27 @@
       </div>
     </ion-col>
   </ion-row>
-
+  <!--
   <ion-row>
     <ion-col>
       <app-my-select-list [label]="'Usuario'" [listName]="'users'" [create]="true"
         (selectEmiter)="setUser($event)"></app-my-select-list>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 
 
 
   <ion-row>
     <ion-col>
-      <ion-button expand="block" color="success" (click)="register(inputAmount.value)">{{isNew ?
-        'REGISTRAR':'ALTERAR'}}</ion-button>
+
+      <!-- <ion-button expand="block" color="success" (click)="register(inputAmount.value)"><ion-icon color="danger"
+          name="checkmark-circle-sharp"></ion-icon></ion-button> -->
     </ion-col>
   </ion-row>
 </ion-grid>
+
+<ion-fab slot="fixed" horizontal="center" vertical="bottom">
+  <ion-fab-button (click)="register(inputAmount.value)" color="danger">
+    <ion-icon name="checkmark-sharp"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
