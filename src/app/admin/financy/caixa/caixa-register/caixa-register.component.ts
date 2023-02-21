@@ -38,6 +38,8 @@ export class CaixaRegisterComponent implements OnInit {
   churches: Church[];
   caixaGroups: CaixaGroup[];
   localPageTitle: string;
+  datePipe: DatePipe;
+  showDescription: boolean;
   constructor(
     private caixaService: CaixaService,
     private caixaTypeService: CaixaTypeService,
@@ -68,8 +70,8 @@ export class CaixaRegisterComponent implements OnInit {
     UiService.localSet(Constants.TITLE_CURRENT_PAGE, this.localPageTitle);
     UiService.pageTitle.emit(this.localPageTitle);
     this.isSmallDevice = this.platform.width() <= 500;
-    const datePipe = new DatePipe('en');
-    this.caixa.date = datePipe.transform(Date.now(), 'yyyy-MM-dd');
+    this.datePipe = new DatePipe('en');
+    this.caixa.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
     this.load();
     console.log(this.caixa);
   }
@@ -82,6 +84,9 @@ export class CaixaRegisterComponent implements OnInit {
     this.churches = churchResponser.data;
   }
 
+  setShowDescription() {
+    this.showDescription = !this.showDescription;
+  }
   setIsEntry(ev: any) {
     console.clear();
     console.log(ev.target.value);
@@ -89,9 +94,19 @@ export class CaixaRegisterComponent implements OnInit {
     console.log(this.caixa.isEntry);
   }
 
-  onSetDate(value: any) {
-    console.log(value);
-    this.caixa.date = value.substring(0, 10);
+  onSetDate(value: any, option: number = 0) {
+    if (value) {
+      this.caixa.date = value.substring(0, 10);
+    } else {
+      if (option === 1) {
+        this.caixa.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+      } else {
+        const yesterday = new Date(
+          new Date().setDate(new Date().getDate() - 1)
+        );
+        this.caixa.date = this.datePipe.transform(yesterday, 'yyyy-MM-dd');
+      }
+    }
   }
 
   async askNeedDoAgain() {

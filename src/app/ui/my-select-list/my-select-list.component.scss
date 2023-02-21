@@ -1,16 +1,49 @@
 .item-search {
-  ion-label {
-    color: var(--ion-color-medium);
+  font-size: 10pt;
+  font-family: Qanelas;
+  color: var(--ion-color-secondary);
+}
+ion-grid {
+}
+.flex-container {
+  display: flex;
+}
+.button-controls {
+  width: 100%;
+  height: 20px;
+  flex-direction: row;
+  ion-icon {
+    font-size: 20px;
+  }
+
+  .right {
+    width: auto;
+    margin-left: 70%;
   }
 }
 
+.main-label {
+  align-items: center;
+  align-content: space-around;
+  flex-direction: row;
+  z-index: 2000;
+  ion-label {
+    font-size: 12pt;
+    font-family: Qanelas;
+    color: var(--ion-color-light);
+  }
+}
+.backgroun-list {
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--ion-color-light);
+  border-radius: 5px;
+  box-shadow: 4px 2px 2px 2px var(--ion-color-medium);
+  z-index: 2000;
+}
 .ocult {
   width: 0px;
   height: 0px;
-}
-.input {
-  border-radius: 20px;
-  border-bottom: 1px solid var(--ion-color-tertiary);
 }
 
 .selected {
@@ -19,7 +52,6 @@
   border: 1px solid var(--ion-color-success);
   color: var(--ion-color-light);
   font-family: Qanelas-bold;
-  font-size: 14pt;
 }
 
 .open-div {
@@ -28,9 +60,6 @@
   max-height: 200px;
   overflow-y: auto;
   overflow-x: hidden;
-  border-radius: 5px;
-  box-shadow: 4px 2px 2px 2px var(--ion-color-medium);
-  z-index: 2000;
 }
 
 //div que é expandida simulando o select list

@@ -2,91 +2,94 @@
   <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="back()"></ion-icon>
   <ion-title>{{localPageTitle}}</ion-title>
 </ion-item>
+<ion-label position="floating">*Valor</ion-label>
+<ion-item lines="none" class="input-amount">
+  <ion-label>R$ </ion-label>
+  <ion-input type="text" maxlength="15" #inputAmount placeholder="Digite o valor" [value]="value"
+    [brmasker]="{money: true, thousand: '.',  decimalCaracter: ','}">
+  </ion-input>
+</ion-item>
 <ion-grid>
   <ion-row>
     <ion-col>
-      <ion-grid>
-
-        <ion-row>
-          <ion-col>
-            <app-my-select-list [label]="'*Grupo'" [listName]="'groups'" [create]="true"
-              (selectEmiter)="setGroup($event)"></app-my-select-list>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <app-my-select-list [label]="'*Tipo'" [listName]="'types'" [create]="true"
-              (selectEmiter)="setType($event)"></app-my-select-list>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <app-my-select-list [label]="'Organização'" [listName]="'churches'" [create]="true"
-              (selectEmiter)="setChurch($event)"></app-my-select-list>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <app-my-select-list [label]="'Usuario'" [listName]="'users'" [create]="true"
-              (selectEmiter)="setUser($event)"></app-my-select-list>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
+      <div class="flex-container-row date-options item-format">
+        <ion-icon name="calendar-clear-outline"></ion-icon>
+        <ion-button color="secondary" (click)="onSetDate(null, 1)"><ion-label>Hoje</ion-label></ion-button>
+        <ion-button color="secondary" (click)="onSetDate(null, 2)"><ion-label>Ontem</ion-label></ion-button>
+        <ion-button color="secondary" id="popover-button-month"><ion-label>Outro</ion-label></ion-button>
+      </div>
+      <div class="date-options">
+        <ion-label>{{caixa?.date | date:'dd/MM/yyyy'}}</ion-label>
+      </div>
+      <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
+        <ng-template>
+          <ion-content>
+            <ion-datetime [showDefaultButtons]="true" presentation="date" display-format="MM-YYYY-DD" #timeMonth
+              (ionChange)="onSetDate(timeMonth.value)" doneText="OK" cancelText="CANCELAR">
+            </ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
     </ion-col>
+  </ion-row>
+  <ion-row>
     <ion-col>
-      <ion-grid>
-        <ion-row>
 
-          <ion-col>
-            <ion-item lines="none" class="input">
-              <ion-label position="floating">*Valor: R$</ion-label>
-              <ion-input type="text" maxlength="15" #inputAmount placeholder="Digite o valor" [value]="value"
-                [brmasker]="{money: true, thousand: '.',  decimalCaracter: ','}">
-              </ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-label>Selecione uma data</ion-label>
 
-            <ion-item id="popover-button-month" lines="none" class="input" detail>
-              <ion-label>{{caixa?.date | date:'dd/MM/yyyy'}}</ion-label>
-            </ion-item>
+      <div class="flex-container-row" (click)="setShowDescription()" *ngIf="!showDescription">
+        <ion-icon name="reader-outline" class="icon-format"></ion-icon>
+        <ion-label class="description-label">DESCRIÇÃO</ion-label>
+      </div>
+      <div class="flex-container-col" *ngIf="showDescription">
+        <textarea inputmode="text" wrap="hard" maxlength="500" [(ngModel)]="caixa.description"
+          (blur)="setShowDescription()"
+          placeholder="Aqui você pode escrever algo importante sobre esse registro...(Obrigatório para saídas)">
+        </textarea>
+        <ion-note slot="end">{{caixa.description?.length}}/500</ion-note>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <div class="flex-container-row">
+        <ion-icon name="list-outline" class="icon-format"></ion-icon>
+        <app-my-select-list [label]="'Categoria'" [listName]="'groups'" [create]="true"
+          (selectEmiter)="setGroup($event)"></app-my-select-list>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <div class="flex-container-row">
+        <ion-icon name="list-outline" class="icon-format"></ion-icon>
+        <app-my-select-list [label]="'Sub Categoria'" [listName]="'types'" [create]="true"
+          (selectEmiter)="setType($event)"></app-my-select-list>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <div class="flex-container-row">
+        <ion-icon name="storefront-outline" class="icon-format"></ion-icon>
+        <app-my-select-list [label]="'Organização'" [listName]="'churches'" [create]="true"
+          (selectEmiter)="setChurch($event)"></app-my-select-list>
+      </div>
+    </ion-col>
+  </ion-row>
 
-            <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
-              <ng-template>
-                <ion-content>
-                  <ion-datetime [showDefaultButtons]="true" presentation="date" display-format="MM-YYYY-DD" #timeMonth
-                    (ionChange)="onSetDate(timeMonth.value)" doneText="OK" cancelText="CANCELAR">
-                  </ion-datetime>
-                </ion-content>
-              </ng-template>
-            </ion-popover>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <textarea inputmode="text" wrap="hard" maxlength="500" [(ngModel)]="caixa.description"
-              placeholder="Aqui você pode escrever algo importante sobre esse registro...(Obrigatório para saídas)">
-            </textarea>
-
-            <ion-item lines="none">
-              <ion-note slot="end">{{caixa.description?.length}}/500</ion-note>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-button expand="block" color="success" (click)="register(inputAmount.value)">{{isNew ?
-              'REGISTRAR':'ALTERAR'}}</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
+  <ion-row>
+    <ion-col>
+      <app-my-select-list [label]="'Usuario'" [listName]="'users'" [create]="true"
+        (selectEmiter)="setUser($event)"></app-my-select-list>
     </ion-col>
   </ion-row>
 
 
+
+  <ion-row>
+    <ion-col>
+      <ion-button expand="block" color="success" (click)="register(inputAmount.value)">{{isNew ?
+        'REGISTRAR':'ALTERAR'}}</ion-button>
+    </ion-col>
+  </ion-row>
 </ion-grid>

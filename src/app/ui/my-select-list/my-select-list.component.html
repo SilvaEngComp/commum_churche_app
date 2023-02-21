@@ -7,52 +7,40 @@
 <ion-grid *ngIf="!isLoading">
   <ion-row *ngIf="!showSelect">
     <ion-col>
-      <ion-item class="input" lines="none" button (click)="setShowSelect()">
-        <ion-label slot="start">{{label | uppercase}}</ion-label>
-        <ion-label slot="end">{{selected}}</ion-label>
-        <ion-icon slot="end" name="caret-down-outline"></ion-icon>
-      </ion-item>
+      <div class="flex-container main-label" lines="none" button (click)="setShowSelect()">
+        <ion-label color="light">{{label | uppercase}}</ion-label>
+        <ion-label color="light"> {{selected}}</ion-label>
+        <ion-icon color="light" name="caret-down-outline"></ion-icon>
+      </div>
     </ion-col>
   </ion-row>
-  <ion-row *ngIf="showSelect" color="light">
-    <ion-col>
-      <ion-item lines="none">
-        <ion-button fill="clear" (click)="setShowSelect()">
-          <ion-label>Fehar</ion-label>
-          <ion-icon name="close-circle-outline"></ion-icon>
-        </ion-button>
+  <ion-row *ngIf="showSelect">
+    <ion-col class="flex-container backgroun-list">
 
-        <ion-button slot="end" fill="clear" (click)="createNew($event)" *ngIf="create">
-          <ion-icon slot="start" color="primary" name="add-circle-outline"></ion-icon>
-          <ion-label slot="end">Novo</ion-label>
-        </ion-button>
+      <div>
+        <div class="button-controls flex-container">
+          <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="setShowSelect()"></ion-icon>
+          <div *ngIf="create" class="right">
+            <ion-icon (click)="createNew($event)" color="primary" name="add-circle-outline"></ion-icon>
+            <ion-label>Novo</ion-label>
+          </div>
+        </div>
 
-      </ion-item>
-      <ion-item [ngClass]="{'ocult': filtredSearch?.length>0}">
-        <ion-label>Lista vazia</ion-label>
-      </ion-item>
-      <ion-grid *ngIf="filtredSearch?.length>0">
-        <ion-row>
-          <ion-col>
-            <ion-item lines="none" class="input">
-              <ion-label position="floating">PESQUISAR</ion-label>
-              <ion-input autofocus="true" type="text" placeholder="Digite o nome" #inputSearchValue
-                (keyup)="searchBar(inputSearchValue.value)">
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-list class="open-div">
-              <ion-item lines="none" detail (click)="onSelect(item)" class="item-search"
-                [ngClass]="{'selected': selected===item?.value}" *ngFor="let item of filtredSearch">
-                {{ item?.value | uppercase}}</ion-item>
-            </ion-list>
+        <ion-input autofocus="true" type="text" placeholder="Pesquisar" #inputSearchValue
+          (keyup)="searchBar(inputSearchValue.value)">
+        </ion-input>
+        <div class="open-div">
+          <ion-label *ngIf="filtredSearch?.length===0">Lista vazia</ion-label>
+          <ul>
+            <li *ngFor="let item of filtredSearch">
+              <ion-label detail (click)="onSelect(item)" class="item-search"
+                [ngClass]="{'selected': selected===item?.value}">
+                {{ item?.value | uppercase}}</ion-label>
+            </li>
+          </ul>
 
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+        </div>
+      </div>
     </ion-col>
   </ion-row>
 </ion-grid>
