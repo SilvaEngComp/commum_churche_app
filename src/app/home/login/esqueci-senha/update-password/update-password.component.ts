@@ -40,10 +40,11 @@ export class UpdatePasswordComponent implements OnInit {
 
   ngOnInit() {
     this.user = UiService.localGet(Constants.RECOVER_USER);
-    if (!this.user) {
-      localStorage.clear();
-      this.cancel();
-    }
+    this.user = new User();
+    // if (!this.user) {
+    //   localStorage.clear();
+    //   this.cancel();
+    // }
     this.diferentes = false;
     this.btnDisable = true;
     this.check1 = false;
@@ -96,7 +97,7 @@ export class UpdatePasswordComponent implements OnInit {
       this.check3 = false;
       flat--;
     }
-    teste = RegExp('[./@/-/_]');
+    teste = RegExp('[./@/&/#/_/$]');
     if (teste.test(this.password)) {
       this.check4 = true;
       flat++;

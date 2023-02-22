@@ -1,17 +1,17 @@
-import { RequestEmailComponent } from './request-email/request-email.component';
 import { BrMaskerModule } from 'br-mask';
-import { LoginComponent } from './login.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { RevoverPasswordComponent } from './esqueci-senha/recover-password.component';
-import { UpdatePasswordComponent } from './esqueci-senha/update-password/update-password.component';
-import { CodeValidationComponent } from './esqueci-senha/code-validation/code-validation.component';
+import { CodeValidationComponent } from '../esqueci-senha/code-validation/code-validation.component';
+import { RevoverPasswordComponent } from '../esqueci-senha/recover-password.component';
+import { UpdatePasswordComponent } from '../esqueci-senha/update-password/update-password.component';
+import { LoginComponent } from '../login/login.component';
+import { LoginAdminComponent } from './login-admin.component';
 
 @NgModule({
   declarations: [
-    RequestEmailComponent,
+    LoginAdminComponent,
     LoginComponent,
     RevoverPasswordComponent,
     CodeValidationComponent,
@@ -24,6 +24,6 @@ import { CodeValidationComponent } from './esqueci-senha/code-validation/code-va
     BrMaskerModule,
     ReactiveFormsModule,
   ],
-  exports: [LoginComponent],
+  exports: [LoginAdminComponent],
 })
 export class LoginModule {}

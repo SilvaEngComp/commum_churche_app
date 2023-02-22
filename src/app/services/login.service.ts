@@ -107,15 +107,19 @@ export class LoginService {
 
   checkCod(cod: string): Promise<Responser> {
     return this.http
-      .get<Responser>(`${environment.API}/auth/codeValidation/${cod}`, {
-        headers: LoginService.getHeaders(),
-      })
+      .post<Responser>(
+        `${environment.API}/auth/codeValidation/`,
+        { cod },
+        {
+          headers: LoginService.getHeaders(),
+        }
+      )
       .toPromise();
   }
 
   recoverAccess(email: string): Promise<any> {
     return this.http
-      .get(`${environment.API}/auth/recoverAccess/${email}`)
+      .post(`${environment.API}/auth/recoverAccess/`, { email })
       .toPromise();
   }
 
@@ -136,8 +140,8 @@ export class LoginService {
 
     return this.http
       .post<Responser>(
-        `${environment.API2}/auth/sendInvitation/${email}`,
-        {},
+        `${environment.API2}/auth/sendInvitation/`,
+        { email },
         {
           headers: LoginService.getHeaders(),
         }
@@ -158,16 +162,7 @@ export class LoginService {
 
   async recorverAccess(email: string): Promise<Responser> {
     return this.http
-      .get<Responser>(`${environment.API}/auth/recoverAccess/${email}`)
-      .toPromise();
-  }
-
-  async checkExistentUser(email: string): Promise<Responser> {
-    return this.http
-      .get<Responser>(
-        `${environment.API}/users/checkEmailExistente?email=${email}`,
-        { headers: await LoginService.getHeaders() }
-      )
+      .post<Responser>(`${environment.API}/auth/recoverAccess`, { email })
       .toPromise();
   }
 }

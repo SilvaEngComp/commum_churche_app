@@ -6,6 +6,7 @@ import { IonInput } from '@ionic/angular';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-code-validation',
@@ -15,7 +16,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class CodeValidationComponent implements OnInit {
   @Output() selectedPage: EventEmitter<number> = new EventEmitter<number>();
   @ViewChild('inputZero', { static: false }) inputZero: IonInput;
-  @Input() email: string;
+  user: User;
   constructor(
     private loginService: LoginService,
     private exceptionService: ExceptionService
@@ -28,13 +29,14 @@ export class CodeValidationComponent implements OnInit {
   ngOnInit() {
     this.error = false;
     this.cod = '';
+    this.user = UiService.localGet(Constants.RECOVER_USER);
   }
 
-  back() {
-    this.selectedPage.emit(Constants.PAGE_LOGIN);
+  async backPage() {
+    this.selectedPage.emit(Constants.PAGE_REQUEST_EMAIL);
   }
 
-  resend() {
+  resendEmail() {
     this.exceptionService.loadingFunction();
     const user = UiService.localGet(Constants.RECOVER_USER);
     this.loginService.recorverAccess(user.email).then((response) => {
@@ -61,18 +63,21 @@ export class CodeValidationComponent implements OnInit {
     this.toString();
     console.log(this.cod2[0]);
     if (this.cod.length >= 6) {
-      this.loginService
-        .checkCod(this.cod)
-        .then(async (response) => {
-          console.log(response);
-          UiService.localSet(Constants.RECOVER_USER, response.data);
-          this.selectedPage.emit(Constants.PAGE_UPDATE_PASSWORD);
-        })
-        .catch((error) => {
-          this.cod = '';
-          this.error = true;
-          this.exceptionService.error(error);
-        });
+      this.sendCode();
     }
+  }
+
+  sendCode() {
+    this.loginService
+      .checkCod(this.cod)
+      .then(async (response) => {
+        UiService.localSet(Constants.RECOVER_USER, response.data);
+        this.selectedPage.emit(Constants.PAGE_UPDATE_PASSWORD);
+      })
+      .catch((error) => {
+        this.cod = '';
+        this.error = true;
+        this.exceptionService.error(error);
+      });
   }
 }

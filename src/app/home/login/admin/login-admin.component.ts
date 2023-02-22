@@ -1,16 +1,16 @@
-import { Constants } from './../../models/constants';
-import { UiService } from './../../services/ui.service';
+import { Constants } from './../../../models/constants';
+import { UiService } from './../../../services/ui.service';
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/User';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-login-admin',
+  templateUrl: './login-admin.component.html',
+  styleUrls: ['./login-admin.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginAdminComponent implements OnInit {
   isLarge: boolean;
   user: User;
   page: number;
@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
     if (!this.page) {
       this.page = 0;
     }
+    console.clear();
   }
 
   onSelectPage(page: any) {

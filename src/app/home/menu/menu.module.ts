@@ -1,6 +1,5 @@
 import { BirthdaysComponent } from './../birthdays/birthdays.component';
 import { BrMaskerModule } from 'br-mask';
-import { LoginModule } from './../login/login.module';
 import { MenuHomeSmallComponent } from './menu-home-small/menu-home-small.component';
 import { MenuHomeSelectComponent } from './menu-home-select/menu-home-select.component';
 import { MenuHomeLargeComponent } from './menu-home-large/menu-home-large.component';
@@ -11,6 +10,7 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageModule } from '../home/home.module';
 import { HomeUserRegisterModule } from '../home-user-register/home-user-register.module';
 import { HomePageRoutingModule } from './app-routing.module';
+import { LoginModule } from '../login/admin/login-admin.module';
 
 @NgModule({
   declarations: [

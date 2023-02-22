@@ -1,0 +1,52 @@
+<div class="flex-container">
+  <div class="fundo flex-container">
+
+    <ion-item lines="none" class="login-button" (click)="login()">
+      <ion-label>Entrar</ion-label>
+    </ion-item>
+
+    <div class="create-account ">
+      <ion-label>Não tem conta? <strong class="link"> Criar</strong></ion-label>
+    </div>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-img class="logo" src="./assets/images/logo.png"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item class="item-input" lines="none">
+          <ion-label position="floating">E-mail</ion-label>
+          <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item class="item-input" lines="none">
+          <ion-label position="floating">senha</ion-label>
+          <ion-input [type]="password" [(ngModel)]="user.password" placeholder="123455678"></ion-input>
+          <ion-button slot="end" expand="block" fill="clear" (click)="showPassword()">
+            <ion-icon color="secondary" *ngIf="show" name="eye-outline"></ion-icon>
+            <ion-icon color="secondary" *ngIf="!show" name="eye-off-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="1" class="forgot-password ">
+        <ion-label class="link" (click)="recoverPassword()">Esqueci minha senha</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</div>

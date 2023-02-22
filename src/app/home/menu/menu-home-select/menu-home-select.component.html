@@ -6,7 +6,7 @@
   <app-home-user-register *ngIf="page===0"></app-home-user-register>
   <app-birthdays *ngIf="page===1"></app-birthdays>
 
-  <app-login *ngIf="page===2"></app-login>
+  <app-login-admin *ngIf="page===2"></app-login-admin>
 
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"

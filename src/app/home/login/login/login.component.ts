@@ -6,12 +6,12 @@ import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
-  selector: 'app-request-email',
-  templateUrl: './request-email.component.html',
-  styleUrls: ['./request-email.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class RequestEmailComponent implements OnInit {
-  @Output() selectedPage: EventEmitter<number> = new EventEmitter<number>();
+export class LoginComponent implements OnInit {
+  @Output() selectedPage: EventEmitter<any> = new EventEmitter<any>();
 
   newParte: number;
   show: boolean;
@@ -63,7 +63,7 @@ export class RequestEmailComponent implements OnInit {
       });
   }
 
-  async recoverPasswordd() {
+  recoverPassword() {
     this.selectedPage.emit(1);
   }
 }

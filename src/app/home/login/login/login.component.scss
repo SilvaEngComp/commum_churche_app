@@ -9,14 +9,6 @@
   --background: white;
   border-radius: 10px;
 }
-ion-grid {
-  width: 90%;
-}
-
-ion-col {
-  display: grid;
-  justify-content: center;
-}
 @media only screen and (min-width: 500px) {
   .fundo {
     background-image: url("../../../../assets/images/login-background.png");
@@ -33,18 +25,19 @@ ion-col {
     height: 250px;
   }
 
-  .buttons {
-    display: flex;
-    flex-direction: row;
-    align-content: space-between;
+  .login-button {
+    width: 200px;
     position: absolute;
     bottom: 10%;
-    ion-button {
-      width: 150px;
-      --border-radius: 10px;
-      text-align: center;
-      margin: 5px;
-    }
+    --border-radius: 20px;
+    text-align: center;
+  }
+
+  .create-account {
+    font-family: Qanelas-bold;
+    color: var(--ion-color-light);
+    position: absolute;
+    bottom: 5%;
   }
   .link {
     font-family: Qanelas-bold;
@@ -54,11 +47,25 @@ ion-col {
     margin-left: 10px;
   }
 
-  .create-account {
-    font-family: Qanelas-bold;
-    color: var(--ion-color-light);
-    position: absolute;
-    bottom: 5%;
+  .forgot-password {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    align-content: flex-end;
+    ion-label {
+      float: right;
+      color: var(--ion-color-primary);
+    }
+    cursor: pointer;
+  }
+
+  ion-grid {
+    width: 90%;
+  }
+
+  ion-col {
+    display: grid;
+    justify-content: center;
   }
 }
 
@@ -78,19 +85,21 @@ ion-col {
     height: 250px;
   }
 
-  .buttons {
-    display: flex;
-    flex-direction: row;
-    align-content: space-between;
+  .login-button {
+    width: 200px;
     position: absolute;
     bottom: 10%;
-    ion-button {
-      width: 150px;
-      --border-radius: 10px;
-      text-align: center;
-      margin: 5px;
-    }
+    --border-radius: 20px;
+    text-align: center;
   }
+
+  .create-account {
+    font-family: Qanelas-bold;
+    color: var(--ion-color-light);
+    position: absolute;
+    bottom: 5%;
+  }
+
   .link {
     font-family: Qanelas-bold;
     color: var(--ion-color-light);
@@ -111,10 +120,12 @@ ion-col {
     }
   }
 
-  .create-account {
-    font-family: Qanelas-bold;
-    color: var(--ion-color-light);
-    position: absolute;
-    bottom: 5%;
+  ion-grid {
+    width: 90%;
+  }
+
+  ion-col {
+    display: grid;
+    justify-content: center;
   }
 }

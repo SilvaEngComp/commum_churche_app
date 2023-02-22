@@ -15,7 +15,7 @@ export class MenuHomeSelectComponent implements OnInit {
   constructor(private platform: Platform) {}
 
   ngOnInit() {
-    this.page = 0;
+    this.page = 2;
     this.isLarge = this.platform.width() > 500;
   }
 

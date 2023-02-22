@@ -176,4 +176,5 @@ export class Constants {
   static IS_COLOR_MANAGER_OPPENED = 'isColorManagerOppened';
   static ELEMENT_MARKER_REF = 'elementMarkerRef';
   static ELEMENT_MARKER_RENDERER = 'elementMarkerRenderer';
+  static LOCALSTORAGE_REQUEST_EMAIL = 'localStorageRequestEmail';
 }

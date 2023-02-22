@@ -52,6 +52,10 @@ export class RevoverPasswordComponent implements OnInit {
       });
   }
 
+  save() {
+    UiService.localSet(Constants.LOCALSTORAGE_REQUEST_EMAIL, this.email);
+  }
+
   codeValidation() {
     this.selectedPage.emit(Constants.PAGE_CODE_VALIDATION);
   }

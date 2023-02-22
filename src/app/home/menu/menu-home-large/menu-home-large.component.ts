@@ -38,9 +38,13 @@ export class MenuHomeLargeComponent implements OnInit {
       this.page = UiService.localGet(Constants.MENU_HOME_PAGE);
     }
 
-    UiService.toTop.subscribe(() => {
-      this.content.scrollToTop(2000);
-    });
+    if (!this.page) {
+      this.page = '0';
+    }
+
+    // UiService.toTop.subscribe(() => {
+    //   this.content.scrollToTop(2000);
+    // });
   }
 
   doRefresh(ev) {
