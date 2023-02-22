@@ -162,7 +162,13 @@ export class LoginService {
 
   async recorverAccess(email: string): Promise<Responser> {
     return this.http
-      .post<Responser>(`${environment.API}/auth/recoverAccess`, { email })
+      .post<Responser>(
+        `${environment.API}/auth/recoverAccess`,
+        { email },
+        {
+          headers: await LoginService.getHeaders(),
+        }
+      )
       .toPromise();
   }
 }
