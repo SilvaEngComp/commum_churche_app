@@ -54,6 +54,8 @@ export class UiService {
 
   @Output()
   static returnColorMaker: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  static installButton: EventEmitter<any> = new EventEmitter<any>();
 
   static stringNormalization(text: string) {
     return text

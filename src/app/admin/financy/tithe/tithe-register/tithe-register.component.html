@@ -2,54 +2,57 @@
   <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="back()"></ion-icon>
   <ion-title>{{localPageTitle}}</ion-title>
 </ion-item>
-<div class="amount-label">
-  <ion-label position="floating">*Digite o valor</ion-label>
+<div class="flex-container">
+  <div class="amount-label">
+    <ion-label position="floating">*Digite o valor</ion-label>
+  </div>
+  <ion-item lines="none" class="input-amount">
+    <ion-label>R$ </ion-label>
+    <ion-input type="text" maxlength="15" #inputAmount [value]="value"
+      [brmasker]="{money: true, thousand: '.',  decimalCaracter: ','}">
+    </ion-input>
+  </ion-item>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="flex-container-row date-options ">
+          <ion-icon class="icon-fomat-date" name="calendar-clear-outline"></ion-icon>
+          <ion-button color="secondary"
+            (click)="onSetDate(null, 1)"><ion-label>{{currentMonth}}</ion-label></ion-button>
+          <ion-button color="secondary" (click)="onSetDate(null, 2)"><ion-label> {{lastMonth}}</ion-label></ion-button>
+          <ion-button color="secondary" id="popover-button-month"><ion-label>Outro</ion-label></ion-button>
+        </div>
+        <div class="date-options-label">
+          <ion-label>{{tithe?.month}}/{{tithe?.year}}</ion-label>
+        </div>
+        <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
+          <ng-template>
+            <ion-content>
+              <ion-datetime [showDefaultButtons]="true" presentation="month-year" display-format="MM-YYYY" #timeMonth
+                (ionChange)="onSetDate(timeMonth.value)" doneText="OK" cancelText="CANCELAR">
+              </ion-datetime>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div class="flex-container-row">
+          <ion-icon name="storefront-outline" class="icon-format"></ion-icon>
+          <app-my-select-list [label]="'Usuario'" [listName]="'users'" [create]="true"
+            (selectEmiter)="setUser($event)"></app-my-select-list>
+        </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+    <ion-fab-button (click)="register(inputAmount.value)" color="success">
+      <ion-icon name="checkmark-sharp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </div>
-<ion-item lines="none" class="input-amount">
-  <ion-label>R$ </ion-label>
-  <ion-input type="text" maxlength="15" #inputAmount [value]="value"
-    [brmasker]="{money: true, thousand: '.',  decimalCaracter: ','}">
-  </ion-input>
-</ion-item>
-
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <div class="flex-container-row date-options ">
-        <ion-icon class="icon-fomat-date" name="calendar-clear-outline"></ion-icon>
-        <ion-button color="secondary" (click)="onSetDate(null, 1)"><ion-label>{{currentMonth}}</ion-label></ion-button>
-        <ion-button color="secondary" (click)="onSetDate(null, 2)"><ion-label> {{lastMonth}}</ion-label></ion-button>
-        <ion-button color="secondary" id="popover-button-month"><ion-label>Outro</ion-label></ion-button>
-      </div>
-      <div class="date-options-label">
-        <ion-label>{{tithe?.month}}/{{tithe?.year}}</ion-label>
-      </div>
-      <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
-        <ng-template>
-          <ion-content>
-            <ion-datetime [showDefaultButtons]="true" presentation="month-year" display-format="MM-YYYY" #timeMonth
-              (ionChange)="onSetDate(timeMonth.value)" doneText="OK" cancelText="CANCELAR">
-            </ion-datetime>
-          </ion-content>
-        </ng-template>
-      </ion-popover>
-    </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col>
-      <div class="flex-container-row">
-        <ion-icon name="storefront-outline" class="icon-format"></ion-icon>
-        <app-my-select-list [label]="'Usuario'" [listName]="'users'" [create]="true"
-          (selectEmiter)="setUser($event)"></app-my-select-list>
-      </div>
-    </ion-col>
-  </ion-row>
-
-</ion-grid>
-
-<ion-fab slot="fixed" horizontal="center" vertical="bottom">
-  <ion-fab-button (click)="register(inputAmount.value)" color="danger">
-    <ion-icon name="checkmark-sharp"></ion-icon>
-  </ion-fab-button>
-</ion-fab>

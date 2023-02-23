@@ -40,6 +40,7 @@ export class CaixaRegisterComponent implements OnInit {
   localPageTitle: string;
   datePipe: DatePipe;
   showDescription: boolean;
+  buttonColor: string;
   constructor(
     private caixaService: CaixaService,
     private caixaTypeService: CaixaTypeService,
@@ -64,7 +65,9 @@ export class CaixaRegisterComponent implements OnInit {
 
     if (this.caixa.isEntry) {
       this.localPageTitle = Constants.TITLE_CAIXA_REGISTER_IN;
+      this.buttonColor = 'success';
     } else {
+      this.buttonColor = 'danger';
       this.localPageTitle = Constants.TITLE_CAIXA_REGISTER_OUT;
     }
     UiService.localSet(Constants.TITLE_CURRENT_PAGE, this.localPageTitle);
@@ -88,9 +91,7 @@ export class CaixaRegisterComponent implements OnInit {
   }
   setIsEntry(ev: any) {
     console.clear();
-    console.log(ev.target.value);
     this.caixa.isEntry = ev.target.value;
-    console.log(this.caixa.isEntry);
   }
 
   onSetDate(value: any, option: number = 0) {

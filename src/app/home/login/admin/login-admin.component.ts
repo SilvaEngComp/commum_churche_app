@@ -23,7 +23,6 @@ export class LoginAdminComponent implements OnInit {
     if (!this.page) {
       this.page = 0;
     }
-    console.clear();
   }
 
   onSelectPage(page: any) {

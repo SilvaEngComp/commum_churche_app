@@ -36,11 +36,13 @@ export class AdminSelectorComponent implements OnInit {
     this.isLarge = this.platform.width() > 500;
     this.user = LoginService.getUser();
     this.page = UiService.localGet(this.defaultPageName);
-    if (!this.page) {
-      this.page = '0';
+    if (!this.page || this.page === '-2' || this.page === '-1') {
+      this.page = '3';
+      this.save();
     } else {
       this.page = String(this.page);
     }
+
     if (!this.platform.is('cordova')) {
       this.requestPermission();
     } else {

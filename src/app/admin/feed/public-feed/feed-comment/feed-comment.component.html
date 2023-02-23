@@ -14,7 +14,7 @@
       <ion-col size="10">
         <div class="div-publisher">
           <ion-avatar>
-            <ion-img [src]="feed?.publisher?.image"></ion-img>
+            <ion-img alt="Igreaja Batista Nova Betel" [src]="feed?.publisher?.image"></ion-img>
           </ion-avatar>
           <div>
             <ion-label>{{ feed?.publisher?.name }}</ion-label>
@@ -25,7 +25,7 @@
     <ion-row *ngIf="feed?.checkPublish">
       <ion-col *ngIf="feed?.image">
         <div [ngClass]="{'feed-img-short': !expandAll, 'feed-img-large':expandAll}">
-          <ion-img [src]="feed?.image"></ion-img>
+          <ion-img alt="Igreaja Batista Nova Betel" [src]="feed?.image"></ion-img>
         </div>
 
       </ion-col>
@@ -74,7 +74,7 @@
 
             <ion-item lines="none">
               <ion-avatar>
-                <ion-img [src]="feed?.publisher?.image"></ion-img>
+                <ion-img alt="Igreaja Batista Nova Betel" [src]="feed?.publisher?.image"></ion-img>
               </ion-avatar>
               <ion-label class="lb-comment-commenter">{{ feed?.publisher?.name }}
               </ion-label>

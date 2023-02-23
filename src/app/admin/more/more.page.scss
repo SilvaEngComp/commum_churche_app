@@ -4,10 +4,7 @@
   background: var(--ion-color-light);
   height: 100%;
 }
-.item-choose-label {
-  margin-top: 5%;
-  --border-radius: 20px;
-}
+
 .div-header {
   background-image: url(".../../../../../assets/images/header.png");
   background-position: 0;
@@ -41,4 +38,37 @@ ion-grid {
   align-content: center;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+@media only screen and (min-width: 500px) {
+  .item-choose-label {
+    margin-top: 1%;
+    --border-radius: 20px;
+
+    ion-icon {
+      font-size: 40px;
+      color: var(--ion-color-light);
+    }
+    ion-label {
+      font-family: Qanelas-bold;
+      color: var(--ion-color-light);
+      margin-left: 1%;
+    }
+  }
+}
+@media only screen and (max-width: 500px) {
+  .item-choose-label {
+    margin-top: 5%;
+    --border-radius: 20px;
+
+    ion-icon {
+      font-size: 40px;
+      color: var(--ion-color-light);
+    }
+    ion-label {
+      font-family: Qanelas-bold;
+      color: var(--ion-color-light);
+      margin-left: 1%;
+    }
+  }
 }

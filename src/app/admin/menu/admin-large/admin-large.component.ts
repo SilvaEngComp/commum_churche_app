@@ -46,11 +46,14 @@ export class AdminLargeComponent implements OnInit {
     this.permission = false;
     this.user = LoginService.getUser();
     this.menu_itens = Menu.getMenu();
-    console.log(this.menu_itens);
     this.page = this.menu_itens[0]?.id;
 
     if (UiService.localGet(this.defaultPageName)) {
       this.page = UiService.localGet(this.defaultPageName);
+    }
+    console.log(this.page);
+    if (!this.page) {
+      this.page = '3';
     }
 
     this.checkImage();

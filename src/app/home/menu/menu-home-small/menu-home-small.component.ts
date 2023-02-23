@@ -23,16 +23,22 @@ import { Menu } from 'src/app/models/menu';
   templateUrl: './menu-home-small.component.html',
   styleUrls: ['./menu-home-small.component.scss'],
 })
-export class MenuHomeSmallComponent implements OnInit {
+export class MenuHomeSmallComponent implements OnInit, AfterViewInit {
   @Output() selectedPage: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('tabHome', { static: false }) tab!: IonTabs;
 
   isTest: boolean;
+  showInstall: boolean;
   constructor(
     private feedService: FeedService,
     private exceptionService: ExceptionService,
     private messagingService: MessagingService
   ) {}
+  ngAfterViewInit(): void {
+    UiService.installButton.subscribe((resp) => {
+      this.showInstall = resp;
+    });
+  }
 
   ngOnInit() {
     this.isTest = environment.TEST;

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { UiService } from 'src/app/services/ui.service';
+/* eslint-disable @typescript-eslint/member-ordering */
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import * as EventEmitter from 'events';
 import { User } from 'src/app/models/User';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -12,18 +15,53 @@ export class MenuHomeSelectComponent implements OnInit {
   isLarge: boolean;
   user: User;
   page: number;
+  public installPrompt = null;
+  showBtn = false;
+
+  public promptEvent;
+
   constructor(private platform: Platform) {}
 
   ngOnInit() {
     this.page = 2;
     this.isLarge = this.platform.width() > 500;
-  }
-
-  onSelectPage(page: any) {
-    this.page = page;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      this.installPrompt = e;
+    });
   }
 
   doRefresh(ev) {
     window.location.reload();
+  }
+
+  onSelectPage(page: any) {
+    if (page <= -1) {
+      this.installPWA();
+    } else {
+      this.page = page;
+    }
+  }
+
+  @HostListener('window:beforeinstallprompt', ['$event'])
+  onbeforeinstallprompt(e) {
+    e.preventDefault();
+    this.promptEvent = e;
+    UiService.installButton.emit(true);
+  }
+
+  public installPWA() {
+    if (this.promptEvent) {
+      this.promptEvent.prompt();
+    } else {
+      UiService.installButton.emit(false);
+    }
+  }
+
+  public shouldInstall(): boolean {
+    return !this.isRunningStandalone() && this.promptEvent;
+  }
+
+  public isRunningStandalone(): boolean {
+    return window.matchMedia('(display-mode: standalone)').matches;
   }
 }

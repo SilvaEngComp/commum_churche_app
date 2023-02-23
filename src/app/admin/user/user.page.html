@@ -76,7 +76,7 @@
         <ion-icon *ngIf="!user?.showDetails" name="caret-forward-outline" (click)="setShowDetail(user)"></ion-icon>
         <ion-icon *ngIf="user?.showDetails" name="caret-down-outline" (click)="setShowDetail(user)"></ion-icon>
         <ion-avatar>
-          <ion-img [src]="user?.image"></ion-img>
+          <ion-img alt="Igreaja Batista Nova Betel" [src]="user?.image"></ion-img>
         </ion-avatar>
         <ion-card-title>{{ user?.name }} </ion-card-title>
         <ion-note class="note-church" slot="end">{{user?.church?.name | uppercase}}</ion-note>

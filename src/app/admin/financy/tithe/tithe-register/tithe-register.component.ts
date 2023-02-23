@@ -47,8 +47,9 @@ export class TitheRegisterComponent implements OnInit {
 
     if (this.tithe?.id) {
       this.isNew = false;
+    } else {
+      this.value = '0,0';
     }
-    console.log(this.tithe);
     this.isSmallDevice = this.platform.width() <= 500;
     this.datePipe = new DatePipe('en');
     this.monthYear = this.datePipe.transform(Date.now(), 'YYYY-MM');

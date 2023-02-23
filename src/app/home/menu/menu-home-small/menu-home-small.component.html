@@ -18,4 +18,9 @@
     <ion-icon name="person-circle"></ion-icon>
     <ion-label>Login</ion-label>
   </ion-tab-button>
+
+  <ion-tab-button tab="login" (click)="setPage(-1)" *ngIf="showInstall">
+    <ion-icon name="cloud-download-outline"></ion-icon>
+    <ion-label>Instalar</ion-label>
+  </ion-tab-button>
 </ion-tab-bar>
