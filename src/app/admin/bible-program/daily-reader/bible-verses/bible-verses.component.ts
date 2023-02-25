@@ -1,3 +1,4 @@
+import { CustomizedMonth } from 'src/app/models/customizedMonth';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { TutorialComponent } from '../../../tutorial/tutorial.component';
 import { ExceptionService } from '../../../../services/exception-service.service';
@@ -11,6 +12,8 @@ import { VerseDayTree } from 'src/app/models/verseDayTree';
 import { Verse } from 'src/app/models/verse';
 import { ConstantMessages } from 'src/app/models/messages';
 import { ConstantsMidia } from 'src/app/models/contantsMidia';
+import { BibleProgramMap } from 'src/app/models/bibleProgramMap';
+import { BibleProgramUserService } from 'src/app/services/bible-program-user.service';
 
 @Component({
   selector: 'app-bible-verses',
@@ -32,10 +35,14 @@ export class BibleVersesComponent implements OnInit {
   active: boolean;
   selectedVerse: Verse;
   action: any;
-
+  localPageTitle: string;
+  customizedMonth: CustomizedMonth;
+  selectedProgram: number;
+  versesToRead: string;
   DOUBLE_CLICK_THRESHOLD = 200;
   constructor(
     private bibleProgramService: BibleProgramService,
+    private bibleProgramUserService: BibleProgramUserService,
     private platform: Platform,
     private popCtrl: PopoverController,
     private exceptionService: ExceptionService
@@ -48,11 +55,13 @@ export class BibleVersesComponent implements OnInit {
       Constants.BIBLE_PROGRAM_MENU_VERSE_DAY
     );
 
-    UiService.setCurrentPage(Constants.BIBLE_PROGRAM_MENU_VERSE_DAY);
-
     this.verseDay = UiService.localGet(Constants.SELECTED_VERSE_DAY);
+
+    this.selectedProgram = UiService.localGet(Constants.SELECTED_PROGRAM);
+
     this.height = Math.round(this.platform.height() * 0.8) + 'px';
     this.letterSizeConfig = 12;
+
     this.load();
     this.checkEventPress();
   }
@@ -61,6 +70,25 @@ export class BibleVersesComponent implements OnInit {
     UiService.scrollVerseRead.subscribe((data) => {
       this.active = data.status;
     });
+  }
+
+  getTexToRead() {
+    this.localPageTitle = `${this.verseDay?.startVerse?.book}
+    ${this.verseDay?.startVerse?.chapter}:${this.verseDay?.startVerse?.verse} Até ${this.verseDay?.endVerse?.book}
+    ${this.verseDay?.endVerse?.chapter}:${this.verseDay?.endVerse?.verse}`;
+
+    if (this?.verseDay?.month >= 0) {
+      this.customizedMonth = new CustomizedMonth(this?.verseDay?.month, false);
+    }
+    this.versesToRead = `Dia ${this.verseDay?.day} de
+    ${this.customizedMonth?.name}`;
+    UiService.localSet(Constants.TITLE_CURRENT_PAGE, this.versesToRead);
+    UiService.pageTitle.emit(this.versesToRead);
+    this.save();
+  }
+
+  save() {
+    UiService.localSet(Constants.SELECTED_VERSE_DAY, this.verseDay);
   }
 
   onWindowScroll(ev: any) {
@@ -108,9 +136,10 @@ export class BibleVersesComponent implements OnInit {
     this.sessionPage.emit(Constants.BIBLE_PROGRAM_MENU_READ_DAY);
   }
   async load() {
-    this.bibleProgramService.getVerse(this.verseDay).then((responser) => {
-      this.verseDayTree = responser.data;
-      console.log(this.verseDayTree[0].chapters[0].verses[0]);
+    this.bibleProgramService.getVerse(this.verseDay?.id).then((responser) => {
+      this.verseDay = responser.data.verseDay;
+      this.verseDayTree = responser.data.tree;
+      this.getTexToRead();
     });
   }
 
@@ -233,5 +262,27 @@ export class BibleVersesComponent implements OnInit {
     document.getElementById(`${this.selectedVerse?.id}`).style.backgroundColor =
       Constants.COLOR_TRANSPARENT;
     this.selectedVerse = null;
+  }
+
+  setAsReadUnread() {
+    this.bibleProgramUserService
+      .setAsDone(this.selectedProgram, this.verseDay)
+      .then((responser) => {
+        this.verseDay.isRead = responser.data !== null ? true : false;
+        this.exceptionService.success(responser);
+      });
+  }
+
+  backVerse() {
+    if (this.verseDay.id - 1 >= 0) {
+      this.verseDay.id = this.verseDay.id - 1;
+      this.load();
+    }
+  }
+  nextVerse() {
+    if (this.verseDay.id + 1 <= 31062) {
+      this.verseDay.id = this.verseDay.id + 1;
+      this.load();
+    }
   }
 }

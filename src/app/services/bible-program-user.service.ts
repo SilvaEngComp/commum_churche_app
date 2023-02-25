@@ -38,16 +38,10 @@ export class BibleProgramUserService extends ServiceInterface {
       .toPromise();
   }
 
-  async setAsDone(
-    program: BibleReaderProgram,
-    verseDay: VerseDay
-  ): Promise<Responser> {
-    console.log(
-      `${environment.API2}/bibleReaderProgramUsers/setAsReadUnread/bibleReaderProgram/${program?.id}/bibleReaderMap/${verseDay?.id}`
-    );
+  async setAsDone(program: number, verseDay: VerseDay): Promise<Responser> {
     return this.http
       .get<Responser>(
-        `${environment.API2}/bibleReaderProgramUsers/setAsReadUnread/bibleReaderProgram/${program?.id}/bibleReaderMap/${verseDay?.id}`,
+        `${environment.API2}/bibleReaderProgramUsers/setAsReadUnread/bibleReaderProgram/${program}/bibleReaderMap/${verseDay?.id}`,
         {
           headers: LoginService.getHeaders(),
         }

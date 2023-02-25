@@ -54,9 +54,9 @@ export class AdminSelectorComponent implements OnInit {
     //   this.ionContent.scrollToPoint(0, value)
     // );
 
-    UiService.pageTitle.subscribe((title) => {
-      console.log(this.pageTile);
-      if (title === Constants.BIBLE_PROGRAM_MENU_VERSE_DAY) {
+    UiService.pageTitle.subscribe((title: string) => {
+      this.pageTile = title;
+      if (title.toLocaleLowerCase().includes('dia')) {
         this.isBibleOppened = true;
       } else {
         this.isBibleOppened = false;

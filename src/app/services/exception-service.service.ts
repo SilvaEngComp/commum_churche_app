@@ -1,3 +1,4 @@
+import { WelcomeComponent } from './../Ui/welcome/welcome.component';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import {
@@ -9,7 +10,6 @@ import {
 } from '@ionic/angular';
 import { FinishActionComponent } from '../ui/finish-action/finish-action.component';
 // import { SocialAuthService } from 'angularx-social-login';
-import { UiService } from './ui.service';
 import { PushNotify } from '../models/pushNotification';
 import { Responser } from '../models/responser';
 // import { NotificationsService } from 'angular2-notifications';
@@ -44,6 +44,13 @@ export class ExceptionService {
     if (reload) {
       modal.onWillDismiss().then(() => window.location.reload());
     }
+  }
+  async wellcome() {
+    const modal = await this.modalCtrl.create({
+      component: WelcomeComponent,
+      cssClass: 'modal-model',
+    });
+    await modal.present();
   }
 
   async pushMessage(msg: PushNotify) {

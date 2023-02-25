@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
         console.clear();
         LoginService.setToken(token);
         this.router.navigate(['admin']);
+        this.exceptionService.wellcome();
       })
       .catch((error) => {
         this.exceptionService.error(error);

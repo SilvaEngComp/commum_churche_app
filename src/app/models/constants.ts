@@ -117,6 +117,7 @@ export class Constants {
 
   static SELECTED_VERSE_DAY = 'selectedVerseDay';
   static SELECTED_MONTH_PROGRAM = 'monthProgram';
+  static SELECTED_PROGRAM = 'selectedProgram';
   static BIBLE_PROGRAM_MENU_VERSE_DAY = '2';
   static BIBLE_PROGRAM_MENU_READ_DAY = '1';
   static BIBLE_PROGRAM_MENU_PLAN = '3';

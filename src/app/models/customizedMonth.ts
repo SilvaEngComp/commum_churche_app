@@ -3,11 +3,11 @@ export class CustomizedMonth {
   name: string;
   abbreviation: string;
 
-  constructor(id: number = null) {
-    if (!id) {
+  constructor(id: number = null, adapt = true) {
+    if (id < 0) {
       id = new Date().getMonth() + 1;
     }
-    if (id >= 1 && id <= 12) {
+    if (id >= 0 && id <= 12) {
       this.id = id;
       const monthes = [
         'Janeiro',
@@ -23,9 +23,12 @@ export class CustomizedMonth {
         'Novembro',
         'Dezembro',
       ];
-      console.log(id);
-      this.name = monthes[id - 1];
-      this.abbreviation = monthes[id - 1].substr(0, 3);
+
+      if (adapt) {
+        id = id - 1;
+      }
+      this.name = monthes[id];
+      this.abbreviation = monthes[id].substr(0, 3);
     }
   }
 

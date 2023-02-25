@@ -16,7 +16,11 @@ ion-header {
 }
 .float-icon {
   ion-icon {
-    font-size: 25px;
+    font-size: 15px;
+  }
+
+  .main-fab-button {
+    margin-top: 5%;
   }
 }
 ion-card-title {
@@ -133,4 +137,15 @@ ion-checkbox {
   z-index: 2000;
   background-color: rgba(0, 0, 0, 0.2);
   height: 100%;
+}
+
+.set-as-read {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-content: center;
+}
+
+.last-row {
+  margin-bottom: 100px;
 }

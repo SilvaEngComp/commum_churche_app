@@ -73,9 +73,9 @@ export class BibleProgramService extends ServiceInterface {
       .toPromise();
   }
 
-  async getVerse(verseDay: VerseDay): Promise<Responser> {
+  async getVerse(verseId: number): Promise<Responser> {
     return this.http
-      .get<Responser>(`${environment.API2}/bibles/getVerse/${verseDay?.id}`, {
+      .get<Responser>(`${environment.API2}/bibles/getVerse/${verseId}`, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();

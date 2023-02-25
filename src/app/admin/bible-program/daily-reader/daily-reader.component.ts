@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import { Constants } from 'src/app/models/constants';
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { UiService } from './../../../services/ui.service';
@@ -43,7 +44,6 @@ export class DailyReaderComponent implements OnInit {
   monthSlide: CustomizedMonth[] = [];
   before: number;
   selectedMonth: number;
-  selectedDay: number;
   currentMonth: number;
   currentDay: number;
   next: number;
@@ -58,7 +58,7 @@ export class DailyReaderComponent implements OnInit {
     private platfom: Platform,
     private bibleProgramService: BibleProgramService,
     private bibleProgramUserService: BibleProgramUserService,
-    private exceptionService: ExceptionService, // private _clipboardService: ClipboardService
+    private exceptionService: ExceptionService,
     private clipboardService: ClipboardService,
     private popCtrl: PopoverController
   ) {}
@@ -81,7 +81,6 @@ export class DailyReaderComponent implements OnInit {
     this.currentMonth = new Date().getMonth() + 1;
     this.currentDay = new Date().getDate();
 
-    this.selectedDay = new Date().getDate();
     this.user = LoginService.getUser();
 
     this.selectedVerseDay = UiService.localGet(Constants.SELECTED_VERSE_DAY);
@@ -114,7 +113,7 @@ export class DailyReaderComponent implements OnInit {
       .then((responser) => {
         this.selectedProgram = responser.data;
 
-        this.setSelectedMonth();
+        this.ajusteSlide();
       })
       .catch(() => (this.is_loading = false));
   }
@@ -122,55 +121,35 @@ export class DailyReaderComponent implements OnInit {
   ajusteSlide() {
     if (this.selectedProgram?.program.length > 0) {
       const adaptedMonth = this.selectedMonth + 1;
+      this.monthSlide = [];
       this.selectedProgram?.program?.filter((bibleProgramMonth) => {
         this.monthSlide.push(bibleProgramMonth.customizedMonth);
-        if (bibleProgramMonth.customizedMonth.id === adaptedMonth) {
-          this.selectedProgramMonth = bibleProgramMonth;
-          if (!this.selectedVerseDay.id) {
-            bibleProgramMonth.verses.filter((verseDay) => {
-              if (
-                bibleProgramMonth.customizedMonth.id === this.currentMonth &&
-                Number(verseDay.day) === this.currentDay
-              ) {
-                this.selectedVerseDay = verseDay;
-                this.selectedDay = this.currentDay;
-              }
-            });
-          } else {
-            if (this.selectedVerseDay.isRead) {
-              const currentMonthPosition =
-                this.selectedProgram?.program?.indexOf(
-                  this.selectedProgramMonth
-                );
-              let nextDayPosition = this.selectedProgram?.program[
-                currentMonthPosition
-              ]?.verses.indexOf(this.selectedVerseDay);
-              if (nextDayPosition >= 0) {
-                nextDayPosition++;
-                this.selectedVerseDay =
-                  this.selectedProgram?.program[currentMonthPosition]?.verses[
-                    nextDayPosition
-                  ];
-                this.selectedDay =
-                  this.selectedProgram?.program[currentMonthPosition]?.verses[
-                    nextDayPosition
-                  ].day;
-              } else {
-                this.selectedDay = this.selectedVerseDay.day;
-              }
-            } else {
-              this.selectedDay = this.selectedVerseDay.day;
-            }
+        bibleProgramMonth.verses.filter((verseDay) => {
+          if (
+            !verseDay?.isRead &&
+            (verseDay?.id < this?.selectedVerseDay?.id ||
+              !this?.selectedVerseDay?.id)
+          ) {
+            this.selectedVerseDay = verseDay;
           }
+        });
+        if (
+          bibleProgramMonth.customizedMonth.id ===
+          Number(this?.selectedVerseDay?.month)
+        ) {
+          this.selectedProgramMonth = bibleProgramMonth;
+          this.selectedMonth = bibleProgramMonth.customizedMonth.id - 1;
         }
       });
     } else {
       this.showMonths = false;
     }
+    this.setSelectedMonth();
     this.save();
 
     this.is_loading = false;
   }
+
   copy() {
     const text: string = `${this.selectedVerseDay?.startVerse?.book}
     ${this.selectedVerseDay?.startVerse?.chapter}:${this.selectedVerseDay?.startVerse?.verse}/${this.selectedVerseDay?.endVerse?.book}
@@ -180,8 +159,8 @@ export class DailyReaderComponent implements OnInit {
   }
 
   setSelectedDay(verseDay: VerseDay) {
-    this.selectedDay = verseDay?.day;
     const adaptedMonth = this.selectedMonth + 1;
+    this.selectedVerseDay = null;
     this.selectedProgram?.program.filter((programDay) => {
       if (programDay?.customizedMonth?.id === adaptedMonth) {
         programDay?.verses.filter((verse) => {
@@ -191,6 +170,7 @@ export class DailyReaderComponent implements OnInit {
         });
       }
     });
+
     this.save();
   }
   setSelectedMonth() {
@@ -199,47 +179,49 @@ export class DailyReaderComponent implements OnInit {
       this.next = this.selectedMonth + 1;
     } else if (this.selectedMonth === 11) {
       this.before = 10;
-      this.next = 0;
+      this.next = -1;
     } else if (this.selectedMonth > 11) {
       this.before = 11;
       this.selectedMonth = 0;
       this.next = 1;
     } else if (this.selectedMonth === 0) {
-      this.before = 11;
+      this.before = -1;
       this.next = 1;
     } else if (this.selectedMonth < 0) {
       this.before = 10;
       this.selectedMonth = 11;
-      this.next = 0;
+      this.next = -1;
     }
 
-    console.log(this.before);
-    console.log(this.selectedMonth);
-    console.log(this.next);
-    this.ajusteSlide();
+    this.ajusteSlideForMonthChanged();
+  }
+
+  ajusteSlideForMonthChanged() {
+    debugger;
+    if (this.selectedProgram?.program.length > 0) {
+      const adaptedMonth = this.selectedMonth + 1;
+      this.selectedProgramMonth = null;
+      this.selectedProgram?.program?.filter((bibleProgramMonth) => {
+        if (bibleProgramMonth.customizedMonth.id === adaptedMonth) {
+          debugger;
+          this.selectedProgramMonth = bibleProgramMonth;
+        }
+      });
+    } else {
+      this.showMonths = false;
+    }
+    this.save();
   }
 
   gotoBeforeSlide() {
-    if (this.selectedMonth > 1) {
-      this.slide.slidePrev();
-      this.selectedMonth--;
-      this.setSelectedMonth();
-    } else {
-      this.selectedMonth--;
-      this.slide.slideTo(this.monthSlide.length);
-      this.setSelectedMonth();
-    }
+    this.slide.slidePrev();
+    this.selectedMonth--;
+    this.setSelectedMonth();
   }
   gotoNextSlide() {
-    if (this.selectedMonth < 11) {
-      this.slide.slideNext();
-      this.selectedMonth++;
-      this.setSelectedMonth();
-    } else {
-      this.selectedMonth++;
-      this.slide.slideTo(0);
-      this.setSelectedMonth();
-    }
+    this.slide.slideNext();
+    this.selectedMonth++;
+    this.setSelectedMonth();
   }
 
   async onScroll(slide: IonSlides) {
@@ -256,15 +238,24 @@ export class DailyReaderComponent implements OnInit {
   setAsReadUnread(verseDay: VerseDay) {
     this.is_loading = true;
     this.bibleProgramUserService
-      .setAsDone(this.selectedProgram, verseDay)
+      .setAsDone(this.selectedProgram?.id, verseDay)
       .then((responser) => {
         const adaptedMonth = this.selectedMonth + 1;
+        let flag = true;
         this.selectedProgram?.program.filter((programDay) => {
           if (programDay?.customizedMonth?.id === adaptedMonth) {
             programDay?.verses.filter((verse) => {
               if (verse?.day === verseDay?.day) {
                 verse.isRead = responser.data !== null ? true : false;
-                this.selectedVerseDay = verse;
+              }
+
+              if (flag) {
+                if (!verse?.isRead) {
+                  debugger;
+
+                  flag = false;
+                  this.selectedVerseDay = verse;
+                }
               }
             });
           }
@@ -282,6 +273,7 @@ export class DailyReaderComponent implements OnInit {
   save() {
     UiService.localSet(Constants.SELECTED_VERSE_DAY, this.selectedVerseDay);
     UiService.localSet(Constants.SELECTED_MONTH_PROGRAM, this.selectedMonth);
+    UiService.localSet(Constants.SELECTED_PROGRAM, this.selectedProgram?.id);
   }
 
   setPlan() {

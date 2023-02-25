@@ -38,8 +38,8 @@ export class MenuHomeLargeComponent implements OnInit {
       this.page = UiService.localGet(Constants.MENU_HOME_PAGE);
     }
 
-    if (!this.page) {
-      this.page = '0';
+    if (!this.page || this.page === '-1' || this.page === '-2') {
+      this.page = '2';
     }
 
     // UiService.toTop.subscribe(() => {

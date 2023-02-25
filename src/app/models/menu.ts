@@ -92,10 +92,7 @@ export class Menu {
         Constants.LATERAL_MENU_OUT,
       ];
     }
-    console.log(name);
-
     const id = menu_itens.indexOf(name);
-    console.log(id);
     return String(id);
   }
 }

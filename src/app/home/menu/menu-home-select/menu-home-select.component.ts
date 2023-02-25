@@ -1,3 +1,4 @@
+import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, HostListener, OnInit } from '@angular/core';
@@ -20,14 +21,20 @@ export class MenuHomeSelectComponent implements OnInit {
 
   public promptEvent;
 
-  constructor(private platform: Platform) {}
+  constructor(
+    private platform: Platform,
+    private exceptionService: ExceptionService
+  ) {}
 
   ngOnInit() {
-    this.page = 2;
+    if (!this.page || this.page < 0) {
+      this.page = 2;
+    }
     this.isLarge = this.platform.width() > 500;
     window.addEventListener('beforeinstallprompt', (e) => {
       this.installPrompt = e;
     });
+    this.exceptionService.wellcome();
   }
 
   doRefresh(ev) {

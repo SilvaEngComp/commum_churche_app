@@ -1,25 +1,40 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start" (click)="back()">
-      <ion-icon color="primary" name="chevron-back-circle-sharp"></ion-icon>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-icon name="help-sharp" (click)="showTutorial($event)"></ion-icon>
-    </ion-buttons>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-item lines="none">
-      <ion-label class="header" lines="none">
-        {{verseDay?.startVerse?.book}}
-        {{verseDay?.startVerse?.chapter}}:{{verseDay?.startVerse?.verse}} Até {{verseDay?.endVerse?.book}}
-        {{verseDay?.endVerse?.chapter}}:{{verseDay?.endVerse?.verse}}
-      </ion-label>
-    </ion-item>
+<ion-item class="item-page-title">
+  <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="back()"></ion-icon>
+  <ion-title>{{localPageTitle}}</ion-title>
+</ion-item>
 
-  </ion-toolbar>
-</ion-header>
+<!-- <ion-fab vertical="top" horizontal="end" class="float-icon">
+  <ion-fab-button closeIcon="main-fab-button">
+    <ion-icon name="text-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button (click)="setLetterSize(false)">
+      <ion-label>A</ion-label>
+      <ion-icon name="caret-down-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button (click)="setLetterSize(true)">
+      <ion-label>A</ion-label>
+      <ion-icon name="caret-up-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab> -->
+
 <div class="open-div" [ngStyle]="{'height': height}" (scroll)="onWindowScroll($event)">
   <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-fab-button slot="end" (click)="setLetterSize(false)">
+            <ion-label>A</ion-label>
+            <ion-icon name="caret-down-outline"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button slot="end" (click)="setLetterSize(true)">
+            <ion-label>A</ion-label>
+            <ion-icon name="caret-up-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
     <ion-row *ngFor="let item of verseDayTree; let bokPosition=index">
       <ion-col>
         <ion-item lines="none">
@@ -47,20 +62,32 @@
         </ion-grid>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col class="set-as-read">
+        <ion-item (click)="setAsReadUnread()" lines="none">
+          <ion-checkbox [checked]="verseDay?.isRead"></ion-checkbox>
+          <ion-label>Marcar como Lido</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="last-row">
+      <ion-col>
+
+        <ion-item lines="none" class="item-challenge-done">
+          <ion-fab-button slot="start" (click)="backVerse()">
+            <ion-icon name="chevron-back-circle-outline"></ion-icon>
+          </ion-fab-button>
+
+          <ion-fab-button slot="end" (click)="nextVerse()">
+            <ion-icon name="chevron-forward-circle-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-item>
+
+      </ion-col>
+    </ion-row>
   </ion-grid>
-  <ion-fab vertical="bottom" horizontal="end" class="float-icon">
-    <ion-fab-button>
-      <ion-icon name="text-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button (click)="setLetterSize(false)">
-        <ion-label>A</ion-label>
-        <ion-icon name="caret-down-outline"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button (click)="setLetterSize(true)">
-        <ion-label>A</ion-label>
-        <ion-icon name="caret-up-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
+
+
+
+
 </div>
