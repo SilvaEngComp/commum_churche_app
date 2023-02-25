@@ -34,7 +34,6 @@ export class MenuHomeSelectComponent implements OnInit {
     window.addEventListener('beforeinstallprompt', (e) => {
       this.installPrompt = e;
     });
-    this.exceptionService.wellcome();
   }
 
   doRefresh(ev) {
