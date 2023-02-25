@@ -56,8 +56,11 @@ export class LoginComponent implements OnInit {
       .then((token) => {
         console.clear();
         LoginService.setToken(token);
-        this.router.navigate(['admin']);
         this.exceptionService.wellcome();
+
+        setTimeout(() => {
+          this.router.navigate(['admin']);
+        }, 1000);
       })
       .catch((error) => {
         this.exceptionService.error(error);
