@@ -14,14 +14,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { BrMaskerModule } from 'br-mask';
 import { PipesModule } from 'src/app/pipes/pipes.module';
-import { ReportComponent } from './financy-summary/financy-summary.component';
+import { FinancySummaryComponent } from './financy-summary/financy-summary.component';
 import { CaixaSummaryComponent } from './financy-summary/caixa-summary/caixa-summary.component';
 import { TitheSummaryComponent } from './financy-summary/tithe-summary/tithe-summary.component';
 
 @NgModule({
   declarations: [
     FinancyAdminComponent,
-    ReportComponent,
+    FinancySummaryComponent,
     CaixaSummaryComponent,
     TitheSummaryComponent,
     MenuSummaryComponent,

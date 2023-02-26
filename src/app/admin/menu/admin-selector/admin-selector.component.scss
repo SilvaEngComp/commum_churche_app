@@ -9,8 +9,10 @@
     grid-template-columns: 1fr 2fr 1fr;
 
     .left {
+      position: absolute;
+      left: 2%;
+      top: 55px;
       border: 2px solid var(--ion-color-light);
-      margin-left: 5px;
     }
 
     ion-title {
@@ -20,8 +22,9 @@
       text-align: center;
     }
     .right {
-      margin-left: 85%;
-      margin-right: 5px;
+      position: absolute;
+      right: 5%;
+      top: 60px;
     }
 
     ion-avatar {
@@ -37,23 +40,29 @@
     background-image: url(".../../../../../../assets/images/header.png");
     background-position: 0;
     background-size: 100% 100%;
-    width: 100%;
+    width: 98%;
     height: 100px;
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
     .left {
+      position: absolute;
+      left: 5%;
+      top: 8px;
       border: 2px solid var(--ion-color-light);
     }
 
-    ion-title {
-      margin-bottom: 30px;
+    ion-label {
+      margin-top: 30px;
       color: var(--ion-color-light);
       font-family: Qanelas-bold;
       text-align: center;
     }
     .right {
-      margin-left: 70%;
+      position: absolute;
+      right: 5%;
+      top: 10px;
     }
 
     ion-avatar {
@@ -61,107 +70,5 @@
       max-width: 30px;
       max-height: 30px;
     }
-  }
-}
-
-ion-grid {
-  height: 100%;
-}
-
-.user-name {
-  color: white;
-  font-family: Qanelas;
-  height: 40px;
-}
-
-.center {
-  display: grid;
-  align-content: center;
-  align-items: center;
-  align-self: center;
-}
-
-ion-segment {
-  // width: 90%;
-  font-size: 1.5vw;
-}
-
-ion-segment ion-label {
-  font-size: 2vw;
-}
-
-.menu-left {
-  ion-label {
-    font-size: 1vw;
-    color: white;
-  }
-
-  ion-icon {
-    margin-left: 20px;
-    font-size: 30px;
-  }
-  ion-list {
-    background: var(--ion-color-secondary);
-    margin-right: 10%;
-    float: right;
-  }
-  .search-item {
-    width: 500px;
-  }
-  ion-button {
-    font-size: 5pt;
-    background: var(--ion-color-primary);
-    color: var(--ion-color-light);
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-}
-
-.menu-right {
-  ion-avatar {
-    margin-right: 20px;
-    width: 100px;
-    height: 40px;
-  }
-  ion-item {
-    width: 200px;
-  }
-  ion-label {
-    font-size: 18pt;
-    font-weight: bold;
-    font-family: Qanelas;
-    color: var(--ion-color-medium);
-  }
-  ion-note {
-    margin-top: -60px;
-    font-size: 8pt;
-    color: var(--ion-color-medium);
-    // margin-bottom: 20px;
-  }
-}
-
-//menu lateral
-.menu-lateral {
-  background-color: var(--ion-color-primary);
-
-  .menu-logo {
-    width: 80px;
-    height: 80px;
-  }
-  ion-list {
-    margin-left: 10%;
-    background-color: var(--ion-color-primary);
-    ion-item {
-      --background: var(--ion-color-primary);
-    }
-  }
-  ion-icon {
-    font-size: 10px;
-    color: var(--ion-color-light);
-  }
-  ion-button > ion-label {
-    font-family: Qanelas;
-    font-size: 8pt;
-    color: var(--ion-color-light);
   }
 }

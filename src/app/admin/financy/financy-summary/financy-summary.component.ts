@@ -23,11 +23,11 @@ import { CaixaSummary } from 'src/app/models/caixaSummary';
 import { Tithe } from 'src/app/models/tithe';
 
 @Component({
-  selector: 'app-report',
+  selector: 'app-summary',
   templateUrl: './financy-summary.component.html',
   styleUrls: ['./financy-summary.component.scss'],
 })
-export class ReportComponent implements OnInit {
+export class FinancySummaryComponent implements OnInit {
   @Output()
   sessionPage: EventEmitter<string> = new EventEmitter<string>();
 
@@ -59,13 +59,7 @@ export class ReportComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.filter = UiService.localGet(Constants.FINANCY_SUMMARY_FILTER);
-    UiService.localSet(
-      Constants.TITLE_CURRENT_PAGE,
-      Constants.TITLE_SUMMARY_FINANCY
-    );
     this.localPageTitle = Constants.TITLE_SUMMARY_FINANCY_SUB;
-    UiService.pageTitle.emit(Constants.MENU_FINANCY_OPTION_SUMMARY);
     this.filter = new FinancySummaryFilter();
     const datePipe = new DatePipe('en');
     const date = new Date();

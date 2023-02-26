@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { UiService } from 'src/app/services/ui.service';
+import { Component, OnInit } from '@angular/core';
+import { ConstantsMidia } from 'src/app/models/contantsMidia';
 
 @Component({
   selector: 'app-tutorial',
@@ -6,8 +8,10 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./tutorial.component.scss'],
 })
 export class TutorialComponent implements OnInit {
-  @Input() path: string;
+  path: string;
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.path = UiService.localGet(ConstantsMidia.OPPEN_TUTORIAL);
+  }
 }

@@ -4,31 +4,33 @@ export class CustomizedMonth {
   abbreviation: string;
 
   constructor(id: number = null, adapt = true) {
-    if (id < 0) {
-      id = new Date().getMonth() + 1;
-    }
-    if (id >= 0 && id <= 12) {
-      this.id = id;
-      const monthes = [
-        'Janeiro',
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-        'Outubro',
-        'Novembro',
-        'Dezembro',
-      ];
-
-      if (adapt) {
-        id = id - 1;
+    if (id) {
+      if (id < 0) {
+        id = new Date().getMonth() + 1;
       }
-      this.name = monthes[id];
-      this.abbreviation = monthes[id].substr(0, 3);
+      if (id >= 0 && id <= 12) {
+        this.id = id;
+        const monthes = [
+          'Janeiro',
+          'Fevereiro',
+          'Março',
+          'Abril',
+          'Maio',
+          'Junho',
+          'Julho',
+          'Agosto',
+          'Setembro',
+          'Outubro',
+          'Novembro',
+          'Dezembro',
+        ];
+
+        if (adapt) {
+          id = id - 1;
+        }
+        this.name = monthes[id];
+        this.abbreviation = monthes[id].substr(0, 3);
+      }
     }
   }
 

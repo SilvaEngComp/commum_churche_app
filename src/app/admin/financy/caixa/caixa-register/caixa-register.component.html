@@ -14,74 +14,75 @@
     </ion-input>
   </ion-item>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <div class="flex-container-row date-options ">
-          <ion-icon class="icon-fomat-date" name="calendar-clear-outline"></ion-icon>
-          <ion-button color="secondary" (click)="onSetDate(null, 1)"><ion-label>Hoje</ion-label></ion-button>
-          <ion-button color="secondary" (click)="onSetDate(null, 2)"><ion-label>Ontem</ion-label></ion-button>
-          <ion-button color="secondary" id="popover-button-month"><ion-label>Outro</ion-label></ion-button>
-        </div>
-        <div class="date-options-label">
-          <ion-label>{{caixa?.date | date:'dd/MM/yyyy'}}</ion-label>
-        </div>
-        <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
-          <ng-template>
-            <ion-content>
-              <ion-datetime [showDefaultButtons]="true" presentation="date" display-format="MM-YYYY-DD" #timeMonth
-                (ionChange)="onSetDate(timeMonth.value)" doneText="OK" cancelText="CANCELAR">
-              </ion-datetime>
-            </ion-content>
-          </ng-template>
-        </ion-popover>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
+  <div class="open-div" [ngStyle]="{'height': height}" (scroll)="onWindowScroll($event)">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="flex-container-row date-options ">
+            <ion-icon class="icon-fomat-date" name="calendar-clear-outline"></ion-icon>
+            <ion-button color="secondary" (click)="onSetDate(null, 1)"><ion-label>Hoje</ion-label></ion-button>
+            <ion-button color="secondary" (click)="onSetDate(null, 2)"><ion-label>Ontem</ion-label></ion-button>
+            <ion-button color="secondary" id="popover-button-month"><ion-label>Outro</ion-label></ion-button>
+          </div>
+          <div class="date-options-label">
+            <ion-label>{{caixa?.date | date:'dd/MM/yyyy'}}</ion-label>
+          </div>
+          <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
+            <ng-template>
+              <ion-content>
+                <ion-datetime [showDefaultButtons]="true" presentation="date" display-format="MM-YYYY-DD" #timeMonth
+                  (ionChange)="onSetDate(timeMonth.value)" doneText="OK" cancelText="CANCELAR">
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
 
 
-        <div class="flex-container-row" (click)="setShowDescription()" *ngIf="!showDescription">
-          <ion-icon name="reader-outline" class="icon-format"></ion-icon>
-          <ion-label class="description-label">DESCRIÇÃO</ion-label>
-        </div>
-        <div class="flex-container-col" *ngIf="showDescription">
-          <textarea inputmode="text" wrap="hard" maxlength="500" [(ngModel)]="caixa.description"
-            (blur)="setShowDescription()"
-            placeholder="Aqui você pode escrever algo importante sobre esse registro...(Obrigatório para saídas)">
+          <div class="flex-container-row" (click)="setShowDescription()" *ngIf="!showDescription">
+            <ion-icon name="reader-outline" class="icon-format"></ion-icon>
+            <ion-label class="description-label">DESCRIÇÃO</ion-label>
+          </div>
+          <div class="flex-container-col" *ngIf="showDescription">
+            <textarea inputmode="text" wrap="hard" maxlength="500" [(ngModel)]="caixa.description"
+              (blur)="setShowDescription()"
+              placeholder="Aqui você pode escrever algo importante sobre esse registro...(Obrigatório para saídas)">
         </textarea>
-          <ion-note slot="end">{{caixa.description?.length}}/500</ion-note>
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <div class="flex-container-row">
-          <ion-icon name="list-outline" class="icon-format"></ion-icon>
-          <app-my-select-list [label]="'Categoria'" [listName]="'groups'" [create]="true"
-            (selectEmiter)="setGroup($event)"></app-my-select-list>
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <div class="flex-container-row">
-          <ion-icon name="list-outline" class="icon-format"></ion-icon>
-          <app-my-select-list [label]="'Sub Categoria'" [listName]="'types'" [create]="true"
-            (selectEmiter)="setType($event)"></app-my-select-list>
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <div class="flex-container-row">
-          <ion-icon name="storefront-outline" class="icon-format"></ion-icon>
-          <app-my-select-list [label]="'Organização'" [listName]="'churches'" [create]="true"
-            (selectEmiter)="setChurch($event)"></app-my-select-list>
-        </div>
-      </ion-col>
-    </ion-row>
-    <!--
+            <ion-note slot="end">{{caixa.description?.length}}/500</ion-note>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="flex-container-row">
+            <ion-icon name="list-outline" class="icon-format"></ion-icon>
+            <app-my-select-list [label]="'Categoria'" [listName]="'groups'" [create]="true"
+              (selectEmiter)="setGroup($event)"></app-my-select-list>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="flex-container-row">
+            <ion-icon name="list-outline" class="icon-format"></ion-icon>
+            <app-my-select-list [label]="'Sub Categoria'" [listName]="'types'" [create]="true"
+              (selectEmiter)="setType($event)"></app-my-select-list>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="flex-container-row">
+            <ion-icon name="storefront-outline" class="icon-format"></ion-icon>
+            <app-my-select-list [label]="'Organização'" [listName]="'churches'" [create]="true"
+              (selectEmiter)="setChurch($event)"></app-my-select-list>
+          </div>
+        </ion-col>
+      </ion-row>
+      <!--
   <ion-row>
     <ion-col>
       <app-my-select-list [label]="'Usuario'" [listName]="'users'" [create]="true"
@@ -91,18 +92,15 @@
 
 
 
-    <ion-row>
-      <ion-col>
+      <ion-row>
+        <ion-col>
 
-        <!-- <ion-button expand="block" color="success" (click)="register(inputAmount.value)"><ion-icon color="danger"
-          name="checkmark-circle-sharp"></ion-icon></ion-button> -->
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-fab slot="fixed" horizontal="center" vertical="bottom">
-    <ion-fab-button (click)="register(inputAmount.value)" [color]="buttonColor">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-fab-button class="confirm-button" (click)="register(inputAmount.value)" [color]="buttonColor">
       <ion-icon name="checkmark-sharp"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </div>
+
 </div>

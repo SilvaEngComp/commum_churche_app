@@ -2,13 +2,20 @@ import { Constants } from 'src/app/models/constants';
 import { ExceptionService } from './../../../services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import { UiService } from 'src/app/services/ui.service';
-import { Platform, IonContent, IonRefresher } from '@ionic/angular';
+import {
+  Platform,
+  IonContent,
+  IonRefresher,
+  PopoverController,
+} from '@ionic/angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { Router } from '@angular/router';
 import { MessagingService } from 'src/app/services/messaging.service';
 import { PushNotify } from 'src/app/models/pushNotification';
 import { FcmService } from 'src/app/services/fcm.service';
+import { ConstantsMidia } from 'src/app/models/contantsMidia';
+import { TutorialComponent } from '../../tutorial/tutorial.component';
 
 @Component({
   selector: 'app-admin-selector',
@@ -29,16 +36,17 @@ export class AdminSelectorComponent implements OnInit {
     private platform: Platform,
     private router: Router,
     private messagingService: MessagingService,
-    private fcmService: FcmService
+    private fcmService: FcmService,
+    private popCtrl: PopoverController
   ) {}
 
   ngOnInit() {
     this.isLarge = this.platform.width() > 500;
     this.user = LoginService.getUser();
     this.page = UiService.localGet(this.defaultPageName);
-    if (!this.page || this.page === '-2' || this.page === '-1') {
+
+    if (!UiService.checkValidPage(this.page)) {
       this.page = '3';
-      this.save();
     } else {
       this.page = String(this.page);
     }
@@ -50,12 +58,9 @@ export class AdminSelectorComponent implements OnInit {
     }
     this.pageTile = UiService.localGet(Constants.TITLE_CURRENT_PAGE);
 
-    // UiService.toTop.subscribe((value) =>
-    //   this.ionContent.scrollToPoint(0, value)
-    // );
-
     UiService.pageTitle.subscribe((title: string) => {
       this.pageTile = title;
+      console.log(this.pageTile);
       if (title.toLocaleLowerCase().includes('dia')) {
         this.isBibleOppened = true;
       } else {
@@ -64,6 +69,15 @@ export class AdminSelectorComponent implements OnInit {
     });
   }
 
+  async showTutorial(event: any) {
+    const pop = await this.popCtrl.create({
+      component: TutorialComponent,
+      event,
+      componentProps: { event },
+    });
+
+    pop.present();
+  }
   listenForMessages() {
     this.messagingService.getMessages().subscribe(
       async (msg: any) => {
@@ -98,9 +112,10 @@ export class AdminSelectorComponent implements OnInit {
     if (page < -1) {
       localStorage.clear();
       this.router.navigate(['']);
+    } else {
+      this.page = String(page);
+      this.save();
     }
-    this.page = String(page);
-    this.save();
   }
   save() {
     UiService.localSet(this.defaultPageName, this.page);

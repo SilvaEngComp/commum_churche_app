@@ -54,9 +54,13 @@ export class UiService {
 
   @Output()
   static returnColorMaker: EventEmitter<any> = new EventEmitter<any>();
-  @Output()
-  static installButton: EventEmitter<any> = new EventEmitter<any>();
 
+  static checkValidPage(page: any) {
+    if (!page || page === '-1' || page == '-2' || page < 0) {
+      return false;
+    }
+    return true;
+  }
   static stringNormalization(text: string) {
     return text
       .normalize('NFD')
@@ -259,7 +263,8 @@ export class UiService {
     switch (op) {
       case 'w':
         window.open(
-          "https://api.whatsapp.com/send?phone=5575983256990&message='Olá! Gostaria de falar com a secretaria da Igreja Batista Nova Betel. Está disponível?'"
+          `https://api.whatsapp.com/send?phone=5575983256990&message='Olá!
+          Gostaria de falar com a secretaria da Igreja Batista Nova Betel. Está disponível?'`
         );
         break;
       case 'm':
@@ -274,7 +279,7 @@ export class UiService {
         break;
       case 's':
         window.open(
-          "https://api.whatsapp.com/send?phone=5575992466044&message='Olá! Está disponível?'"
+          `https://api.whatsapp.com/send?phone=5575992466044&message='Olá! Está disponível?'`
         );
         break;
     }

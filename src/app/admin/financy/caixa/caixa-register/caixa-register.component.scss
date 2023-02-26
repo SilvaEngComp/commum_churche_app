@@ -1,5 +1,8 @@
-.ng-invalid.ng-touched:not(form) {
-  border-bottom: 1px solid red;
+.item-page-title {
+  font-family: Qanelas;
+  font-size: 14pt;
+  color: var(--ion-color-primary);
+  text-align: center;
 }
 
 .flex-container {
@@ -14,17 +17,6 @@ textarea {
   border-radius: 10px;
   text-align: justify;
   font-family: Qanelas-bold;
-}
-
-ion-grid {
-  background-color: var(--ion-color-secondary);
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-  height: 80%;
-  width: 98%;
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
 }
 
 .flex-container-row {
@@ -84,9 +76,14 @@ ion-grid {
   }
 }
 
+ion-grid {
+  z-index: 2000;
+}
+
 .input-amount {
+  --border-radius: 20px;
   ion-label {
-    font-size: 28pt;
+    font-size: 24pt;
     font-family: Qanelas-bold;
     color: var(--ion-color-primary);
     margin: 5px;
@@ -99,6 +96,12 @@ ion-grid {
   }
 }
 
+.confirm-button {
+  position: absolute;
+  bottom: -20%;
+  left: 40%;
+  z-index: 2000;
+}
 @media only screen and (min-width: 500px) {
   ion-grid {
     background-color: var(--ion-color-secondary);
@@ -115,4 +118,66 @@ ion-grid {
     display: grid;
     justify-content: center;
   }
+}
+@media only screen and (max-width: 500px) {
+  ion-grid {
+    background-color: var(--ion-color-secondary);
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    height: 90%;
+    width: 98%;
+    position: absolute;
+    bottom: -30%;
+    left: 0px;
+  }
+}
+
+.open-div {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+//div que é expandida simulando o select list
+.open-div ::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.open-div::-webkit-scrollbar {
+  width: 1em;
+  border-radius: 20px;
+  background: var(--ion-color-light);
+}
+
+.open-div::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: var(--ion-color-primary);
+}
+
+.open-div::-webkit-scrollbar-corner {
+  background: var(--ion-color-tertiary);
+}
+
+.open-div::-webkit-scrollbar-corner {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.open-div::-webkit-scrollbar-button:single-button {
+  background-color: var(--ion-color-light);
+  display: block;
+  border-style: solid;
+  height: 13px;
+  width: 16px;
+}
+
+.open-div::-webkit-scrollbar-button:single-button:vertical:decrement {
+  border-width: 0 8px 8px 8px;
+  border-color: var(--ion-color-light) var(--ion-color-light)
+    var(--ion-color-primary) var(--ion-color-light);
+}
+
+.open-div::-webkit-scrollbar-button:single-button:vertical:increment {
+  border-width: 8px 8px 0 8px;
+  border-color: var(--ion-color-primary) var(--ion-color-light)
+    var(--ion-color-light) var(--ion-color-light);
 }

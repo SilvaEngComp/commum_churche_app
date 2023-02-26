@@ -42,6 +42,9 @@ ${environment.BASE_URL}`;
       });
     }
   }
+  close() {
+    UiService.showColorMarkEmitter.emit(false);
+  }
 
   async share() {
     const title = `${this.verse?.book} ${this.verse?.chapter}:${this.verse?.verse}`;

@@ -2,7 +2,7 @@
   "name": "Igreja Batista Nova Betel",
   "short_name": "IBNB",
   "theme_color": "#024152",
-  "background_color": "#71c3ce",
+  "background_color": "#fafafa",
   "gcm_sender_id": "103953800507",
   "display": "fullscreen",
   "scope": "./",
@@ -17,6 +17,11 @@
     {
       "src": "assets/icons/app_icons/92.png",
       "sizes": "92x92",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/app_icons/96.png",
+      "sizes": "96x96",
       "type": "image/png"
     },
     {
@@ -59,6 +64,16 @@
     {
       "src": "assets/icons/app_icons/1024.png",
       "sizes": "1024x1024",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/app_icons/appstore.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/app_icons/playstore.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]

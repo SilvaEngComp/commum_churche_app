@@ -3,9 +3,7 @@ import { UiService } from 'src/app/services/ui.service';
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import * as EventEmitter from 'events';
 import { User } from 'src/app/models/User';
-import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-menu-home-select',
@@ -52,14 +50,15 @@ export class MenuHomeSelectComponent implements OnInit {
   onbeforeinstallprompt(e) {
     e.preventDefault();
     this.promptEvent = e;
-    UiService.installButton.emit(true);
   }
 
   public installPWA() {
     if (this.promptEvent) {
       this.promptEvent.prompt();
     } else {
-      UiService.installButton.emit(false);
+      this.exceptionService.alertDialog(
+        'O App já se encontra instalado. Caso contrário acesso pelo Google Chrome'
+      );
     }
   }
 

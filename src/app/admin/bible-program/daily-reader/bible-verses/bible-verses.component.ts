@@ -5,7 +5,14 @@ import { ExceptionService } from '../../../../services/exception-service.service
 import { Platform, PopoverController } from '@ionic/angular';
 import { BibleProgramService } from '../../../../services/bible-program.service';
 import { VerseDay } from '../../../../models/verseDay';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Constants } from 'src/app/models/constants';
 import { UiService } from 'src/app/services/ui.service';
 import { VerseDayTree } from 'src/app/models/verseDayTree';
@@ -21,6 +28,7 @@ import { BibleProgramUserService } from 'src/app/services/bible-program-user.ser
   styleUrls: ['./bible-verses.component.scss'],
 })
 export class BibleVersesComponent implements OnInit {
+  @ViewChild('mainDiv', { static: false }) mainDiv: ElementRef;
   @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
 
   verseDay: VerseDay;
@@ -54,6 +62,10 @@ export class BibleVersesComponent implements OnInit {
       Constants.BIBLE_PROGRAM_SUBPAGE,
       Constants.BIBLE_PROGRAM_MENU_VERSE_DAY
     );
+    UiService.localSet(
+      ConstantsMidia.OPPEN_TUTORIAL,
+      ConstantsMidia.TUTORIAL_VERSES_READ
+    );
 
     this.verseDay = UiService.localGet(Constants.SELECTED_VERSE_DAY);
 
@@ -85,6 +97,10 @@ export class BibleVersesComponent implements OnInit {
     UiService.localSet(Constants.TITLE_CURRENT_PAGE, this.versesToRead);
     UiService.pageTitle.emit(this.versesToRead);
     this.save();
+    if (this.mainDiv) {
+      console.log(this.mainDiv);
+      this.mainDiv.nativeElement.scrollTo({ left: 0, top: 0 });
+    }
   }
 
   save() {

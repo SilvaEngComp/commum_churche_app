@@ -258,6 +258,11 @@
   src: url(../assets/fonts/Qanelas/Qanelas-thin.otf) format("opentype");
 }
 
+@font-face {
+  font-family: Qilgabe;
+  src: url(../assets/fonts/qilgabe-d9ebe.otf) format("opentype");
+}
+
 .transparent-modal {
   .modal-wrapper {
     --background: rgba(44, 39, 45, 0.2);

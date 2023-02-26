@@ -77,6 +77,8 @@ export class Constants {
   static MENU_BACK = '-1';
   static MENU_GENERAL_OPTION_MORE = '3';
 
+  static PAGE_CONTROLL_FINANCY_ADMIN = 'financy-subpage';
+
   static MENU_FINANCY_OPTION_TITHE = '0';
   static MENU_FINANCY_OPTION_SUMMARY = '1';
   static MENU_FINANCY_OPTION_CAIXA_REGISTER = '2';

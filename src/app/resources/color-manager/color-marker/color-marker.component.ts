@@ -32,7 +32,6 @@ export class ColorMarkerComponent implements OnInit {
     'FireBrick',
     'Maroon',
     'ForestGreen',
-    'Yellow',
   ];
 
   constructor(private userVerseMarkService: UserVerseMarkService) {}

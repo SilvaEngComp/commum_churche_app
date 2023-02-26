@@ -69,6 +69,10 @@ export class DailyReaderComponent implements OnInit {
       Constants.BIBLE_PROGRAM_MENU_READ_DAY
     );
 
+    UiService.localSet(
+      ConstantsMidia.OPPEN_TUTORIAL,
+      ConstantsMidia.TUTORIAL_BIBLE_READ
+    );
     UiService.setCurrentPage(Constants.TITLE_DAILY_READER);
 
     this.showMonths = true;
@@ -94,15 +98,6 @@ export class DailyReaderComponent implements OnInit {
     this.load();
   }
 
-  async showTutorial(event: any) {
-    const pop = await this.popCtrl.create({
-      component: TutorialComponent,
-      event,
-      componentProps: { path: ConstantsMidia.TUTORIAL_BIBLE_READ },
-    });
-
-    pop.present();
-  }
   doRefresh(ev) {
     window.location.reload();
   }
@@ -197,13 +192,11 @@ export class DailyReaderComponent implements OnInit {
   }
 
   ajusteSlideForMonthChanged() {
-    debugger;
     if (this.selectedProgram?.program.length > 0) {
       const adaptedMonth = this.selectedMonth + 1;
       this.selectedProgramMonth = null;
       this.selectedProgram?.program?.filter((bibleProgramMonth) => {
         if (bibleProgramMonth.customizedMonth.id === adaptedMonth) {
-          debugger;
           this.selectedProgramMonth = bibleProgramMonth;
         }
       });
@@ -251,8 +244,6 @@ export class DailyReaderComponent implements OnInit {
 
               if (flag) {
                 if (!verse?.isRead) {
-                  debugger;
-
                   flag = false;
                   this.selectedVerseDay = verse;
                 }

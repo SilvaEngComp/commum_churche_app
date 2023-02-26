@@ -17,5 +17,6 @@ export class WelcomeComponent implements OnInit {
 
   ok() {
     this.modalCtrl.dismiss();
+    window.location.reload();
   }
 }

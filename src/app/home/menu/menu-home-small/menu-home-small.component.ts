@@ -23,30 +23,26 @@ import { Menu } from 'src/app/models/menu';
   templateUrl: './menu-home-small.component.html',
   styleUrls: ['./menu-home-small.component.scss'],
 })
-export class MenuHomeSmallComponent implements OnInit, AfterViewInit {
+export class MenuHomeSmallComponent implements OnInit {
   @Output() selectedPage: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('tabHome', { static: false }) tab!: IonTabs;
 
   isTest: boolean;
   showInstall: boolean;
   constructor(
-    private feedService: FeedService,
+    private platform: Platform,
     private exceptionService: ExceptionService,
     private messagingService: MessagingService
   ) {}
-  ngAfterViewInit(): void {
-    UiService.installButton.subscribe((resp) => {
-      this.showInstall = resp;
-    });
-  }
 
   ngOnInit() {
     this.isTest = environment.TEST;
+
+    this.showInstall = this.platform.is('mobileweb');
   }
 
   async setPage(page: number) {
     this.selectedPage.emit(page);
-    // UiService.localSet('tab-page', this.page_selected);
   }
   requestPermission() {
     this.messagingService.requestPermission().subscribe(

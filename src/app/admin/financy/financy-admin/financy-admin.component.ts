@@ -11,17 +11,18 @@ export class FinancyAdminComponent implements OnInit {
   @Output()
   sessionPage: EventEmitter<string> = new EventEmitter<string>();
   @Input() subpage: string;
-  defaultPageName = 'financy-subpage';
+  defaultPageName = Constants.PAGE_CONTROLL_FINANCY_ADMIN;
   constructor() {}
 
   ngOnInit() {
-    if (!this.subpage) {
-      this.subpage = '0';
-
-      if (UiService.localGet(this.defaultPageName)) {
-        this.subpage = UiService.localGet(this.defaultPageName);
-      }
+    UiService.setCurrentPage(Constants.TITLE_SUMMARY_FINANCY);
+    if (UiService.localGet(this.defaultPageName)) {
+      this.subpage = UiService.localGet(this.defaultPageName);
     }
+    if (!UiService.checkValidPage(this.subpage)) {
+      this.subpage = '1';
+    }
+    console.log(this.subpage);
     UiService.pageMenu.subscribe((menu) => {
       this.subpage = menu.subpage;
       this.save();
@@ -29,7 +30,6 @@ export class FinancyAdminComponent implements OnInit {
 
     UiService.caixaAdminEmitter.subscribe((subpage) => {
       this.subpage = subpage;
-      console.log(subpage);
 
       this.save();
     });
@@ -43,6 +43,8 @@ export class FinancyAdminComponent implements OnInit {
     if (subpage === '-1') {
       this.sessionPage.emit(Constants.MENU_GENERAL_OPTION_MORE);
     }
+    console.log(subpage);
+
     this.subpage = subpage;
     this.save();
   }

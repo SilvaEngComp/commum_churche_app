@@ -1,5 +1,5 @@
 <div [ngSwitch]="subpage">
-  <app-report *ngSwitchCase="'1'" (sessionPage)="onReceiveSession($event)"></app-report>
+  <app-summary *ngSwitchCase="'1'" (sessionPage)="onReceiveSession($event)"></app-summary>
   <app-tithe *ngSwitchCase="'0'" (sessionPage)="onReceiveSession($event)"></app-tithe>
   <app-caixa-register *ngSwitchCase="'2'" (sessionPage)="onReceiveSession($event)"></app-caixa-register>
   <app-tithe-register *ngSwitchCase="'3'" (sessionPage)="onReceiveSession($event)"></app-tithe-register>

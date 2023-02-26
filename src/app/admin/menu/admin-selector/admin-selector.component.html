@@ -7,8 +7,8 @@
     <img src="./assets/images/logo.png" />
   </ion-avatar>
 
-  <ion-title>{{pageTile}}</ion-title>
-  <ion-avatar class="right">
+  <ion-label>{{pageTile}}</ion-label>
+  <ion-avatar class="right" (click)="showTutorial($event)">
     <img src="./assets/images/help.png" />
   </ion-avatar>
 </div>

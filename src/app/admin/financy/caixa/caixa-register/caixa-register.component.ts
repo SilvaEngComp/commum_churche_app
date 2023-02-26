@@ -41,6 +41,7 @@ export class CaixaRegisterComponent implements OnInit {
   datePipe: DatePipe;
   showDescription: boolean;
   buttonColor: string;
+  height: string;
   constructor(
     private caixaService: CaixaService,
     private caixaTypeService: CaixaTypeService,
@@ -51,6 +52,7 @@ export class CaixaRegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.height = Math.round(this.platform.height() * 0.7) + 'px';
     this.caixa = UiService.localGet(Constants.CAIXA_MAINTAINCE);
 
     if (!this.caixa) {
@@ -71,7 +73,6 @@ export class CaixaRegisterComponent implements OnInit {
       this.localPageTitle = Constants.TITLE_CAIXA_REGISTER_OUT;
     }
     UiService.localSet(Constants.TITLE_CURRENT_PAGE, this.localPageTitle);
-    UiService.pageTitle.emit(this.localPageTitle);
     this.isSmallDevice = this.platform.width() <= 500;
     this.datePipe = new DatePipe('en');
     this.caixa.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
@@ -234,5 +235,9 @@ export class CaixaRegisterComponent implements OnInit {
     } else {
       this.caixa.user = null;
     }
+  }
+
+  onWindowScroll(ev: any) {
+    UiService.scrollVerseRead.emit({ status: true });
   }
 }
