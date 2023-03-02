@@ -21,19 +21,19 @@ export class ValidCodeComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private exceptionService: ExceptionService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.error = false;
     this.cod = '';
     if (UiService.localGet('email')) {
       this.email = UiService.localGet('email');
-    } if (UiService.localGet('register-invitation')) {
+    }
+    if (UiService.localGet('register-invitation')) {
       this.is_invitation = UiService.localGet('register-invitation');
     }
 
     console.log(this.is_invitation);
-
   }
 
   clear() {
@@ -42,7 +42,6 @@ export class ValidCodeComponent implements OnInit {
   }
   back() {
     UiService.pageMenu.emit({ page: UiService.localGet('callbackPage') });
-
   }
 
   toString() {
@@ -54,16 +53,18 @@ export class ValidCodeComponent implements OnInit {
   resend() {
     if (this.email) {
       this.exceptionService.loadingFunction();
-      this.loginService.recorverAccess(this.email).then((responser) => {
-        this.exceptionService.success(responser);
-      }).catch((error) => this.exceptionService.error(error)).finally(() => this.is_validing = false);
+      this.loginService
+        .recoverAccess(this.email)
+        .then((responser) => {
+          this.exceptionService.success(responser);
+        })
+        .catch((error) => this.exceptionService.error(error))
+        .finally(() => (this.is_validing = false));
     }
   }
 
-
   checkCod(id: number, value: any, input: IonInput) {
     if (value.length > 0) {
-
       if (id === 0 && value.length === 6) {
         this.cod2 = value.split('');
       } else if (this.cod2[id].length < 6) {
@@ -81,9 +82,9 @@ export class ValidCodeComponent implements OnInit {
           .then(async (responser) => {
             this.exceptionService.success(responser);
             this.responseReturn.emit({ valid: true, user: responser.data });
-
           })
-          .catch((e) => this.exceptionService.error(e)).finally(() => this.is_validing = false);
+          .catch((e) => this.exceptionService.error(e))
+          .finally(() => (this.is_validing = false));
       }
     }
   }

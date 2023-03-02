@@ -39,7 +39,7 @@ export class CodeValidationComponent implements OnInit {
   resendEmail() {
     this.exceptionService.loadingFunction();
     const user = UiService.localGet(Constants.RECOVER_USER);
-    this.loginService.recorverAccess(user.email).then((response) => {
+    this.loginService.recoverAccess(user.email).then((response) => {
       this.exceptionService.success(response);
       this.cod2 = ['', '', '', '', '', ''];
       this.cod = '';

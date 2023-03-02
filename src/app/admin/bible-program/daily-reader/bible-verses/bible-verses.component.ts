@@ -98,7 +98,6 @@ export class BibleVersesComponent implements OnInit {
     UiService.pageTitle.emit(this.versesToRead);
     this.save();
     if (this.mainDiv) {
-      console.log(this.mainDiv);
       this.mainDiv.nativeElement.scrollTo({ left: 0, top: 0 });
     }
   }

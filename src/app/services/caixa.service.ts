@@ -66,7 +66,7 @@ export class CaixaService extends ServiceInterface {
       return Promise.resolve(null);
     }
 
-    caixa.user = LoginService.getUser();
+    caixa.register = LoginService.getUser();
     caixa.amount = UiService.convertToNumber(String(caixa.amount));
 
     console.log(JSON.stringify(caixa));

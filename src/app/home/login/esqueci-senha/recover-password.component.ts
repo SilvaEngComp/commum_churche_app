@@ -42,6 +42,10 @@ export class RevoverPasswordComponent implements OnInit {
     this.loginService
       .recoverAccess(this.email)
       .then(async () => {
+        this.exceptionService.alertDialog(
+          'Um código foi enviado. Verifique seu email',
+          'Código enviado!'
+        );
         const user = new User();
         user.email = this.email;
         UiService.localSet(Constants.RECOVER_USER, user);

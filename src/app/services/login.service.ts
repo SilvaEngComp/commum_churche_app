@@ -139,36 +139,16 @@ export class LoginService {
     }
 
     return this.http
-      .post<Responser>(
-        `${environment.API2}/auth/sendInvitation/`,
-        { email },
-        {
-          headers: LoginService.getHeaders(),
-        }
-      )
+      .post<Responser>(`${environment.API2}/auth/sendInvitation/`, { email })
       .toPromise();
   }
 
-  async validCod(cod: string, is_invitation: boolean): Promise<Responser> {
+  async validCod(code: string, is_invitation: boolean): Promise<Responser> {
     return this.http
-      .get<Responser>(
-        `${environment.API}/auth/codeRescue/${cod}/${is_invitation}`,
-        {
-          headers: await LoginService.getHeaders(),
-        }
-      )
-      .toPromise();
-  }
-
-  async recorverAccess(email: string): Promise<Responser> {
-    return this.http
-      .post<Responser>(
-        `${environment.API}/auth/recoverAccess`,
-        { email },
-        {
-          headers: await LoginService.getHeaders(),
-        }
-      )
+      .post<Responser>(`${environment.API}/auth/codeRescue`, {
+        code,
+        isInvitation: is_invitation,
+      })
       .toPromise();
   }
 }

@@ -1,52 +1,43 @@
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <ion-card>
-        <table class="responsive-table centered">
-          <thead>
-
-            <tr>
-              <th colspan="8"><ion-label class="page-title">{{caixaSummary?.caixaGroup?.name}}</ion-label></th>
-            </tr>
-            <tr>
-              <th *ngFor="let item of headCaixaList">{{item | uppercase}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of caixaSummary?.caixas">
-              <td>
-                <ion-label>{{item?.caixaType?.name | uppercase}}</ion-label>
-              </td>
-              <td>
-                <ion-label>{{item?.amount | currencyBrl}}</ion-label>
-              </td>
-              <td>
-                <ion-label>{{item?.date | date:'dd/MM/YYYY'}}</ion-label>
-              </td>
-              <td>
-                <ion-label>{{item?.user?.name | uppercase}}</ion-label>
-              </td>
-              <td>
-                <ion-label> {{item?.church?.name | uppercase}}</ion-label>
-              </td>
-              <td>
-                <div class="description">
-                  <p readonly="readonly" rows="10" cols="2" type="text">
-                    {{item.description}}
-                  </p>
-                </div>
-              </td>
-              <td>
-                <ion-item lines="none" (click)="openMenuOption($event,item)">
-                  <ion-icon color="tertiary" slot="end" name="settings-outline"></ion-icon>
-                </ion-item>
-              </td>
-
-            </tr>
-          </tbody>
-        </table>
-
-      </ion-card>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<div class="table-responsive">
+  <table class="table  align-middle">
+    <thead>
+      <tr class="table-dark">
+        <th colspan="8"><ion-label class="page-title">{{caixaSummary?.caixaGroup?.name}}</ion-label></th>
+      </tr>
+      <tr class="table-group-divider">
+        <th *ngFor="let item of headCaixaList">{{item | uppercase}}</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let item of caixaSummary?.caixas">
+        <td>
+          <ion-label>{{item?.caixaType?.name | uppercase}}</ion-label>
+        </td>
+        <td>
+          <ion-label>{{item?.amount | currencyBrl}}</ion-label>
+        </td>
+        <td>
+          <ion-label>{{item?.date | date:'dd/MM/YYYY'}}</ion-label>
+        </td>
+        <td>
+          <ion-label>{{item?.register?.name | uppercase}}</ion-label>
+        </td>
+        <td>
+          <ion-label> {{item?.church?.name | uppercase}}</ion-label>
+        </td>
+        <td>
+          <div class="description">
+            <p readonly="readonly" rows="10" cols="2" type="text">
+              {{item.description}}
+            </p>
+          </div>
+        </td>
+        <td rowspan="2">
+          <ion-item lines="none" (click)="openMenuOption($event,item)">
+            <ion-icon color="tertiary" slot="end" name="settings-outline"></ion-icon>
+          </ion-item>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

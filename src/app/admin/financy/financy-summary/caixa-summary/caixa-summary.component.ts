@@ -20,9 +20,10 @@ export class CaixaSummaryComponent implements OnInit {
     'Tipo',
     'Valor',
     'Data',
-    'Registrado por',
+    'Tesoureiro',
     'Organização',
     'Motivo',
+    '',
   ];
   total: number;
   constructor(
@@ -39,6 +40,7 @@ export class CaixaSummaryComponent implements OnInit {
     this.caixaSummary?.caixas?.filter((caixaSummary) => {
       this.total += caixaSummary?.amount;
     });
+    debugger;
   }
 
   setShowSummaryDetail(caixa: CaixaSummary) {

@@ -9,9 +9,9 @@
     <ion-col>
       <div class="flex-container main-label" lines="none" button (click)="setShowSelect()">
         <ion-label color="light">{{label | uppercase}}</ion-label>
-        <ion-label color="light"> {{selected}}</ion-label>
         <ion-icon color="light" name="caret-down-outline"></ion-icon>
       </div>
+      <ion-label color="light" *ngIf="selected"> {{selected}}</ion-label>
     </ion-col>
   </ion-row>
   <ion-row *ngIf="showSelect">
@@ -22,7 +22,7 @@
           <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="setShowSelect()"></ion-icon>
           <div *ngIf="create" class="right flex-container">
             <ion-icon (click)="createNew($event)" color="primary" name="add-circle-outline"></ion-icon>
-            <ion-label>Novo</ion-label>
+            <ion-label>Add</ion-label>
           </div>
         </div>
 

@@ -19,7 +19,7 @@ export class EmailCodeComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private exceptionService: ExceptionService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.email = '';
@@ -35,7 +35,7 @@ export class EmailCodeComponent implements OnInit {
     this.exceptionService.loadingFunction();
     // Enviando o email para recupeação de senha
     this.loginService
-      .recorverAccess(this.email)
+      .recoverAccess(this.email)
       .then(async () => {
         this.responseReturn.emit({ email: this.email });
       })
@@ -51,7 +51,6 @@ export class EmailCodeComponent implements OnInit {
   }
   back() {
     UiService.pageMenu.emit({ page: UiService.localGet('callbackPage') });
-
   }
   showPassword() {
     this.show = !this.show;
@@ -61,5 +60,4 @@ export class EmailCodeComponent implements OnInit {
       this.typePassword = 'password';
     }
   }
-
 }

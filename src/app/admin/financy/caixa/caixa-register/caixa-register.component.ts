@@ -231,9 +231,9 @@ export class CaixaRegisterComponent implements OnInit {
 
   setUser(user: User) {
     if (user) {
-      this.caixa.user = user;
+      this.caixa.register = user;
     } else {
-      this.caixa.user = null;
+      this.caixa.register = null;
     }
   }
 

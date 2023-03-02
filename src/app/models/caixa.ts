@@ -10,7 +10,7 @@ export class Caixa {
   caixaType: CaixaType;
   amount: number;
   description: string;
-  user: User;
+  register: User;
   isEntry: boolean;
   created_at: string;
   showDetails: boolean;
@@ -20,7 +20,7 @@ export class Caixa {
   constructor(name?: string) {
     this.date = UiService.getCurrentDate();
     this.caixaType = new CaixaType(name);
-    this.user = new User();
+    this.register = new User();
     this.isEntry = false;
     this.description = '';
   }
