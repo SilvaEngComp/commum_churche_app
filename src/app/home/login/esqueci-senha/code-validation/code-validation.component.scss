@@ -4,6 +4,9 @@
   align-items: center;
 }
 
+ion-progress-bar {
+  z-index: 2000;
+}
 .item-input {
   width: 350px;
   --background: white;

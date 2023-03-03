@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <ion-progress-bar *ngIf="cod.length===6" value="0.25" buffer="0.5"></ion-progress-bar>
+
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -25,24 +25,30 @@
         </ion-label>
       </ion-col>
     </ion-row>
+    <ion-row *ngIf="cod.length===6">
+      <ion-col>
+        <ion-progress-bar value="0.25" buffer="0.5"></ion-progress-bar>
+      </ion-col>
+    </ion-row>
     <ion-row *ngIf="cod.length<6">
       <ion-col class="input-code">
-        <ion-input #inputZero type="text" [value]="cod2[0]" maxlength="6" (keyup)="checkCod(0, $event)"></ion-input>
+        <ion-input #inputZero type="text" [value]="cod2[0]" maxlength="6" #input1
+          (keyup)="checkCod(0, $event,input1,input2)"></ion-input>
 
-        <ion-input [disabled]="cod2[0].length<=0" type="text" [value]="cod2[1]" maxlength="1"
-          (keyup)="checkCod(1, $event)"></ion-input>
+        <ion-input type="text" [value]="cod2[1]" maxlength="1" #input2
+          (keyup)="checkCod(1, $event,input2, input3)"></ion-input>
 
-        <ion-input [disabled]="cod2[1].length<=0" type="text" [value]="cod2[2]" maxlength="1"
-          (keyup)="checkCod(2, $event)"></ion-input>
+        <ion-input type="text" [value]="cod2[2]" maxlength="1" #input3
+          (keyup)="checkCod(2, $event,input3, input4)"></ion-input>
 
-        <ion-input [disabled]="cod2[2].length<=0" type="text" [value]="cod2[3]" maxlength="1"
-          (keyup)="checkCod(3, $event)"></ion-input>
+        <ion-input type="text" [value]="cod2[3]" maxlength="1" #input4
+          (keyup)="checkCod(3, $event,input4, input5)"></ion-input>
 
-        <ion-input [disabled]="cod2[3].length<=0" type="text" [value]="cod2[4]" maxlength="1"
-          (keyup)="checkCod(4, $event)"></ion-input>
+        <ion-input type="text" [value]="cod2[4]" maxlength="1" #input5
+          (keyup)="checkCod(4, $event,input5, input6)"></ion-input>
 
-        <ion-input [disabled]="cod2[4].length<=0" type="text" [value]="cod2[5]" maxlength="6"
-          (keyup)="checkCod(5, $event)"></ion-input>
+        <ion-input type="text" [value]="cod2[5]" maxlength="6" #input6
+          (keyup)="checkCod(5, $event,input6, input6)"></ion-input>
 
       </ion-col>
     </ion-row>

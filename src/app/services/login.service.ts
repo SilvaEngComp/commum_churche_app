@@ -105,9 +105,9 @@ export class LoginService {
       .toPromise();
   }
 
-  checkCod(cod: string): Promise<Responser> {
+  checkCod(code: string): Promise<Responser> {
     return this.http
-      .post<Responser>(`${environment.API}/auth/codeValidation`, { cod })
+      .post<Responser>(`${environment.API}/auth/codeValidation`, { code })
       .toPromise();
   }
 

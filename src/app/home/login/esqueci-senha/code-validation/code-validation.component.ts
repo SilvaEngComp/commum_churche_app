@@ -53,15 +53,19 @@ export class CodeValidationComponent implements OnInit {
     });
   }
 
-  checkCod(id: number, ev) {
-    if (id === 0 && ev.target.value.length > 1) {
+  checkCod(id: number, ev, current: IonInput, next: IonInput) {
+    if (ev.target.value.length > 1) {
+      this.cod2 = [];
       this.cod2 = ev.target.value.split('');
     } else {
       this.cod2[id] = ev.target.value;
     }
 
     this.toString();
-    console.log(this.cod2[0]);
+    current.value = this.cod[id];
+    if (!next.autofocus && current.value.length === 1) {
+      next.setFocus();
+    }
     if (this.cod.length >= 6) {
       this.sendCode();
     }
@@ -75,9 +79,11 @@ export class CodeValidationComponent implements OnInit {
         this.selectedPage.emit(Constants.PAGE_UPDATE_PASSWORD);
       })
       .catch((error) => {
-        this.cod = '';
         this.error = true;
         this.exceptionService.error(error);
+      })
+      .finally(() => {
+        this.cod = '';
       });
   }
 }
