@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { CaixaGroup } from '../models/caixaGroup';
+import { CaixaCategory } from '../models/caixaCategory';
 import { Responser } from '../models/responser';
 import { ExceptionService } from './exception-service.service';
 import { LoginService } from './login.service';
@@ -10,7 +10,7 @@ import { ServiceInterface } from './serviceInterface';
 @Injectable({
   providedIn: 'root',
 })
-export class CaixaGroupService extends ServiceInterface {
+export class CaixaCategoryService extends ServiceInterface {
   constructor(
     protected http: HttpClient,
     protected exceptionService: ExceptionService
@@ -32,27 +32,27 @@ export class CaixaGroupService extends ServiceInterface {
       return Promise.resolve(null);
     }
     return this.http
-      .get<Responser>(`${environment.API2}/caixaGroups`, {
+      .get<Responser>(`${environment.API2}/caixaCategories`, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();
   }
 
-  async store(caixagroup: CaixaGroup): Promise<Responser> {
+  async store(caixacategory: CaixaCategory): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
 
-    console.log(JSON.stringify(caixagroup));
+    console.log(JSON.stringify(caixacategory));
     return this.http
-      .post<Responser>(`${environment.API2}/caixaGroups`, caixagroup, {
+      .post<Responser>(`${environment.API2}/caixaCategories`, caixacategory, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();
   }
 
-  async update(caixagroup: CaixaGroup): Promise<Responser> {
+  async update(caixacategory: CaixaCategory): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
@@ -60,8 +60,8 @@ export class CaixaGroupService extends ServiceInterface {
 
     return this.http
       .patch<Responser>(
-        `${environment.API2}/caixaGroups/${caixagroup.id}`,
-        caixagroup,
+        `${environment.API2}/caixaCategories/${caixacategory.id}`,
+        caixacategory,
         {
           headers: LoginService.getHeaders(),
         }
@@ -69,16 +69,19 @@ export class CaixaGroupService extends ServiceInterface {
       .toPromise();
   }
 
-  async delete(caixagroup: CaixaGroup): Promise<Responser> {
+  async delete(caixacategory: CaixaCategory): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
 
     return this.http
-      .delete<Responser>(`${environment.API2}/caixaGroups/${caixagroup?.id}`, {
-        headers: LoginService.getHeaders(),
-      })
+      .delete<Responser>(
+        `${environment.API2}/caixaCategories/${caixacategory?.id}`,
+        {
+          headers: LoginService.getHeaders(),
+        }
+      )
       .toPromise();
   }
 }

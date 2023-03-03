@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { CaixaType } from 'src/app/models/caixaType';
+import { CaixaSubcategory } from 'src/app/models/caixaSubcategory';
 import { ConstantMessages } from 'src/app/models/messages';
-import { CaixaTypeService } from 'src/app/services/caixa-type.service';
+import { CaixaSubcategoryService } from 'src/app/services/caixa-subcategory.service';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
 
@@ -11,18 +11,18 @@ import { UiService } from 'src/app/services/ui.service';
   templateUrl: './caixa-type-register.component.html',
   styleUrls: ['./caixa-type-register.component.scss'],
 })
-export class CaixaTypeRegisterComponent implements OnInit {
-  @Input() apiResponse: CaixaType[];
+export class CaixaSubcategoryRegisterComponent implements OnInit {
+  @Input() apiResponse: CaixaSubcategory[];
 
-  caixaType: CaixaType;
+  caixaSubcategory: CaixaSubcategory;
   constructor(
     private exceptionService: ExceptionService,
-    private caixatypeService: CaixaTypeService,
+    private caixaSubcategoryService: CaixaSubcategoryService,
     private popCtrl: PopoverController
   ) {}
 
   ngOnInit() {
-    this.caixaType = new CaixaType();
+    this.caixaSubcategory = new CaixaSubcategory();
   }
 
   register() {
@@ -30,8 +30,8 @@ export class CaixaTypeRegisterComponent implements OnInit {
       if (this.validForm()) {
         this.exceptionService.loadingFunction();
 
-        this.caixatypeService
-          .store(this.caixaType)
+        this.caixaSubcategoryService
+          .store(this.caixaSubcategory)
           .then(() => {
             this.close();
           })
@@ -46,12 +46,12 @@ export class CaixaTypeRegisterComponent implements OnInit {
   objIsAlreadyRegistred() {
     const objects = this.apiResponse.filter((obj) =>
       UiService.stringNormalization(obj.name).includes(
-        UiService.stringNormalization(this.caixaType.name)
+        UiService.stringNormalization(this.caixaSubcategory.name)
       )
     );
     if (objects?.length > 0) {
       for (let i = 0; i < objects?.length; i++) {
-        this.caixaType = objects[i];
+        this.caixaSubcategory = objects[i];
         this.exceptionService.alertDialog(
           ConstantMessages.USER_ALREADY_EXISTS,
           'Alerta'
@@ -63,7 +63,7 @@ export class CaixaTypeRegisterComponent implements OnInit {
   }
 
   validForm() {
-    if (!this.caixaType?.name) {
+    if (!this.caixaSubcategory?.name) {
       this.exceptionService.alertDialog(ConstantMessages.GENERIC_NAME_INVALID);
       return;
     }
@@ -72,6 +72,6 @@ export class CaixaTypeRegisterComponent implements OnInit {
   }
 
   close() {
-    this.popCtrl.dismiss({ obj: this.caixaType });
+    this.popCtrl.dismiss({ obj: this.caixaSubcategory });
   }
 }

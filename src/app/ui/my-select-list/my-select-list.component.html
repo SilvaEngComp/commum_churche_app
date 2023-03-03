@@ -31,13 +31,13 @@
         </ion-input>
         <div class="open-div">
           <ion-label *ngIf="filtredSearch?.length===0">Lista vazia</ion-label>
-          <ol>
+          <ul>
             <li *ngFor="let item of filtredSearch">
               <ion-label detail (click)="onSelect(item)" class="item-search"
                 [ngClass]="{'selected': selected===item?.value}">
                 {{ item?.value | uppercase}}</ion-label>
             </li>
-          </ol>
+          </ul>
 
         </div>
       </div>

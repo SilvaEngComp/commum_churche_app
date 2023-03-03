@@ -107,19 +107,13 @@ export class LoginService {
 
   checkCod(cod: string): Promise<Responser> {
     return this.http
-      .post<Responser>(
-        `${environment.API}/auth/codeValidation/`,
-        { cod },
-        {
-          headers: LoginService.getHeaders(),
-        }
-      )
+      .post<Responser>(`${environment.API}/auth/codeValidation`, { cod })
       .toPromise();
   }
 
   recoverAccess(email: string): Promise<any> {
     return this.http
-      .post(`${environment.API}/auth/recoverAccess/`, { email })
+      .post(`${environment.API}/auth/recoverAccess`, { email })
       .toPromise();
   }
 
@@ -139,7 +133,7 @@ export class LoginService {
     }
 
     return this.http
-      .post<Responser>(`${environment.API2}/auth/sendInvitation/`, { email })
+      .post<Responser>(`${environment.API2}/auth/sendInvitation`, { email })
       .toPromise();
   }
 

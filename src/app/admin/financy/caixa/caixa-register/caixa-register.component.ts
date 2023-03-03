@@ -1,8 +1,8 @@
-import { CaixaGroup } from './../../../../models/caixaGroup';
+import { CaixaCategory } from '../../../../models/caixaCategory';
 import { Church } from 'src/app/models/church';
 import { ConstantMessages } from 'src/app/models/messages';
-import { CaixaType } from './../../../../models/caixaType';
-import { CaixaTypeService } from './../../../../services/caixa-type.service';
+import { CaixaSubcategory } from '../../../../models/caixaSubcategory';
+import { CaixaSubcategoryService } from '../../../../services/caixa-subcategory.service';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlertController, Platform } from '@ionic/angular';
@@ -30,13 +30,13 @@ export class CaixaRegisterComponent implements OnInit {
   isSmallDevice: boolean;
   days: string[] = [];
   day: string;
-  caixaTypes: CaixaType[];
+  caixaSubcategorys: CaixaSubcategory[];
   customizedMonth: CustomizedMonth;
   year: string;
   isEntry: string;
   value: string;
   churches: Church[];
-  caixaGroups: CaixaGroup[];
+  caixaCategorys: CaixaCategory[];
   localPageTitle: string;
   datePipe: DatePipe;
   showDescription: boolean;
@@ -44,7 +44,7 @@ export class CaixaRegisterComponent implements OnInit {
   height: string;
   constructor(
     private caixaService: CaixaService,
-    private caixaTypeService: CaixaTypeService,
+    private caixaSubcategoryService: CaixaSubcategoryService,
     private exceptionService: ExceptionService,
     private platform: Platform,
     private actionCtrl: AlertController,
@@ -80,8 +80,8 @@ export class CaixaRegisterComponent implements OnInit {
   }
 
   async load() {
-    const inputMethodResponser = await this.caixaTypeService.get();
-    this.caixaTypes = inputMethodResponser.data;
+    const inputMethodResponser = await this.caixaSubcategoryService.get();
+    this.caixaSubcategorys = inputMethodResponser.data;
 
     const churchResponser = await this.churchService.get();
     this.churches = churchResponser.data;
@@ -162,11 +162,11 @@ export class CaixaRegisterComponent implements OnInit {
   }
 
   isFormValid() {
-    if (!this.caixa?.caixaGroup?.id) {
+    if (!this.caixa?.caixaCategory?.id) {
       this.exceptionService.alertDialog(ConstantMessages.CAIXA_GROUP_INVALID);
       return;
     }
-    if (!this.caixa?.caixaType?.id) {
+    if (!this.caixa?.caixaSubcategory?.id) {
       this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
       return;
     }
@@ -206,11 +206,11 @@ export class CaixaRegisterComponent implements OnInit {
     return true;
   }
 
-  setType(caixaType: CaixaType) {
-    if (caixaType) {
-      this.caixa.caixaType = caixaType;
+  setType(caixaSubcategory: CaixaSubcategory) {
+    if (caixaSubcategory) {
+      this.caixa.caixaSubcategory = caixaSubcategory;
     } else {
-      this.caixa.caixaType = null;
+      this.caixa.caixaSubcategory = null;
     }
   }
 
@@ -221,11 +221,11 @@ export class CaixaRegisterComponent implements OnInit {
       this.caixa.church = null;
     }
   }
-  setGroup(caixaGroup: CaixaGroup) {
-    if (caixaGroup) {
-      this.caixa.caixaGroup = caixaGroup;
+  setGroup(caixaCategory: CaixaCategory) {
+    if (caixaCategory) {
+      this.caixa.caixaCategory = caixaCategory;
     } else {
-      this.caixa.caixaGroup = null;
+      this.caixa.caixaCategory = null;
     }
   }
 

@@ -1,6 +1,6 @@
 import { Constants } from './constants';
 
-export class CaixaGroup {
+export class CaixaCategory {
   id: number;
   name: string;
 

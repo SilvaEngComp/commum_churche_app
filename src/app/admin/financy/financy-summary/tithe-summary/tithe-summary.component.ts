@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { Tithe } from 'src/app/models/tithe';
 import { TitheSummary } from 'src/app/models/tithesummary';
 
@@ -10,16 +11,21 @@ import { TitheSummary } from 'src/app/models/tithesummary';
 export class TitheSummaryComponent implements OnInit {
   @Input() titheSummary: TitheSummary;
   @Input() isTithe: boolean;
-  headTitheList: string[] = [
-    'valor',
-    'data',
-    'Registrado por',
-    'Referente a',
-    'Período',
-  ];
+  headTitheList: string[] = ['valor', 'data', 'Registrado por', 'Período'];
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.isTithe) {
+      this.headTitheList.push('Dizimista');
+    } else {
+      this.headTitheList.push('Ofertante');
+    }
+    this.titheSummary?.tithes?.filter((tithe) => {
+      tithe.customizedMonth = new CustomizedMonth(
+        Number(tithe?.customizedMonth?.id)
+      );
+    });
+  }
 
   setShowSummaryDetail() {
     console.log(this.titheSummary);

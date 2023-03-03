@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { CaixaGroup } from 'src/app/models/caixaGroup';
+import { CaixaCategory } from 'src/app/models/caixaCategory';
 import { Church } from 'src/app/models/church';
 import { ConstantMessages } from 'src/app/models/messages';
 import { ChurchService } from 'src/app/services/church.service';

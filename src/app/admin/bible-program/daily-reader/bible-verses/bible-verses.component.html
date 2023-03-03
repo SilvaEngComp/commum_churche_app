@@ -35,7 +35,7 @@
                   <ion-col class="col-verses" [id]="verse?.id" (click)="pressMark(verse)"
                     [ngStyle]="{'background-color':verse?.userVerseMark?.color, 'font-size': letterSize}"
                     [ngClass]="{'white-text':checkWhiteText(verse)}">
-                    <ion-text class="verse">
+                    <ion-text class="verse" [ngStyle]="{'font-size': letterSize}">
                       <strong>{{verse?.verse}}</strong> {{verse?.text}}</ion-text>
                     <ion-icon *ngIf="(verse?.userVerseMark?.comment?.length>0)"
                       name="chatbox-ellipses-outline"></ion-icon>

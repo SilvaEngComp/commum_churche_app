@@ -1,7 +1,7 @@
-import { CaixaGroup } from './../../../../models/caixaGroup';
+import { CaixaCategory } from '../../../../models/caixaCategory';
 import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { CaixaGroupService } from 'src/app/services/caixa-group.service';
+import { CaixaCategoryService } from 'src/app/services/caixa-category.service';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { ConstantMessages } from 'src/app/models/messages';
 import { UiService } from 'src/app/services/ui.service';
@@ -11,17 +11,17 @@ import { UiService } from 'src/app/services/ui.service';
   templateUrl: './caixa-group-register.component.html',
   styleUrls: ['./caixa-group-register.component.scss'],
 })
-export class CaixaGroupRegisterComponent implements OnInit {
-  @Input() apiResponse: CaixaGroup[];
-  caixaGroup: CaixaGroup;
+export class CaixaCategoryRegisterComponent implements OnInit {
+  @Input() apiResponse: CaixaCategory[];
+  caixaCategory: CaixaCategory;
   constructor(
     private exceptionService: ExceptionService,
-    private caixagroupService: CaixaGroupService,
+    private caixacategoryService: CaixaCategoryService,
     private popCtrl: PopoverController
   ) {}
 
   ngOnInit() {
-    this.caixaGroup = new CaixaGroup();
+    this.caixaCategory = new CaixaCategory();
   }
 
   register() {
@@ -29,10 +29,10 @@ export class CaixaGroupRegisterComponent implements OnInit {
       if (this.validForm()) {
         this.exceptionService.loadingFunction();
 
-        this.caixagroupService
-          .store(this.caixaGroup)
+        this.caixacategoryService
+          .store(this.caixaCategory)
           .then((responser) => {
-            this.caixaGroup = responser.data;
+            this.caixaCategory = responser.data;
             this.close();
           })
           .catch((erro) => {
@@ -45,7 +45,7 @@ export class CaixaGroupRegisterComponent implements OnInit {
   }
 
   validForm() {
-    if (!this.caixaGroup?.name) {
+    if (!this.caixaCategory?.name) {
       this.exceptionService.alertDialog(ConstantMessages.GENERIC_NAME_INVALID);
       return;
     }
@@ -56,12 +56,12 @@ export class CaixaGroupRegisterComponent implements OnInit {
   objIsAlreadyRegistred() {
     const objects = this.apiResponse.filter((obj) =>
       UiService.stringNormalization(obj.name).includes(
-        UiService.stringNormalization(this.caixaGroup.name)
+        UiService.stringNormalization(this.caixaCategory.name)
       )
     );
     if (objects?.length > 0) {
       for (let i = 0; i < objects?.length; i++) {
-        this.caixaGroup = objects[i];
+        this.caixaCategory = objects[i];
         this.exceptionService.alertDialog(
           ConstantMessages.USER_ALREADY_EXISTS,
           'Alerta'
@@ -73,6 +73,6 @@ export class CaixaGroupRegisterComponent implements OnInit {
   }
 
   close() {
-    this.popCtrl.dismiss({ obj: this.caixaGroup });
+    this.popCtrl.dismiss({ obj: this.caixaCategory });
   }
 }

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CaixaGroupService } from './caixa-group.service';
+import { CaixaCategoryService } from './caixa-category.service';
 
-describe('CaixaGroupService', () => {
-  let service: CaixaGroupService;
+describe('CaixaCategoryService', () => {
+  let service: CaixaCategoryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CaixaGroupService);
+    service = TestBed.inject(CaixaCategoryService);
   });
 
   it('should be created', () => {

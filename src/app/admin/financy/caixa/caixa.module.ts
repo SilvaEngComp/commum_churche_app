@@ -1,5 +1,5 @@
-import { CaixaTypeRegisterComponent } from './caixa-type-register/caixa-type-register.component';
-import { CaixaGroupRegisterComponent } from './caixa-group-register/caixa-group-register.component';
+import { CaixaSubcategoryRegisterComponent } from './caixa-type-register/caixa-type-register.component';
+import { CaixaCategoryRegisterComponent } from './caixa-group-register/caixa-group-register.component';
 import { UiModule } from './../../../ui/ui.module';
 import { FilterCaixaComponent } from './filter-caixa/filter-caixa.component';
 import { CaixaRegisterComponent } from './caixa-register/caixa-register.component';
@@ -14,8 +14,8 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
   declarations: [
     CaixaRegisterComponent,
     FilterCaixaComponent,
-    CaixaGroupRegisterComponent,
-    CaixaTypeRegisterComponent,
+    CaixaCategoryRegisterComponent,
+    CaixaSubcategoryRegisterComponent,
   ],
   imports: [
     CommonModule,

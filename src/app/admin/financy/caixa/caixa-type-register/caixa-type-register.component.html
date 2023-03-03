@@ -4,8 +4,8 @@
       <ion-col>
         <ion-item lines="none" class="input">
           <ion-label position="floating">*Nome: </ion-label>
-          <ion-input (keyup.enter)="register()" type="text" [(ngModel)]="caixaType.name" #name="ngModel"
-            name="caixatypeName" [ngModelOptions]="{standalone: true}" required></ion-input>
+          <ion-input (keyup.enter)="register()" type="text" [(ngModel)]="caixaSubcategory.name" #name="ngModel"
+            name="caixasubategoryName" [ngModelOptions]="{standalone: true}" required></ion-input>
           <ion-note *ngIf="!name?.valid && name?.touched" color="danger">Este campo é obrigatório</ion-note>
         </ion-item>
 

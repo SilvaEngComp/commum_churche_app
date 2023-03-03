@@ -1,8 +1,9 @@
 <div class="table-responsive">
-  <table class="table  align-middle">
+  <table class="table  align-middle table-sm">
     <thead>
       <tr class="table-dark">
-        <th colspan="8"><ion-label class="page-title">{{caixaSummary?.caixaGroup?.name}}</ion-label></th>
+        <th colspan="8"><ion-label class="label-title">{{caixaSummary?.caixaCategory?.name}}</ion-label></th>
+        <th colspan="8"><ion-label class="label-title">{{caixaSummary?.caixaSubcategory?.name}}</ion-label></th>
       </tr>
       <tr class="table-group-divider">
         <th *ngFor="let item of headCaixaList">{{item | uppercase}}</th>
@@ -11,23 +12,23 @@
     <tbody class="table-group-divider">
       <tr *ngFor="let item of caixaSummary?.caixas">
         <td>
-          <ion-label>{{item?.caixaType?.name | uppercase}}</ion-label>
+          <ion-label class="label-body">{{item?.caixaSubcategory?.name | uppercase}}</ion-label>
         </td>
         <td>
-          <ion-label>{{item?.amount | currencyBrl}}</ion-label>
+          <ion-label class="label-body">{{item?.amount | currencyBrl}}</ion-label>
         </td>
         <td>
-          <ion-label>{{item?.date | date:'dd/MM/YYYY'}}</ion-label>
+          <ion-label class="label-body">{{item?.date | date:'dd/MM/YYYY'}}</ion-label>
         </td>
         <td>
-          <ion-label>{{item?.register?.name | uppercase}}</ion-label>
+          <ion-label class="label-body">{{item?.register?.name | uppercase}}</ion-label>
         </td>
         <td>
-          <ion-label> {{item?.church?.name | uppercase}}</ion-label>
+          <ion-label class="label-body"> {{item?.church?.name | uppercase}}</ion-label>
         </td>
         <td>
           <div class="description">
-            <p readonly="readonly" rows="10" cols="2" type="text">
+            <p readonly="readonly" rows="10" cols="2" type="text" class="label-body">
               {{item.description}}
             </p>
           </div>

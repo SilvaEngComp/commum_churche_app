@@ -90,15 +90,7 @@ export class BalanceComponent implements OnInit {
 
       this.titheSummary = this.sumary.titheSummary?.tithe;
 
-      this.titheSummary?.tithes.filter((tithe) => {
-        tithe.customizedMonth = new CustomizedMonth(Number(tithe.month));
-      });
-
       this.offerSummary = this.sumary.titheSummary?.offer;
-
-      this.offerSummary?.tithes.filter((tithe) => {
-        tithe.customizedMonth = new CustomizedMonth(Number(tithe.month));
-      });
     });
   }
 

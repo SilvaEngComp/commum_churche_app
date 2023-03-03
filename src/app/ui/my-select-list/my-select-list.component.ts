@@ -4,20 +4,20 @@ import { UiService } from './../../services/ui.service';
 import { PopoverController } from '@ionic/angular';
 /* eslint-disable max-len */
 import { ChurchRegisterComponent } from './../../admin/church/church-register/church-register.component';
-import { CaixaTypeRegisterComponent } from './../../admin/financy/caixa/caixa-type-register/caixa-type-register.component';
-import { CaixaGroupRegisterComponent } from './../../admin/financy/caixa/caixa-group-register/caixa-group-register.component';
 import { EmergencyUserRegisterComponent } from '../../admin/user/user-register/emergency-user-register/emergency-user-register.component';
 import { ModalController } from '@ionic/angular';
 import { ChurchService } from './../../services/church.service';
-import { CaixaGroupService } from './../../services/caixa-group.service';
+import { CaixaCategoryService } from '../../services/caixa-category.service';
 import { UserService } from './../../services/user.service';
 /* eslint-disable @typescript-eslint/member-ordering */
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MySelectAdapter } from 'src/app/models/mySelectAdapter';
 import { UserFilter } from 'src/app/models/userFilter';
-import { CaixaTypeService } from 'src/app/services/caixa-type.service';
+import { CaixaSubcategoryService } from 'src/app/services/caixa-subcategory.service';
 import { ScheduleTypeRegisterComponent } from 'src/app/admin/church-schedule/schedule-type-register/schedule-type-register.component';
+import { CaixaCategoryRegisterComponent } from 'src/app/admin/financy/caixa/caixa-group-register/caixa-group-register.component';
+import { CaixaSubcategoryRegisterComponent } from 'src/app/admin/financy/caixa/caixa-type-register/caixa-type-register.component';
 
 @Component({
   selector: 'app-my-select-list',
@@ -46,8 +46,8 @@ export class MySelectListComponent implements OnInit {
   };
   constructor(
     private userService: UserService,
-    private caixaGroupService: CaixaGroupService,
-    private caixaTypeService: CaixaTypeService,
+    private caixaCategoryService: CaixaCategoryService,
+    private caixaSubcategoryService: CaixaSubcategoryService,
     private churchService: ChurchService,
     private churchScheduleTypeService: ChurchScheduleTypeService,
     private popCtrl: PopoverController
@@ -101,11 +101,11 @@ export class MySelectListComponent implements OnInit {
       this.apiResponse = responser.data;
     } else if (this.listName === 'groups') {
       // this.apiResponse = UiService.localGet('localGroups');
-      const responser = await this.caixaGroupService.get();
+      const responser = await this.caixaCategoryService.get();
       this.apiResponse = responser.data;
     } else if (this.listName === 'types') {
       // this.apiResponse = UiService.localGet('localGroups');
-      const responser = await this.caixaTypeService.get();
+      const responser = await this.caixaSubcategoryService.get();
       this.apiResponse = responser.data;
     } else if (this.listName === 'churches') {
       // this.apiResponse = UiService.localGet('localGroups');
@@ -160,9 +160,9 @@ export class MySelectListComponent implements OnInit {
     if (this.listName === 'users') {
       component = EmergencyUserRegisterComponent;
     } else if (this.listName === 'groups') {
-      component = CaixaGroupRegisterComponent;
+      component = CaixaCategoryRegisterComponent;
     } else if (this.listName === 'types') {
-      component = CaixaTypeRegisterComponent;
+      component = CaixaSubcategoryRegisterComponent;
     } else if (this.listName === 'churches') {
       component = ChurchRegisterComponent;
     } else if (this.listName === 'churchScheduleTypes') {

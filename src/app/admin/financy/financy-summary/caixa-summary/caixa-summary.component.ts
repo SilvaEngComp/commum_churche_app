@@ -40,7 +40,6 @@ export class CaixaSummaryComponent implements OnInit {
     this.caixaSummary?.caixas?.filter((caixaSummary) => {
       this.total += caixaSummary?.amount;
     });
-    debugger;
   }
 
   setShowSummaryDetail(caixa: CaixaSummary) {
