@@ -26,14 +26,19 @@
         <td>
           <ion-label class="label-body"> {{item?.church?.name | uppercase}}</ion-label>
         </td>
-        <td>
+        <td *ngIf="item?.description">
           <div class="description">
             <p readonly="readonly" rows="10" cols="2" type="text" class="label-body">
               {{item.description}}
             </p>
           </div>
         </td>
-        <td rowspan="2">
+        <td *ngIf="item?.file">
+          <ion-item lines="none" (click)="download(item)" download="teste.txt">
+            <ion-icon color="tertiary" name="download-outline"></ion-icon>
+          </ion-item>
+        </td>
+        <td>
           <ion-item lines="none" (click)="openMenuOption($event,item)">
             <ion-icon color="tertiary" slot="end" name="settings-outline"></ion-icon>
           </ion-item>

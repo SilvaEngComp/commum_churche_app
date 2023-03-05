@@ -1,12 +1,12 @@
+import { ModelFileUplod } from 'src/app/models/modelFileUpload';
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FileUploader, FileLikeObject } from 'ng2-file-upload';
 import { ExceptionService } from 'src/app/services/exception-service.service';
-import { UiService } from 'src/app/services/ui.service';
 import { LoginService } from 'src/app/services/login.service';
-import { ModelImgeUplod, TempFile } from 'src/app/models/tempImage';
 import { User } from 'src/app/models/User';
+import { TempFile } from 'src/app/models/temFile';
 
 // import { FilePath } from "@ionic-native/file-path/ngx";
 @Component({
@@ -19,9 +19,7 @@ export class LoadImagesComponent implements OnInit {
   public hasBaseDropZoneOver = false;
   @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private exceptionService: ExceptionService) {}
-
-  @Input() localImages: ModelImgeUplod;
+  @Input() localImages: ModelFileUplod;
   @Input() myFile: TempFile;
   user: User;
   @Input() single: boolean;
@@ -30,20 +28,20 @@ export class LoadImagesComponent implements OnInit {
   hasOneSelected: boolean;
   selectedImge: string;
   file64: any[] = [];
-
+  constructor(private exceptionService: ExceptionService) {}
   ngOnInit() {
     if (!this.localImages) {
-      this.localImages = new ModelImgeUplod();
+      this.localImages = new ModelFileUplod();
     }
 
     this.user = LoginService.getUser();
-    this.localImages.images = [];
+    this.localImages.files = [];
     this.selectedImge = null;
   }
 
   getFiles(): FileLikeObject[] {
     let cont = 0;
-    this.localImages.images = [];
+    this.localImages.files = [];
 
     return this.uploader.queue.map((fileItem, i) => {
       cont++;
@@ -51,7 +49,7 @@ export class LoadImagesComponent implements OnInit {
       const url = URL.createObjectURL(fileItem._file);
 
       const image = new TempFile(fileItem._file.name, url, fileItem._file.type);
-      this.localImages.images.push(image);
+      this.localImages.files.push(image);
       if (this.single) {
         this.localImages.formData.append(
           'files',
@@ -85,7 +83,7 @@ export class LoadImagesComponent implements OnInit {
   }
 
   onSelectImage(image: TempFile) {
-    this.localImages.images.filter((img) => {
+    this.localImages.files.filter((img) => {
       if (img.path === image.path) {
         img.checked = !img.checked;
       }
@@ -95,7 +93,7 @@ export class LoadImagesComponent implements OnInit {
   }
 
   getLimite() {
-    if (this.localImages.images.length >= 10) {
+    if (this.localImages.files.length >= 10) {
       this.exceptionService.alertDialog('Limite de 10 imagens', 'Atenção!');
       return true;
     }
@@ -111,7 +109,7 @@ export class LoadImagesComponent implements OnInit {
   }
 
   hasSelected() {
-    this.localImages.images.filter((image) => {
+    this.localImages.files.filter((image) => {
       if (image.checked) {
         this.hasOneSelected = true;
       }
@@ -131,7 +129,7 @@ export class LoadImagesComponent implements OnInit {
 
   excluir() {
     if (!this.single) {
-      const selectedImges: TempFile[] = this.localImages.images.filter(
+      const selectedImges: TempFile[] = this.localImages.files.filter(
         (image) => {
           if (image.checked) {
             return image;
@@ -140,11 +138,8 @@ export class LoadImagesComponent implements OnInit {
       );
 
       selectedImges.filter((image) => {
-        this.localImages.images.splice(
-          this.localImages.images.indexOf(image),
-          1
-        );
-        this.uploader.queue.splice(this.localImages.images.indexOf(image), 1);
+        this.localImages.files.splice(this.localImages.files.indexOf(image), 1);
+        this.uploader.queue.splice(this.localImages.files.indexOf(image), 1);
       });
     } else {
       this.myFile = null;

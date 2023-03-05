@@ -18,6 +18,7 @@ export class Caixa {
   church: Church;
   caixaCategory: CaixaCategory;
   wallet: Wallet;
+  file: string;
 
   constructor(name?: string) {
     this.date = UiService.getCurrentDate();

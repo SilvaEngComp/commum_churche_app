@@ -1,7 +1,8 @@
+import { UserCSV } from './../../models/birthdayExport';
+import { DownloadService } from './../../services/download.service';
 import { UserFilter } from 'src/app/models/userFilter';
 import { UserService } from './../../services/user.service';
-import { Component, OnInit } from '@angular/core';
-import { UserFacadeService } from 'src/app/facades/user-facade.service';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Constants } from 'src/app/models/constants';
 import { User } from 'src/app/models/User';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -14,13 +15,16 @@ import { CustomizedMonth } from 'src/app/models/customizedMonth';
   styleUrls: ['./birthdays.component.scss'],
 })
 export class BirthdaysComponent implements OnInit {
+  @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
   users: User[];
   isLoading: boolean;
   filter: UserFilter;
   currentMonth: CustomizedMonth;
+  isLoggedIn: boolean;
   constructor(
     private userSerice: UserService,
-    private exceptionService: ExceptionService
+    private exceptionService: ExceptionService,
+    private downloadService: DownloadService
   ) {}
 
   ngOnInit() {
@@ -28,6 +32,7 @@ export class BirthdaysComponent implements OnInit {
     const datepipe: DatePipe = new DatePipe('en');
     this.filter.birthdayMonth = datepipe.transform(Date.now(), 'MM');
     this.currentMonth = new CustomizedMonth(Number(this.filter.birthdayMonth));
+    // this.isLoading = LoginService.isLogged();
     this.loadUsers();
   }
 
@@ -57,5 +62,24 @@ export class BirthdaysComponent implements OnInit {
       });
       this.checkImage();
     });
+  }
+
+  async sendEmail() {
+    this.exceptionService.loadingFunction('Processando Tabela Excel...');
+    this.downloadService.exportAsExcelFile(
+      UserCSV.getTable(UserCSV.getRelatorio(this.users)),
+      'Aniversariantes do mês de ' + this.currentMonth?.name,
+      2
+    );
+    this.exceptionService.openLoading('Email enviado com sucesso!');
+  }
+
+  async download() {
+    this.exceptionService.loadingFunction('Processando Tabela Excel...');
+    this.downloadService.exportAsExcelFile(
+      UserCSV.getTable(UserCSV.getRelatorio(this.users)),
+      'Aniversariantes do mês de ' + this.currentMonth?.name,
+      1
+    );
   }
 }

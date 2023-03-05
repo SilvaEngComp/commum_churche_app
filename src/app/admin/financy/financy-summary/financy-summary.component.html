@@ -3,8 +3,12 @@
   <ion-title>{{localPageTitle}}</ion-title>
 </ion-item>
 <ion-grid>
+
   <ion-row>
     <ion-col class="card-options">
+
+      <app-my-select-list [color]="'primary'" [label]="'Conta'" [listName]="'wallets'" [obj]="wallet"
+        (selectEmiter)="setWallet($event)"></app-my-select-list>
       <ion-item lines="none">
         <ion-button id="select-date" expand="block" color="primary">
           <ion-label>De {{initialDate | date: 'dd/MM/yyyy'}} até {{endDate | date: 'dd/MM/yyyy'}}</ion-label>

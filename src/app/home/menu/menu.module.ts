@@ -1,4 +1,4 @@
-import { BirthdaysComponent } from './../birthdays/birthdays.component';
+import { BirthdaysModule } from './../birthdays/birthdays.module';
 import { BrMaskerModule } from 'br-mask';
 import { MenuHomeSmallComponent } from './menu-home-small/menu-home-small.component';
 import { MenuHomeSelectComponent } from './menu-home-select/menu-home-select.component';
@@ -17,7 +17,6 @@ import { LoginModule } from '../login/admin/login-admin.module';
     MenuHomeLargeComponent,
     MenuHomeSelectComponent,
     MenuHomeSmallComponent,
-    BirthdaysComponent,
   ],
   imports: [
     CommonModule,
@@ -29,6 +28,7 @@ import { LoginModule } from '../login/admin/login-admin.module';
     LoginModule,
     HomePageRoutingModule,
     HomeUserRegisterModule,
+    BirthdaysModule,
   ],
   exports: [MenuHomeSelectComponent],
 })

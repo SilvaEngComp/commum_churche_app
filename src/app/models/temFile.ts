@@ -1,13 +1,3 @@
-export class ModelImgeUplod {
-  images: TempFile[];
-  formData: FormData;
-
-  constructor() {
-    this.images = [];
-    this.formData = new FormData();
-  }
-}
-
 export class TempFile {
   id: number;
   name: string;

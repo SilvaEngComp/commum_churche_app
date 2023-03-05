@@ -76,6 +76,7 @@ export class Constants {
 
   static MENU_BACK = '-1';
   static MENU_GENERAL_OPTION_MORE = '3';
+  static MENU_GENERAL_OPTION_USER = '1';
 
   static PAGE_CONTROLL_FINANCY_ADMIN = 'financy-subpage';
 
@@ -90,6 +91,9 @@ export class Constants {
   static TITHE_MAINTAINCE = 'titheMaintaince';
   static CAIXA_MAINTAINCE = 'caixatitheMaintaince';
   static USER_MAINTAINCE = 'userMaintaince';
+  static CAIXA_WALLET = 'caixaWallet';
+  static WALLET_FLUX_ID = 1;
+  static WALLET_PROVISIONED_ID = 2;
   static MENU_USER_OPTION_PROFILE = '0';
   static MENU_USER_OPTION_MEMBERS = '1';
   static HAS_BACK_PAGE = 'hasBackPage';

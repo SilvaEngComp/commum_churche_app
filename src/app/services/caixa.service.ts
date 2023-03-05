@@ -60,7 +60,7 @@ export class CaixaService extends ServiceInterface {
       .toPromise();
   }
 
-  async story(caixa: Caixa): Promise<Responser> {
+  async store(caixa: Caixa): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
@@ -74,6 +74,23 @@ export class CaixaService extends ServiceInterface {
       .post<Responser>(`${environment.API2}/caixas`, caixa, {
         headers: LoginService.getHeaders(),
       })
+      .toPromise();
+  }
+
+  async fileUpload(formData: FormData, caixa: Caixa): Promise<Responser> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+    console.log(caixa);
+    return this.http
+      .post<Responser>(
+        `${environment.API2}/caixas/${caixa.id}/file`,
+        formData,
+        {
+          headers: await LoginService.getHeaders(true),
+        }
+      )
       .toPromise();
   }
 

@@ -28,13 +28,14 @@ export class ConstantMessages {
   static DAY_INVALID = 'Selecione um dia válido';
   static MONTH_YEAR_INVALID = 'Selecione um mês e ano válidos';
   static DATE_INVALID = 'Selecione uma data válida';
-  static CAIXA_TYPE_INVALID = 'Selecione uma subcategoria';
-  static CAIXA_GROUP_INVALID = 'Selecione uma categoria';
+  static CAIXA_SUBCATEGORY_INVALID = 'Selecione uma subcategoria';
+  static CAIXA_CATEGORY_INVALID = 'Selecione uma categoria';
   static CAIXA_CHURCH_INVALID = 'Selecione uma organização';
   static INPUT_OUTPUT_INVALID = 'Selecione se é ENTRADA ou SAÍDA';
   static TITHE_TYPE_INVALID = 'Selecione se é DÍZIMO ou OFERTA';
   static TITHE_USER_INVALID = 'Selecione um usuário';
   static CAIXA_DESCRIPTION_INVALID = 'Digite o motivo do registro de saída';
+  static CAIXA_WALLET_INVALID = 'Selecione uma carteira';
 
   static MSG_MAX_LIMIT_LETTER = 'Limite atingido';
   static WHATSAPP_INVITE_SHARE = `Olá! Que a paz do Senhor esteja com você! Clica ai no link e vem conhecer nosso App...
@@ -49,4 +50,5 @@ export class ConstantMessages {
   static TITILE_INVALID = 'Por favor, Insira um título válido';
   static CHURCH_SCHEDULE_INVALID_CHURCH =
     'Por favor, Selecione uma organização';
+  static FILE_LIMIT = 'Limitado a 1 (um) arquivo';
 }

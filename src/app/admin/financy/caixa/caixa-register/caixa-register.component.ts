@@ -1,9 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 import { WalletService } from './../../../../services/wallet.service';
 import { CaixaCategory } from '../../../../models/caixaCategory';
 import { Church } from 'src/app/models/church';
 import { ConstantMessages } from 'src/app/models/messages';
 import { CaixaSubcategory } from '../../../../models/caixaSubcategory';
-import { CaixaSubcategoryService } from '../../../../services/caixa-subcategory.service';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlertController, Platform } from '@ionic/angular';
@@ -13,10 +13,10 @@ import { CaixaService } from 'src/app/services/caixa.service';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
 import { Constants } from 'src/app/models/constants';
-import { ChurchService } from 'src/app/services/church.service';
-import { User } from 'src/app/models/User';
 import { Wallet } from 'src/app/models/wallet';
-
+import { FileUploader, FileLikeObject } from 'ng2-file-upload';
+import { ModelFileUplod } from 'src/app/models/modelFileUpload';
+import { TempFile } from 'src/app/models/temFile';
 @Component({
   selector: 'app-caixa-register',
   templateUrl: './caixa-register.component.html',
@@ -26,7 +26,7 @@ export class CaixaRegisterComponent implements OnInit {
   @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
   @Input() caixa: Caixa;
   @Input() isNew: boolean;
-
+  public uploader: FileUploader = new FileUploader({});
   monthYear: string;
   months: CustomizedMonth[];
   isSmallDevice: boolean;
@@ -44,7 +44,11 @@ export class CaixaRegisterComponent implements OnInit {
   showDescription: boolean;
   buttonColor: string;
   height: string;
-  wallets: Wallet[];
+  wallet: Wallet;
+
+  localFiles: ModelFileUplod;
+  singleFile: boolean;
+  selectedFile: string;
   constructor(
     private caixaService: CaixaService,
     private exceptionService: ExceptionService,
@@ -56,7 +60,9 @@ export class CaixaRegisterComponent implements OnInit {
   ngOnInit() {
     this.height = Math.round(this.platform.height() * 0.7) + 'px';
     this.caixa = UiService.localGet(Constants.CAIXA_MAINTAINCE);
-
+    this.wallet = UiService.localGet(Constants.CAIXA_WALLET);
+    this.singleFile = true;
+    this.localFiles = new ModelFileUplod();
     if (!this.caixa) {
       this.caixa = new Caixa();
       this.value = '0,0';
@@ -78,12 +84,6 @@ export class CaixaRegisterComponent implements OnInit {
     this.isSmallDevice = this.platform.width() <= 500;
     this.datePipe = new DatePipe('en');
     this.caixa.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
-  }
-
-  load() {
-    this.walletService.get().then((responser) => {
-      this.wallets = responser.data;
-    });
   }
 
   setShowDescription() {
@@ -132,25 +132,42 @@ export class CaixaRegisterComponent implements OnInit {
   async register(amount: any) {
     this.caixa.amount = UiService.convertToNumber(amount);
     if (this.isFormValid()) {
-      const tipo = this.caixa?.isEntry ? 'Entrada' : 'Saída';
-
       if (!this.isNew) {
         this.caixaService.update(this.caixa).then(() => {
-          this.exceptionService.toastHandler(
-            `${tipo} alterada com Successo!`,
-            5000
-          );
-          this.askNeedDoAgain();
+          this.fileRegister();
         });
       } else {
-        this.caixaService.story(this.caixa).then(() => {
+        this.caixaService.store(this.caixa).then((responser) => {
+          this.caixa = responser.data;
+
+          this.fileRegister();
+          this.askNeedDoAgain();
+        });
+      }
+    }
+  }
+
+  fileRegister() {
+    const tipo = this.caixa?.isEntry ? 'Entrada' : 'Saída';
+
+    if (this?.localFiles?.files?.length > 0) {
+      this.caixaService
+        .fileUpload(this.localFiles.formData, this.caixa)
+        .then((responser) => {
           this.exceptionService.toastHandler(
             `${tipo} registrada com Successo!`,
             5000
           );
-          this.askNeedDoAgain();
+        })
+        .catch((error) => {
+          this.exceptionService.error(error);
         });
-      }
+    } else {
+      this.exceptionService.toastHandler(
+        `${tipo} registrada com Successo!`,
+        5000
+      );
+      this.askNeedDoAgain();
     }
   }
 
@@ -160,11 +177,13 @@ export class CaixaRegisterComponent implements OnInit {
 
   isFormValid() {
     if (!this.caixa?.caixaCategory?.id) {
-      this.exceptionService.alertDialog(ConstantMessages.CAIXA_GROUP_INVALID);
+      this.exceptionService.alertDialog(
+        ConstantMessages.CAIXA_CATEGORY_INVALID
+      );
       return;
     }
-    if (!this.caixa?.caixaSubcategory?.id) {
-      this.exceptionService.alertDialog(ConstantMessages.CAIXA_TYPE_INVALID);
+    if (!this.caixa?.wallet?.id) {
+      this.exceptionService.alertDialog(ConstantMessages.CAIXA_WALLET_INVALID);
       return;
     }
 
@@ -226,15 +245,75 @@ export class CaixaRegisterComponent implements OnInit {
     }
   }
 
-  setUser(user: User) {
-    if (user) {
-      this.caixa.register = user;
+  setWallet(wallet: Wallet) {
+    if (wallet) {
+      this.caixa.wallet = wallet;
     } else {
-      this.caixa.register = null;
+      this.caixa.wallet = null;
     }
   }
 
   onWindowScroll(ev: any) {
     UiService.scrollVerseRead.emit({ status: true });
+  }
+
+  getFiles(): FileLikeObject[] {
+    let cont = 0;
+    this.localFiles = new ModelFileUplod();
+
+    return this.uploader.queue.map((fileItem, i) => {
+      cont++;
+
+      const url = URL.createObjectURL(fileItem._file);
+
+      const image = new TempFile(fileItem._file.name, url, fileItem._file.type);
+      this.localFiles.files.push(image);
+      if (this.singleFile) {
+        this.localFiles.formData.append(
+          'files',
+          fileItem._file,
+          fileItem._file.name
+        );
+        this.selectedFile = url;
+      } else {
+        this.localFiles.formData.append(
+          'files[]',
+          fileItem._file,
+          fileItem._file.name
+        );
+      }
+
+      return fileItem.file;
+    });
+  }
+
+  convertBlobToBase64 = (blob: Blob) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(blob);
+    });
+
+  onSelectFile() {
+    this.getFiles();
+  }
+
+  getLimite() {
+    if (this.localFiles.files.length >= 10) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.FILE_LIMIT,
+        'Atenção!'
+      );
+      return true;
+    }
+
+    return false;
+  }
+
+  excluir() {
+    this.localFiles = new ModelFileUplod();
   }
 }

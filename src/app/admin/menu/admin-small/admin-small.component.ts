@@ -24,6 +24,7 @@ import { FeedService } from 'src/app/services/feed.service';
 import { PushNotify } from 'src/app/models/pushNotification';
 import { LoginService } from 'src/app/services/login.service';
 import { Constants } from 'src/app/models/constants';
+import { Share } from '@capacitor/share';
 @Component({
   selector: 'app-admin-small',
   templateUrl: './admin-small.component.html',
@@ -59,6 +60,15 @@ export class AdminSmallComponent implements OnInit {
 
     UiService.returnColorMaker.subscribe((data) => {
       this.setShowColorMark(false);
+    });
+  }
+  async share() {
+    await Share.share({
+      title: 'App Igreja Batista Nova Betel',
+      text: `Venha conhecer nosso APP...
+"Discipulado, um estilo de vida!"`,
+      url: environment.BASE_URL,
+      dialogTitle: 'Igreja Batista Nova Betel',
     });
   }
 

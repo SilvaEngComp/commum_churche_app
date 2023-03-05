@@ -1,3 +1,4 @@
+import { UiModule } from './../../ui/ui.module';
 import { ExpenseComponent } from './financy-summary/expense/expense.component';
 import { BalanceComponent } from './financy-summary/balance/balance.component';
 import { MenuCaixaSummaryComponent } from './financy-summary/menu-caixa-summary/menu-caixa-summary.component';
@@ -39,6 +40,7 @@ import { TitheSummaryComponent } from './financy-summary/tithe-summary/tithe-sum
     TitheModule,
     CaixaModule,
     ChurchModule,
+    UiModule,
   ],
   exports: [FinancyAdminComponent, TitheComponent, TitheRegisterComponent],
   providers: [],

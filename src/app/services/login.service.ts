@@ -33,6 +33,9 @@ export class LoginService {
   public static getUser(): User {
     return LoginService.getToken().user;
   }
+  public static isLogged(): boolean {
+    return LoginService.getToken()?.user ? true : false;
+  }
   public static updateUserToken(user: User, reload: boolean = false) {
     const token = LoginService.getToken();
     token.user = user;

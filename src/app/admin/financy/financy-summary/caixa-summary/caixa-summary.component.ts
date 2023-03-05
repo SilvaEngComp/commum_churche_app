@@ -1,3 +1,4 @@
+import { DownloadService } from './../../../../services/download.service';
 import { MenuCaixaSummaryComponent } from './../menu-caixa-summary/menu-caixa-summary.component';
 import { PopoverController } from '@ionic/angular';
 import { Constants } from 'src/app/models/constants';
@@ -6,7 +7,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Caixa } from 'src/app/models/caixa';
 import { CaixaSummary } from 'src/app/models/caixaSummary';
 import { UiService } from 'src/app/services/ui.service';
-
+import { FileUploader, FileLikeObject } from 'ng2-file-upload';
 @Component({
   selector: 'app-caixa-summary',
   templateUrl: './caixa-summary.component.html',
@@ -16,19 +17,19 @@ export class CaixaSummaryComponent implements OnInit {
   @Output() mantainceEmiter: EventEmitter<any> = new EventEmitter<any>();
   @Input() caixaSummary: CaixaSummary;
   @Input() isEntry: boolean;
+  public uploader: FileUploader = new FileUploader({});
   headCaixaList: string[] = [
     'Tipo',
     'Valor',
     'Data',
     'Tesoureiro',
     'Organização',
-    'Motivo',
-    '',
   ];
   total: number;
   constructor(
     private caixaFacade: CaixaFacadeService,
-    private popCtrl: PopoverController
+    private popCtrl: PopoverController,
+    private downloadService: DownloadService
   ) {}
 
   ngOnInit() {
@@ -36,10 +37,27 @@ export class CaixaSummaryComponent implements OnInit {
       console.log('emiting request to reload');
       this.mantainceEmiter.emit();
     });
+    let flagDescription = false;
+    let flagFile = false;
     this.total = 0;
     this.caixaSummary?.caixas?.filter((caixaSummary) => {
       this.total += caixaSummary?.amount;
+      if (caixaSummary?.description?.length > 0) {
+        flagDescription = true;
+      }
+      if (caixaSummary?.file?.length > 0) {
+        flagFile = true;
+      }
     });
+
+    if (flagDescription) {
+      this.headCaixaList.push('Descrição');
+    }
+    if (flagFile) {
+      this.headCaixaList.push('Comprovante');
+    }
+
+    this.headCaixaList.push('');
   }
 
   setShowSummaryDetail(caixa: CaixaSummary) {
@@ -78,5 +96,9 @@ export class CaixaSummaryComponent implements OnInit {
     } else if (data?.option === Constants.OPTION_DELETE) {
       this.delete(caixa);
     }
+  }
+
+  download(caixa: Caixa) {
+    this.downloadService.downloadPDF(caixa);
   }
 }

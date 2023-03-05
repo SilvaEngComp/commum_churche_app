@@ -3,6 +3,7 @@ import { UiService } from 'src/app/services/ui.service';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { DatePipe } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   OnInit,
@@ -21,13 +22,14 @@ import { FilterCaixaComponent } from '../caixa/filter-caixa/filter-caixa.compone
 import { TitheSummary } from 'src/app/models/tithesummary';
 import { CaixaSummary } from 'src/app/models/caixaSummary';
 import { Tithe } from 'src/app/models/tithe';
+import { Wallet } from 'src/app/models/wallet';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './financy-summary.component.html',
   styleUrls: ['./financy-summary.component.scss'],
 })
-export class FinancySummaryComponent implements OnInit {
+export class FinancySummaryComponent implements OnInit, AfterViewInit {
   @Output()
   sessionPage: EventEmitter<string> = new EventEmitter<string>();
 
@@ -51,12 +53,18 @@ export class FinancySummaryComponent implements OnInit {
 
   localPageTitle: string;
   balance: number;
+  wallet: Wallet;
   constructor(
     private financyService: FinancyService,
     private caixaFacade: CaixaFacadeService,
     private modalController: ModalController,
     private exeptionService: ExceptionService
   ) {}
+  ngAfterViewInit(): void {
+    this.wallet = new Wallet();
+    this.wallet.id = Constants.WALLET_FLUX_ID;
+    UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
+  }
 
   ngOnInit() {
     this.localPageTitle = Constants.TITLE_SUMMARY_FINANCY_SUB;
@@ -70,6 +78,7 @@ export class FinancySummaryComponent implements OnInit {
 
     this.filter.dateI = this.initialDate;
     this.filter.dateF = this.endDate;
+    this.filter.wallet_id = Constants.WALLET_FLUX_ID;
 
     this.load();
   }
@@ -87,7 +96,7 @@ export class FinancySummaryComponent implements OnInit {
   }
 
   async load() {
-    if (!this.filter?.dateI || !this.filter?.dateF) {
+    if (!this.filter?.dateI || !this.filter?.dateF || !this.filter.wallet_id) {
       this.exeptionService.alertDialog(
         'Selecione a data de inicio e fim da consulta',
         'Alerta'
@@ -185,5 +194,17 @@ export class FinancySummaryComponent implements OnInit {
 
   back() {
     this.sessionPage.emit(Constants.MENU_BACK);
+  }
+
+  setWallet(wallet: Wallet) {
+    if (wallet) {
+      this.wallet = wallet;
+      this.filter.wallet_id = this.wallet.id;
+      this.load();
+      UiService.localSet(Constants.CAIXA_WALLET, this.wallet);
+    } else {
+      this.wallet = null;
+      UiService.localRemove(Constants.CAIXA_WALLET);
+    }
   }
 }

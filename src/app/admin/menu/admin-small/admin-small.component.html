@@ -22,7 +22,7 @@
 
 
 
-  <ion-tab-button tab="more" (click)="setPage(3)" class="admin">
+  <ion-tab-button tab="more" (click)="setPage(3)" class="admin" *noPermission="'member'">
     <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/white-logo.png"></ion-img>
     <ion-label class="label-img-icon">Admin</ion-label>
   </ion-tab-button>
@@ -31,6 +31,11 @@
     <ion-icon name="person-sharp"></ion-icon>
     <ion-label>Perfil</ion-label>
   </ion-tab-button>
+  <ion-tab-button tab="more" (click)="share()">
+    <ion-icon name="gift-outline"></ion-icon>
+    <ion-label>Convidar</ion-label>
+  </ion-tab-button>
+
   <ion-tab-button tab="more" (click)="setPage(-2)">
     <ion-icon name="power-sharp"></ion-icon>
     <ion-label>Sair</ion-label>

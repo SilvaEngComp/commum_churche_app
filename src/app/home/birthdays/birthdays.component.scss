@@ -9,3 +9,11 @@ ion-card {
   width: 200px;
   height: 340px;
 }
+
+.month {
+  ion-label {
+    font-family: Qilgabe;
+    font-size: 20pt;
+    color: var(--ion-color-primary);
+  }
+}

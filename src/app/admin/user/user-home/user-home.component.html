@@ -1,0 +1,24 @@
+<ion-item color="secondary" class="item-choose-label">
+  <ion-icon name="information-circle-outline"></ion-icon>
+  <ion-label>Escolha o que deseja acessar</ion-label>
+</ion-item>
+<ion-grid>
+  <ion-row>
+    <ion-col class="card-options">
+      <ion-item (click)="selectOption('2')" lines="none">
+        <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/member-admin.png"></ion-img>
+      </ion-item>
+    </ion-col>
+    <ion-col class="card-options">
+      <ion-item (click)="selectOption('4')" lines="none">
+        <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/birthday-admin.png"></ion-img>
+      </ion-item>
+    </ion-col>
+
+    <ion-col class="card-options">
+      <ion-item (click)="selectOption('3')" lines="none">
+        <ion-img alt="Cadastro" src="./assets/images/register-admin.png"></ion-img>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -110,7 +110,6 @@ export class UiService {
       return true;
     }
 
-    console.log(permission);
     return user.roles.includes(permission);
   }
   // }

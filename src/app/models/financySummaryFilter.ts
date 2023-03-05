@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { User } from './User';
+import { Wallet } from './wallet';
 
 export class FinancySummaryFilter {
   amount: number;
@@ -8,6 +10,7 @@ export class FinancySummaryFilter {
   user: User;
   dateI: string;
   dateF: string;
+  wallet_id: number;
 
   constructor() {}
   static getRequest(filter: FinancySummaryFilter): string {
@@ -53,6 +56,12 @@ export class FinancySummaryFilter {
         request += '&';
       }
       request += 'dateF=' + filter.dateF;
+    }
+    if (filter.wallet_id) {
+      if (request.length > 0) {
+        request += '&';
+      }
+      request += 'wallet_id=' + filter.wallet_id;
     }
 
     return request;

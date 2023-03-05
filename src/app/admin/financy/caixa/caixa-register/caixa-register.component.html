@@ -58,8 +58,8 @@
       <ion-row>
         <ion-col>
           <div class="flex-container-row">
-            <ion-icon name="list-outline" class="icon-format"></ion-icon>
-            <app-my-select-list [label]="'Categoria'" [listName]="'groups'" [create]="true"
+            <ion-icon name="menu-outline" class="icon-format"></ion-icon>
+            <app-my-select-list [label]="'*Categoria'" [listName]="'groups'" [create]="true"
               (selectEmiter)="setGroup($event)"></app-my-select-list>
           </div>
         </ion-col>
@@ -77,24 +77,31 @@
         <ion-col>
           <div class="flex-container-row">
             <ion-icon name="storefront-outline" class="icon-format"></ion-icon>
-            <app-my-select-list [label]="'Organização'" [listName]="'churches'" [create]="true"
+            <app-my-select-list [label]="'*Organização'" [listName]="'churches'" [create]="true"
               (selectEmiter)="setChurch($event)"></app-my-select-list>
           </div>
         </ion-col>
       </ion-row>
-      <!--
+
       <ion-row>
         <ion-col>
-
-          <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-            <ion-label>Carteira </ion-label>
-            <ion-select [value]="caixa.wallet.id" interface="popover" (ionChange)="setMaritalStatus($event)">
-              <ion-select-option [value]="item?.id" *ngFor="let item of wallets">{{item?.name | uppercase}}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
+          <div class="flex-container-row">
+            <ion-icon name="wallet-outline" class="icon-format"></ion-icon>
+            <app-my-select-list [label]="'*Conta'" [listName]="'wallets'" [obj]="wallet"
+              (selectEmiter)="setWallet($event)"></app-my-select-list>
+          </div>
         </ion-col>
-      </ion-row> -->
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div class="flex-container-row">
+            <ion-icon name="document-attach-outline" class="icon-format"></ion-icon>
+
+            <input type='file' ng2FileSelect [uploader]="uploader" (onFileSelected)="onSelectFile()" />
+          </div>
+        </ion-col>
+      </ion-row>
+
 
 
 

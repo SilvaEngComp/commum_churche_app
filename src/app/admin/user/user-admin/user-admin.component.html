@@ -1,5 +1,7 @@
 <div [ngSwitch]="subpage">
-  <app-user-register *ngSwitchCase="'2'" (sessionPage)="onReceiveSession($event)"></app-user-register>
-  <app-user *ngSwitchCase="'1'" (sessionPage)="onReceiveSession($event)"></app-user>
+  <app-user-register *ngSwitchCase="'3'" (sessionPage)="onReceiveSession($event)"></app-user-register>
+  <app-user *ngSwitchCase="'2'" (sessionPage)="onReceiveSession($event)"></app-user>
+  <app-user-home *ngSwitchCase="'1'" (returnPage)="onReceiveSession($event)"></app-user-home>
   <app-profile *ngSwitchCase="'0'" (returnPage)="onReceiveSession($event)"></app-profile>
+  <app-birthdays *ngSwitchCase="'4'" (returnPage)="onReceiveSession($event)"></app-birthdays>
 </div>

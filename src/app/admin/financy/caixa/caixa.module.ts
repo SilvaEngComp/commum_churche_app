@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { BrMaskerModule } from 'br-mask';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     ReactiveFormsModule,
     PipesModule,
     UiModule,
+    FileUploadModule,
   ],
   exports: [CaixaRegisterComponent],
 })

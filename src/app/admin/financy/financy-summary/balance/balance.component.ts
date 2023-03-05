@@ -1,3 +1,4 @@
+import { Wallet } from './../../../../models/wallet';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IonPopover } from '@ionic/angular';
@@ -28,6 +29,7 @@ export class BalanceComponent implements OnInit {
   initialDate: string;
   endDate: string;
   localPageTitle: string;
+  wallet: Wallet;
   constructor(
     private financyService: FinancyService,
     private exeptionService: ExceptionService
@@ -39,7 +41,6 @@ export class BalanceComponent implements OnInit {
       Constants.TITLE_SUMMARY_BALANCE
     );
     this.localPageTitle = Constants.TITLE_SUMMARY_BALANCE;
-    UiService.pageTitle.emit(Constants.MENU_FINANCY_OPTION_EXPENSE);
     this.filter = new FinancySummaryFilter();
     const datePipe = new DatePipe('en');
     const date = new Date();
@@ -47,9 +48,15 @@ export class BalanceComponent implements OnInit {
     const ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     this.initialDate = datePipe.transform(primeiroDia, 'YYYY-MM-dd');
     this.endDate = datePipe.transform(ultimoDia, 'YYYY-MM-dd');
+    this.wallet = UiService.localGet(Constants.CAIXA_WALLET);
 
     this.filter.dateI = this.initialDate;
     this.filter.dateF = this.endDate;
+    if (this?.wallet) {
+      this.filter.wallet_id = this?.wallet?.id;
+    } else {
+      this.filter.wallet_id = Constants.WALLET_FLUX_ID;
+    }
     this.load();
   }
 

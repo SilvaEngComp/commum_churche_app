@@ -1,3 +1,5 @@
+import { BirthdaysModule } from './../../home/birthdays/birthdays.module';
+import { UserHomeComponent } from './user-home/user-home.component';
 import { ResourcesModule } from './../../resources/resources.module';
 import { LoadImagesComponent } from './../../resources/load-images/load-images.component';
 /* eslint-disable max-len */
@@ -34,6 +36,7 @@ import { EmergencyUserRegisterComponent } from './user-register/emergency-user-r
     UserSearchModule,
     HomeUserRegisterModule,
     ResourcesModule,
+    BirthdaysModule,
   ],
   declarations: [
     UserPage,
@@ -42,9 +45,11 @@ import { EmergencyUserRegisterComponent } from './user-register/emergency-user-r
     ProfileComponent,
     FilterComponent,
     EmergencyUserRegisterComponent,
+    UserHomeComponent,
   ],
   exports: [
     UserAdminComponent,
+    UserHomeComponent,
     UserPage,
     UserRegisterComponent,
     ProfileComponent,

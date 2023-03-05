@@ -36,9 +36,10 @@ export class UserAdminComponent implements OnInit {
 
   onReceiveSession(subpage: string) {
     if (subpage === '-1') {
-      this.sessionPage.emit(Constants.MENU_GENERAL_OPTION_MORE);
+      this.subpage = Constants.MENU_GENERAL_OPTION_USER;
+    } else {
+      this.subpage = subpage;
     }
-    this.subpage = subpage;
     this.save();
   }
 }

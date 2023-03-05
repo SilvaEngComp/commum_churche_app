@@ -1,3 +1,4 @@
+import { WalletService } from './../../services/wallet.service';
 import { ChurchScheduleTypeService } from 'src/app/services/church-schedule-type.service';
 import { ChurchScheduleFilter } from './../../models/churchScheduleFilter';
 import { UiService } from './../../services/ui.service';
@@ -32,6 +33,7 @@ export class MySelectListComponent implements OnInit {
   @Input() listName?: any;
   @Input() isRequired?: boolean;
   @Input() obj?: any;
+  @Input() color?: string;
   showSelect?: boolean;
   isLoading: boolean;
   limit: number;
@@ -50,7 +52,8 @@ export class MySelectListComponent implements OnInit {
     private caixaSubcategoryService: CaixaSubcategoryService,
     private churchService: ChurchService,
     private churchScheduleTypeService: ChurchScheduleTypeService,
-    private popCtrl: PopoverController
+    private popCtrl: PopoverController,
+    private walletService: WalletService
   ) {}
 
   ngOnInit() {
@@ -59,13 +62,11 @@ export class MySelectListComponent implements OnInit {
     this.load();
 
     UiService.mySelectEmitter.subscribe((data) => {
-      console.log(data);
       if (data?.obj) {
         this.obj = data?.obj;
       }
       console.log(`${data?.listName} === ${this.listName}`);
       if (data?.listName === this.listName) {
-        console.log(this.obj);
         this.load(this.obj);
       }
     });
@@ -107,6 +108,10 @@ export class MySelectListComponent implements OnInit {
       // this.apiResponse = UiService.localGet('localGroups');
       const responser = await this.caixaSubcategoryService.get();
       this.apiResponse = responser.data;
+    } else if (this.listName === 'wallets') {
+      // this.apiResponse = UiService.localGet('localGroups');
+      const responser = await this.walletService.get();
+      this.apiResponse = responser.data;
     } else if (this.listName === 'churches') {
       // this.apiResponse = UiService.localGet('localGroups');
       const responser = await this.churchService.get();
@@ -114,7 +119,6 @@ export class MySelectListComponent implements OnInit {
     } else if (this.listName === 'churchScheduleTypes') {
       const filter: ChurchScheduleFilter = new ChurchScheduleFilter();
       if (obj) {
-        console.log(obj);
         filter.church = obj.church;
       }
       const responser = await this.churchScheduleTypeService.get(filter);
@@ -130,6 +134,14 @@ export class MySelectListComponent implements OnInit {
       this.limit = this.apiResponse.length;
     } else {
       this.limit = 10;
+    }
+
+    if (obj) {
+      this.apiResponseAdapted.filter((selection) => {
+        if (obj.id === selection.cod) {
+          this.selected = selection.value;
+        }
+      });
     }
 
     if (isReload) {
