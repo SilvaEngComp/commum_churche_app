@@ -11,7 +11,7 @@ import { TitheSummary } from 'src/app/models/tithesummary';
 export class TitheSummaryComponent implements OnInit {
   @Input() titheSummary: TitheSummary;
   @Input() isTithe: boolean;
-  headTitheList: string[] = ['valor', 'data', 'Registrado por', 'Período'];
+  headTitheList: string[] = ['valor', 'data', 'Registrado por'];
   constructor() {}
 
   ngOnInit() {
@@ -20,11 +20,6 @@ export class TitheSummaryComponent implements OnInit {
     } else {
       this.headTitheList.push('Ofertante');
     }
-    this.titheSummary?.tithes?.filter((tithe) => {
-      tithe.customizedMonth = new CustomizedMonth(
-        Number(tithe?.customizedMonth?.id)
-      );
-    });
   }
 
   setShowSummaryDetail() {

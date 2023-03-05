@@ -42,6 +42,7 @@ export class ConstantMessages {
 
   static GENERIC_NAME_INVALID = 'Insira um nome válido';
   static USER_INVALID = 'Selecione um usuário';
+  static MEMBER_INVALID = 'Selecione um Membro';
   static USER_ALREADY_EXISTS =
     'Usuário já está cadastrado e será selecionado automaticamente na lista ao fechar essa mensagem';
 

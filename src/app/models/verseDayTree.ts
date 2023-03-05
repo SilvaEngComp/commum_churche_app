@@ -1,6 +1,7 @@
+import { Book } from './book';
 import { Chapter } from './chapter';
 export class VerseDayTree {
-  book: number;
+  book: Book;
   chapters: Chapter[];
   constructor() {}
 }

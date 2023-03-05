@@ -1,3 +1,4 @@
+import { WalletService } from './../../../../services/wallet.service';
 import { CaixaCategory } from '../../../../models/caixaCategory';
 import { Church } from 'src/app/models/church';
 import { ConstantMessages } from 'src/app/models/messages';
@@ -14,6 +15,7 @@ import { UiService } from 'src/app/services/ui.service';
 import { Constants } from 'src/app/models/constants';
 import { ChurchService } from 'src/app/services/church.service';
 import { User } from 'src/app/models/User';
+import { Wallet } from 'src/app/models/wallet';
 
 @Component({
   selector: 'app-caixa-register',
@@ -42,13 +44,13 @@ export class CaixaRegisterComponent implements OnInit {
   showDescription: boolean;
   buttonColor: string;
   height: string;
+  wallets: Wallet[];
   constructor(
     private caixaService: CaixaService,
-    private caixaSubcategoryService: CaixaSubcategoryService,
     private exceptionService: ExceptionService,
     private platform: Platform,
-    private actionCtrl: AlertController,
-    private churchService: ChurchService
+    private walletService: WalletService,
+    private actionCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -76,15 +78,12 @@ export class CaixaRegisterComponent implements OnInit {
     this.isSmallDevice = this.platform.width() <= 500;
     this.datePipe = new DatePipe('en');
     this.caixa.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
-    this.load();
   }
 
-  async load() {
-    const inputMethodResponser = await this.caixaSubcategoryService.get();
-    this.caixaSubcategorys = inputMethodResponser.data;
-
-    const churchResponser = await this.churchService.get();
-    this.churches = churchResponser.data;
+  load() {
+    this.walletService.get().then((responser) => {
+      this.wallets = responser.data;
+    });
   }
 
   setShowDescription() {
@@ -129,8 +128,6 @@ export class CaixaRegisterComponent implements OnInit {
     });
 
     await action.present();
-
-    const result = await action.onDidDismiss();
   }
   async register(amount: any) {
     this.caixa.amount = UiService.convertToNumber(amount);

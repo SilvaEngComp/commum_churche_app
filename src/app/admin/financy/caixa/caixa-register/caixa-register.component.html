@@ -83,12 +83,18 @@
         </ion-col>
       </ion-row>
       <!--
-  <ion-row>
-    <ion-col>
-      <app-my-select-list [label]="'Usuario'" [listName]="'users'" [create]="true"
-        (selectEmiter)="setUser($event)"></app-my-select-list>
-    </ion-col>
-  </ion-row> -->
+      <ion-row>
+        <ion-col>
+
+          <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+            <ion-label>Carteira </ion-label>
+            <ion-select [value]="caixa.wallet.id" interface="popover" (ionChange)="setMaritalStatus($event)">
+              <ion-select-option [value]="item?.id" *ngFor="let item of wallets">{{item?.name | uppercase}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row> -->
 
 
 

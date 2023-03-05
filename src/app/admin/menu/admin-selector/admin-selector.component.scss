@@ -5,8 +5,10 @@
     background-size: 100% 100%;
     width: 100%;
     height: 100px;
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
 
     .left {
       position: absolute;
@@ -15,11 +17,13 @@
       border: 2px solid var(--ion-color-light);
     }
 
-    ion-title {
-      margin-bottom: 30px;
+    ion-label {
       color: var(--ion-color-light);
       font-family: Qanelas-bold;
       text-align: center;
+      font-size: 12pt;
+      word-wrap: break-word;
+      margin-top: 5%;
     }
     .right {
       position: absolute;
@@ -40,12 +44,12 @@
     background-image: url(".../../../../../../assets/images/header.png");
     background-position: 0;
     background-size: 100% 100%;
-    width: 98%;
+    width: 100%;
     height: 100px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     align-content: center;
-    flex-direction: column;
     .left {
       position: absolute;
       left: 5%;
@@ -54,10 +58,12 @@
     }
 
     ion-label {
-      margin-top: 30px;
       color: var(--ion-color-light);
       font-family: Qanelas-bold;
       text-align: center;
+      font-size: 12pt;
+      word-wrap: break-word;
+      margin-top: 5%;
     }
     .right {
       position: absolute;

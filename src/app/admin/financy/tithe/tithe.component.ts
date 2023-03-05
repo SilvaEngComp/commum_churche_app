@@ -62,10 +62,7 @@ export class TitheComponent implements OnInit {
 
     this.titheFacade.dataLoaded.subscribe((data) => {
       this.isLoading = false;
-      this.tithes = data.filter((tithe: Tithe) => {
-        tithe.customizedMonth = new CustomizedMonth(tithe?.customizedMonth?.id);
-        return tithe;
-      });
+
       console.log(this.tithes);
       UiService.localSet('upperTitheLimit', 10);
       UiService.localSet('inferiorTitheLimit', 0);

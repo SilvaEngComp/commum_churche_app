@@ -5,15 +5,12 @@ export class Tithe {
   id: number;
   amount: number;
   isTithe: boolean;
-  month: string;
-  year: string;
-  customizedMonth: CustomizedMonth;
+  date: string;
   showDetails: boolean;
   created_at: string;
   user: User;
   register: User;
   constructor() {
-    this.customizedMonth = new CustomizedMonth();
     this.isTithe = true;
   }
 }

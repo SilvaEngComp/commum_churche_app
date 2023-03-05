@@ -9,7 +9,7 @@ export const environment = {
   API2: 'http://127.0.0.1:8000/api/v2',
   API3: 'http://127.0.0.1:8000/api/v3',
   IMAGE_URL: 'http://127.0.0.1:8000/storage/',
-  TEST: true,
+  TEST: false,
 
   // API: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
   // API2: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',

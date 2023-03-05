@@ -48,6 +48,7 @@ export class BibleVersesComponent implements OnInit {
   selectedProgram: number;
   versesToRead: string;
   DOUBLE_CLICK_THRESHOLD = 200;
+  is_loading: boolean;
   constructor(
     private bibleProgramService: BibleProgramService,
     private bibleProgramUserService: BibleProgramUserService,
@@ -85,12 +86,15 @@ export class BibleVersesComponent implements OnInit {
   }
 
   getTexToRead() {
-    this.localPageTitle = `${this.verseDay?.startVerse?.book}
-    ${this.verseDay?.startVerse?.chapter}:${this.verseDay?.startVerse?.verse} Até ${this.verseDay?.endVerse?.book}
+    this.localPageTitle = `${this.verseDay?.startVerse?.book?.abbrev}
+    ${this.verseDay?.startVerse?.chapter}:${this.verseDay?.startVerse?.verse} Até ${this.verseDay?.endVerse?.book?.abbrev}
     ${this.verseDay?.endVerse?.chapter}:${this.verseDay?.endVerse?.verse}`;
 
     if (this?.verseDay?.month >= 0) {
-      this.customizedMonth = new CustomizedMonth(this?.verseDay?.month, false);
+      this.customizedMonth = new CustomizedMonth(
+        this?.verseDay?.month - 1,
+        false
+      );
     }
     this.versesToRead = `Dia ${this.verseDay?.day} de
     ${this.customizedMonth?.name}`;
@@ -151,11 +155,15 @@ export class BibleVersesComponent implements OnInit {
     this.sessionPage.emit(Constants.BIBLE_PROGRAM_MENU_READ_DAY);
   }
   async load() {
-    this.bibleProgramService.getVerse(this.verseDay?.id).then((responser) => {
-      this.verseDay = responser.data.verseDay;
-      this.verseDayTree = responser.data.tree;
-      this.getTexToRead();
-    });
+    this.is_loading = true;
+    this.bibleProgramService
+      .getVerse(this.verseDay?.id)
+      .then((responser) => {
+        this.verseDay = responser.data.verseDay;
+        this.verseDayTree = responser.data.tree;
+        this.getTexToRead();
+      })
+      .finally(() => (this.is_loading = false));
   }
 
   doRefresh(ev) {

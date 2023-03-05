@@ -51,14 +51,10 @@ export class TitheRegisterComponent implements OnInit {
       this.value = '0,0';
     }
     this.isSmallDevice = this.platform.width() <= 500;
+
+    this.isSmallDevice = this.platform.width() <= 500;
     this.datePipe = new DatePipe('en');
-    this.monthYear = this.datePipe.transform(Date.now(), 'YYYY-MM');
-    this.onSetDate(this.monthYear);
-    this.currentMonth = new CustomizedMonth(Number(this?.tithe?.month))?.name;
-    const yesterday = new Date(new Date().setMonth(new Date().getMonth() - 1));
-    this.lastMonth = new CustomizedMonth(
-      Number(this.datePipe.transform(yesterday, 'MM'))
-    )?.name;
+    this.tithe.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
 
     if (this.tithe.isTithe) {
       this.localPageTitle = Constants.TITLE_TITHE_REGISTER;
@@ -70,36 +66,20 @@ export class TitheRegisterComponent implements OnInit {
   }
 
   onSetDate(value: any, option: number = 0) {
-    let date: string;
     if (value) {
-      date = value.substring(0, 10);
+      this.tithe.date = value.substring(0, 10);
     } else {
       if (option === 1) {
-        date = this.datePipe.transform(Date.now(), 'MM-yyyy');
+        this.tithe.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
       } else {
         const yesterday = new Date(
-          new Date().setMonth(new Date().getMonth() - 1)
+          new Date().setDate(new Date().getDate() - 1)
         );
-        date = this.datePipe.transform(yesterday, 'MM-yyyy');
+        this.tithe.date = this.datePipe.transform(yesterday, 'yyyy-MM-dd');
       }
     }
-
-    const dates = date.split('-');
-    this.tithe.month = dates[1];
-    this.tithe.year = dates[0];
   }
 
-  onSelectMonth(value: any) {
-    console.log(value);
-    if (!value) {
-      value = this.monthYear;
-    }
-    const dates = value.substring(0, 7).split('-');
-    this.tithe.month = dates[1];
-    this.tithe.year = dates[0];
-    this.year = this.tithe?.year;
-    this.customizedMonth = new CustomizedMonth(Number(this.tithe?.month));
-  }
   setIsTithe(ev: any) {
     this.tithe.isTithe = ev.target.value;
   }
@@ -136,14 +116,14 @@ export class TitheRegisterComponent implements OnInit {
       return;
     }
 
-    if (!this.tithe.month || !this.tithe?.year) {
-      this.exceptionService.alertDialog(ConstantMessages.MONTH_YEAR_INVALID);
+    if (!this.tithe.date) {
+      this.exceptionService.alertDialog(ConstantMessages.DATE_INVALID);
       return;
     }
 
     if (UiService.validPermissions(Constants.FINANCIAL)) {
       if (!this.tithe?.user?.id) {
-        this.exceptionService.alertDialog(ConstantMessages.USER_INVALID);
+        this.exceptionService.alertDialog(ConstantMessages.MEMBER_INVALID);
         return;
       }
     } else {

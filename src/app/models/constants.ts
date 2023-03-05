@@ -86,6 +86,7 @@ export class Constants {
   static MENU_FINANCY_OPTION_BALANCE = '4';
   static MENU_FINANCY_OPTION_EXPENSE = '5';
 
+  static OFFER_MAINTAINCE = 'offerMaintaince';
   static TITHE_MAINTAINCE = 'titheMaintaince';
   static CAIXA_MAINTAINCE = 'caixatitheMaintaince';
   static USER_MAINTAINCE = 'userMaintaince';
