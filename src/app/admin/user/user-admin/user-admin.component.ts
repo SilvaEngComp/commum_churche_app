@@ -16,13 +16,11 @@ export class UserAdminComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    if (!this.subpage) {
-      if (UiService.localGet(this.defaultPageName)) {
-        this.subpage = UiService.localGet(this.defaultPageName);
-      }
-      if (!this.subpage) {
-        this.subpage = '0';
-      }
+    UiService.setCurrentPage(Constants.TITLE_SECRETARY);
+    this.subpage = UiService.localGet(Constants.PAGE_CONTROLL_SECRETARY_ADMIN);
+
+    if (!UiService.checkValidPage(this.subpage)) {
+      this.subpage = '1';
     }
     UiService.pageMenu.subscribe((menu) => {
       this.subpage = menu.subpage;
@@ -31,7 +29,7 @@ export class UserAdminComponent implements OnInit {
   }
 
   save() {
-    UiService.localSet(this.defaultPageName, this.subpage);
+    UiService.localSet(Constants.PAGE_CONTROLL_SECRETARY_ADMIN, this.subpage);
   }
 
   onReceiveSession(subpage: string) {

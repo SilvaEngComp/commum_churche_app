@@ -11,14 +11,12 @@ export class FinancyAdminComponent implements OnInit {
   @Output()
   sessionPage: EventEmitter<string> = new EventEmitter<string>();
   @Input() subpage: string;
-  defaultPageName = Constants.PAGE_CONTROLL_FINANCY_ADMIN;
   constructor() {}
 
   ngOnInit() {
     UiService.setCurrentPage(Constants.TITLE_SUMMARY_FINANCY);
-    if (UiService.localGet(this.defaultPageName)) {
-      this.subpage = UiService.localGet(this.defaultPageName);
-    }
+    this.subpage = UiService.localGet(Constants.PAGE_CONTROLL_FINANCY_ADMIN);
+
     if (!UiService.checkValidPage(this.subpage)) {
       this.subpage = '1';
     }
@@ -36,7 +34,7 @@ export class FinancyAdminComponent implements OnInit {
   }
 
   save() {
-    UiService.localSet(this.defaultPageName, this.subpage);
+    UiService.localSet(Constants.PAGE_CONTROLL_FINANCY_ADMIN, this.subpage);
   }
 
   onReceiveSession(subpage: string) {

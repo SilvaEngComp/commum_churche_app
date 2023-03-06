@@ -8,6 +8,7 @@ import { User } from 'src/app/models/User';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { DatePipe } from '@angular/common';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-birthdays',
@@ -21,6 +22,8 @@ export class BirthdaysComponent implements OnInit {
   filter: UserFilter;
   currentMonth: CustomizedMonth;
   isLoggedIn: boolean;
+  localPageTitle: string;
+  user: User;
   constructor(
     private userSerice: UserService,
     private exceptionService: ExceptionService,
@@ -32,10 +35,15 @@ export class BirthdaysComponent implements OnInit {
     const datepipe: DatePipe = new DatePipe('en');
     this.filter.birthdayMonth = datepipe.transform(Date.now(), 'MM');
     this.currentMonth = new CustomizedMonth(Number(this.filter.birthdayMonth));
-    // this.isLoading = LoginService.isLogged();
+    this.isLoggedIn = LoginService.isLogged();
+
+    this.localPageTitle = Constants.TITLE_BIRTHDAYS;
     this.loadUsers();
   }
 
+  back() {
+    this.returnPage.emit(Constants.MENU_BACK);
+  }
   checkImage() {
     this.users.filter((user) => {
       if (!user?.image) {
@@ -65,7 +73,12 @@ export class BirthdaysComponent implements OnInit {
   }
 
   async sendEmail() {
-    this.exceptionService.loadingFunction('Processando Tabela Excel...');
+    if (this.isLoggedIn) {
+      this.user = LoginService.getUser();
+    }
+    this.exceptionService.loadingFunction(
+      'Enviando para o email ' + this.user?.email
+    );
     this.downloadService.exportAsExcelFile(
       UserCSV.getTable(UserCSV.getRelatorio(this.users)),
       'Aniversariantes do mês de ' + this.currentMonth?.name,

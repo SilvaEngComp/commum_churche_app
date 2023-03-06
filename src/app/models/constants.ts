@@ -79,6 +79,7 @@ export class Constants {
   static MENU_GENERAL_OPTION_USER = '1';
 
   static PAGE_CONTROLL_FINANCY_ADMIN = 'financy-subpage';
+  static PAGE_CONTROLL_SECRETARY_ADMIN = 'secretary-subpage';
 
   static MENU_FINANCY_OPTION_TITHE = '0';
   static MENU_FINANCY_OPTION_SUMMARY = '1';
@@ -136,8 +137,10 @@ export class Constants {
   static TITLE_DAILY_READER = 'Leitura Bíblica';
   static TITLE_SUMMARY_FINANCY_SUB = 'Resumo Financeiro';
   static TITLE_SUMMARY_BALANCE = 'Receitas';
+  static TITLE_BIRTHDAYS = 'Aniversariantes';
   static TITLE_SUMMARY_EXPANSE = 'Saídas';
   static TITLE_SUMMARY_FINANCY = 'Tesouraria';
+  static TITLE_SECRETARY = 'Sercretaria';
   static TITLE_USER_PROFILE = 'PERFIL';
   static TITLE_USER_MEMBERS = 'LISTA DE MEMBROS';
   static TITLE_TITHE_HISTORIC = 'DÍZIMOS E OFERTAS';
