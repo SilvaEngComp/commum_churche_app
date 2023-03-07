@@ -1,6 +1,6 @@
 import { DownloadService } from './../../../../services/download.service';
 import { MenuCaixaSummaryComponent } from './../menu-caixa-summary/menu-caixa-summary.component';
-import { PopoverController } from '@ionic/angular';
+import { ActionSheetController, PopoverController } from '@ionic/angular';
 import { Constants } from 'src/app/models/constants';
 import { CaixaFacadeService } from 'src/app/facades/caixa-facade.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
@@ -24,11 +24,13 @@ export class CaixaSummaryComponent implements OnInit {
     'Data',
     'Tesoureiro',
     'Organização',
+    '',
   ];
   total: number;
   constructor(
     private caixaFacade: CaixaFacadeService,
     private popCtrl: PopoverController,
+    private actionSheetCtrl: ActionSheetController,
     private downloadService: DownloadService
   ) {}
 
@@ -37,27 +39,10 @@ export class CaixaSummaryComponent implements OnInit {
       console.log('emiting request to reload');
       this.mantainceEmiter.emit();
     });
-    let flagDescription = false;
-    let flagFile = false;
     this.total = 0;
     this.caixaSummary?.caixas?.filter((caixaSummary) => {
       this.total += caixaSummary?.amount;
-      if (caixaSummary?.description?.length > 0) {
-        flagDescription = true;
-      }
-      if (caixaSummary?.file?.length > 0) {
-        flagFile = true;
-      }
     });
-
-    if (flagDescription) {
-      this.headCaixaList.push('Descrição');
-    }
-    if (flagFile) {
-      this.headCaixaList.push('Comprovante');
-    }
-
-    this.headCaixaList.push('');
   }
 
   setShowSummaryDetail(caixa: CaixaSummary) {
@@ -100,5 +85,22 @@ export class CaixaSummaryComponent implements OnInit {
 
   download(caixa: Caixa) {
     this.downloadService.downloadPDF(caixa);
+  }
+  async openDescription(caixa: Caixa) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Descrição',
+      subHeader: caixa?.description,
+
+      buttons: [
+        {
+          text: 'ok',
+          data: {
+            action: () => {},
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
   }
 }

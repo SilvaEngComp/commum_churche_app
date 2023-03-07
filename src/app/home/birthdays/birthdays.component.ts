@@ -42,7 +42,7 @@ export class BirthdaysComponent implements OnInit {
   }
 
   back() {
-    this.returnPage.emit(Constants.MENU_BACK);
+    this.returnPage.emit(Constants.MENU_GENERAL_OPTION_USER);
   }
   checkImage() {
     this.users.filter((user) => {

@@ -24,12 +24,11 @@ export class FeedAdminPage implements OnInit {
     );
 
     UiService.pageTitle.emit(Constants.TITLE_FEED_REGISTER);
-
+    this.subpage = UiService.localGet(Constants.FEED_SUBPAGE);
     if (!this.subpage) {
       UiService.localSet(Constants.FEED_SUBPAGE, Constants.FEED_PAGE_PUBLIC);
-      this.subpage = UiService.localGet(Constants.FEED_SUBPAGE);
       if (!this.subpage) {
-        this.subpage = Constants.FEED_PAGE_PUBLIC;
+        this.subpage = Constants.FEED_PAGE_HOME;
       }
     }
     UiService.feedPage.subscribe((obj) => {
@@ -41,7 +40,7 @@ export class FeedAdminPage implements OnInit {
     console.log(this.subpage);
   }
 
-  returnPage(obj) {
+  receive(obj) {
     if (obj?.page === '-1') {
       this.sessionPage.emit(Constants.MENU_GENERAL_OPTION_MORE);
     }

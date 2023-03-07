@@ -3,11 +3,11 @@ import { Constants } from 'src/app/models/constants';
 import { User } from 'src/app/models/User';
 
 @Component({
-  selector: 'app-user-home',
-  templateUrl: './user-home.component.html',
-  styleUrls: ['./user-home.component.scss'],
+  selector: 'app-feed-home',
+  templateUrl: './feed-home.component.html',
+  styleUrls: ['./feed-home.component.scss'],
 })
-export class UserHomeComponent implements OnInit {
+export class FeedHomeComponent implements OnInit {
   @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
   user: User;
   localImage: string;
@@ -16,8 +16,8 @@ export class UserHomeComponent implements OnInit {
 
   ngOnInit() {}
 
-  async selectOption(page: string) {
-    this.returnPage.emit(page);
+  async selectOption(subpage: string) {
+    this.returnPage.emit({ subpage });
   }
 
   back() {

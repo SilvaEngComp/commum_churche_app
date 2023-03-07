@@ -52,6 +52,7 @@ export class TitheService extends ServiceInterface {
       this.checkLogged();
       return Promise.resolve(null);
     }
+    console.clear();
     console.log(JSON.stringify(tithe));
     return this.http
       .patch<Responser>(`${environment.API2}/tithes/${tithe.id}`, tithe, {
@@ -64,6 +65,7 @@ export class TitheService extends ServiceInterface {
       this.checkLogged();
       return Promise.resolve(null);
     }
+    console.clear();
     console.log(JSON.stringify(tithe));
     return this.http
       .post<Responser>(`${environment.API2}/tithes`, tithe, {

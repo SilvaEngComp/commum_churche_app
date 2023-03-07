@@ -1,3 +1,4 @@
+import { FeedHomeComponent } from './../feed-home/feed-home.component';
 import { ReviewFeedComponent } from './../create-feed/review-feed/review-feed.component';
 import { EditTextFeedComponent } from '../create-feed/edit-text-feed/edit-text-feed.component';
 import { MenuPostComponent } from '../public-feed/menu-post/menu-post.component';
@@ -43,6 +44,7 @@ import { ResourcesModule } from 'src/app/resources/resources.module';
     PublicationComponent,
     EditTextFeedComponent,
     ReviewFeedComponent,
+    FeedHomeComponent,
   ],
   providers: [
     DatabaseService,

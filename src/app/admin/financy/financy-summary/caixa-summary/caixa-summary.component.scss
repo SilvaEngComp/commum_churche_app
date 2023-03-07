@@ -2,6 +2,7 @@
   font-family: Qanelas-bold;
   font-size: 14pt;
   text-align: center;
+  color: var(--ion-color-light);
 }
 .label-body {
   font-family: Qanelas;
@@ -9,7 +10,7 @@
   text-align: center;
 }
 
-div {
+.buttons {
   display: flex;
   justify-content: center;
   align-items: center;

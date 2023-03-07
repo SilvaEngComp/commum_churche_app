@@ -1,15 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IonToggle } from '@ionic/angular';
 import { Constants } from 'src/app/models/constants';
 import { Feed } from 'src/app/models/feed';
-import { PushNotify } from 'src/app/models/pushNotification';
 import { User } from 'src/app/models/User';
 import { ExceptionService } from 'src/app/services/exception-service.service';
-import { FeedService } from 'src/app/services/feed.service';
-import { LoginService } from 'src/app/services/login.service';
-import { MessagingService } from 'src/app/services/messaging.service';
 import { UiService } from 'src/app/services/ui.service';
 import { environment } from 'src/environments/environment';
 
@@ -32,16 +27,15 @@ export class EditTextFeedComponent implements OnInit {
   dateValue: string;
   hasTime: boolean;
   session: number;
-  constructor(
-    private feedService: FeedService,
-    private messagingService: MessagingService,
-    private exceptionService: ExceptionService
-  ) {}
+  constructor(private exceptionService: ExceptionService) {}
 
   ngOnInit() {
     this.session = 1;
     this.image = new FormData();
     this.feed = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
+    if (!this.feed) {
+      this.feed = new Feed();
+    }
     if (!this.feed?.hasTime) {
       this.feed.hasTime = false;
     }

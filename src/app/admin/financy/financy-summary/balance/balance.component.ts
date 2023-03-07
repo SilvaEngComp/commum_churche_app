@@ -5,7 +5,7 @@ import { IonPopover } from '@ionic/angular';
 import { CaixaSummary } from 'src/app/models/caixaSummary';
 import { Constants } from 'src/app/models/constants';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
-import { FinancySummary } from 'src/app/models/fianancySummary';
+import { FinancySummary } from 'src/app/models/totalInputOutput';
 import { FinancySummaryFilter } from 'src/app/models/financySummaryFilter';
 import { TitheSummary } from 'src/app/models/tithesummary';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -23,7 +23,7 @@ export class BalanceComponent implements OnInit {
   @Input() inputSummary: CaixaSummary;
   @Input() titheSummary: TitheSummary;
   @Input() offerSummary: TitheSummary;
-  @Input() sumary: FinancySummary;
+  @Input() sumary: FinancySummary[];
   filter: FinancySummaryFilter;
   noContent = 'Nenhum Registro';
   initialDate: string;
@@ -89,19 +89,31 @@ export class BalanceComponent implements OnInit {
       this.offerSummary = new TitheSummary();
       this.titheSummary = new TitheSummary();
 
-      this.sumary.caixaSummary?.input?.filter((caixaSummary) => {
-        if (caixaSummary?.isEntry) {
-          this.inputSummary.total += caixaSummary?.total;
-        }
+      this.sumary.filter((summary) => {
+        summary?.summary?.result?.caixaSummary?.input?.filter(
+          (caixaSummary) => {
+            if (caixaSummary?.isEntry) {
+              this.inputSummary.total += caixaSummary?.total;
+            }
+          }
+        );
       });
-
-      this.titheSummary = this.sumary.titheSummary?.tithe;
-
-      this.offerSummary = this.sumary.titheSummary?.offer;
     });
   }
 
   back() {
     this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_SUMMARY);
+  }
+
+  setWallet(wallet: Wallet) {
+    if (wallet) {
+      this.wallet = wallet;
+      this.filter.wallet_id = this.wallet.id;
+      this.load();
+      UiService.localSet(Constants.CAIXA_WALLET, this.wallet);
+    } else {
+      this.wallet = null;
+      UiService.localRemove(Constants.CAIXA_WALLET);
+    }
   }
 }

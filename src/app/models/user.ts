@@ -29,13 +29,16 @@ export class User {
   fcm_web_key: string;
   fcm_mobile_key: string;
   fcm_mobile_web_key: string;
-  constructor() {
-    this.password = '';
-    this.roles = [Constants.ROLE_MEMBER];
-    this.contact = new Contact();
-    this.maritalStatus = new MaritalStatus();
-    this.inputMethod = new InputMethod();
-    this.church = new Church();
-    this.showDetails = false;
+
+  constructor(started?: boolean) {
+    if (!started) {
+      this.password = '';
+      this.roles = [Constants.ROLE_MEMBER];
+      this.contact = new Contact();
+      this.maritalStatus = new MaritalStatus();
+      this.inputMethod = new InputMethod();
+      this.church = new Church();
+      this.showDetails = false;
+    }
   }
 }

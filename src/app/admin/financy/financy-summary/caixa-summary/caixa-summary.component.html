@@ -1,11 +1,10 @@
 <div class="table-responsive">
-  <table class="table  align-middle table-sm">
+  <table class="table  align-middle ">
     <thead>
       <tr class="table-dark">
-        <th colspan="8"><ion-label class="label-title">{{caixaSummary?.caixaCategory?.name}}</ion-label></th>
-        <th colspan="8"><ion-label class="label-title">{{caixaSummary?.caixaSubcategory?.name}}</ion-label></th>
+        <th colspan="6"><ion-label class="label-title">{{caixaSummary?.caixaCategory?.name}}</ion-label></th>
       </tr>
-      <tr class="table-group-divider">
+      <tr>
         <th *ngFor="let item of headCaixaList">{{item | uppercase}}</th>
       </tr>
     </thead>
@@ -26,22 +25,22 @@
         <td>
           <ion-label class="label-body"> {{item?.church?.name | uppercase}}</ion-label>
         </td>
-        <td *ngIf="item?.description">
-          <div class="description">
-            <p readonly="readonly" rows="10" cols="2" type="text" class="label-body">
-              {{item.description}}
-            </p>
-          </div>
-        </td>
-        <td *ngIf="item?.file">
-          <ion-item lines="none" (click)="download(item)" download="teste.txt">
-            <ion-icon color="tertiary" name="download-outline"></ion-icon>
-          </ion-item>
-        </td>
+
         <td>
-          <ion-item lines="none" (click)="openMenuOption($event,item)">
-            <ion-icon color="tertiary" slot="end" name="settings-outline"></ion-icon>
-          </ion-item>
+
+          <div class="buttons">
+            <ion-tab-button (click)="openDescription(item)">
+              <ion-icon name="document-text-outline"></ion-icon>
+              <ion-label>Descrição</ion-label>
+            </ion-tab-button>
+            <ion-tab-button (click)="download(item)">
+              <ion-icon name="download-outline"></ion-icon>
+              <ion-label>Comprovante</ion-label>
+            </ion-tab-button> <ion-tab-button (click)="openMenuOption($event,item)">
+              <ion-icon name="settings-outline"></ion-icon>
+              <ion-label>Opções</ion-label>
+            </ion-tab-button>
+          </div>
         </td>
       </tr>
     </tbody>

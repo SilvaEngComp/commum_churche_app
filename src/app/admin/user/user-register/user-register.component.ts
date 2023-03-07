@@ -20,11 +20,13 @@ export class UserRegisterComponent implements OnInit {
   @Input() isEmergencial: boolean;
   isSmallDevice: boolean;
   user: User;
+  localPageTitle: string;
   constructor(private platform: Platform) {}
 
   ngOnInit() {
     this.isSmallDevice = this.platform.width() <= 500;
     this.user = new User();
+    this.localPageTitle = Constants.TITLE_USER_REGISTER;
   }
 
   back() {

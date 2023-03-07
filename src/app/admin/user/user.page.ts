@@ -114,7 +114,7 @@ export class UserPage implements OnInit {
   }
 
   back() {
-    this.sessionPage.emit(Constants.MENU_BACK);
+    this.sessionPage.emit(Constants.MENU_GENERAL_OPTION_USER);
   }
   setConfigPagination(isRestart = false) {
     this.tresholderPagination = 10;

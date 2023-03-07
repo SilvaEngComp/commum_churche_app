@@ -1,5 +1,5 @@
+import { Church } from './church';
 /* eslint-disable @typescript-eslint/naming-convention */
-import { CustomizedMonth } from './customizedMonth';
 import { User } from './User';
 export class Tithe {
   id: number;
@@ -10,6 +10,7 @@ export class Tithe {
   created_at: string;
   user: User;
   register: User;
+  church: Church;
   constructor() {
     this.isTithe = true;
   }

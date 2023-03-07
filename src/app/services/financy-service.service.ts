@@ -26,7 +26,7 @@ export class FinancyService extends ServiceInterface {
     );
   }
 
-  async caixaSummary(filter: FinancySummaryFilter): Promise<Responser> {
+  async getTotalInputOutput(filter: FinancySummaryFilter): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
@@ -35,13 +35,61 @@ export class FinancyService extends ServiceInterface {
     console.log(
       `${
         environment.API2
-      }/financies/caixaSummary?${FinancySummaryFilter.getRequest(filter)}`
+      }/financies/getTotalInputOutput?${FinancySummaryFilter.getRequest(
+        filter
+      )}`
     );
     return this.http
       .get<Responser>(
         `${
           environment.API2
-        }/financies/caixaSummary?${FinancySummaryFilter.getRequest(filter)}`,
+        }/financies/getTotalInputOutput?${FinancySummaryFilter.getRequest(
+          filter
+        )}`,
+        {
+          headers: LoginService.getHeaders(),
+        }
+      )
+      .toPromise();
+  }
+  async getInput(filter: FinancySummaryFilter): Promise<Responser> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+
+    console.log(
+      `${environment.API2}/financies/getInput?${FinancySummaryFilter.getRequest(
+        filter
+      )}`
+    );
+    return this.http
+      .get<Responser>(
+        `${
+          environment.API2
+        }/financies/getInput?${FinancySummaryFilter.getRequest(filter)}`,
+        {
+          headers: LoginService.getHeaders(),
+        }
+      )
+      .toPromise();
+  }
+  async getOutput(filter: FinancySummaryFilter): Promise<Responser> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+
+    console.log(
+      `${
+        environment.API2
+      }/financies/getOutput?${FinancySummaryFilter.getRequest(filter)}`
+    );
+    return this.http
+      .get<Responser>(
+        `${
+          environment.API2
+        }/financies/getOutput?${FinancySummaryFilter.getRequest(filter)}`,
         {
           headers: LoginService.getHeaders(),
         }

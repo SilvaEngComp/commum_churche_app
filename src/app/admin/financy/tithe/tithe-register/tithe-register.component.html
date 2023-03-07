@@ -47,6 +47,15 @@
       </ion-col>
     </ion-row>
 
+    <ion-row>
+      <ion-col>
+        <div class="flex-container-row">
+          <ion-icon name="storefront-outline" class="icon-format"></ion-icon>
+          <app-my-select-list [label]="'*Organização'" [listName]="'churches'" [create]="true"
+            (selectEmiter)="setChurch($event)"></app-my-select-list>
+        </div>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 
   <ion-fab class="confirm-button" slot="fixed" horizontal="center" vertical="bottom">

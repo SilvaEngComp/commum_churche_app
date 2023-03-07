@@ -6,6 +6,8 @@
 <ion-grid>
   <ion-row>
     <ion-col>
+      <app-my-select-list [color]="'primary'" [label]="'Conta'" [listName]="'wallets'" [obj]="wallet"
+        (selectEmiter)="setWallet($event)"></app-my-select-list>
       <ion-item class="filter-date">
         <ion-button id="select-date" expand="block" color="primary">
           <ion-label>De {{initialDate | date: 'dd/MM/yyyy'}} até {{endDate | date: 'dd/MM/yyyy'}}</ion-label>
@@ -88,11 +90,12 @@
           </ion-item>
           <div class="ion-padding" slot="content">
 
-            <ion-item lines="none" *ngIf="sumary?.caixaSummary?.input?.length===0">
+            <ion-item lines="none" *ngIf="sumary?.summary?.result?.caixaSummary?.input?.length===0">
               <ion-title color="primary"> {{noContent}}</ion-title>
             </ion-item>
-            <div *ngFor="let caixa of sumary?.caixaSummary?.input">
-              <app-caixa-summary [caixaSummary]="caixa" [isEntry]="true" *ngIf="sumary?.caixaSummary?.input.length>0"
+            <div *ngFor="let caixa of sumary?.summary?.result?.caixaSummary?.input">
+              <app-caixa-summary [caixaSummary]="caixa" [isEntry]="true"
+                *ngIf="sumary?.summary?.result?.caixaSummary?.input.length>0"
                 (mantainceEmiter)="receiveMantainceEmiter($event)"></app-caixa-summary>
 
             </div>

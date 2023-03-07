@@ -143,6 +143,7 @@ export class Constants {
   static TITLE_SECRETARY = 'Sercretaria';
   static TITLE_USER_PROFILE = 'PERFIL';
   static TITLE_USER_MEMBERS = 'LISTA DE MEMBROS';
+  static TITLE_USER_REGISTER = 'Cadastro de Membro';
   static TITLE_TITHE_HISTORIC = 'DÍZIMOS E OFERTAS';
   static TITLE_TITHE_HISTRIC = 'LISTA DE MEMBROS';
   static TITLE_CAIXA_REGISTER_OUT = 'REGISTRAR SAÍDA';
@@ -159,6 +160,7 @@ export class Constants {
 
   static FEED_SUBPAGE = 'feed-subpage';
   static FEED_PAGE_PUBLIC = '1';
+  static FEED_PAGE_HOME = '0';
   static FEED_PAGE_CREATE_FEED = '2';
   static FEED_PAGE_PUBLICATION = '3';
   static FEED_PAGE_COMMENT = '4';

@@ -10,6 +10,7 @@ import { UiService } from 'src/app/services/ui.service';
 import { TitheService } from 'src/app/services/tithe.service';
 import { ConstantMessages } from 'src/app/models/messages';
 import { User } from 'src/app/models/User';
+import { Church } from 'src/app/models/church';
 
 @Component({
   selector: 'app-tithe-register',
@@ -126,9 +127,10 @@ export class TitheRegisterComponent implements OnInit {
         this.exceptionService.alertDialog(ConstantMessages.MEMBER_INVALID);
         return;
       }
-    } else {
-      this.tithe.user = LoginService.getUser();
     }
+
+    this.tithe.register = new User(true);
+    this.tithe.register.id = LoginService.getUser()?.id;
 
     return true;
   }
@@ -139,9 +141,18 @@ export class TitheRegisterComponent implements OnInit {
 
   setUser(user: User) {
     if (user) {
-      this.tithe.user = user;
+      this.tithe.user = new User(true);
+      this.tithe.user.id = user.id;
     } else {
       this.tithe.user = null;
+    }
+  }
+
+  setChurch(church: Church) {
+    if (church) {
+      this.tithe.church = church;
+    } else {
+      this.tithe.church = null;
     }
   }
 }

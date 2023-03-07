@@ -1,3 +1,4 @@
+import { TotalInputOutput } from './../../../models/totalInputOutput';
 import { MenuSummaryComponent } from './menu-summary/menu-summary.component';
 import { UiService } from 'src/app/services/ui.service';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
@@ -13,7 +14,6 @@ import {
 import { IonPopover, ModalController, PopoverController } from '@ionic/angular';
 import { CaixaFacadeService } from 'src/app/facades/caixa-facade.service';
 import { Caixa } from 'src/app/models/caixa';
-import { FinancySummary } from 'src/app/models/fianancySummary';
 import { Constants } from 'src/app/models/constants';
 import { FinancySummaryFilter } from 'src/app/models/financySummaryFilter';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -34,7 +34,7 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
   sessionPage: EventEmitter<string> = new EventEmitter<string>();
 
   filter: FinancySummaryFilter;
-  sumary: FinancySummary;
+  totalInputOutput: TotalInputOutput;
   month: string;
   year: string;
   // caixaSummary: CaixaSummary;
@@ -102,32 +102,10 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
         'Alerta'
       );
     }
-    this.financyService.caixaSummary(this.filter).then((response) => {
-      this.sumary = response.data;
-      this.inputSummary = new CaixaSummary();
-      this.outputSummary = new CaixaSummary();
-      this.titheSummary = new TitheSummary();
-      this.offerSummary = new TitheSummary();
-
-      this.sumary.caixaSummary?.input?.filter((caixaSummary) => {
-        if (caixaSummary?.isEntry) {
-          this.inputSummary.total += caixaSummary?.total;
-        }
-      });
-      this.sumary.caixaSummary?.output?.filter((caixaSummary) => {
-        if (!caixaSummary?.isEntry) {
-          this.outputSummary.total += caixaSummary?.total;
-        }
-      });
-
-      this.titheSummary = this.sumary.titheSummary?.tithe;
-      this.offerSummary = this.sumary.titheSummary?.offer;
-
+    this.financyService.getTotalInputOutput(this.filter).then((response) => {
+      this.totalInputOutput = response.data;
       this.balance =
-        this.inputSummary.total +
-        this.offerSummary.total +
-        this.titheSummary.total +
-        this.outputSummary.total;
+        this.totalInputOutput.totalInput - this.totalInputOutput.totalOutput;
     });
   }
 

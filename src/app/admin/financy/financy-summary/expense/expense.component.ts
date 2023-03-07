@@ -4,7 +4,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IonPopover } from '@ionic/angular';
 import { CaixaSummary } from 'src/app/models/caixaSummary';
 import { Constants } from 'src/app/models/constants';
-import { FinancySummary } from 'src/app/models/fianancySummary';
+import { FinancySummary } from 'src/app/models/totalInputOutput';
 import { FinancySummaryFilter } from 'src/app/models/financySummaryFilter';
 import { TitheSummary } from 'src/app/models/tithesummary';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -85,11 +85,13 @@ export class ExpenseComponent implements OnInit {
       this.sumary = response.data;
       this.outputSummary = new CaixaSummary();
 
-      this.sumary.caixaSummary?.output?.filter((caixaSummary) => {
-        if (!caixaSummary?.isEntry) {
-          this.outputSummary.total += caixaSummary?.total;
+      this.sumary.summary.result.caixaSummary?.output?.filter(
+        (caixaSummary) => {
+          if (!caixaSummary?.isEntry) {
+            this.outputSummary.total += caixaSummary?.total;
+          }
         }
-      });
+      );
     });
   }
 
