@@ -1,3 +1,4 @@
+import { SummaryOutput } from './../../../../models/sumaryOutput';
 import { Wallet } from './../../../../models/wallet';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -20,7 +21,7 @@ export class ExpenseComponent implements OnInit {
   @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
 
   @Input() outputSummary: CaixaSummary;
-  @Input() sumary: FinancySummary;
+  @Input() sumary: SummaryOutput[];
   filter: FinancySummaryFilter;
   noContent = 'Nenhum Registro';
   initialDate: string;
@@ -81,11 +82,15 @@ export class ExpenseComponent implements OnInit {
         'Alerta'
       );
     }
-    this.financyService.caixaSummary(this.filter).then((response) => {
+    this.financyService.getOutput(this.filter).then((response) => {
       this.sumary = response.data;
       this.outputSummary = new CaixaSummary();
 
-      this.sumary.summary.result.caixaSummary?.output?.filter(
+      this.sumary.filter(output=>{
+        output.outpus.
+
+
+      }).summary.result.caixaSummary?.output?.filter(
         (caixaSummary) => {
           if (!caixaSummary?.isEntry) {
             this.outputSummary.total += caixaSummary?.total;
