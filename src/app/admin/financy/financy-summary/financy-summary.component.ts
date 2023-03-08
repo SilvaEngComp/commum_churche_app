@@ -61,8 +61,6 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
     private exeptionService: ExceptionService
   ) {}
   ngAfterViewInit(): void {
-    this.wallet = new Wallet();
-    this.wallet.id = Constants.WALLET_FLUX_ID;
     UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
   }
 
@@ -78,7 +76,12 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
 
     this.filter.dateI = this.initialDate;
     this.filter.dateF = this.endDate;
-    this.filter.wallet_id = Constants.WALLET_FLUX_ID;
+
+    this.wallet = UiService.localGet(Constants.CAIXA_WALLET);
+    if (!this.wallet) {
+      this.filter.wallet_id = Constants.WALLET_FLUX_ID;
+    }
+    UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
 
     this.load();
   }
@@ -93,6 +96,7 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
 
   selectDateInterval(popover: IonPopover) {
     popover?.dismiss();
+    this.load();
   }
 
   async load() {
@@ -102,11 +106,14 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
         'Alerta'
       );
     }
-    this.financyService.getTotalInputOutput(this.filter).then((response) => {
-      this.totalInputOutput = response.data;
-      this.balance =
-        this.totalInputOutput.totalInput - this.totalInputOutput.totalOutput;
-    });
+    this.financyService
+      .getTotalInputOutput(this.filter)
+      .then((response) => {
+        this.totalInputOutput = response.data;
+        this.balance =
+          this.totalInputOutput.totalInput - this.totalInputOutput.totalOutput;
+      })
+      .catch((error) => console.log(error));
   }
 
   goToBalance() {

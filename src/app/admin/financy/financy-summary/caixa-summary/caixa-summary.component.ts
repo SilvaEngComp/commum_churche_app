@@ -1,13 +1,13 @@
-import { DownloadService } from './../../../../services/download.service';
+import { CaixaReport } from '../../../../models/CaixaReportChurch';
 import { MenuCaixaSummaryComponent } from './../menu-caixa-summary/menu-caixa-summary.component';
+import { DownloadService } from './../../../../services/download.service';
 import { ActionSheetController, PopoverController } from '@ionic/angular';
 import { Constants } from 'src/app/models/constants';
 import { CaixaFacadeService } from 'src/app/facades/caixa-facade.service';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Caixa } from 'src/app/models/caixa';
-import { CaixaSummary } from 'src/app/models/caixaSummary';
 import { UiService } from 'src/app/services/ui.service';
-import { FileUploader, FileLikeObject } from 'ng2-file-upload';
+import { FileUploader } from 'ng2-file-upload';
 @Component({
   selector: 'app-caixa-summary',
   templateUrl: './caixa-summary.component.html',
@@ -15,7 +15,7 @@ import { FileUploader, FileLikeObject } from 'ng2-file-upload';
 })
 export class CaixaSummaryComponent implements OnInit {
   @Output() mantainceEmiter: EventEmitter<any> = new EventEmitter<any>();
-  @Input() caixaSummary: CaixaSummary;
+  @Input() caixaReport: CaixaReport;
   @Input() isEntry: boolean;
   public uploader: FileUploader = new FileUploader({});
   headCaixaList: string[] = [
@@ -26,7 +26,6 @@ export class CaixaSummaryComponent implements OnInit {
     'Organização',
     '',
   ];
-  total: number;
   constructor(
     private caixaFacade: CaixaFacadeService,
     private popCtrl: PopoverController,
@@ -39,20 +38,20 @@ export class CaixaSummaryComponent implements OnInit {
       console.log('emiting request to reload');
       this.mantainceEmiter.emit();
     });
-    this.total = 0;
-    this.caixaSummary?.caixas?.filter((caixaSummary) => {
-      this.total += caixaSummary?.amount;
-    });
   }
 
-  setShowSummaryDetail(caixa: CaixaSummary) {
-    this.caixaSummary.showDetails = !this.caixaSummary.showDetails;
+  setShowSummaryDetail() {
+    this.caixaReport.showDetails = !this.caixaReport.showDetails;
   }
 
-  setShowCaixaDetail(caixa: Caixa, caixaSummary: CaixaSummary) {
-    const caixaPosition = this.caixaSummary.caixas.indexOf(caixa);
-    this.caixaSummary.caixas[caixaPosition].showDetails =
-      !this.caixaSummary.caixas[caixaPosition].showDetails;
+  setShowCaixaDetail(caixa: Caixa, caixaReport: CaixaReport) {
+    const caixaPosition =
+      this.caixaReport.caixaReportCategory.caixaSummary.caixas.indexOf(caixa);
+    this.caixaReport.caixaReportCategory.caixaSummary.caixas[
+      caixaPosition
+    ].showDetails =
+      !this.caixaReport.caixaReportCategory.caixaSummary.caixas[caixaPosition]
+        .showDetails;
   }
 
   async edit(caixa: Caixa) {

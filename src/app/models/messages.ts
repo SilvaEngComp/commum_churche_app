@@ -51,4 +51,7 @@ export class ConstantMessages {
   static CHURCH_SCHEDULE_INVALID_CHURCH =
     'Por favor, Selecione uma organização';
   static FILE_LIMIT = 'Limitado a 1 (um) arquivo';
+  static INVALID_WALLET = 'Selecione uma Conta';
+  static INVALIDE_DATE_INTERVAL =
+    'Selecione a data de inicio e fim da consulta';
 }

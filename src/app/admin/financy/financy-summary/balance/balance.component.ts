@@ -1,13 +1,17 @@
+import { ConstantMessages } from './../../../../models/messages';
+import { SummaryInput } from './../../../../models/sumaryInput';
 import { Wallet } from './../../../../models/wallet';
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  AfterViewInit,
+} from '@angular/core';
 import { IonPopover } from '@ionic/angular';
-import { CaixaSummary } from 'src/app/models/caixaSummary';
 import { Constants } from 'src/app/models/constants';
-import { CustomizedMonth } from 'src/app/models/customizedMonth';
-import { FinancySummary } from 'src/app/models/totalInputOutput';
 import { FinancySummaryFilter } from 'src/app/models/financySummaryFilter';
-import { TitheSummary } from 'src/app/models/tithesummary';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { FinancyService } from 'src/app/services/financy-service.service';
 import { UiService } from 'src/app/services/ui.service';
@@ -17,29 +21,25 @@ import { UiService } from 'src/app/services/ui.service';
   templateUrl: './balance.component.html',
   styleUrls: ['./balance.component.scss'],
 })
-export class BalanceComponent implements OnInit {
+export class BalanceComponent implements OnInit, AfterViewInit {
   @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
 
-  @Input() inputSummary: CaixaSummary;
-  @Input() titheSummary: TitheSummary;
-  @Input() offerSummary: TitheSummary;
-  @Input() sumary: FinancySummary[];
+  summaryinput: SummaryInput;
   filter: FinancySummaryFilter;
   noContent = 'Nenhum Registro';
   initialDate: string;
   endDate: string;
   localPageTitle: string;
   wallet: Wallet;
+  isLoading: boolean;
   constructor(
     private financyService: FinancyService,
     private exeptionService: ExceptionService
   ) {}
-
+  ngAfterViewInit(): void {
+    UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
+  }
   ngOnInit() {
-    UiService.localSet(
-      Constants.TITLE_CURRENT_PAGE,
-      Constants.TITLE_SUMMARY_BALANCE
-    );
     this.localPageTitle = Constants.TITLE_SUMMARY_BALANCE;
     this.filter = new FinancySummaryFilter();
     const datePipe = new DatePipe('en');
@@ -49,9 +49,11 @@ export class BalanceComponent implements OnInit {
     this.initialDate = datePipe.transform(primeiroDia, 'YYYY-MM-dd');
     this.endDate = datePipe.transform(ultimoDia, 'YYYY-MM-dd');
     this.wallet = UiService.localGet(Constants.CAIXA_WALLET);
+    UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
 
     this.filter.dateI = this.initialDate;
     this.filter.dateF = this.endDate;
+
     if (this?.wallet) {
       this.filter.wallet_id = this?.wallet?.id;
     } else {
@@ -66,6 +68,7 @@ export class BalanceComponent implements OnInit {
 
   selectDateInterval(popover: IonPopover) {
     popover?.dismiss();
+    this.load();
   }
 
   setIntialDate(date: any) {
@@ -77,28 +80,33 @@ export class BalanceComponent implements OnInit {
     this.filter.dateF = this.endDate;
   }
   async load() {
+    if (this.isValidFilter()) {
+      this.financyService
+        .getInputs(this.filter)
+        .then((response) => {
+          this.summaryinput = response.data;
+          console.log(this.summaryinput);
+        })
+        .catch((error) => this.exeptionService.error(error));
+    }
+  }
+
+  isValidFilter() {
     if (!this.filter?.dateI || !this.filter?.dateF) {
       this.exeptionService.alertDialog(
-        'Selecione a data de inicio e fim da consulta',
+        ConstantMessages.INVALIDE_DATE_INTERVAL,
         'Alerta'
       );
+      return false;
     }
-    this.financyService.caixaSummary(this.filter).then((response) => {
-      this.sumary = response.data;
-      this.inputSummary = new CaixaSummary();
-      this.offerSummary = new TitheSummary();
-      this.titheSummary = new TitheSummary();
-
-      this.sumary.filter((summary) => {
-        summary?.summary?.result?.caixaSummary?.input?.filter(
-          (caixaSummary) => {
-            if (caixaSummary?.isEntry) {
-              this.inputSummary.total += caixaSummary?.total;
-            }
-          }
-        );
-      });
-    });
+    if (!this.filter?.wallet_id) {
+      this.exeptionService.alertDialog(
+        ConstantMessages.INVALID_WALLET,
+        'Alerta'
+      );
+      return false;
+    }
+    return true;
   }
 
   back() {

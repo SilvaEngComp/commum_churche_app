@@ -1,14 +1,20 @@
 import { TitheSummary } from './titheSummary';
-import { CaixaSummary } from './caixaSummary';
 import { Church } from './church';
+import { CaixaReport } from './CaixaReportChurch';
 
 export class SummaryInput {
-  input: {
-    church: Church;
-    data: {
-      input: CaixaSummary;
-      tithe: TitheSummary;
-      offer: TitheSummary;
-    };
-  };
+  total: number;
+  reports: InputsReport[];
+}
+
+export class InputsReport {
+  input: CaixaReport;
+  tithe: TitheReport;
+  offer: TitheReport;
+}
+
+export class TitheReport {
+  church: Church;
+  titheSummary: TitheSummary;
+  showDetails: boolean;
 }

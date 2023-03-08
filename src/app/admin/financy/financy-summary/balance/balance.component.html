@@ -5,10 +5,10 @@
 
 <ion-grid>
   <ion-row>
-    <ion-col>
+    <ion-col class="card-options">
       <app-my-select-list [color]="'primary'" [label]="'Conta'" [listName]="'wallets'" [obj]="wallet"
         (selectEmiter)="setWallet($event)"></app-my-select-list>
-      <ion-item class="filter-date">
+      <ion-item class="filter-date" lines="none">
         <ion-button id="select-date" expand="block" color="primary">
           <ion-label>De {{initialDate | date: 'dd/MM/yyyy'}} até {{endDate | date: 'dd/MM/yyyy'}}</ion-label>
         </ion-button>
@@ -52,53 +52,59 @@
   </ion-row>
   <ion-row>
     <ion-col>
+      <div class="balance">
+        <ion-label class="balance-label">Saldo em Conta</ion-label>
+        <ion-label class="balance-value">{{summaryinput?.total| currencyBrl}}</ion-label>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngFor="let summary of summaryinput?.reports">
+    <ion-col>
+      <ion-item color="primary"><ion-label>{{summary?.tithe?.church?.name}}</ion-label></ion-item>
       <ion-accordion-group>
-
         <ion-accordion value="second">
           <ion-item slot="header" color="light">
             <ion-card-title>Dízimos</ion-card-title>
-            <ion-note slot="end">R$ {{titheSummary?.total | currencyBrl}}</ion-note>
+            <ion-note slot="end">R$ {{summary?.tithe?.titheSummary?.total | currencyBrl}}</ion-note>
           </ion-item>
           <div class="ion-padding" slot="content">
-            <ion-item lines="none" *ngIf="titheSummary?.tithes.length===0 ">
+            <ion-item lines="none" *ngIf="summary?.tithe?.titheSummary?.tithes?.length===0 ">
               <ion-title color="primary"> {{noContent}}</ion-title>
             </ion-item>
 
-            <app-tithe-summary [titheSummary]="titheSummary" [isTithe]="true"
-              *ngIf="titheSummary?.tithes.length>0"></app-tithe-summary>
+            <app-tithe-summary [titheReport]="summary?.tithe" [isTithe]="true"
+              *ngIf="summary?.tithe?.titheSummary?.tithes?.length>0"></app-tithe-summary>
           </div>
         </ion-accordion>
         <ion-accordion value="third">
           <ion-item slot="header" color="light">
             <ion-card-title>Ofertas</ion-card-title>
-            <ion-note slot="end">R$ {{offerSummary?.total | currencyBrl}}</ion-note>
+            <ion-note slot="end">R$ {{summary?.offer?.titheSummary?.total | currencyBrl}}</ion-note>
           </ion-item>
           <div class="ion-padding" slot="content">
 
-            <ion-item lines="none" *ngIf="offerSummary?.tithes.length===0 ">
+            <ion-item lines="none" *ngIf="summary?.offer?.titheSummary?.tithes.length===0 ">
               <ion-title color="primary"> {{noContent}}</ion-title>
             </ion-item>
             <div>
-              <app-tithe-summary [titheSummary]="offerSummary" [isTithe]="false"
-                *ngIf="offerSummary?.tithes.length>0"></app-tithe-summary>
+              <app-tithe-summary [titheReport]="summary?.offer" [isTithe]="false"
+                *ngIf="summary?.offer?.titheSummary?.tithes.length>0"></app-tithe-summary>
             </div>
           </div>
         </ion-accordion> <ion-accordion value="fourth">
           <ion-item slot="header" color="light">
             <ion-card-title>Outras Entradas</ion-card-title>
-            <ion-note slot="end">R$ {{inputSummary?.total | currencyBrl}}</ion-note>
+            <ion-note slot="end">R$ {{summary?.input?.caixaReportCategory?.total | currencyBrl }}</ion-note>
           </ion-item>
           <div class="ion-padding" slot="content">
 
-            <ion-item lines="none" *ngIf="sumary?.summary?.result?.caixaSummary?.input?.length===0">
+            <ion-item lines="none" *ngIf="summary?.input?.caixaReportCategory?.caixaSummary?.caixas?.length===0">
               <ion-title color="primary"> {{noContent}}</ion-title>
             </ion-item>
-            <div *ngFor="let caixa of sumary?.summary?.result?.caixaSummary?.input">
-              <app-caixa-summary [caixaSummary]="caixa" [isEntry]="true"
-                *ngIf="sumary?.summary?.result?.caixaSummary?.input.length>0"
-                (mantainceEmiter)="receiveMantainceEmiter($event)"></app-caixa-summary>
+            <app-caixa-summary [caixaReport]="summary?.input" [isEntry]="true"
+              *ngIf="summary?.input?.caixaReportCategory?.caixaSummary?.caixas?.length>0"
+              (mantainceEmiter)="receiveMantainceEmiter($event)"></app-caixa-summary>
 
-            </div>
           </div>
         </ion-accordion>
       </ion-accordion-group>

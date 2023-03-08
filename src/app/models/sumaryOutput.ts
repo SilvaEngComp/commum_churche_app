@@ -1,9 +1,10 @@
-import { CaixaSummary } from './caixaSummary';
-import { Church } from './church';
+import { CaixaReport } from './CaixaReportChurch';
 
 export class SummaryOutput {
-  outpus: {
-    church: Church;
-    output: CaixaSummary;
-  };
+  total: number;
+  reports: OutputReport[];
+}
+
+export class OutputReport {
+  output: CaixaReport;
 }

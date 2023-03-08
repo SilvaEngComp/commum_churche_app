@@ -1,7 +1,6 @@
+import { TitheReport } from './../../../../models/sumaryInput';
 import { Component, Input, OnInit } from '@angular/core';
-import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { Tithe } from 'src/app/models/tithe';
-import { TitheSummary } from 'src/app/models/tithesummary';
 
 @Component({
   selector: 'app-tithe-summary',
@@ -9,7 +8,7 @@ import { TitheSummary } from 'src/app/models/tithesummary';
   styleUrls: ['./tithe-summary.component.scss'],
 })
 export class TitheSummaryComponent implements OnInit {
-  @Input() titheSummary: TitheSummary;
+  @Input() titheReport: TitheReport;
   @Input() isTithe: boolean;
   headTitheList: string[] = ['valor', 'data', 'Registrado por'];
   constructor() {}
@@ -23,13 +22,12 @@ export class TitheSummaryComponent implements OnInit {
   }
 
   setShowSummaryDetail() {
-    console.log(this.titheSummary);
-    this.titheSummary.showDetails = !this.titheSummary.showDetails;
+    this.titheReport.showDetails = !this.titheReport.showDetails;
   }
 
   setShowTitheDetail(tithe: Tithe) {
-    const tithePosition = this.titheSummary.tithes.indexOf(tithe);
-    this.titheSummary.tithes[tithePosition].showDetails =
-      !this.titheSummary.tithes[tithePosition].showDetails;
+    const tithePosition = this.titheReport.titheSummary.tithes.indexOf(tithe);
+    this.titheReport.titheSummary.tithes[tithePosition].showDetails =
+      !this.titheReport.titheSummary.tithes[tithePosition].showDetails;
   }
 }

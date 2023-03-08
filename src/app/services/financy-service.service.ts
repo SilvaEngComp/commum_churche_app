@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { FinancySummaryFilter } from './../models/financySummaryFilter';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -33,63 +34,75 @@ export class FinancyService extends ServiceInterface {
     }
 
     console.log(
-      `${
-        environment.API2
-      }/financies/getTotalInputOutput?${FinancySummaryFilter.getRequest(
-        filter
-      )}`
+      JSON.stringify({
+        dateI: filter.dateI,
+        dateF: filter.dateF,
+        wallet_id: filter.wallet_id,
+      })
     );
     return this.http
-      .get<Responser>(
-        `${
-          environment.API2
-        }/financies/getTotalInputOutput?${FinancySummaryFilter.getRequest(
-          filter
-        )}`,
+      .post<Responser>(
+        `${environment.API2}/financies/totalInputOutput`,
+        {
+          dateI: filter.dateI,
+          dateF: filter.dateF,
+          wallet_id: filter.wallet_id,
+        },
         {
           headers: LoginService.getHeaders(),
         }
       )
       .toPromise();
   }
-  async getInput(filter: FinancySummaryFilter): Promise<Responser> {
+  async getInputs(filter: FinancySummaryFilter): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
 
     console.log(
-      `${environment.API2}/financies/getInput?${FinancySummaryFilter.getRequest(
-        filter
-      )}`
+      JSON.stringify({
+        dateI: filter.dateI,
+        dateF: filter.dateF,
+        wallet_id: filter.wallet_id,
+      })
     );
     return this.http
-      .get<Responser>(
-        `${
-          environment.API2
-        }/financies/getInput?${FinancySummaryFilter.getRequest(filter)}`,
+      .post<Responser>(
+        `${environment.API2}/financies/inputs`,
+        {
+          dateI: filter.dateI,
+          dateF: filter.dateF,
+          wallet_id: filter.wallet_id,
+        },
         {
           headers: LoginService.getHeaders(),
         }
       )
       .toPromise();
   }
-  async getOutput(filter: FinancySummaryFilter): Promise<Responser> {
+  async getOutputs(filter: FinancySummaryFilter): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
-
+    console.clear();
     console.log(
-      `${
-        environment.API2
-      }/financies/getOutput?${FinancySummaryFilter.getRequest(filter)}`
+      JSON.stringify({
+        dateI: filter.dateI,
+        dateF: filter.dateF,
+        wallet_id: filter.wallet_id,
+      })
     );
+
     return this.http
-      .get<Responser>(
-        `${
-          environment.API2
-        }/financies/getOutput?${FinancySummaryFilter.getRequest(filter)}`,
+      .post<Responser>(
+        `${environment.API2}/financies/outputs`,
+        {
+          dateI: filter.dateI,
+          dateF: filter.dateF,
+          wallet_id: filter.wallet_id,
+        },
         {
           headers: LoginService.getHeaders(),
         }
