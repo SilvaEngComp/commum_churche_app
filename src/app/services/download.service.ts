@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Caixa } from 'src/app/models/caixa';
 /* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable guard-for-in */
@@ -24,25 +25,30 @@ export class DownloadService {
   ) {}
 
   public exportAsExcelFile(json: any[], excelFileName: string, op): void {
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
-    const workbook: XLSX.WorkBook = {
-      Sheets: { data: worksheet },
-      SheetNames: ['data'],
-    };
-    const excelBuffer: any = XLSX.write(workbook, {
-      bookType: 'xlsx',
-      type: 'array',
-    });
+    const worksheet: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(json);
 
-    if (op === 1) {
-      this.downloadExcel(excelBuffer, excelFileName);
-    } else {
-      this.sendEmail(excelBuffer, excelFileName);
-    }
+    /* generate workbook and add the worksheet */
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, excelFileName);
+    workbook.SheetNames = [excelFileName];
+
+    /* save to file */
+    XLSX.writeFile(workbook, excelFileName + EXCEL_EXTENSION);
+
+    // const excelBuffer: any = XLSX.write(workbook, {
+    //   bookType: 'xlsx',
+    //   type: 'array',
+    // });
+
+    // if (op === 1) {
+    //   this.downloadExcel(excelBuffer, excelFileName);
+    // } else {
+    //   this.sendEmail(excelBuffer, excelFileName);
+    // }
   }
 
   private downloadExcel(buffer: any, fileName: string): void {
-    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    const data: Blob = new Blob([buffer], { type: 'application/octet-stream' });
     FileSaver.saveAs(
       data,
       fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION

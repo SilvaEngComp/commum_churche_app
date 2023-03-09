@@ -1,4 +1,4 @@
-import { CaixaSubcategoryRegisterComponent } from './caixa-type-register/caixa-type-register.component';
+import { CaixaTypeRegisterComponent } from './caixa-type-register/caixa-type-register.component';
 import { CaixaCategoryRegisterComponent } from './caixa-group-register/caixa-group-register.component';
 import { UiModule } from './../../../ui/ui.module';
 import { FilterCaixaComponent } from './filter-caixa/filter-caixa.component';
@@ -16,7 +16,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     CaixaRegisterComponent,
     FilterCaixaComponent,
     CaixaCategoryRegisterComponent,
-    CaixaSubcategoryRegisterComponent,
+    CaixaTypeRegisterComponent,
   ],
   imports: [
     CommonModule,

@@ -15,10 +15,10 @@ import { UserService } from './../../services/user.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MySelectAdapter } from 'src/app/models/mySelectAdapter';
 import { UserFilter } from 'src/app/models/userFilter';
-import { CaixaSubcategoryService } from 'src/app/services/caixa-subcategory.service';
+import { CaixaTypeService } from 'src/app/services/caixa-type.service';
 import { ScheduleTypeRegisterComponent } from 'src/app/admin/church-schedule/schedule-type-register/schedule-type-register.component';
 import { CaixaCategoryRegisterComponent } from 'src/app/admin/financy/caixa/caixa-group-register/caixa-group-register.component';
-import { CaixaSubcategoryRegisterComponent } from 'src/app/admin/financy/caixa/caixa-type-register/caixa-type-register.component';
+import { CaixaTypeRegisterComponent } from 'src/app/admin/financy/caixa/caixa-type-register/caixa-type-register.component';
 
 @Component({
   selector: 'app-my-select-list',
@@ -49,7 +49,7 @@ export class MySelectListComponent implements OnInit {
   constructor(
     private userService: UserService,
     private caixaCategoryService: CaixaCategoryService,
-    private caixaSubcategoryService: CaixaSubcategoryService,
+    private caixaTypeService: CaixaTypeService,
     private churchService: ChurchService,
     private churchScheduleTypeService: ChurchScheduleTypeService,
     private popCtrl: PopoverController,
@@ -106,7 +106,7 @@ export class MySelectListComponent implements OnInit {
       this.apiResponse = responser.data;
     } else if (this.listName === 'types') {
       // this.apiResponse = UiService.localGet('localGroups');
-      const responser = await this.caixaSubcategoryService.get();
+      const responser = await this.caixaTypeService.get();
       this.apiResponse = responser.data;
     } else if (this.listName === 'wallets') {
       // this.apiResponse = UiService.localGet('localGroups');
@@ -174,7 +174,7 @@ export class MySelectListComponent implements OnInit {
     } else if (this.listName === 'groups') {
       component = CaixaCategoryRegisterComponent;
     } else if (this.listName === 'types') {
-      component = CaixaSubcategoryRegisterComponent;
+      component = CaixaTypeRegisterComponent;
     } else if (this.listName === 'churches') {
       component = ChurchRegisterComponent;
     } else if (this.listName === 'churchScheduleTypes') {

@@ -1,11 +1,11 @@
 import { CaixaCategory } from './caixaCategory';
 import { Caixa } from './caixa';
-import { CaixaSubcategory } from './caixaSubcategory';
+import { CaixaType } from './caixaType';
 
 export class CaixaSummary {
   total: number;
   caixaCategory: CaixaCategory;
-  caixaSubcategory: CaixaSubcategory;
+  caixaType: CaixaType;
   caixas: Caixa[];
   showDetails: boolean;
   isEntry: boolean;

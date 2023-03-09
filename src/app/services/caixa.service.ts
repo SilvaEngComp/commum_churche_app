@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Caixa } from '../models/caixa';
 import { ExceptionService } from './exception-service.service';
 import { CaixaFilter } from '../models/caixaFilter';
-import { CaixaSubcategory } from '../models/caixaSubcategory';
+import { CaixaType } from '../models/caixaType';
 import { Responser } from '../models/responser';
 import { UiService } from './ui.service';
 import { ServiceInterface } from './serviceInterface';
@@ -44,7 +44,7 @@ export class CaixaService extends ServiceInterface {
       .toPromise();
   }
 
-  async getByType(data: string, tipo: CaixaSubcategory): Promise<Responser> {
+  async getByType(data: string, tipo: CaixaType): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);

@@ -3,7 +3,7 @@
   <ion-title>{{localPageTitle}}</ion-title>
 </ion-item>
 
-<ion-grid>
+<ion-grid *ngIf="summaryinput">
   <ion-row>
     <ion-col class="card-options">
       <app-my-select-list [color]="'primary'" [label]="'Conta'" [listName]="'wallets'" [obj]="wallet"
@@ -94,15 +94,15 @@
         </ion-accordion> <ion-accordion value="fourth">
           <ion-item slot="header" color="light">
             <ion-card-title>Outras Entradas</ion-card-title>
-            <ion-note slot="end">R$ {{summary?.input?.caixaReportCategory?.total | currencyBrl }}</ion-note>
+            <ion-note slot="end">R$ {{summary?.caixaReport?.caixaReportCategory?.total | currencyBrl }}</ion-note>
           </ion-item>
           <div class="ion-padding" slot="content">
 
-            <ion-item lines="none" *ngIf="summary?.input?.caixaReportCategory?.caixaSummary?.caixas?.length===0">
+            <ion-item lines="none" *ngIf="summary?.caixaReport?.caixaReportCategory?.caixaSummary?.caixas?.length===0">
               <ion-title color="primary"> {{noContent}}</ion-title>
             </ion-item>
-            <app-caixa-summary [caixaReport]="summary?.input" [isEntry]="true"
-              *ngIf="summary?.input?.caixaReportCategory?.caixaSummary?.caixas?.length>0"
+            <app-caixa-summary [caixaReport]="summary?.caixaReport" [isEntry]="true"
+              *ngIf="summary?.caixaReport?.caixaReportCategory?.caixaSummary?.caixas?.length>0"
               (mantainceEmiter)="receiveMantainceEmiter($event)"></app-caixa-summary>
 
           </div>

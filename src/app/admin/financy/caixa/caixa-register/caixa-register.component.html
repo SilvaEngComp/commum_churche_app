@@ -47,6 +47,7 @@
             <ion-label class="description-label">DESCRIÇÃO</ion-label>
           </div>
           <div class="flex-container-col" *ngIf="showDescription">
+            <ion-icon color="danger" name="close-circle-sharp" (click)="setShowDescription()"></ion-icon>
             <textarea inputmode="text" wrap="hard" maxlength="500" [(ngModel)]="caixa.description"
               (blur)="setShowDescription()"
               placeholder="Aqui você pode escrever algo importante sobre esse registro...(Obrigatório para saídas)">
@@ -106,14 +107,14 @@
 
 
       <ion-row>
-        <ion-col>
-
+        <ion-col class="confirm-button">
+          <ion-fab-button (click)="register(inputAmount.value)" [color]="buttonColor">
+            <ion-icon name="checkmark-sharp"></ion-icon>
+          </ion-fab-button>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-fab-button class="confirm-button" (click)="register(inputAmount.value)" [color]="buttonColor">
-      <ion-icon name="checkmark-sharp"></ion-icon>
-    </ion-fab-button>
+
   </div>
 
 </div>

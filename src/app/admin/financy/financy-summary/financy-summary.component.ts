@@ -23,6 +23,7 @@ import { TitheSummary } from 'src/app/models/tithesummary';
 import { CaixaSummary } from 'src/app/models/caixaSummary';
 import { Tithe } from 'src/app/models/tithe';
 import { Wallet } from 'src/app/models/wallet';
+import { ConstantMessages } from 'src/app/models/messages';
 
 @Component({
   selector: 'app-summary',
@@ -80,6 +81,8 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
     this.wallet = UiService.localGet(Constants.CAIXA_WALLET);
     if (!this.wallet) {
       this.filter.wallet_id = Constants.WALLET_FLUX_ID;
+    } else {
+      this.filter.wallet_id = this.wallet?.id;
     }
     UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
 
@@ -100,20 +103,35 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
   }
 
   async load() {
-    if (!this.filter?.dateI || !this.filter?.dateF || !this.filter.wallet_id) {
+    if (this.isValidFilter()) {
+      this.financyService
+        .getTotalInputOutput(this.filter)
+        .then((response) => {
+          this.totalInputOutput = response.data;
+          this.balance =
+            this.totalInputOutput.totalInput -
+            this.totalInputOutput.totalOutput;
+        })
+        .catch((error) => console.log(error));
+    }
+  }
+
+  isValidFilter() {
+    if (!this.filter?.dateI || !this.filter?.dateF) {
       this.exeptionService.alertDialog(
-        'Selecione a data de inicio e fim da consulta',
+        ConstantMessages.INVALIDE_DATE_INTERVAL,
         'Alerta'
       );
+      return false;
     }
-    this.financyService
-      .getTotalInputOutput(this.filter)
-      .then((response) => {
-        this.totalInputOutput = response.data;
-        this.balance =
-          this.totalInputOutput.totalInput - this.totalInputOutput.totalOutput;
-      })
-      .catch((error) => console.log(error));
+    if (!this.filter?.wallet_id) {
+      this.exeptionService.alertDialog(
+        ConstantMessages.INVALID_WALLET,
+        'Alerta'
+      );
+      return false;
+    }
+    return true;
   }
 
   goToBalance() {

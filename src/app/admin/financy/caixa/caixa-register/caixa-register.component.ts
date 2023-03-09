@@ -3,7 +3,7 @@ import { WalletService } from './../../../../services/wallet.service';
 import { CaixaCategory } from '../../../../models/caixaCategory';
 import { Church } from 'src/app/models/church';
 import { ConstantMessages } from 'src/app/models/messages';
-import { CaixaSubcategory } from '../../../../models/caixaSubcategory';
+import { CaixaType } from '../../../../models/caixaType';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlertController, Platform } from '@ionic/angular';
@@ -32,7 +32,7 @@ export class CaixaRegisterComponent implements OnInit {
   isSmallDevice: boolean;
   days: string[] = [];
   day: string;
-  caixaSubcategorys: CaixaSubcategory[];
+  caixaTypes: CaixaType[];
   customizedMonth: CustomizedMonth;
   year: string;
   isEntry: string;
@@ -222,11 +222,11 @@ export class CaixaRegisterComponent implements OnInit {
     return true;
   }
 
-  setType(caixaSubcategory: CaixaSubcategory) {
-    if (caixaSubcategory) {
-      this.caixa.caixaSubcategory = caixaSubcategory;
+  setType(caixaType: CaixaType) {
+    if (caixaType) {
+      this.caixa.caixaType = caixaType;
     } else {
-      this.caixa.caixaSubcategory = null;
+      this.caixa.caixaType = null;
     }
   }
 

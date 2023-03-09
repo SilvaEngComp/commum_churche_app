@@ -1,3 +1,5 @@
+import { CaixasReportCategory } from './CaixaReportCategory';
+import { Church } from './church';
 import { CaixaReport } from './CaixaReportChurch';
 
 export class SummaryOutput {
@@ -6,5 +8,6 @@ export class SummaryOutput {
 }
 
 export class OutputReport {
-  output: CaixaReport;
+  church: Church;
+  caixaReport: CaixaReport;
 }

@@ -2,7 +2,7 @@
   <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="back()"></ion-icon>
   <ion-title>{{localPageTitle}}</ion-title>
 </ion-item>
-<ion-grid>
+<ion-grid *ngIf="totalInputOutput">
 
   <ion-row>
     <ion-col class="card-options">

@@ -23,46 +23,38 @@ export class UserCSV {
   static getTable(relatorio: UserCSV[]): any[][] {
     const csvtable: any[][] = [];
 
+    csvtable.push(UserCSV.headersOptions());
     relatorio.filter((userCSV) => {
-      const relatorioList: any[] = [];
-      if (userCSV.name) {
-        relatorioList.push(userCSV.name);
+      const relatorioList: BodyCSV[] = [];
+      if (userCSV?.name) {
+        relatorioList.push(new BodyCSV(userCSV.name));
       } else {
-        relatorioList.push('');
+        relatorioList.push(new BodyCSV(''));
       }
       if (userCSV.birthDate) {
-        relatorioList.push(userCSV.birthDate);
+        relatorioList.push(new BodyCSV(userCSV.birthDate));
       } else {
-        relatorioList.push('');
+        relatorioList.push(new BodyCSV(''));
       }
       if (userCSV.church) {
-        relatorioList.push(userCSV.church);
+        relatorioList.push(new BodyCSV(userCSV.church));
       } else {
-        relatorioList.push('');
+        relatorioList.push(new BodyCSV(''));
       }
       csvtable.push(relatorioList);
     });
     return csvtable;
   }
 
-  static headersOptions(): HeaderUserCSV[] {
-    const options: HeaderUserCSV[] = [];
+  static headersOptions(): HeaderCSV[] {
+    const options: HeaderCSV[] = [];
     const names: string[] = ['Nome', 'Data', 'Organização'];
 
     names.filter((name) => {
-      options.push(new HeaderUserCSV(name));
+      options.push(new HeaderCSV(name));
     });
 
     return options;
-  }
-
-  static header(selectedHeaders: HeaderUserCSV[]): string[] {
-    const headerUserCSV: string[] = [];
-
-    selectedHeaders.filter((selected) => {
-      headerUserCSV.push(selected.name);
-    });
-    return headerUserCSV;
   }
 
   static getRelatorio(users: User[]) {
@@ -77,9 +69,26 @@ export class UserCSV {
   }
 }
 
-export class HeaderUserCSV {
-  name: string;
-  constructor(name?: string, checked: boolean = true) {
-    this.name = name;
+export class HeaderCSV {
+  v: string;
+  s: any;
+  constructor(value: string) {
+    this.v = value;
+    this.s = {
+      font: {
+        bold: true,
+        background: { rgb: 'FF0000' },
+        name: 'Arial Black',
+        sz: 24,
+      },
+    };
+  }
+}
+export class BodyCSV {
+  v: string;
+  s: any;
+  constructor(value: string) {
+    this.v = value;
+    this.s = { font: { name: 'Courier', sz: 24 } };
   }
 }

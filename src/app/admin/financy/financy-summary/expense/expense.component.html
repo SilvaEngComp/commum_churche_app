@@ -2,7 +2,7 @@
   <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="back()"></ion-icon>
   <ion-title>{{localPageTitle}}</ion-title>
 </ion-item>
-<ion-grid>
+<ion-grid *ngIf="caixaReport">
   <ion-row>
     <ion-col class="card-options">
       <app-my-select-list [color]="'primary'" [label]="'Conta'" [listName]="'wallets'" [obj]="wallet"
@@ -59,22 +59,23 @@
   </ion-row>
   <ion-row *ngFor="let summary of caixaReport?.reports">
     <ion-col>
-      <ion-accordion value="fourth">
-        <ion-item slot="header" color="light">
-          <ion-card-title>Saídas</ion-card-title>
-          <ion-note slot="end">R$ {{summary?.output?.caixaReportCategory?.total | currencyBrl }}</ion-note>
-        </ion-item>
-        <div class="ion-padding" slot="content">
-
-          <ion-item lines="none" *ngIf="summary?.output?.caixaReportCategory?.caixaSummary?.caixas?.length===0">
-            <ion-title color="primary"> {{noContent}}</ion-title>
+      <ion-accordion-group>
+        <ion-accordion value="fourth">
+          <ion-item slot="header" color="light">
+            <ion-card-title>{{summary?.caixaReport?.church?.name}}</ion-card-title>
+            <ion-note slot="end">R$ {{summary?.caixaReport?.caixaReportCategory?.total | currencyBrl }}</ion-note>
           </ion-item>
-          <app-caixa-summary [caixaReport]="summary?.output" [isEntry]="true"
-            *ngIf="summary?.output?.caixaReportCategory?.caixaSummary?.caixas?.length>0"
-            (mantainceEmiter)="receiveMantainceEmiter($event)"></app-caixa-summary>
+          <div class="ion-padding" slot="content">
+            <ion-item lines="none" *ngIf="summary?.caixaReport?.caixaReportCategory?.caixaSummary?.caixas?.length===0">
+              <ion-title color="primary"> {{noContent}}</ion-title>
+            </ion-item>
 
-        </div>
-      </ion-accordion>
+            <app-caixa-summary [caixaReport]="summary?.caixaReport" [isEntry]="false"
+              *ngIf="summary?.caixaReport?.caixaReportCategory?.caixaSummary?.caixas?.length>0"
+              (mantainceEmiter)="receiveMantainceEmiter($event)"></app-caixa-summary>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
     </ion-col>
   </ion-row>
 </ion-grid>

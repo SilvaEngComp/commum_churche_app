@@ -8,7 +8,7 @@ export class SummaryInput {
 }
 
 export class InputsReport {
-  input: CaixaReport;
+  caixaReport: CaixaReport;
   tithe: TitheReport;
   offer: TitheReport;
 }

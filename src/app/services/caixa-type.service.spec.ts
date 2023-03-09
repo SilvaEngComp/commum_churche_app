@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CaixaTypeService } from './caixa-subcategory.service';
+import { CaixaTypeService } from './caixa-type.service';
 
 describe('CaixaTypeService', () => {
   let service: CaixaTypeService;

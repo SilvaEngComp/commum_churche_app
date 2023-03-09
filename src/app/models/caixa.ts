@@ -1,5 +1,5 @@
 import { Wallet } from './wallet';
-import { CaixaSubcategory } from './caixaSubcategory';
+import { CaixaType } from './caixaType';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { UiService } from '../services/ui.service';
 import { User } from './user';
@@ -8,7 +8,7 @@ import { Church } from './church';
 export class Caixa {
   id: number;
   date: string;
-  caixaSubcategory: CaixaSubcategory;
+  caixaType: CaixaType;
   amount: number;
   description: string;
   register: User;
@@ -22,7 +22,7 @@ export class Caixa {
 
   constructor(name?: string) {
     this.date = UiService.getCurrentDate();
-    this.caixaSubcategory = new CaixaSubcategory(name);
+    this.caixaType = new CaixaType(name);
     this.register = new User();
     this.register = new User();
     this.isEntry = false;
