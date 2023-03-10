@@ -19,11 +19,11 @@ export class CaixaSummaryComponent implements OnInit {
   @Input() isEntry: boolean;
   public uploader: FileUploader = new FileUploader({});
   headCaixaList: string[] = [
-    'Tipo',
     'Valor',
     'Data',
     'Tesoureiro',
     'Organização',
+    'Subcagoria',
     '',
   ];
   constructor(
@@ -38,20 +38,8 @@ export class CaixaSummaryComponent implements OnInit {
       console.log('emiting request to reload');
       this.mantainceEmiter.emit();
     });
-  }
 
-  setShowSummaryDetail() {
-    this.caixaReport.showDetails = !this.caixaReport.showDetails;
-  }
-
-  setShowCaixaDetail(caixa: Caixa, caixaReport: CaixaReport) {
-    const caixaPosition =
-      this.caixaReport.caixaReportCategory.caixaSummary.caixas.indexOf(caixa);
-    this.caixaReport.caixaReportCategory.caixaSummary.caixas[
-      caixaPosition
-    ].showDetails =
-      !this.caixaReport.caixaReportCategory.caixaSummary.caixas[caixaPosition]
-        .showDetails;
+    console.log(this.caixaReport);
   }
 
   async edit(caixa: Caixa) {

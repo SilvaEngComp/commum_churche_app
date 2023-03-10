@@ -1,74 +1,47 @@
-<div class="div-body">
-  <ion-item lines="none">
-    <ion-title class="title">ADICIONAR IMAGENS</ion-title>
-  </ion-item>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <div class="div-drop-image" ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-          (fileOver)="fileOverBase($event)" (onFileDrop)="onReceiveImage()" [uploader]="uploader">
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <div class="div-drop-image" ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+        (fileOver)="fileOverBase($event)" (onFileDrop)="onReceiveImage()" [uploader]="uploader">
 
-          <div *ngIf="!selectedImge">
-            <ion-icon src="./assets/icons/file-image.svg"></ion-icon>
-            <ion-icon src="./assets/icons/file-image.svg"></ion-icon>
-          </div>
-          <ion-img alt="Igreaja Batista Nova Betel" [src]="selectedImge" *ngIf="selectedImge"
-            class="selected-image"></ion-img>
+        <ion-icon *ngIf="!selectedImge" color="secondary" name="image-outline"></ion-icon>
+        <ion-img alt="Igreaja Batista Nova Betel" [src]="selectedImge" *ngIf="selectedImge"
+          class="selected-image"></ion-img>
 
-          <ion-label>ARRASTE SUAS IMAGENS PARA AQUI</ion-label>
+        <label class="lb-input">
+          <ion-label slot="start">Clique aqui para procurar na galeria</ion-label>
+          <input type='file' ng2FileSelect [uploader]="uploader" (onFileSelected)="onReceiveImage()" />
 
-          <label class="lb-input">
-            <ion-label slot="start">PROCURAR NO DISPOSITIVO</ion-label>
-            <input type='file' ng2FileSelect [uploader]="uploader" (onFileSelected)="onReceiveImage()" />
+        </label>
+      </div>
 
-          </label>
-        </div>
+      <ion-item lines="none">
+        <ion-label color="primary">Especificações</ion-label>
+      </ion-item>
+      <ul>
+        <li><ion-label color="primary">Proporção indicada 1:1</ion-label></li>
+        <li><ion-label color="primary">Tamanho Máximo 2 Mb</ion-label></li>
+      </ul>
 
-      </ion-col>
+    </ion-col>
 
-      <!-- <ion-col class="isSmall">
-        <div class="right-list">
-          <div class="observacao">
-            <ion-label>OBSERVAÇÕES</ion-label>
-          </div>
-          <div class="div-list">
-            <div>
-              <ion-label>TAMNHO MÁXIMO POR IMAGEM (2 Mb)</ion-label>
-              <ion-icon name="ellipse-sharp"></ion-icon>
-            </div>
-            <div>
-              <ion-label>IMAGENS NO FORMATO PNG OU JPEG/JPG</ion-label>
-              <ion-icon name="ellipse-sharp"></ion-icon>
-            </div>
 
-            <div>
-              <ion-label>LIMITE DE 10 (DEZ) IMAGENS POR PRODUTO</ion-label>
-              <ion-icon name="ellipse-sharp"></ion-icon>
-            </div>
-            <div>
-              <ion-label>EVITE COLOCAR IMAGENS COM POUCA QUALIDADE</ion-label>
-              <ion-icon name="ellipse-sharp"></ion-icon>
-            </div>
-          </div>
-        </div>
-      </ion-col> -->
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item class="pass-button" lines="none">
-          <ion-button color="danger" (click)="excluir()" *ngIf="hasOneSelected">
-            <ion-label color="light">EXCLUIR</ion-label>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item class="pass-button" lines="none">
+        <ion-button color="danger" (click)="excluir()" *ngIf="hasOneSelected">
+          <ion-label color="light">EXCLUIR</ion-label>
 
-          </ion-button> <ion-button color="warning" (click)="cancel()" *ngIf="confirmButton">
-            <ion-label color="light">CANCELAR</ion-label>
-          </ion-button>
+        </ion-button> <ion-button color="warning" (click)="cancel()" *ngIf="confirmButton">
+          <ion-label color="light">CANCELAR</ion-label>
+        </ion-button>
 
-          <ion-button slot="end" slot="end" color="success" (click)="back()" *ngIf="confirmButton">
-            <ion-label>CONCLUIR</ion-label>
-            <ion-icon name="checkmark-circle-outline"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</div>
+        <ion-button slot="end" slot="end" color="success" (click)="back()" *ngIf="confirmButton">
+          <ion-label>CONCLUIR</ion-label>
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>

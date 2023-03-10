@@ -1,43 +1,41 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start" (click)="back()">
-      <ion-icon color="primary" name="arrow-undo-circle-outline"></ion-icon>
-    </ion-buttons>
-    <ion-title class="lb-title">
-      {{!feed?.id? 'NOVA PUBLICAÇÃO': 'EDITAR PUBLICAÇÃO'}}
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-segment color="secondary" [value]="session" (ionChange)="setSession($event)">
-  <ion-segment-button value="1">
+<ion-item class="item-page-title">
+  <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="back()"></ion-icon>
+  <ion-title>{{localPageTitle}}</ion-title>
+</ion-item>
+
+<div class="segment">
+  <ion-segment-button value="1" [ngClass]="{'selected-segment': session==='1'}">
     <ion-label>Texto</ion-label>
   </ion-segment-button>
-  <ion-segment-button value="2">
+  <ion-label color="secondary">|</ion-label>
+  <ion-segment-button value="2" [ngClass]="{'selected-segment': session==='2', 'left':true}">
     <ion-label>Imagem</ion-label>
-  </ion-segment-button> <ion-segment-button value="3">
-    <ion-label>Revisar</ion-label>
   </ion-segment-button>
-</ion-segment>
+  <ion-label color="secondary">|</ion-label>
+  <ion-segment-button value="3" [ngClass]="{'selected-segment': session==='3'}">
+    <ion-label>Agendar</ion-label>
+  </ion-segment-button>
+</div>
 
-<ion-spinner *ngIf="is_loading" name="bubbles"></ion-spinner>
+<ion-spinner mode="ios" *ngIf="is_loading" name="bubbles"></ion-spinner>
 <ion-grid>
   <ion-row>
-    <ion-col *ngIf="session===1">
+    <ion-col *ngIf="session==='1'">
       <ion-card>
         <app-edit-text-feed (returnSubpage)="receiveSubpage($event)"></app-edit-text-feed>
       </ion-card>
     </ion-col>
-    <ion-col *ngIf="session===2">
+    <ion-col *ngIf="session==='2'">
       <app-load-images [single]="true" (returnPage)="receiveSubpage($event)"></app-load-images>
     </ion-col>
-    <ion-col *ngIf="session===3">
+    <ion-col *ngIf="session==='3'">
       <ion-card>
         <app-review-feed (returnSubpage)="receiveSubpage($event)"></app-review-feed>
       </ion-card>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col *ngIf="session>1">
+    <ion-col *ngIf="session!=='1'">
       <ion-button expand="block" (click)="backSession()">
         <ion-icon name="chevron-back-outline"></ion-icon>
 
@@ -47,8 +45,8 @@
 
     <ion-col>
       <ion-button expand="block" (click)="publish()">
-        <ion-label>{{session<3 ?'PRÓXIMO':'CONCLUIR'}} </ion-label>
-            <ion-icon name="chevron-forward-outline"></ion-icon>
+        <ion-label>{{session!=='3' ?'PRÓXIMO':'CONCLUIR'}} </ion-label>
+        <ion-icon name="chevron-forward-outline"></ion-icon>
       </ion-button>
     </ion-col>
   </ion-row>

@@ -42,19 +42,13 @@ export class PublicationComponent implements OnInit {
     if (!this.feed) {
       this.feed = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
     }
+    console.log(this.feed);
 
     if (UiService.localGet(Constants.FEED_SUBPAGE) === 'selected-feed') {
       this.is_a_selected_post = true;
     }
-    this.user = LoginService.getUser();
 
     this.feedReaction = new FeedComment();
-
-    if (this.feed.publisher.id === this.user.id) {
-      this.permission = true;
-    } else {
-      this.permission = false;
-    }
   }
 
   setLove() {

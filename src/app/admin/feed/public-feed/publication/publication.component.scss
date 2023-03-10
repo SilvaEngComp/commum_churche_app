@@ -1,3 +1,8 @@
+.flex-container-row {
+  display: flex;
+  flex-direction: row;
+}
+
 .lb-feed-title {
   font-family: Qanelas-bold;
   font-size: 16pt;
@@ -51,24 +56,6 @@ ion-textarea {
   width: 90%;
   margin: 20px;
   text-align: justify;
-}
-
-.div-publisher {
-  display: flex;
-  margin-top: 10px;
-  div {
-    margin-left: 15px;
-    display: grid;
-    grid-template-columns: auto;
-    justify-content: left;
-    ion-note {
-      font-size: 10pt;
-      margin-top: -20px;
-      font-family: Qanelas;
-      font-weight: 900;
-      color: var(--ion-color-medium);
-    }
-  }
 }
 
 .short-message {

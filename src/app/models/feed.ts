@@ -8,7 +8,7 @@ export class Feed {
   title: string;
   message: string;
   image: string;
-  published: boolean;
+  isAvailable: boolean;
   date: string;
   time: string;
   checkPublish: boolean;
@@ -19,7 +19,7 @@ export class Feed {
   url: string;
 
   constructor() {
-    this.published = true;
+    this.isAvailable = true;
     this.showComment = false;
     const datePipe = new DatePipe('en');
     this.date = datePipe.transform(Date.now(), 'yyyy-MM-dd');

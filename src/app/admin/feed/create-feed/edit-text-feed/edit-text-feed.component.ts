@@ -21,11 +21,7 @@ export class EditTextFeedComponent implements OnInit {
   is_loading: boolean;
   base_url: string = environment.IMAGE_URL;
   image: FormData;
-  minDate: string;
-  maxDate: string;
-  datePipe = new DatePipe('en');
-  dateValue: string;
-  hasTime: boolean;
+
   session: number;
   constructor(private exceptionService: ExceptionService) {}
 
@@ -40,34 +36,6 @@ export class EditTextFeedComponent implements OnInit {
       this.feed.hasTime = false;
     }
     console.log(this.feed);
-  }
-
-  setTimeExists() {
-    this.hasTime = !this.hasTime;
-    this.feed.hasTime = this.hasTime;
-  }
-
-  setDate(date) {
-    const validDateObj = UiService.validDate(date);
-    if (validDateObj) {
-      if (validDateObj.status) {
-        this.feed.date = validDateObj.date;
-        this.save();
-      } else {
-        this.exceptionService.alertDialog(validDateObj.message);
-      }
-    }
-  }
-  setTime(time) {
-    const validDateObj = UiService.validTime(time);
-    if (validDateObj) {
-      if (validDateObj.status) {
-        this.feed.date = validDateObj.date;
-        this.save();
-      } else {
-        this.exceptionService.alertDialog(validDateObj.message);
-      }
-    }
   }
 
   back() {
@@ -88,17 +56,8 @@ export class EditTextFeedComponent implements OnInit {
     });
   }
 
-  setDateAsNow() {
-    this.feed.date = this.datePipe.transform(Date.now(), 'dd/MM/yyyy');
-    this.save();
-  }
-  setTimeAsNow() {
-    this.feed.time = this.datePipe.transform(Date.now(), 'HH::mm');
-    this.save();
-  }
-
-  onTypeTitle(title) {
-    this.feed.title = title;
+  onTypeTitle(ev) {
+    this.feed.title = ev.target.value;
     this.save();
   }
 

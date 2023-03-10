@@ -1,34 +1,19 @@
-.geral {
-  display: grid;
-  grid-template-columns: auto;
-  background-color: rgba($color: #92949c, $alpha: 0.2);
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.div-header {
-  background: white;
-  width: 100%;
-  min-height: 80px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  display: grid;
-  align-items: center;
-  align-content: center;
-  align-self: center;
-  margin-bottom: 10px;
-}
-
 .div-body {
   background: white;
   width: 100%;
   min-height: 80px;
   margin-bottom: 10px;
 }
-
+ion-icon {
+  font-size: 100px;
+}
+.lb-input {
+  font-family: Qanelas-bold;
+  color: var(--ion-color-secondary);
+}
 .drop-zone {
   background-color: #f6f6f6;
-  border: dotted 3px #dedddd;
+  border: dotted 3px var(--ion-color-secondary);
   height: 30vh;
   display: flex;
   align-items: center;
@@ -36,40 +21,21 @@
   margin: 5px;
 }
 
-.file-input-container {
-  text-align: right;
-  input[type="file"] {
-    display: none;
-  }
-  label {
-    border: 1px solid var(--ion-color-secondary);
-    padding: 6px 12px;
-    cursor: pointer;
-  }
-}
-
-.title {
-  font-size: 20pt;
-  font-weight: bold;
-  font-family: Qanelas;
-  text-align: center;
-  color: var(--ion-color-medium);
-}
-
 //LEFT SIDE
 .selected-image {
-  border: 2px solid var(--ion-color-medium);
+  border: 2px solid var(--ion-color-secondary);
   border-radius: 10px;
   width: 300px;
   height: 300px;
 }
 
 .div-drop-image {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   align-content: center;
   justify-content: center;
-  border: 2px solid var(--ion-color-medium);
+  border: 2px solid var(--ion-color-secondary);
   border-radius: 10px;
   width: 100%;
   min-height: 300px;
@@ -87,7 +53,7 @@
     font-family: Qanelas;
   }
   label {
-    background-color: var(--ion-color-success);
+    background-color: var(--ion-color-secondary);
     border-radius: 2px;
     text-align: center;
     ion-label {
@@ -103,131 +69,4 @@
 
 .nv-file-over {
   border: dotted 3px var(--ion-color-success);
-}
-
-//RIGHT SIDE
-.right-list {
-  display: grid;
-  grid-template-columns: auto;
-  align-items: flex-end;
-  ion-label {
-    float: right;
-  }
-  .div-list {
-    display: grid;
-    grid-template-columns: auto;
-    //   margin-right: 30px;
-    div {
-      float: right;
-      display: flex;
-      justify-content: flex-end;
-      ion-label {
-        font-size: 5pt;
-        font-family: "Courier New", Courier, monospace;
-        margin-right: 5px;
-        color: var(--ion-color-medium);
-      }
-      ion-icon {
-        font-size: 10px;
-        color: var(--ion-color-medium);
-      }
-    }
-    p::before {
-      content: "";
-      width: 5px;
-      height: 5px;
-      border-radius: 10px;
-      background-color: var(--ion-color-success);
-      position: absolute;
-      top: 5px;
-      left: 50%;
-    }
-  }
-}
-
-.observacao {
-  font-size: 20pt;
-  font-weight: bold;
-  font-family: Qanelas;
-  text-align: center;
-  color: var(--ion-color-medium);
-}
-
-ul {
-  list-style-type: disc;
-}
-
-.images-list {
-  display: flex;
-  justify-content: space-around;
-  margin-left: 10px;
-  ion-card {
-    margin-top: 10px;
-    width: 80px;
-    height: 80px;
-    border: 2px solid var(--ion-color-medium);
-    border-radius: 10px;
-    ion-label {
-      width: 10px;
-      height: 10px;
-      background: var(--ion-color-medium);
-      margin-left: 10px;
-      border-radius: 3px;
-      color: var(--ion-color-light);
-      font-size: 12pt;
-      font-family: Qanelas;
-    }
-    ion-checkbox {
-      margin-left: 70px;
-      margin-right: 2px;
-      margin-bottom: 2px;
-      z-index: 2000;
-    }
-  }
-  ion-img {
-    margin-left: 20px;
-    width: 40px;
-    height: 40px;
-  }
-  .onSelectedImge {
-    border: 5px dotted var(--ion-color-tertiary);
-  }
-}
-
-.pass-button {
-  ion-label {
-    color: var(--ion-color-secondary);
-    font-size: 12pt;
-    font-weight: 100;
-    font-family: "Courier New", Courier, monospace;
-  }
-  ion-button {
-    ion-label {
-      color: var(--ion-color-light);
-      font-size: 12pt;
-      font-weight: bold;
-      font-family: Qanelas;
-    }
-    ion-icon {
-      color: var(--ion-color-light);
-      font-size: 10px;
-    }
-  }
-}
-
-@media screen and (min-width: 500px) {
-  .isSmall {
-    display: none;
-    width: 0px;
-    height: 0px;
-  }
-
-  .title {
-    font-size: 10pt;
-  }
-}
-@media screen and (max-width: 500px) {
-  .title {
-    font-size: 10pt;
-  }
 }

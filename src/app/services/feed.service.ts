@@ -32,6 +32,9 @@ export class FeedService extends ServiceInterface {
       this.checkLogged();
       return Promise.resolve(null);
     }
+
+    console.clear();
+    console.log(`${environment.API2}/feeds${filter.getRequest()}`);
     return this.http
       .get<Responser>(`${environment.API2}/feeds${filter.getRequest()}`, {
         headers: await LoginService.getHeaders(),
@@ -56,6 +59,9 @@ export class FeedService extends ServiceInterface {
       return Promise.resolve(null);
     }
     const user = LoginService.getUser();
+
+    console.clear();
+    console.log(`${environment.API2}/feeds/hasSawNewest/${user.id}`);
     return this.http
       .get(`${environment.API2}/feeds/hasSawNewest/${user.id}`, {
         headers: await LoginService.getHeaders(),
@@ -67,6 +73,7 @@ export class FeedService extends ServiceInterface {
       this.checkLogged();
       return Promise.resolve(null);
     }
+    console.clear();
     console.log(JSON.stringify(feed));
     return this.http
       .post<Responser>(`${environment.API2}/feeds`, feed, {
@@ -102,23 +109,13 @@ export class FeedService extends ServiceInterface {
       .toPromise();
   }
 
-  async onlineClass(feed: Feed, online: boolean) {
-    if (!(await LoginService.getHeaders())) {
-      this.checkLogged();
-      return Promise.resolve(null);
-    }
-    return this.http
-      .get(`${environment.API2}/feeds/${feed.id}/online/${online}`, {
-        headers: await LoginService.getHeaders(),
-      })
-      .toPromise();
-  }
-
   async update(feed: Feed): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
       return Promise.resolve(null);
     }
+    console.clear();
+    console.log(JSON.stringify(feed));
     return this.http
       .patch<Responser>(`${environment.API2}/feeds/${feed.id}`, feed, {
         headers: await LoginService.getHeaders(),

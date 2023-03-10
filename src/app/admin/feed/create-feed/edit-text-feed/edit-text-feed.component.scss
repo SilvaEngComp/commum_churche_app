@@ -1,17 +1,3 @@
-.div-time {
-  display: grid;
-  grid-template-columns: auto auto;
-}
-ion-checkbox {
-  margin-right: 5px;
-}
-
-@media screen and (max-width: 500px) {
-  .div-time {
-    width: 300px;
-  }
-}
-
 .url {
   font-family: Qanelas;
   width: 100%;
@@ -24,4 +10,9 @@ ion-checkbox {
   width: 100%;
   height: 200px;
   border: 1px dotted var(--ion-color-tertiary);
+}
+
+.item-input {
+  border: 1px solid var(--ion-color-secondary);
+  border-radius: 20px;
 }

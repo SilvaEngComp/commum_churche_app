@@ -156,7 +156,7 @@ export class Constants {
   static COLOR_TRANSPARENT = 'transparent';
 
   static TITLE_FEED_CREATE_FEED = 'CRIAR NOVA PUBLICAÇÃO';
-  static TITLE_FEED_NEWS_FEED = 'Novidades';
+  static TITLE_FEED_NEWS_FEED = 'Notícias';
 
   static FEED_SUBPAGE = 'feed-subpage';
   static FEED_PAGE_PUBLIC = '1';
@@ -165,6 +165,7 @@ export class Constants {
   static FEED_PAGE_PUBLICATION = '3';
   static FEED_PAGE_COMMENT = '4';
   static FEED_ATTRIBUTES_FEED_OBJECT = 'storedFeed';
+  static FEED_ATTRIBUTES_FEED_SESSION = 'feedSession';
 
   static CHURCH_SCHEDULE_SUBPAGE = 'schedule-subpage';
   static CHURCH_SCHEDULE_PAGE_PUBLIC = '1';

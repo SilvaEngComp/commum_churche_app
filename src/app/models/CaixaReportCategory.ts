@@ -2,7 +2,7 @@ import { CaixaCategory } from './caixaCategory';
 import { CaixaSummary } from './caixaSummary';
 
 export class CaixasReportCategory {
-  total: CaixaCategory;
-  caixaSummary: CaixaSummary;
+  total: number;
+  caixaSummary: CaixaSummary[];
   showDetails: boolean;
 }

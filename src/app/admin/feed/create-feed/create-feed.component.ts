@@ -32,7 +32,8 @@ export class CreateFeedComponent implements OnInit {
   datePipe = new DatePipe('en');
   dateValue: string;
   hasTime: boolean;
-  session: number;
+  session: string;
+  localPageTitle: string;
   constructor(
     private feedService: FeedService,
     private messagingService: MessagingService,
@@ -40,13 +41,19 @@ export class CreateFeedComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.session = 1;
+    this.session = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_SESSION);
+    if (!this.session) {
+      this.session = '1';
+    }
     this.image = new FormData();
     this.checkFeed();
+    this.localPageTitle = !this.feed?.id
+      ? 'NOVA PUBLICAÇÃO'
+      : 'EDITAR PUBLICAÇÃO';
   }
 
   setSession(ev: any) {
-    this.session = Number(ev.target.value);
+    this.session = String(ev.target.value);
     this.checkFeed();
   }
 
@@ -68,16 +75,23 @@ export class CreateFeedComponent implements OnInit {
       this.feed.publisher.roles = user.roles;
     }
 
-    if (this.session === 1) {
-      this.feed.published = false;
-    } else if (this.session === 3) {
-      this.feed.published = true;
+    if (this.session === '1') {
+      this.feed.isAvailable = false;
+    } else if (this.session === '3') {
+      this.feed.isAvailable = true;
     }
+    this.save();
   }
 
   backSession() {
-    this.session--;
+    const aux = Number(this.session) - 1;
+    this.session = String(aux);
     this.checkFeed();
+  }
+  nextSession() {
+    const aux = Number(this.session) + 1;
+    this.session = String(aux);
+    this.save();
   }
   back() {
     console.log({ subpage: Constants.FEED_PAGE_PUBLIC });
@@ -87,6 +101,7 @@ export class CreateFeedComponent implements OnInit {
   }
   save() {
     UiService.localSet(Constants.FEED_ATTRIBUTES_FEED_OBJECT, this.feed);
+    UiService.localSet(Constants.FEED_ATTRIBUTES_FEED_SESSION, this.session);
   }
 
   receiveSubpage(obj: any) {
@@ -104,12 +119,12 @@ export class CreateFeedComponent implements OnInit {
   publish() {
     this.checkFeed();
 
-    if (this.session !== 2) {
+    if (this.session !== '2') {
       if (this.validForm()) {
         this.feedService.store(this.feed).then((responser) => {
           this.feed = responser.data;
           this.save();
-          if (this.session === 3) {
+          if (this.session === '3') {
             this.back();
             const push: PushNotify = new PushNotify(
               this.feed.title,
@@ -117,12 +132,12 @@ export class CreateFeedComponent implements OnInit {
             );
             this.messagingService.send(push);
           } else {
-            this.session++;
+            this.nextSession();
           }
         });
       }
     } else {
-      this.session++;
+      this.nextSession();
     }
 
     console.log(this.session);
