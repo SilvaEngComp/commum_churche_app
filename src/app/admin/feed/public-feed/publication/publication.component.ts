@@ -57,9 +57,7 @@ export class PublicationComponent implements OnInit {
       this.exeptionService.error(error);
     });
   }
-  setComment() {
-    // UiService.localSet(Constants.FEED_ATTRIBUTES_FEED_OBJECT, this.feed);
-    // UiService.feedPage.emit({ subpage: Constants.FEED_PAGE_COMMENT });
+  accessUrl() {
     window.open(this?.feed?.url);
   }
   back() {

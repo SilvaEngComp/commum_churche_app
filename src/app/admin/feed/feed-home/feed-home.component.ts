@@ -21,6 +21,6 @@ export class FeedHomeComponent implements OnInit {
   }
 
   back() {
-    this.returnPage.emit(Constants.MENU_BACK);
+    this.returnPage.emit({ page: Constants.MENU_BACK });
   }
 }

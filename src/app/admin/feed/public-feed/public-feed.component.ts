@@ -41,7 +41,7 @@ export class PublicFeedComponent implements OnInit {
   }
 
   back() {
-    this.returnPage.emit({ page: Constants.MENU_BACK });
+    this.returnPage.emit({ page: Constants.MENU_GENERAL_OPTION_FEED });
   }
 
   load() {

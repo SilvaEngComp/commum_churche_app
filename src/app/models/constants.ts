@@ -77,6 +77,7 @@ export class Constants {
   static MENU_BACK = '-1';
   static MENU_GENERAL_OPTION_MORE = '3';
   static MENU_GENERAL_OPTION_USER = '1';
+  static MENU_GENERAL_OPTION_FEED = '0';
 
   static PAGE_CONTROLL_FINANCY_ADMIN = 'financy-subpage';
   static PAGE_CONTROLL_SECRETARY_ADMIN = 'secretary-subpage';

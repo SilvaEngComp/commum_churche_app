@@ -6,7 +6,7 @@
         <ion-label position="floating">Título</ion-label>
         <ion-textarea (keyup)="onTypeTitle($event)" maxlength="120" [value]="feed?.title" class="item-input"
           placeholder="Digite o título da publicação"></ion-textarea>
-        <ion-note>{{ feed?.url?.length ? feed?.url?.length : 0}} / 120 caracteres</ion-note>
+        <ion-note>{{ feed?.title?.length ? feed?.title?.length : 0}} / 120 caracteres</ion-note>
       </ion-col>
     </ion-row> <ion-row>
       <ion-col>

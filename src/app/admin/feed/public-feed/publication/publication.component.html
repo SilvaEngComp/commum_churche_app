@@ -1,13 +1,11 @@
 <ion-grid>
   <ion-row>
     <ion-col size="10">
-      <div class="flex-container-row">
-        <ion-item>
-          <ion-avatar>
-            <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/logo.png"></ion-img>
-          </ion-avatar>
-          <p class="lb-feed-title">{{ feed?.title }}</p>
-        </ion-item>
+      <div class="flex-container-row logo-div">
+        <ion-avatar class="logo">
+          <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/logo.png"></ion-img>
+        </ion-avatar>
+        <p class="lb-feed-title">{{ feed?.title }}</p>
         <ion-icon [ngClass]="{'hidde-menu':!permission}" (click)="menuPost(feed, $event)"
           name="ellipsis-vertical-outline"></ion-icon>
       </div>
@@ -15,7 +13,7 @@
   </ion-row>
   <ion-row *ngIf="feed?.image?.length>0">
     <ion-col>
-      <div [ngClass]="{'feed-img-short': !expandAll, 'feed-img-large':expandAll}">
+      <div class="feed-img-short">
         <ion-img alt="Igreaja Batista Nova Betel" [src]="feed?.image"></ion-img>
       </div>
     </ion-col>
@@ -23,9 +21,9 @@
   <ion-row>
     <ion-col>
       <div class="headers-reactions">
-        <ion-icon *ngIf="!feed?.love" name="heart-outline" (click)="setLove()"></ion-icon>
+        <ion-icon color="secondary" *ngIf="!feed?.love" name="heart-outline" (click)="setLove()"></ion-icon>
         <ion-icon color="danger" *ngIf="feed?.love" name="heart-sharp" (click)="setLove()"></ion-icon>
-        <ion-icon name="chatbox-outline" (click)="setComment()"></ion-icon>
+        <ion-icon color="secondary" name="chatbubble-outline" (click)="accessUrl()"></ion-icon>
         <ion-label>{{ feed?.date +' '+feed?.time | date: 'dd/MM/yyyy HH:mm:ss' }}</ion-label>
       </div>
 

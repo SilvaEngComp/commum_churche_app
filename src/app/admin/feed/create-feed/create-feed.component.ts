@@ -94,10 +94,9 @@ export class CreateFeedComponent implements OnInit {
     this.save();
   }
   back() {
-    console.log({ subpage: Constants.FEED_PAGE_PUBLIC });
-    this.returnSubpage.emit({ subpage: Constants.FEED_PAGE_PUBLIC });
-
+    this.returnSubpage.emit({ subpage: Constants.MENU_GENERAL_OPTION_FEED });
     UiService.localRemove(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
+    UiService.localRemove(Constants.FEED_ATTRIBUTES_FEED_SESSION);
   }
   save() {
     UiService.localSet(Constants.FEED_ATTRIBUTES_FEED_OBJECT, this.feed);

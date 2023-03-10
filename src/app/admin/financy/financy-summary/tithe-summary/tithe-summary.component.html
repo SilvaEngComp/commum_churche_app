@@ -19,7 +19,14 @@
         <td>
           <ion-label>{{ item?.user?.name}}</ion-label>
         </td>
-
+        <td>
+          <div class="buttons">
+            <ion-tab-button (click)="delete(item)">
+              <ion-icon name="trash-outline"></ion-icon>
+              <ion-label>Excluir</ion-label>
+            </ion-tab-button>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>

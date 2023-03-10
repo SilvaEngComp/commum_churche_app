@@ -22,9 +22,10 @@ export class FeedAdminPage implements OnInit {
       Constants.TITLE_CURRENT_PAGE,
       Constants.TITLE_FEED_REGISTER
     );
-
     UiService.pageTitle.emit(Constants.TITLE_FEED_REGISTER);
-    this.subpage = UiService.localGet(Constants.FEED_SUBPAGE);
+    if (!this.subpage) {
+      this.subpage = UiService.localGet(Constants.FEED_SUBPAGE);
+    }
     if (!this.subpage) {
       UiService.localSet(Constants.FEED_SUBPAGE, Constants.FEED_PAGE_PUBLIC);
       if (!this.subpage) {

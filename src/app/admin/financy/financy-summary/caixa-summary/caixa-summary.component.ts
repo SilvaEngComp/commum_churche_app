@@ -34,11 +34,6 @@ export class CaixaSummaryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.caixaFacade.dataLoaded.subscribe((data) => {
-      console.log('emiting request to reload');
-      this.mantainceEmiter.emit();
-    });
-
     console.log(this.caixaReport);
   }
 

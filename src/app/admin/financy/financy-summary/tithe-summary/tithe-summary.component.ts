@@ -1,6 +1,7 @@
 import { TitheReport } from './../../../../models/sumaryInput';
 import { Component, Input, OnInit } from '@angular/core';
 import { Tithe } from 'src/app/models/tithe';
+import { TitheFacade } from 'src/app/facades/tithe-facade.service';
 
 @Component({
   selector: 'app-tithe-summary',
@@ -11,7 +12,7 @@ export class TitheSummaryComponent implements OnInit {
   @Input() titheReport: TitheReport;
   @Input() isTithe: boolean;
   headTitheList: string[] = ['valor', 'data', 'Registrado por'];
-  constructor() {}
+  constructor(private titheFacade: TitheFacade) {}
 
   ngOnInit() {
     if (this.isTithe) {
@@ -19,6 +20,7 @@ export class TitheSummaryComponent implements OnInit {
     } else {
       this.headTitheList.push('Ofertante');
     }
+    this.headTitheList.push('');
   }
 
   setShowSummaryDetail() {
@@ -29,5 +31,9 @@ export class TitheSummaryComponent implements OnInit {
     const tithePosition = this.titheReport.titheSummary.tithes.indexOf(tithe);
     this.titheReport.titheSummary.tithes[tithePosition].showDetails =
       !this.titheReport.titheSummary.tithes[tithePosition].showDetails;
+  }
+
+  delete(tithe: Tithe) {
+    this.titheFacade.delete(tithe);
   }
 }

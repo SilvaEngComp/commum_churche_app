@@ -18,6 +18,7 @@ import { FinancyService } from 'src/app/services/financy-service.service';
 import { UiService } from 'src/app/services/ui.service';
 import { ConstantMessages } from 'src/app/models/messages';
 import { SummaryOutput } from 'src/app/models/sumaryOutput';
+import { CaixaFacadeService } from 'src/app/facades/caixa-facade.service';
 
 @Component({
   selector: 'app-expense',
@@ -37,7 +38,8 @@ export class ExpenseComponent implements OnInit, AfterViewInit {
   total: number;
   constructor(
     private financyService: FinancyService,
-    private exeptionService: ExceptionService
+    private exeptionService: ExceptionService,
+    private caixaFacade: CaixaFacadeService
   ) {}
   ngAfterViewInit(): void {
     UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
@@ -63,6 +65,10 @@ export class ExpenseComponent implements OnInit, AfterViewInit {
     }
 
     this.load();
+
+    this.caixaFacade.dataLoaded.subscribe((data) => {
+      this.load();
+    });
   }
 
   receiveMantainceEmiter(ev: any) {

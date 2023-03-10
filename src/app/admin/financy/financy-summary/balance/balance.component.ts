@@ -15,6 +15,8 @@ import { FinancySummaryFilter } from 'src/app/models/financySummaryFilter';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { FinancyService } from 'src/app/services/financy-service.service';
 import { UiService } from 'src/app/services/ui.service';
+import { TitheFacade } from 'src/app/facades/tithe-facade.service';
+import { CaixaFacadeService } from 'src/app/facades/caixa-facade.service';
 
 @Component({
   selector: 'app-balance',
@@ -34,7 +36,9 @@ export class BalanceComponent implements OnInit, AfterViewInit {
   isLoading: boolean;
   constructor(
     private financyService: FinancyService,
-    private exeptionService: ExceptionService
+    private titheFacade: TitheFacade,
+    private exeptionService: ExceptionService,
+    private caixaFacade: CaixaFacadeService
   ) {}
   ngAfterViewInit(): void {
     UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
@@ -60,6 +64,14 @@ export class BalanceComponent implements OnInit, AfterViewInit {
       this.filter.wallet_id = Constants.WALLET_FLUX_ID;
     }
     this.load();
+
+    this.titheFacade.dataLoaded.subscribe((data) => {
+      this.load();
+    });
+
+    this.caixaFacade.dataLoaded.subscribe((data) => {
+      this.load();
+    });
   }
 
   receiveMantainceEmiter(ev: any) {
