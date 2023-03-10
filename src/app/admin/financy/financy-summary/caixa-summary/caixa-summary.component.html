@@ -30,11 +30,11 @@
         <td>
 
           <div class="buttons">
-            <ion-tab-button (click)="openDescription(item)">
+            <ion-tab-button [disabled]="!item?.description" (click)="openDescription(item)">
               <ion-icon name="document-text-outline"></ion-icon>
               <ion-label>Descrição</ion-label>
             </ion-tab-button>
-            <ion-tab-button (click)="download(item)">
+            <ion-tab-button [disabled]="!item?.file" (click)="download(item)">
               <ion-icon name="download-outline"></ion-icon>
               <ion-label>Comprovante</ion-label>
             </ion-tab-button> <ion-tab-button (click)="delete(item)">

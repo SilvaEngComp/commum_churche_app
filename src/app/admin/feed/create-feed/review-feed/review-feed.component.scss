@@ -11,13 +11,29 @@
   }
 }
 
-.date-options-label {
-  text-align: center;
-
+.date-options-item {
+  width: 100%;
+  ion-button {
+    margin-right: 2%;
+    ion-label {
+      font-family: Qanelas-bold;
+      color: var(--ion-color-light);
+      font-size: 14pt;
+    }
+  }
   ion-label {
     font-family: Qanelas-bold;
-    color: var(--ion-color-light);
-    margin: 5%;
+    color: var(--ion-color-primary);
+    font-size: 14pt;
+  }
+}
+
+.date-options-label {
+  ion-label {
+    font-family: Qanelas-bold;
+    color: var(--ion-color-primary);
+    font-size: 14pt;
+    margin-left: 10%;
   }
 }
 

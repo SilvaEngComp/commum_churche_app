@@ -23,6 +23,7 @@ export class PublicationComponent implements OnInit {
   @Output() returnSubpage: EventEmitter<any> = new EventEmitter<any>();
   @Input() expandAll: boolean;
   @Input() feed: Feed;
+  @Input() showReactions: boolean;
   user: User;
   base_url: string = environment.IMAGE_URL;
   is_loading: boolean;

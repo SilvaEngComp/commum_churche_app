@@ -67,28 +67,35 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.localPageTitle = Constants.TITLE_SUMMARY_FINANCY_SUB;
-    this.filter = new FinancySummaryFilter();
-    const datePipe = new DatePipe('en');
-    const date = new Date();
-    const primeiroDia = new Date(date.getFullYear(), date.getMonth(), 1);
-    const ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    this.initialDate = datePipe.transform(primeiroDia, 'YYYY-MM-dd');
-    this.endDate = datePipe.transform(ultimoDia, 'YYYY-MM-dd');
-
-    this.filter.dateI = this.initialDate;
-    this.filter.dateF = this.endDate;
-
-    this.wallet = UiService.localGet(Constants.CAIXA_WALLET);
-    if (!this.wallet) {
-      this.filter.wallet_id = Constants.WALLET_FLUX_ID;
-    } else {
-      this.filter.wallet_id = this.wallet?.id;
-    }
-    UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
+    this.checkFilter();
 
     this.load();
   }
 
+  checkFilter() {
+    this.filter = UiService.localGet(Constants.FINANCY_SUMMARY_FILTER);
+    if (!this.filter) {
+      this.filter = new FinancySummaryFilter();
+
+      const datePipe = new DatePipe('en');
+      const date = new Date();
+      const primeiroDia = new Date(date.getFullYear(), date.getMonth(), 1);
+      const ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+      this.initialDate = datePipe.transform(primeiroDia, 'YYYY-MM-dd');
+      this.endDate = datePipe.transform(ultimoDia, 'YYYY-MM-dd');
+      this.wallet = UiService.localGet(Constants.CAIXA_WALLET);
+      UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
+
+      this.filter.dateI = this.initialDate;
+      this.filter.dateF = this.endDate;
+
+      if (this?.wallet) {
+        this.filter.wallet_id = this?.wallet?.id;
+      } else {
+        this.filter.wallet_id = Constants.WALLET_FLUX_ID;
+      }
+    }
+  }
   saveFilter() {
     UiService.localSet(Constants.FINANCY_SUMMARY_FILTER, this.filter);
   }
@@ -99,6 +106,7 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
 
   selectDateInterval(popover: IonPopover) {
     popover?.dismiss();
+    this.saveFilter();
     this.load();
   }
 
@@ -209,5 +217,6 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
       this.wallet = null;
       UiService.localRemove(Constants.CAIXA_WALLET);
     }
+    this.saveFilter();
   }
 }

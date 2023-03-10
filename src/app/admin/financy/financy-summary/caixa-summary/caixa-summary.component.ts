@@ -1,3 +1,4 @@
+import { ExceptionService } from './../../../../services/exception-service.service';
 import { CaixaReport } from '../../../../models/CaixaReportChurch';
 import { MenuCaixaSummaryComponent } from './../menu-caixa-summary/menu-caixa-summary.component';
 import { DownloadService } from './../../../../services/download.service';
@@ -30,7 +31,8 @@ export class CaixaSummaryComponent implements OnInit {
     private caixaFacade: CaixaFacadeService,
     private popCtrl: PopoverController,
     private actionSheetCtrl: ActionSheetController,
-    private downloadService: DownloadService
+    private downloadService: DownloadService,
+    private exceptionService: ExceptionService
   ) {}
 
   ngOnInit() {
@@ -66,7 +68,13 @@ export class CaixaSummaryComponent implements OnInit {
   }
 
   download(caixa: Caixa) {
-    this.downloadService.downloadPDF(caixa);
+    if (caixa?.file) {
+      this.downloadService.downloadPDF(caixa);
+    } else {
+      this.exceptionService.alertDialog(
+        'Este registro não tem um comprovante associado'
+      );
+    }
   }
   async openDescription(caixa: Caixa) {
     const actionSheet = await this.actionSheetCtrl.create({

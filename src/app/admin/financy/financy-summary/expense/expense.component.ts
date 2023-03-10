@@ -47,22 +47,7 @@ export class ExpenseComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.localPageTitle = Constants.TITLE_SUMMARY_EXPANSE;
-    this.filter = new FinancySummaryFilter();
-    const datePipe = new DatePipe('en');
-    const date = new Date();
-    const primeiroDia = new Date(date.getFullYear(), date.getMonth(), 1);
-    const ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    this.initialDate = datePipe.transform(primeiroDia, 'YYYY-MM-dd');
-    this.endDate = datePipe.transform(ultimoDia, 'YYYY-MM-dd');
-    this.wallet = UiService.localGet(Constants.CAIXA_WALLET);
-
-    this.filter.dateI = this.initialDate;
-    this.filter.dateF = this.endDate;
-    if (this?.wallet) {
-      this.filter.wallet_id = this?.wallet?.id;
-    } else {
-      this.filter.wallet_id = Constants.WALLET_FLUX_ID;
-    }
+    this.checkFilter();
 
     this.load();
 
@@ -71,12 +56,37 @@ export class ExpenseComponent implements OnInit, AfterViewInit {
     });
   }
 
+  checkFilter() {
+    this.filter = UiService.localGet(Constants.FINANCY_SUMMARY_FILTER);
+    if (!this.filter) {
+      this.filter = new FinancySummaryFilter();
+
+      const datePipe = new DatePipe('en');
+      const date = new Date();
+      const primeiroDia = new Date(date.getFullYear(), date.getMonth(), 1);
+      const ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+      this.initialDate = datePipe.transform(primeiroDia, 'YYYY-MM-dd');
+      this.endDate = datePipe.transform(ultimoDia, 'YYYY-MM-dd');
+      this.wallet = UiService.localGet(Constants.CAIXA_WALLET);
+      UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
+
+      this.filter.dateI = this.initialDate;
+      this.filter.dateF = this.endDate;
+
+      if (this?.wallet) {
+        this.filter.wallet_id = this?.wallet?.id;
+      } else {
+        this.filter.wallet_id = Constants.WALLET_FLUX_ID;
+      }
+    }
+  }
   receiveMantainceEmiter(ev: any) {
     this.load();
   }
 
   selectDateInterval(popover: IonPopover) {
     popover?.dismiss();
+    this.saveFilter();
     this.load();
   }
 
@@ -130,5 +140,10 @@ export class ExpenseComponent implements OnInit, AfterViewInit {
       this.wallet = null;
       UiService.localRemove(Constants.CAIXA_WALLET);
     }
+    this.saveFilter();
+  }
+
+  saveFilter() {
+    UiService.localSet(Constants.FINANCY_SUMMARY_FILTER, this.filter);
   }
 }

@@ -5,7 +5,7 @@
 
         <ion-button fill="clear"><ion-icon class="icon-fomat-date" name="calendar-outline"></ion-icon></ion-button>
         <ion-button color="secondary" (click)="onSetDate(null, 1)"><ion-label>Hoje</ion-label></ion-button>
-        <ion-button color="secondary" (click)="onSetDate(null, 2)"><ion-label>Ontem</ion-label></ion-button>
+        <ion-button color="secondary" (click)="onSetDate(null, 2)"><ion-label>Amanhã</ion-label></ion-button>
         <ion-button color="secondary" id="popover-button-date"><ion-label>Outro</ion-label></ion-button>
       </div>
       <div class="date-options-label">
@@ -23,16 +23,14 @@
     </ion-col>
   </ion-row> <ion-row>
     <ion-col>
-      <ion-item lines="none">
+      <ion-item lines="none" class="date-options-item">
         <ion-button [disabled]="this.feed?.hasTime" color="secondary"
           id="popover-button-time"><ion-label>Horário</ion-label></ion-button>
 
-        <ion-checkbox slot="end" [checked]="this.feed?.hasTime" (ionChange)="setTimeExists()"></ion-checkbox>
-        <ion-label slot="end">Sem horário</ion-label>
-      </ion-item>
-      <div class="date-options-label">
         <ion-label>{{feed?.time}}</ion-label>
-      </div>
+
+      </ion-item>
+
       <ion-popover trigger="popover-button-time" [dismissOnSelect]="false">
         <ng-template>
           <ion-content>
@@ -46,21 +44,8 @@
   </ion-row>
 
   <ion-row>
-    <ion-col size="10">
-      <div class="div-publisher">
-        <ion-avatar>
-          <ion-img alt="Igreaja Batista Nova Betel" [src]="feed?.publisher?.image"></ion-img>
-        </ion-avatar>
-        <div>
-          <ion-label>{{ feed?.publisher?.name }}</ion-label>
-        </div>
-      </div>
-    </ion-col>
-
-  </ion-row>
-  <ion-row>
     <ion-col>
-      <app-publication [feed]="feed" [expandAll]="feed?.message?.length>500"></app-publication>
+      <app-publication [feed]="feed" [showReactions]="false" [expandAll]="feed?.message?.length>500"></app-publication>
     </ion-col>
   </ion-row>
 </ion-grid>

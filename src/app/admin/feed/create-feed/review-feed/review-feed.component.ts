@@ -85,7 +85,7 @@ export class ReviewFeedComponent implements OnInit {
         this.feed.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
       } else {
         const yesterday = new Date(
-          new Date().setDate(new Date().getDate() - 1)
+          new Date().setDate(new Date().getDate() + 1)
         );
         this.feed.date = this.datePipe.transform(yesterday, 'yyyy-MM-dd');
       }

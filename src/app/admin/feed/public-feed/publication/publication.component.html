@@ -18,7 +18,7 @@
       </div>
     </ion-col>
   </ion-row>
-  <ion-row>
+  <ion-row *ngIf="showReactions">
     <ion-col>
       <div class="headers-reactions">
         <ion-icon color="secondary" *ngIf="!feed?.love" name="heart-outline" (click)="setLove()"></ion-icon>
@@ -26,11 +26,12 @@
         <ion-icon color="secondary" name="chatbubble-outline" (click)="accessUrl()"></ion-icon>
         <ion-label>{{ feed?.date +' '+feed?.time | date: 'dd/MM/yyyy HH:mm:ss' }}</ion-label>
       </div>
-
-
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
       <div [ngClass]="{ 'short-message': !expandAll, 'complete-message': expandAll}">{{ feed?.message
         }}</div>
-
       <ion-item lines="none" *ngIf="feed?.message?.length>100">
         <p class="p-as-a-link" (click)="showCompleteMessage()">{{expandAll ? 'MENOS': 'MAIS...'}}</p>
       </ion-item>
