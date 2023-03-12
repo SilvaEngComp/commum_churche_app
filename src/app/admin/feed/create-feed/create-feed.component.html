@@ -26,7 +26,8 @@
       </ion-card>
     </ion-col>
     <ion-col *ngIf="session==='2'">
-      <app-load-images [single]="true" (returnPage)="receiveSubpage($event)"></app-load-images>
+      <app-load-images [single]="true" [selectedImge]="feed?.image"
+        (returnPage)="receiveSubpage($event)"></app-load-images>
     </ion-col>
     <ion-col *ngIf="session==='3'">
       <ion-card>

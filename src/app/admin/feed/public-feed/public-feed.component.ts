@@ -1,6 +1,6 @@
 import { Constants } from 'src/app/models/constants';
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { FeedService } from 'src/app/services/feed.service';
 import { DatePipe } from '@angular/common';
@@ -18,7 +18,7 @@ import { FilterFeed } from 'src/app/models/filterFeed';
 })
 export class PublicFeedComponent implements OnInit {
   @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
-
+  @Input() editable: boolean;
   user: User;
   feeds: Feed[];
   base_url: string = environment.IMAGE_URL;
@@ -27,6 +27,7 @@ export class PublicFeedComponent implements OnInit {
   feedReaction: FeedComment;
   filterFeed: FilterFeed;
   localPageTitle: string;
+
   constructor(
     private feedService: FeedService,
     private exeptionService: ExceptionService
@@ -96,7 +97,6 @@ export class PublicFeedComponent implements OnInit {
   }
 
   returnSubPage(obj: any) {
-    console.log(obj);
     if (obj.subpage) {
       this.returnPage.emit(obj);
     }

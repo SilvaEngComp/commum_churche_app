@@ -1,3 +1,4 @@
+import { ConstantMessages } from './../../../../models/messages';
 import { ExceptionService } from './../../../../services/exception-service.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { Constants } from 'src/app/models/constants';
@@ -21,12 +22,16 @@ export class ReviewFeedComponent implements OnInit {
   datePipe = new DatePipe('en');
   dateValue: string;
   hasTime: boolean;
+  today: string;
   constructor(private exceptionService: ExceptionService) {}
 
   ngOnInit() {
     this.datePipe = new DatePipe('en');
     this.checkFeed();
-    this.feed.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+    this.today = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+    if (!this?.feed?.date) {
+      this.feed.date = this.today;
+    }
   }
   checkFeed() {
     this.feed = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
@@ -60,15 +65,9 @@ export class ReviewFeedComponent implements OnInit {
       }
     }
   }
+
   setTime(time) {
-    const validDateObj = UiService.validTime(time);
-    if (validDateObj) {
-      if (validDateObj.status) {
-        this.feed.date = validDateObj.date;
-      } else {
-        this.exceptionService.alertDialog(validDateObj.message);
-      }
-    }
+    this.feed.time = String(time).substring(11, 16);
   }
   setDateAsNow() {
     this.feed.date = this.datePipe.transform(Date.now(), 'dd/MM/yyyy');

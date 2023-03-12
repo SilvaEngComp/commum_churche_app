@@ -1,13 +1,12 @@
-<!-- <ion-item class="item-page-title">
+<ion-item class="item-page-title" *ngIf="editable">
   <ion-icon slot="start" color="primary" name="chevron-back-circle-sharp" (click)="back()"></ion-icon>
   <ion-title>{{localPageTitle}}</ion-title>
-  <ion-icon slot="end" name="add-circle-outline" (click)="newFeed()" *permission="'multimidia'"></ion-icon>
-</ion-item> -->
+</ion-item>
 
 
 
 
 <div *ngIf="!is_loading" class="div-body">
-  <app-publication *ngFor="let feed of feeds" [feed]="feed" (returnSubpage)="returnSubPage($event)"
-    [expandAll]="feed?.message?.length>500"></app-publication>
+  <app-publication *ngFor="let feed of feeds" [showReactions]="true" [editable]="editable" [feed]="feed"
+    (returnSubpage)="returnSubPage($event)" [expandAll]="feed?.message?.length>500"></app-publication>
 </div>

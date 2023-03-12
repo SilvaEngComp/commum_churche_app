@@ -6,7 +6,7 @@
           <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/logo.png"></ion-img>
         </ion-avatar>
         <p class="lb-feed-title">{{ feed?.title }}</p>
-        <ion-icon [ngClass]="{'hidde-menu':!permission}" (click)="menuPost(feed, $event)"
+        <ion-icon [ngClass]="{'hidde-menu':!editable}" (click)="menuPost(feed, $event)"
           name="ellipsis-vertical-outline"></ion-icon>
       </div>
     </ion-col>
@@ -14,7 +14,7 @@
   <ion-row *ngIf="feed?.image?.length>0">
     <ion-col>
       <div class="feed-img-short">
-        <ion-img alt="Igreaja Batista Nova Betel" [src]="feed?.image"></ion-img>
+        <ion-img alt="Erro ao carregar imagem" [src]="feed?.image"></ion-img>
       </div>
     </ion-col>
   </ion-row>

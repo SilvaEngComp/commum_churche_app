@@ -15,7 +15,7 @@
         <ng-template>
           <ion-content>
             <ion-datetime [showDefaultButtons]="true" presentation="date" display-format="MM-YYYY-DD" #datePop
-              (ionChange)="onSetDate(datePop.value)" doneText="OK" cancelText="CANCELAR">
+              [min]="today" (ionChange)="onSetDate(datePop.value)" doneText="OK" cancelText="CANCELAR">
             </ion-datetime>
           </ion-content>
         </ng-template>

@@ -24,9 +24,9 @@ export class LoadImagesComponent implements OnInit {
   user: User;
   @Input() single: boolean;
   @Input() confirmButton: boolean;
-
+  @Input() selectedImge: string;
   hasOneSelected: boolean;
-  selectedImge: string;
+
   file64: any[] = [];
   constructor(private exceptionService: ExceptionService) {}
   ngOnInit() {
@@ -36,7 +36,6 @@ export class LoadImagesComponent implements OnInit {
 
     this.user = LoginService.getUser();
     this.localImages.files = [];
-    this.selectedImge = null;
   }
 
   getFiles(): FileLikeObject[] {

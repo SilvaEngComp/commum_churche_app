@@ -94,9 +94,9 @@ export class CreateFeedComponent implements OnInit {
     this.save();
   }
   back() {
-    this.returnSubpage.emit({ subpage: Constants.MENU_GENERAL_OPTION_FEED });
     UiService.localRemove(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
     UiService.localRemove(Constants.FEED_ATTRIBUTES_FEED_SESSION);
+    this.returnSubpage.emit({ subpage: Constants.MENU_GENERAL_OPTION_FEED });
   }
   save() {
     UiService.localSet(Constants.FEED_ATTRIBUTES_FEED_OBJECT, this.feed);
@@ -110,7 +110,6 @@ export class CreateFeedComponent implements OnInit {
         .then((responser) => {
           this.feed.image = responser.data.image;
           this.save();
-          // window.location.reload();
         });
     }
   }
@@ -120,26 +119,27 @@ export class CreateFeedComponent implements OnInit {
 
     if (this.session !== '2') {
       if (this.validForm()) {
-        this.feedService.store(this.feed).then((responser) => {
-          this.feed = responser.data;
-          this.save();
-          if (this.session === '3') {
-            this.back();
-            const push: PushNotify = new PushNotify(
-              this.feed.title,
-              this.feed.message
-            );
-            this.messagingService.send(push);
-          } else {
-            this.nextSession();
-          }
-        });
+        this.feedService
+          .store(this.feed)
+          .then((responser) => {
+            this.feed = responser.data;
+            this.save();
+            if (this.session === '3') {
+              this.back();
+              const push: PushNotify = new PushNotify(
+                this.feed.title,
+                this.feed.message
+              );
+              this.messagingService.send(push);
+            } else {
+              this.nextSession();
+            }
+          })
+          .catch((error) => this.exceptionService.error(error));
       }
     } else {
       this.nextSession();
     }
-
-    console.log(this.session);
   }
 
   validForm() {
