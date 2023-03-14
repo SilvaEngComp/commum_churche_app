@@ -48,6 +48,8 @@ export class ConstantMessages {
     'Usuário já está cadastrado e será selecionado automaticamente na lista ao fechar essa mensagem';
 
   static TITILE_INVALID = 'Por favor, Insira um título válido';
+  static LEGEND_INVALID = 'Por favor, Insira uma legenda';
+  static TIME_INVALID = 'Por favor, Insira um horário válido';
   static CHURCH_SCHEDULE_INVALID_CHURCH =
     'Por favor, Selecione uma organização';
   static FILE_LIMIT = 'Limitado a 1 (um) arquivo';

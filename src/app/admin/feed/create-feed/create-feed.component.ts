@@ -143,11 +143,25 @@ export class CreateFeedComponent implements OnInit {
   }
 
   validForm() {
-    if (!this.feed?.title) {
-      this.exceptionService.alertDialog(ConstantMessages.TITILE_INVALID);
-      return;
+    if (this.session === '1') {
+      if (!this.feed?.title) {
+        this.exceptionService.alertDialog(ConstantMessages.TITILE_INVALID);
+        return;
+      }
+      if (!this.feed?.message) {
+        this.exceptionService.alertDialog(ConstantMessages.LEGEND_INVALID);
+        return;
+      }
+    } else if (this.session === '3') {
+      if (!this.feed?.date) {
+        this.exceptionService.alertDialog(ConstantMessages.DATE_INVALID);
+        return;
+      }
+      if (!this.feed?.time) {
+        this.exceptionService.alertDialog(ConstantMessages.TIME_INVALID);
+        return;
+      }
     }
-
     return true;
   }
 }

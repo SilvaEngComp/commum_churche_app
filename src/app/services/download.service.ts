@@ -14,7 +14,6 @@ import { ExceptionService } from './exception-service.service';
 const EXCEL_TYPE =
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -95,17 +94,30 @@ export class DownloadService {
   download(caixa: Caixa) {
     return this.http.get(caixa?.file, { responseType: 'blob' });
   }
-  downloadPDF(caixa: Caixa, filename = 'Comprovante') {
+
+  async toDataURL({ url }: { url }) {
+    const blob = await fetch(url).then((res) => res.blob());
+    return URL.createObjectURL(blob);
+  }
+
+  teste(caixa: Caixa) {
+    this.http
+      .get('caixa?.file', {
+        responseType: 'blob',
+        headers: { Accept: 'application/pdf' },
+      })
+      .subscribe((blob) => {
+        FileSaver.saveAs(blob, caixa?.file);
+      });
+  }
+
+  async downloadPDF(caixa: Caixa, filename = 'Comprovante') {
+    return this.teste(caixa);
     const dwldLink = document.createElement('a');
-    const isSafariBrowser =
-      navigator.userAgent.indexOf('Safari') !== -1 &&
-      navigator.userAgent.indexOf('Chrome') === -1;
-    if (isSafariBrowser) {
-      //if Safari open in new window to save file with random filename.
-      dwldLink.setAttribute('target', '_blank');
-    }
-    dwldLink.setAttribute('href', caixa?.file);
-    dwldLink.setAttribute('download', filename + '.pdf');
+
+    dwldLink.setAttribute('target', '_blank');
+    dwldLink.href = await this.toDataURL({ url: caixa?.file });
+    dwldLink.download = caixa?.file;
     dwldLink.style.visibility = 'hidden';
     document.body.appendChild(dwldLink);
     dwldLink.click();

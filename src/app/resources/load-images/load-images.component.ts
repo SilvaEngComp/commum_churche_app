@@ -33,6 +33,7 @@ export class LoadImagesComponent implements OnInit {
     if (!this.localImages) {
       this.localImages = new ModelFileUplod();
     }
+    console.log(this.selectedImge);
 
     this.user = LoginService.getUser();
     this.localImages.files = [];

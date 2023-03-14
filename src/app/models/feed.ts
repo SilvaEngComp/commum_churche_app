@@ -17,6 +17,7 @@ export class Feed {
   hasTime: boolean;
   showComment: boolean;
   url: string;
+  linkType: number;
 
   constructor() {
     this.isAvailable = true;

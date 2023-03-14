@@ -23,8 +23,10 @@
       <div class="headers-reactions">
         <ion-icon color="secondary" *ngIf="!feed?.love" name="heart-outline" (click)="setLove()"></ion-icon>
         <ion-icon color="danger" *ngIf="feed?.love" name="heart-sharp" (click)="setLove()"></ion-icon>
-        <ion-icon color="secondary" name="chatbubble-outline" (click)="accessUrl()"></ion-icon>
-        <ion-label>{{ feed?.date +' '+feed?.time | date: 'dd/MM/yyyy HH:mm:ss' }}</ion-label>
+        <ion-icon *ngIf="feed?.linkType===1" color="secondary" name="logo-instagram" (click)="accessUrl()"></ion-icon>
+        <ion-icon *ngIf="feed?.linkType===2" color="secondary" name="logo-youtube" (click)="accessUrl()"></ion-icon>
+        <ion-icon *ngIf="feed?.linkType===3" color="secondary" name="link-outline" (click)="accessUrl()"></ion-icon>
+        <!-- <ion-label>{{ feed?.date +' '+feed?.time | date: 'dd/MM/yyyy HH:mm:ss' }}</ion-label> -->
       </div>
     </ion-col>
   </ion-row>

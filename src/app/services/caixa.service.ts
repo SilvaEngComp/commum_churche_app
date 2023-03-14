@@ -44,6 +44,18 @@ export class CaixaService extends ServiceInterface {
       .toPromise();
   }
 
+  async downloadReceipt(caixa: Caixa): Promise<Responser> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+    return this.http
+      .get<Responser>(`${environment.API2}/caixas/${caixa?.id}`, {
+        headers: LoginService.getHeaders(),
+      })
+      .toPromise();
+  }
+
   async getByType(data: string, tipo: CaixaType): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();

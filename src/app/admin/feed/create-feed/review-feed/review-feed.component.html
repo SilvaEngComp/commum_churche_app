@@ -1,51 +1,45 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <div class="flex-container-row date-options ">
-
-        <ion-button fill="clear"><ion-icon class="icon-fomat-date" name="calendar-outline"></ion-icon></ion-button>
-        <ion-button color="secondary" (click)="onSetDate(null, 1)"><ion-label>Hoje</ion-label></ion-button>
-        <ion-button color="secondary" (click)="onSetDate(null, 2)"><ion-label>Amanhã</ion-label></ion-button>
-        <ion-button color="secondary" id="popover-button-date"><ion-label>Outro</ion-label></ion-button>
-      </div>
-      <div class="date-options-label">
-        <ion-label>{{feed?.date | date:'dd/MM/yyyy'}}</ion-label>
-      </div>
-      <ion-popover trigger="popover-button-date" [dismissOnSelect]="false">
-        <ng-template>
-          <ion-content>
-            <ion-datetime [showDefaultButtons]="true" presentation="date" display-format="MM-YYYY-DD" #datePop
-              [min]="today" (ionChange)="onSetDate(datePop.value)" doneText="OK" cancelText="CANCELAR">
-            </ion-datetime>
-          </ion-content>
-        </ng-template>
-      </ion-popover>
-    </ion-col>
-  </ion-row> <ion-row>
-    <ion-col>
-      <ion-item lines="none" class="date-options-item">
-        <ion-button [disabled]="this.feed?.hasTime" color="secondary"
-          id="popover-button-time"><ion-label>Horário</ion-label></ion-button>
-
-        <ion-label>{{feed?.time}}</ion-label>
-
-      </ion-item>
-
-      <ion-popover trigger="popover-button-time" [dismissOnSelect]="false">
-        <ng-template>
-          <ion-content>
-            <ion-datetime [showDefaultButtons]="true" presentation="time" #timePop (ionChange)="setTime(timePop.value)"
-              doneText="OK" cancelText="CANCELAR">
-            </ion-datetime>
-          </ion-content>
-        </ng-template>
-      </ion-popover>
-    </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col>
       <app-publication [feed]="feed" [showReactions]="false" [expandAll]="feed?.message?.length>500"></app-publication>
     </ion-col>
   </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-label class="label-item" position="floating">Data de publicação</ion-label>
+
+      <ion-item class="input-item" lines="none">
+        <ion-input class="input" type="date" [(ngModel)]="feed.date"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row><ion-row>
+    <ion-col>
+      <ion-label class="label-item" position="floating">Horário de publicação</ion-label>
+
+      <ion-item class="input-item" lines="none">
+        <ion-input type="time" [(ngModel)]="feed.time"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
 </ion-grid>
+
+
+<ion-popover trigger="popover-button-date" [dismissOnSelect]="false">
+  <ng-template>
+    <ion-content>
+      <ion-datetime [showDefaultButtons]="true" presentation="date" display-format="MM-YYYY-DD" #datePop [min]="today"
+        (ionChange)="onSetDate(datePop.value)" doneText="OK" cancelText="CANCELAR">
+      </ion-datetime>
+    </ion-content>
+  </ng-template>
+</ion-popover>
+
+<ion-popover trigger="popover-button-time" [dismissOnSelect]="false">
+  <ng-template>
+    <ion-content>
+      <ion-datetime [showDefaultButtons]="true" presentation="time" #timePop (ionChange)="setTime(timePop.value)"
+        doneText="OK" cancelText="CANCELAR">
+      </ion-datetime>
+    </ion-content>
+  </ng-template>
+</ion-popover>

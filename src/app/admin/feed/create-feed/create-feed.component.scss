@@ -7,9 +7,6 @@
   align-self: center;
 }
 
-.selected-segment {
-  border-bottom: 2px solid var(--ion-color-secondary);
-}
 // ion-segment  {
 //   --background: #71c3ce;
 // }
@@ -18,7 +15,22 @@ ion-textarea {
   word-wrap: break-word;
 }
 
+ion-segment-button {
+  ion-label {
+    font-family: Qanelas-bold;
+    color: var(--ion-color-primary);
+    opacity: 0.3;
+  }
+}
+
 .segment {
   display: flex;
   flex-direction: row;
+}
+
+.selected-segment {
+  ion-label {
+    opacity: 1;
+  }
+  border-bottom: 2px solid var(--ion-color-secondary);
 }
