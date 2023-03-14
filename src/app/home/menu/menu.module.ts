@@ -1,3 +1,4 @@
+import { SplashScreamComponent } from './../splash-scream/splash-scream.component';
 import { BirthdaysModule } from './../birthdays/birthdays.module';
 import { BrMaskerModule } from 'br-mask';
 import { MenuHomeSmallComponent } from './menu-home-small/menu-home-small.component';

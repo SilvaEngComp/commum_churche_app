@@ -125,6 +125,10 @@ export class CreateFeedComponent implements OnInit {
             this.feed = responser.data;
             this.save();
             if (this.session === '3') {
+              this.exceptionService.openLoading(
+                'Publicação enviada!',
+                'Parabéns!Você Acabou de realizar uma publicação!'
+              );
               this.back();
               const push: PushNotify = new PushNotify(
                 this.feed.title,
