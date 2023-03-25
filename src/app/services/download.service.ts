@@ -100,28 +100,27 @@ export class DownloadService {
     return URL.createObjectURL(blob);
   }
 
-  teste(caixa: Caixa) {
+  webDownload(caixa: Caixa, fileName: string) {
     this.http
-      .get('caixa?.file', {
+      .get(`${environment.API2}/caixas/${caixa?.id}`, {
         responseType: 'blob',
-        headers: { Accept: 'application/pdf' },
+        headers: LoginService.getHeaders(),
       })
       .subscribe((blob) => {
-        FileSaver.saveAs(blob, caixa?.file);
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onload = () => {
+          FileSaver.saveAs(String(reader.result), fileName);
+        };
+
+        // FileSaver.saveAs(blob);
       });
   }
 
-  async downloadPDF(caixa: Caixa, filename = 'Comprovante') {
-    return this.teste(caixa);
-    const dwldLink = document.createElement('a');
-
-    dwldLink.setAttribute('target', '_blank');
-    dwldLink.href = await this.toDataURL({ url: caixa?.file });
-    dwldLink.download = caixa?.file;
-    dwldLink.style.visibility = 'hidden';
-    document.body.appendChild(dwldLink);
-    dwldLink.click();
-    document.body.removeChild(dwldLink);
+  async downloadPDF(caixa: Caixa) {
+    const values = caixa?.file.split('.');
+    const filename = 'comprovante.' + values[values.length - 1];
+    return this.webDownload(caixa, filename);
   }
 
   convertToCSV(objArray, headerList) {

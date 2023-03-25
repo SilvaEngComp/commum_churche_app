@@ -79,6 +79,9 @@ export class BalanceComponent implements OnInit, AfterViewInit {
       } else {
         this.filter.wallet_id = Constants.WALLET_FLUX_ID;
       }
+    } else {
+      this.initialDate = this.filter.dateI;
+      this.endDate = this.filter.dateF;
     }
   }
 

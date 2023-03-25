@@ -56,6 +56,7 @@ export class LoginService {
       } else {
         httpHeaders = new HttpHeaders({
           'Content-Type': 'application/json',
+          Accept: 'application/octet-stream',
           Authorization: 'Bearer ' + token.token,
         });
       }

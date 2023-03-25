@@ -12,7 +12,7 @@
         <ion-label color="light">{{label | uppercase}}</ion-label>
         <ion-icon color="light" name="caret-down-outline"></ion-icon>
       </div>
-      <ion-label class="item-selected" [color]="color" *ngIf="selected"> {{selected}}</ion-label>
+      <ion-label class="item-selected" [color]="itemSelectedcolor" *ngIf="selected"> {{selected}}</ion-label>
     </ion-col>
   </ion-row>
   <ion-row *ngIf="showSelect">

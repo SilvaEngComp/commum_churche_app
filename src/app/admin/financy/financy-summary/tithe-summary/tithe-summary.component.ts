@@ -21,6 +21,7 @@ export class TitheSummaryComponent implements OnInit {
       this.headTitheList.push('Ofertante');
     }
     this.headTitheList.push('');
+    console.log(this.titheReport);
   }
 
   setShowSummaryDetail() {

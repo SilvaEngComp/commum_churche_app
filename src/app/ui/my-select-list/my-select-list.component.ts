@@ -19,6 +19,7 @@ import { CaixaTypeService } from 'src/app/services/caixa-type.service';
 import { ScheduleTypeRegisterComponent } from 'src/app/admin/church-schedule/schedule-type-register/schedule-type-register.component';
 import { CaixaCategoryRegisterComponent } from 'src/app/admin/financy/caixa/caixa-group-register/caixa-group-register.component';
 import { CaixaTypeRegisterComponent } from 'src/app/admin/financy/caixa/caixa-type-register/caixa-type-register.component';
+import { Constants } from 'src/app/models/constants';
 
 @Component({
   selector: 'app-my-select-list',
@@ -34,6 +35,7 @@ export class MySelectListComponent implements OnInit {
   @Input() isRequired?: boolean;
   @Input() obj?: any;
   @Input() color?: string;
+  @Input() itemSelectedcolor?: string;
   showSelect?: boolean;
   isLoading: boolean;
   limit: number;
@@ -59,13 +61,17 @@ export class MySelectListComponent implements OnInit {
   ngOnInit() {
     this.selected = '';
     this.showSelect = false;
+
     this.load();
+
+    if (!this.itemSelectedcolor) {
+      this.itemSelectedcolor = 'primary';
+    }
 
     UiService.mySelectEmitter.subscribe((data) => {
       if (data?.obj) {
         this.obj = data?.obj;
       }
-      console.log(`${data?.listName} === ${this.listName}`);
       if (data?.listName === this.listName) {
         this.load(this.obj);
       }
@@ -109,7 +115,10 @@ export class MySelectListComponent implements OnInit {
       const responser = await this.caixaTypeService.get();
       this.apiResponse = responser.data;
     } else if (this.listName === 'wallets') {
-      // this.apiResponse = UiService.localGet('localGroups');
+      const wallet = UiService.localGet(Constants.CAIXA_WALLET);
+      if (wallet) {
+        this.selected = wallet?.name;
+      }
       const responser = await this.walletService.get();
       this.apiResponse = responser.data;
     } else if (this.listName === 'churches') {
@@ -118,7 +127,7 @@ export class MySelectListComponent implements OnInit {
       this.apiResponse = responser.data;
     } else if (this.listName === 'churchScheduleTypes') {
       const filter: ChurchScheduleFilter = new ChurchScheduleFilter();
-      if (obj) {
+      if (obj?.church) {
         filter.church = obj.church;
       }
       const responser = await this.churchScheduleTypeService.get(filter);

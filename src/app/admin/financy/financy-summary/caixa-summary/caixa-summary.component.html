@@ -34,7 +34,7 @@
               <ion-icon name="document-text-outline"></ion-icon>
               <ion-label>Descrição</ion-label>
             </ion-tab-button>
-            <ion-tab-button [disabled]="!item?.file" (click)="download(item)">
+            <ion-tab-button [disabled]="!item?.file" (click)="download(item)" [download]="item?.file">
               <ion-icon name="download-outline"></ion-icon>
               <ion-label>Comprovante</ion-label>
             </ion-tab-button> <ion-tab-button (click)="delete(item)">
