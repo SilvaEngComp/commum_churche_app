@@ -1,3 +1,4 @@
+import { ConstantMessages } from 'src/app/models/messages';
 import { Router } from '@angular/router';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -40,11 +41,11 @@ export class UpdatePasswordComponent implements OnInit {
 
   ngOnInit() {
     this.user = UiService.localGet(Constants.RECOVER_USER);
-    this.user = new User();
-    // if (!this.user) {
-    //   localStorage.clear();
-    //   this.cancel();
-    // }
+    // this.user = new User();
+    if (!this.user) {
+      localStorage.clear();
+      this.cancel();
+    }
     this.diferentes = false;
     this.btnDisable = true;
     this.check1 = false;
@@ -160,6 +161,7 @@ export class UpdatePasswordComponent implements OnInit {
     }
   }
   cancel() {
+    this.exceptionService.alertDialog(ConstantMessages.ENDED_SESSION);
     this.selectedPage.emit(Constants.PAGE_LOGIN);
   }
 

@@ -1,3 +1,4 @@
+import { ConstantMessages } from './../../../../models/messages';
 import { UiService } from 'src/app/services/ui.service';
 import { Constants } from 'src/app/models/constants';
 import { ViewChild } from '@angular/core';
@@ -30,6 +31,14 @@ export class CodeValidationComponent implements OnInit {
     this.error = false;
     this.cod = '';
     this.user = UiService.localGet(Constants.RECOVER_USER);
+    if (!this.user) {
+      localStorage.clear();
+      this.cancel();
+    }
+  }
+  cancel() {
+    this.exceptionService.alertDialog(ConstantMessages.ENDED_SESSION);
+    this.selectedPage.emit(Constants.PAGE_LOGIN);
   }
 
   async backPage() {

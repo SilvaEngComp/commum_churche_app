@@ -56,4 +56,5 @@ export class ConstantMessages {
   static INVALID_WALLET = 'Selecione uma Conta';
   static INVALIDE_DATE_INTERVAL =
     'Selecione a data de inicio e fim da consulta';
+  static ENDED_SESSION = 'Sessão Expirada. Tente novamente';
 }
