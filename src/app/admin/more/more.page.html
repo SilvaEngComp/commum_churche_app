@@ -4,24 +4,24 @@
 </ion-item>
 <ion-grid>
   <ion-row>
-    <ion-col class="card-options">
+    <ion-col class="card-options" *permission="'financial'">
       <ion-item (click)="selectOption(5)" lines="none">
         <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/financy-admin.png"></ion-img>
       </ion-item>
     </ion-col>
-    <ion-col class="card-options">
+    <ion-col class="card-options" *permission="'multimidia'">
       <ion-item (click)="selectOption(6)" lines="none">
         <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/marketing-admin.png"></ion-img>
       </ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col class="card-options">
+    <ion-col class="card-options" *permission="'secretary'">
       <ion-item (click)="selectOption(2)" lines="none">
         <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/secretary-admin.png"></ion-img>
       </ion-item>
     </ion-col>
-    <ion-col class="card-options">
+    <ion-col class="card-options" *permission="'super_admin'">
       <ion-item lines="none">
         <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/config-admin.png"></ion-img>
       </ion-item>
