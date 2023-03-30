@@ -3,8 +3,9 @@
 </ion-content> -->
 <app-admin-small *ngIf="isLarge" (selectedPage)="onSelectPage($event)"></app-admin-small>
 <div class="div-header">
-  <ion-avatar class="left">
-    <img src="./assets/images/logo.png" />
+  <ion-avatar class="left" (click)="setPage('0')">
+    <!-- <img src="./assets/images/logo.png" /> -->
+    <img [src]="user?.image" />
   </ion-avatar>
 
   <ion-label>{{pageTile}}</ion-label>

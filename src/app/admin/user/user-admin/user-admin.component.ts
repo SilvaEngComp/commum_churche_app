@@ -17,15 +17,24 @@ export class UserAdminComponent implements OnInit {
 
   ngOnInit() {
     UiService.setCurrentPage(Constants.TITLE_SECRETARY);
-    this.subpage = UiService.localGet(Constants.PAGE_CONTROLL_SECRETARY_ADMIN);
-
+    if (!this.subpage) {
+      this.subpage = UiService.localGet(
+        Constants.PAGE_CONTROLL_SECRETARY_ADMIN
+      );
+    } else {
+      this.save();
+    }
     if (!UiService.checkValidPage(this.subpage)) {
-      this.subpage = '1';
+      this.setSubpage('1');
     }
     UiService.pageMenu.subscribe((menu) => {
-      this.subpage = menu.subpage;
-      this.save();
+      this.setSubpage(menu.subpage);
     });
+  }
+
+  setSubpage(subpage: any) {
+    this.subpage = subpage;
+    this.save();
   }
 
   save() {

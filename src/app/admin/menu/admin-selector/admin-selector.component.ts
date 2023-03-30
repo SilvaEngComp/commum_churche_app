@@ -113,9 +113,13 @@ export class AdminSelectorComponent implements OnInit {
       localStorage.clear();
       this.router.navigate(['']);
     } else {
-      this.page = String(page);
-      this.save();
+      this.setPage(page);
     }
+  }
+
+  setPage(page: any) {
+    this.page = String(page);
+    this.save();
   }
   save() {
     UiService.localSet(this.defaultPageName, this.page);
