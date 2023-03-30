@@ -107,6 +107,16 @@ export class AdminSelectorComponent implements OnInit {
       }
     );
   }
+  standby() {
+    let localImage;
+    if (this.user?.gender?.toLocaleLowerCase().includes('masculino')) {
+      localImage = Constants.MALE_PERSON;
+    } else {
+      localImage = Constants.FEMALE_PERSON;
+    }
+
+    document.getElementById('userImage').setAttribute('src', localImage);
+  }
 
   onSelectPage(page: any) {
     if (page < -1) {
