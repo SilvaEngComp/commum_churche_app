@@ -4,6 +4,8 @@ export class UserCSV {
   name: string;
   birthDate: string;
   church: string;
+  isBaptized: string;
+  inputMethod: string;
 
   constructor(user: User) {
     if (user) {
@@ -16,6 +18,14 @@ export class UserCSV {
 
       if (user?.church?.name) {
         this.church = user?.church?.name;
+      }
+      if (user?.inputMethod?.name) {
+        this.inputMethod = user?.inputMethod?.name;
+      }
+      if (user?.isBaptized) {
+        this.isBaptized = 'SIM';
+      } else {
+        this.isBaptized = 'NÃO';
       }
     }
   }
@@ -41,6 +51,17 @@ export class UserCSV {
       } else {
         relatorioList.push(new BodyCSV(''));
       }
+
+      if (userCSV.isBaptized) {
+        relatorioList.push(new BodyCSV(userCSV.isBaptized));
+      } else {
+        relatorioList.push(new BodyCSV('NÃO'));
+      }
+      if (userCSV.inputMethod) {
+        relatorioList.push(new BodyCSV(userCSV.inputMethod));
+      } else {
+        relatorioList.push(new BodyCSV(''));
+      }
       csvtable.push(relatorioList);
     });
     return csvtable;
@@ -48,7 +69,13 @@ export class UserCSV {
 
   static headersOptions(): HeaderCSV[] {
     const options: HeaderCSV[] = [];
-    const names: string[] = ['Nome', 'Data', 'Organização'];
+    const names: string[] = [
+      'Nome',
+      'Data de Nascimento',
+      'Organização',
+      'Batizado',
+      'Ingresso por',
+    ];
 
     names.filter((name) => {
       options.push(new HeaderCSV(name));

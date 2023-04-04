@@ -64,8 +64,13 @@
           <ion-icon name="add"></ion-icon>
         </ion-button>
 
-        <ion-button slot="end" color="medium" (click)="setLetterSize(false)">-A</ion-button>
-        <ion-button slot="end" color="medium" (click)="setLetterSize(true)">+A</ion-button>
+        <ion-button slot="end" fill="clear" color="primary" (click)="download()">
+          <ion-icon color="primary" slot="end" name="cloud-download-outline"></ion-icon>
+          <!-- <ion-icon color="primary" slot="end" name="mail-outline" (click)="sendEmail()"></ion-icon> -->
+        </ion-button>
+
+        <!-- <ion-button slot="end" color="medium" (click)="setLetterSize(false)">-A</ion-button>
+        <ion-button slot="end" color="medium" (click)="setLetterSize(true)">+A</ion-button> -->
       </ion-item>
     </ion-col>
   </ion-row>

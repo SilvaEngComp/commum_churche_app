@@ -14,12 +14,13 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { User } from '../../models/user';
 import { environment } from 'src/environments/environment';
 import { UiService } from 'src/app/services/ui.service';
 import { UserFacadeService } from 'src/app/facades/user-facade.service';
 import { Constants } from 'src/app/models/constants';
-
+import { DownloadService } from './../../services/download.service';
+import { UserCSV } from 'src/app/models/birthdayExport';
+import { User } from 'src/app/models/User';
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
@@ -55,7 +56,7 @@ export class UserPage implements OnInit {
   constructor(
     private userFacadeService: UserFacadeService,
     private exceptionService: ExceptionService,
-    private modalController: ModalController
+    private downloadService: DownloadService
   ) {}
 
   ngOnInit() {
@@ -208,16 +209,14 @@ export class UserPage implements OnInit {
     });
   }
 
-  // async openFilter() {
-  //   const modal = this.modalController.create({
-  //     component: FilterComponent,
-  //   });
-
-  //   (await modal).present();
-
-  //   const { data } = await (await modal).onWillDismiss();
-  //   this.loadUsers();
-  // }
+  download() {
+    this.exceptionService.loadingFunction('Processando Tabela Excel...');
+    this.downloadService.exportAsExcelFile(
+      UserCSV.getTable(UserCSV.getRelatorio(this.users)),
+      'Lista de membros',
+      1
+    );
+  }
 
   receiveFilter(ev: any) {
     this.loadUsers();
