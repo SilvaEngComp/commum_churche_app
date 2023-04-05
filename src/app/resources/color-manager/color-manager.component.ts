@@ -47,7 +47,7 @@ ${environment.BASE_URL}`;
   }
 
   async share() {
-    const title = `${this.verse?.book} ${this.verse?.chapter}:${this.verse?.verse}`;
+    const title = `${this.verse?.book?.name} ${this.verse?.chapter}:${this.verse?.verse}`;
     await Share.share({
       title,
       text: this.text,

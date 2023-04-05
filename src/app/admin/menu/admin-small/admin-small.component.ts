@@ -1,30 +1,24 @@
-import { Router } from '@angular/router';
 import { Verse } from 'src/app/models/verse';
-import { element } from 'protractor';
 import { environment } from 'src/environments/environment';
-import { User } from 'src/app/models/user';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
   EventEmitter,
   OnInit,
   Output,
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { IonTabs, Platform } from '@ionic/angular';
-import { FcmService } from 'src/app/services/fcm.service';
+import { IonTabs } from '@ionic/angular';
 import { MessagingService } from 'src/app/services/messaging.service';
 import { UiService } from 'src/app/services/ui.service';
 import { FeedService } from 'src/app/services/feed.service';
 import { PushNotify } from 'src/app/models/pushNotification';
-import { LoginService } from 'src/app/services/login.service';
 import { Constants } from 'src/app/models/constants';
 import { Share } from '@capacitor/share';
+import { User } from 'src/app/models/User';
 @Component({
   selector: 'app-admin-small',
   templateUrl: './admin-small.component.html',
@@ -43,9 +37,7 @@ export class AdminSmallComponent implements OnInit {
   constructor(
     private feedService: FeedService,
     private exceptionService: ExceptionService,
-    private messagingService: MessagingService,
-    private loginService: LoginService,
-    private router: Router
+    private messagingService: MessagingService
   ) {}
 
   @ViewChild('tabAdmin', { static: false }) tab!: IonTabs;
@@ -58,7 +50,7 @@ export class AdminSmallComponent implements OnInit {
       this.setShowColorMark(data.status);
     });
 
-    UiService.returnColorMaker.subscribe((data) => {
+    UiService.returnColorMaker.subscribe(() => {
       this.setShowColorMark(false);
     });
   }
