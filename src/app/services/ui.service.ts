@@ -55,6 +55,9 @@ export class UiService {
   @Output()
   static returnColorMaker: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output()
+  static graphGenerator: EventEmitter<any> = new EventEmitter<any>();
+
   static checkValidPage(page: any) {
     if (!page || page === '-1' || page == '-2' || page < 0) {
       return false;
@@ -293,12 +296,18 @@ export class UiService {
     backgroundColor?: string[],
     borderColor?: string[]
   ): Chart {
-    const datasets = [];
     if (!backgroundColor) {
-      backgroundColor = ['rgba(139,0,139, 0.5)'];
+      backgroundColor = [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)',
+        'rgb(46,139,87)',
+        'rgb(139,0,139)',
+        'rgb(255,215,0)',
+      ];
     }
     if (!borderColor) {
-      borderColor = ['rgba(75,0,130, 1)'];
+      borderColor = ['rgba(176,224,230)'];
     }
 
     const config: ChartConfiguration = {
@@ -328,167 +337,5 @@ export class UiService {
 
     Chart.register(...registerables);
     return new Chart(canvas, config);
-  }
-
-  static buildChartYear(
-    canvas,
-    type,
-    labels,
-    datas,
-    datasetLabel,
-    backgroundColor?: string[],
-    borderColor?: string[]
-  ): Chart {
-    const datasets = [];
-    console.log('year: ' + datas.length);
-
-    if (!backgroundColor) {
-      backgroundColor = [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-      ];
-    }
-    if (!borderColor) {
-      borderColor = [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ];
-    }
-    let i = 0;
-    datas.filter((data) => {
-      datasets.push({
-        data,
-        label: datasetLabel[i],
-        backgroundColor,
-        borderColor,
-        borderWidth: 1,
-        barPercentage: 0.8,
-        barThickness: 'flex',
-      });
-      if (i < datasetLabel.length) {
-        i++;
-      }
-    });
-
-    const config: ChartConfiguration = {
-      type,
-      data: {
-        labels,
-        datasets,
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    };
-
-    Chart.register(...registerables);
-    return new Chart(canvas, config);
-  }
-
-  static validaCnpj(cnpj: string) {
-    cnpj = cnpj.replace(/[^\d]+/g, '');
-    if (cnpj == '') {
-      return false;
-    }
-    if (cnpj.length != 14) {
-      return false;
-    }
-    // LINHA 10 - Elimina CNPJs invalidos conhecidos
-    if (
-      cnpj == '00000000000000' ||
-      cnpj == '11111111111111' ||
-      cnpj == '22222222222222' ||
-      cnpj == '33333333333333' ||
-      cnpj == '44444444444444' ||
-      cnpj == '55555555555555' ||
-      cnpj == '66666666666666' ||
-      cnpj == '77777777777777' ||
-      cnpj == '88888888888888' ||
-      cnpj == '99999999999999'
-    ) {
-      return false;
-    } // LINHA 21
-
-    // Valida DVs LINHA 23 -
-    let tamanho: number = cnpj.length - 2;
-    let numeros: string = cnpj.substring(0, tamanho);
-    const digitos = cnpj.substring(tamanho);
-    let soma = 0;
-    let pos = tamanho - 7;
-    for (let i = tamanho; i >= 1; i--) {
-      soma += Number(numeros.charAt(tamanho - i)) * pos--;
-      if (pos < 2) {
-        pos = 9;
-      }
-    }
-    let resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-    if (resultado != Number(digitos.charAt(0))) {
-      return false;
-    }
-
-    tamanho = tamanho + 1;
-    numeros = cnpj.substring(0, tamanho);
-    soma = 0;
-    pos = tamanho - 7;
-    for (let i = tamanho; i >= 1; i--) {
-      soma += Number(numeros.charAt(tamanho - i)) * pos--;
-      if (pos < 2) {
-        pos = 9;
-      }
-    }
-    resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-    if (resultado != Number(digitos.charAt(1))) {
-      return false;
-    } // LINHA 49
-
-    return true;
-  }
-
-  public static validaCpf(cpf): boolean {
-    cpf = cpf.replace(/[^\d]+/g, '');
-    let sum;
-    let rest;
-    sum = 0;
-    if (cpf == '00000000000') {
-      return false;
-    }
-
-    for (let i = 1; i <= 9; i++) {
-      sum = sum + Number(cpf.substring(i - 1, i)) * (11 - i);
-    }
-    rest = (sum * 10) % 11;
-    if (rest == 10 || rest == 11) {
-      rest = 0;
-    }
-    // tslint:disable-next-line: radix
-    if (rest != Number(cpf.substring(9, 10))) {
-      return false;
-    }
-
-    sum = 0;
-    for (let i = 1; i <= 10; i++) {
-      sum = sum + Number(cpf.substring(i - 1, i)) * (12 - i);
-    }
-    rest = (sum * 10) % 11;
-
-    if (rest == 10 || rest == 11) {
-      rest = 0;
-    }
-    if (rest != Number(cpf.substring(10, 11))) {
-      return false;
-    }
-    return true;
   }
 }

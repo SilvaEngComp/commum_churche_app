@@ -35,11 +35,7 @@
     <ion-row *ngIf="!showLoadEditImage">
       <ion-col>
         <ion-item lines="none" color="light" class="control-buttons">
-          <ion-button (click)="cancel()" color="danger">
-            <ion-icon name="close-circle-outline"></ion-icon>
-            <ion-label>CANCELAR</ion-label>
-          </ion-button>
-          <ion-button (click)="update()" color="success">
+          <ion-button slot="end" (click)="update()" color="success">
             <ion-icon name="save-outline"></ion-icon>
             <ion-label>SALVAR</ion-label>
           </ion-button>
@@ -189,6 +185,17 @@
 
 
       </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!showLoadEditImage">
+      <ion-col>
+        <ion-item lines="none" color="light" class="control-buttons">
+          <ion-button slot="end" (click)="update()" color="success">
+            <ion-icon name="save-outline"></ion-icon>
+            <ion-label>SALVAR</ion-label>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+
     </ion-row>
   </ion-grid>
 

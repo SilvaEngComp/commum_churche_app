@@ -13,13 +13,18 @@ export class CaixaReportExcelFormat {
     this.workbook = new Excel.Workbook();
   }
 
-  setWorksheetGeneral(generalTitle: string, tithes: any[][]) {
-    this.worksheet = this.workbook.addWorksheet('Totais');
+  setWorksheetGeneral(
+    generalTitle: string,
+    worksheetTitle: string,
+    data: any[][]
+  ) {
+    this.worksheet = this.workbook.addWorksheet(worksheetTitle);
     this.setImage();
     this.setDate();
     this.setTitle(generalTitle);
     this.setHeadTypeRow();
     this.setHeadRow();
+    this.worksheet.addRows(data);
   }
 
   setDate() {
@@ -139,12 +144,12 @@ export class CaixaReportExcelFormat {
 
   setHeadRow() {
     //Add Header Row
-    let hearder = Constants.TITHE_REPORT_HEADER;
-    hearder.push('');
+    let hearder = [];
+    hearder = hearder.concat(Constants.TITHE_REPORT_HEADER);
     hearder = hearder.concat(Constants.TITHE_REPORT_HEADER);
     hearder = hearder.concat(Constants.CAIXA_REPORT_HEADER);
-    hearder.push('');
     hearder = hearder.concat(Constants.CAIXA_REPORT_HEADER);
+    hearder.pop();
     const headerRow = this.worksheet.addRow(hearder);
 
     // Cell Style : Fill and Border

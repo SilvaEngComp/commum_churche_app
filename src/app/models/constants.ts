@@ -32,6 +32,7 @@ export class Constants {
   static PAGE_ADMIN_PROFILE = '0';
   static USER_SUPERIOR_LIMIT = 'upperUserLimit';
   static USER_INFERIOR_LIMIT = 'inferiorUserLimit';
+  static USER_PAGE_NUMBER = 'usersPageNumber';
   static USER_FILTER_LIST = ['Mês', 'Semana'];
   static USER_FILTER = 'userFilter';
   static TITHE_SUPERIOR_LIMIT = 'upperTitheLimit';
@@ -40,6 +41,7 @@ export class Constants {
   static TITHE_FILTER = 'titheFilter';
   static CAIXA_FILTER = 'caixaFilter';
   static FINANCY_SUMMARY_FILTER = 'financySummaryFilter';
+  static FINANCY_REPORT_FILTER = 'financyReportFilter';
 
   static PAGE_FINANCY_CAIXA = '0';
   static PAGE_FINANCY_TITHE = '1';
@@ -196,12 +198,17 @@ export class Constants {
   static ELEMENT_MARKER_REF = 'elementMarkerRef';
   static ELEMENT_MARKER_RENDERER = 'elementMarkerRenderer';
   static LOCALSTORAGE_REQUEST_EMAIL = 'localStorageRequestEmail';
-  static TITHE_REPORT_HEADER = ['VALOR', 'DATA', 'DIZIMISTA', 'TESOUREIRO'];
+  static TITHE_REPORT_HEADER = ['VALOR', 'DATA', 'DIZIMISTA', 'TESOUREIRO', ''];
   static CAIXA_REPORT_HEADER = [
     'VALOR',
     'DATA',
     'TESOUREIRO',
     'CATEGORIA',
     'SUBCATEGORIA',
+    '',
   ];
+
+  static FINANCY_REPORT_INPUT = 'financyReportInput';
+  static FINANCY_REPORT_OUTPUT = 'financyReportOutput';
+  static FINANCY_REPORT_GENERAL = 'financyReportGeneral';
 }

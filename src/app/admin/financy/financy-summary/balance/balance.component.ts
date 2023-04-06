@@ -103,7 +103,7 @@ export class BalanceComponent implements OnInit, AfterViewInit {
     this.endDate = date.substring(0, 10);
     this.filter.dateF = this.endDate;
   }
-  async load() {
+  load() {
     if (this.isValidFilter()) {
       this.financyService
         .getInputs(this.filter)

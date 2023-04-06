@@ -19,6 +19,7 @@ import { FinancySummaryComponent } from './financy-summary/financy-summary.compo
 import { CaixaSummaryComponent } from './financy-summary/caixa-summary/caixa-summary.component';
 import { TitheSummaryComponent } from './financy-summary/tithe-summary/tithe-summary.component';
 import { FinancyReportModule } from './financy-report/financy-report.module';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { FinancyReportModule } from './financy-report/financy-report.module';
     ChurchModule,
     UiModule,
     FinancyReportModule,
+    DirectivesModule,
   ],
   exports: [FinancyAdminComponent, TitheComponent, TitheRegisterComponent],
   providers: [],

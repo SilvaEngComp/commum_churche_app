@@ -2,8 +2,7 @@
   <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="back()"></ion-icon>
   <ion-title>{{localPageTitle}}</ion-title>
 </ion-item>
-<ion-grid *ngIf="totalInputOutput">
-
+<ion-grid>
   <ion-row>
     <ion-col class="card-options">
 
@@ -53,65 +52,24 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <div class="balance">
-        <ion-label class="balance-label">Saldo em Conta</ion-label>
-        <ion-label class="balance-value">{{balance | currencyBrl}}</ion-label>
-      </div>
-    </ion-col>
-  </ion-row>
-
-  <ion-row>
-
-    <ion-col class="card-options">
-      <div class="input-output-div">
-        <ion-icon color="success" name="arrow-up-circle-sharp"></ion-icon>
-        <div>
-          <ion-label class="balance-label">Receitas</ion-label><br>
-          <ion-label color="success" class="balance-value">{{totalInputOutput?.totalInput | currencyBrl}}</ion-label>
-        </div>
-      </div>
-    </ion-col>
-    <ion-col class="card-options">
-      <div class="input-output-div">
-        <ion-icon color="danger" name="arrow-up-circle-sharp"></ion-icon>
-        <div>
-          <ion-label class="balance-label">Saídas</ion-label><br>
-          <ion-label color="danger" class="balance-value">{{totalInputOutput?.totalOutput | currencyBrl}}</ion-label>
-        </div>
-      </div>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-
       <ion-button fill="clear" color="primary" (click)="download()">
         <ion-icon color="primary" slot="end" name="cloud-download-outline"></ion-icon>
       </ion-button>
     </ion-col>
   </ion-row>
-  <ion-row [ngClass]="{ocult: loaded}">
+  <ion-row>
     <ion-col>
-      <div *ngIf="!loaded" class="spinner">
-        <ion-spinner name="dots"></ion-spinner>
-        <ion-label>Carregando dados</ion-label>
-        <ion-spinner name="dots"></ion-spinner>
-      </div>
+      <app-general-summary-graph></app-general-summary-graph>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-card class="div-canvas">
-        <ion-label class="lb-title">Resumo Entradas e Saídas</ion-label><br>
-        <canvas #canvasMnth (chartClick)="onChartClick($event)"></canvas>
-      </ion-card>
+      <app-inputs-graph></app-inputs-graph>
     </ion-col>
   </ion-row>
-  <!-- <ion-row>
+  <ion-row>
     <ion-col>
-      <ion-card [ngClass]="{'ocult': !loaded}" class="div-canvas">
-        <ion-label class="lb-title">Relatório do Ano {{ano}}</ion-label>
-        <canvas #canvasYear></canvas>
-      </ion-card>
+      <app-outputs-graph></app-outputs-graph>
     </ion-col>
-  </ion-row> -->
+  </ion-row>
 </ion-grid>

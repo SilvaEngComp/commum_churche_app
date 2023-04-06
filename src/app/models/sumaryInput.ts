@@ -8,13 +8,14 @@ export class SummaryInput {
 }
 
 export class InputsReport {
+  church: Church;
+  total: number;
   caixaReport: CaixaReport;
   tithe: TitheReport;
   offer: TitheReport;
 }
 
 export class TitheReport {
-  church: Church;
   titheSummary: TitheSummary;
   showDetails: boolean;
 }

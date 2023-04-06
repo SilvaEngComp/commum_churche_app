@@ -28,6 +28,7 @@ export class AdminSelectorComponent implements OnInit {
   user: User;
   page: string;
   defaultPageName = 'menu-admin-page';
+
   showColorMark: boolean;
   isBibleOppened: boolean;
   pageTile: string;

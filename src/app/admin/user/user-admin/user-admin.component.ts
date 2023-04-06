@@ -17,6 +17,7 @@ export class UserAdminComponent implements OnInit {
 
   ngOnInit() {
     UiService.setCurrentPage(Constants.TITLE_SECRETARY);
+
     if (!this.subpage) {
       this.subpage = UiService.localGet(
         Constants.PAGE_CONTROLL_SECRETARY_ADMIN

@@ -17,6 +17,11 @@ import { UserExcelFormat } from '../models/userExcelFormat';
 import { User } from '../models/User';
 import { Church } from '../models/church';
 import { CaixaReportExcelFormat } from '../models/caixaReportExcelFormat';
+import { UiService } from './ui.service';
+import { Constants } from '../models/constants';
+import { TotalInputOutput } from '../models/totalInputOutput';
+import { SummaryInput } from '../models/sumaryInput';
+import { SummaryOutput } from '../models/sumaryOutput';
 const EXCEL_TYPE =
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
@@ -106,15 +111,133 @@ export class DownloadService {
     this.testDownloadXls(userExcelFormat?.workbook, generalTitle);
   }
 
-  async buildFinancialReport(users: User[], generalTitle: string) {
+  async buildFinancialReport(generalTitle: string) {
     const userExcelFormat = new CaixaReportExcelFormat();
-    let title;
 
-    const data = [];
+    const churchResponser = await this.churchService.get();
+    const churches: Church[] = churchResponser.data;
 
-    userExcelFormat.setWorksheetGeneral(generalTitle, data);
+    const inputs: SummaryInput = UiService.localGet(
+      Constants.FINANCY_REPORT_INPUT
+    );
+    const outputs: SummaryOutput = UiService.localGet(
+      Constants.FINANCY_REPORT_OUTPUT
+    );
+    const general: TotalInputOutput = UiService.localGet(
+      Constants.FINANCY_REPORT_GENERAL
+    );
+    churches.filter((church) => {
+      const inputsData: any[] = [];
+      inputs.reports.filter((report) => {
+        if (report?.church?.id === church?.id) {
+          report?.caixaReport?.caixaReportCategory?.caixaSummary.filter(
+            (summary) =>
+              summary?.caixas.filter((obj) =>
+                inputsData.push([
+                  UiService.convertToCurrency(obj?.amount),
+                  obj?.date,
+                  obj?.register?.name,
+                  obj?.caixaCategory?.name,
+                  obj?.caixaType?.name ? obj?.caixaType?.name : '',
+                  '',
+                ])
+              )
+          );
+        }
+      });
 
-    this.exceptionService.loadingFunction('Processando Tabela Excel...');
+      let count = inputsData?.length;
+      const titheData: any[] = [];
+      inputs.reports.filter((report) => {
+        if (report?.church?.id === church?.id) {
+          report?.tithe?.titheSummary.tithes.filter((obj) =>
+            titheData.push([
+              UiService.convertToCurrency(obj?.amount),
+              obj?.date,
+              obj?.user?.name,
+              obj?.register?.name,
+              '',
+            ])
+          );
+        }
+      });
+
+      if (titheData?.length > count) {
+        count = titheData?.length;
+      }
+
+      const offerData: any[] = [];
+      inputs.reports.filter((report) => {
+        if (report?.church?.id === church?.id) {
+          report?.offer?.titheSummary.tithes.filter((obj) =>
+            offerData.push([
+              UiService.convertToCurrency(obj?.amount),
+              obj?.date,
+              obj?.user?.name,
+              obj?.register?.name,
+              '',
+            ])
+          );
+        }
+      });
+
+      if (offerData?.length > count) {
+        count = offerData?.length;
+      }
+      const outputsData: any[] = [];
+      outputs.reports.filter((report) => {
+        if (report?.church?.id === church?.id) {
+          report?.caixaReport?.caixaReportCategory?.caixaSummary.filter(
+            (summary) =>
+              summary?.caixas.filter((caixa) =>
+                outputsData.push([
+                  UiService.convertToCurrency(caixa?.amount),
+                  caixa?.date,
+                  caixa?.register?.name,
+                  caixa?.caixaCategory?.name,
+                  caixa?.caixaType?.name ? caixa?.caixaType?.name : '',
+                ])
+              )
+          );
+        }
+      });
+
+      if (outputsData?.length > count) {
+        count = outputsData?.length;
+      }
+      const data = [];
+
+      for (let i = 0; i < count; i++) {
+        let rowTithe = ['', '', '', '', ''];
+        let rowOffer = ['', '', '', '', ''];
+        let rowInput = ['', '', '', '', '', ''];
+        let rowOutput = ['', '', '', '', '', ''];
+
+        if (i < titheData?.length) {
+          rowTithe = titheData[i];
+        }
+        if (i < offerData?.length) {
+          rowOffer = offerData[i];
+        }
+        if (i < inputsData?.length) {
+          rowInput = inputsData[i];
+        }
+        if (i < outputsData?.length) {
+          rowOutput = outputsData[i];
+        }
+
+        let completeRow = [];
+        completeRow = completeRow.concat(rowTithe);
+        completeRow = completeRow.concat(rowOffer);
+        completeRow = completeRow.concat(rowInput);
+        completeRow = completeRow.concat(rowOutput);
+
+        data.push(completeRow);
+      }
+
+      userExcelFormat.setWorksheetGeneral(generalTitle, church?.name, data);
+    });
+
     this.testDownloadXls(userExcelFormat?.workbook, generalTitle);
   }
 

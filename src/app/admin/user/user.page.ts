@@ -1,6 +1,4 @@
 import { ConstantMessages } from './../../models/messages';
-import { FilterComponent } from './filter/filter.component';
-import { ModalController } from '@ionic/angular';
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -19,7 +17,6 @@ import { UiService } from 'src/app/services/ui.service';
 import { UserFacadeService } from 'src/app/facades/user-facade.service';
 import { Constants } from 'src/app/models/constants';
 import { DownloadService } from './../../services/download.service';
-import { UserCSV } from 'src/app/models/birthdayExport';
 import { User } from 'src/app/models/User';
 @Component({
   selector: 'app-user',
@@ -84,8 +81,19 @@ export class UserPage implements OnInit {
       this.users = data.data;
       this.users.sort((a, b) => (a?.name > b?.name ? 1 : -1));
       this.checkImage();
-      UiService.localSet('upperUserLimit', 10);
-      UiService.localSet('inferiorUserLimit', 0);
+      this.upperLimit = UiService.localGet(Constants.USER_SUPERIOR_LIMIT);
+      this.inferiorLimit = UiService.localGet(Constants.USER_INFERIOR_LIMIT);
+      this.paginationNumber = UiService.localGet(Constants.USER_PAGE_NUMBER);
+
+      if (!this.upperLimit) {
+        UiService.localSet(Constants.USER_SUPERIOR_LIMIT, 10);
+      }
+      if (!this.inferiorLimit) {
+        UiService.localSet(Constants.USER_INFERIOR_LIMIT, 0);
+      }
+      if (!this.paginationNumber) {
+        UiService.localSet(Constants.USER_PAGE_NUMBER, 1);
+      }
     });
   }
 
@@ -165,6 +173,7 @@ export class UserPage implements OnInit {
   limitsSave() {
     UiService.localSet(Constants.USER_SUPERIOR_LIMIT, this.upperLimit);
     UiService.localSet(Constants.USER_INFERIOR_LIMIT, this.inferiorLimit);
+    UiService.localSet(Constants.USER_PAGE_NUMBER, this.paginationNumber);
   }
 
   search(search: any) {

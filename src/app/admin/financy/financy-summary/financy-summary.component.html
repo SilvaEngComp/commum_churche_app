@@ -57,7 +57,7 @@
         <ion-label class="balance-label">Saldo em Conta</ion-label>
         <ion-label class="balance-value">{{balance | currencyBrl}}</ion-label>
       </div>
-      <ion-item lines="none">
+      <ion-item lines="none" *permission="'super_admin'">
         <ion-icon color="primary" name="stats-chart-outline" (click)="goToReport()"></ion-icon>
       </ion-item>
     </ion-col>

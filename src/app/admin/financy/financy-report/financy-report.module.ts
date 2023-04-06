@@ -6,12 +6,17 @@ import { IonicModule } from '@ionic/angular';
 import { BrMaskerModule } from 'br-mask';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { UiModule } from 'src/app/ui/ui.module';
-import { ChurchModule } from '../../church/church.module';
-import { CaixaModule } from '../caixa/caixa.module';
-import { TitheModule } from '../tithe/tithe.module';
+import { GeneralSummaryComponent } from './general-summary-graph/general-summary-graph.component';
+import { InputsGraphComponent } from './inputs-graph/inputs-graph.component';
+import { OutputsGraphComponent } from './outputs-graph/outputs-graph.component';
 
 @NgModule({
-  declarations: [FinancyReportComponent],
+  declarations: [
+    FinancyReportComponent,
+    GeneralSummaryComponent,
+    InputsGraphComponent,
+    OutputsGraphComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -19,9 +24,6 @@ import { TitheModule } from '../tithe/tithe.module';
     BrMaskerModule,
     ReactiveFormsModule,
     PipesModule,
-    TitheModule,
-    CaixaModule,
-    ChurchModule,
     UiModule,
   ],
   exports: [FinancyReportComponent],

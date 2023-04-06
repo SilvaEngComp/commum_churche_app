@@ -381,21 +381,33 @@ export class ProfileComponent implements OnInit {
     if (!this.user.maritalStatus) {
       this.user.maritalStatus = new MaritalStatus();
     }
-    this.user.maritalStatus.id = ev.target.value;
+    this.maritalStatuses.filter((obj) => {
+      if (obj.id === ev.target.value) {
+        this.user.maritalStatus = obj;
+      }
+    });
   }
 
   setInputMethod(ev: any) {
     if (!this.user.inputMethod) {
       this.user.inputMethod = new InputMethod();
     }
-    this.user.inputMethod.id = ev.target.value;
+    this.inputMethods.filter((obj) => {
+      if (obj.id === ev.target.value) {
+        this.user.inputMethod = obj;
+      }
+    });
   }
 
   setChurch(ev: any) {
     if (!this.user.church) {
       this.user.church = new Church();
     }
-    this.user.church.id = ev.target.value;
+    this.churches.filter((obj) => {
+      if (obj.id === ev.target.value) {
+        this.user.church = obj;
+      }
+    });
   }
 
   onSelectData(date: any) {
