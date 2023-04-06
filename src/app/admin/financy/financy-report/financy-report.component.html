@@ -57,16 +57,13 @@
         <ion-label class="balance-label">Saldo em Conta</ion-label>
         <ion-label class="balance-value">{{balance | currencyBrl}}</ion-label>
       </div>
-      <ion-item lines="none">
-        <ion-icon color="primary" name="stats-chart-outline" (click)="goToReport()"></ion-icon>
-      </ion-item>
     </ion-col>
   </ion-row>
 
   <ion-row>
 
     <ion-col class="card-options">
-      <div class="input-output-div" (click)="goToBalance()">
+      <div class="input-output-div">
         <ion-icon color="success" name="arrow-up-circle-sharp"></ion-icon>
         <div>
           <ion-label class="balance-label">Receitas</ion-label><br>
@@ -75,7 +72,7 @@
       </div>
     </ion-col>
     <ion-col class="card-options">
-      <div class="input-output-div" (click)="goToExpence()">
+      <div class="input-output-div">
         <ion-icon color="danger" name="arrow-up-circle-sharp"></ion-icon>
         <div>
           <ion-label class="balance-label">Saídas</ion-label><br>
@@ -85,25 +82,36 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col class="card-options">
-      <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/tithes-admin.png"
-        (click)="openMenuOption(1,true)"></ion-img>
-    </ion-col>
+    <ion-col>
 
-    <ion-col class="card-options">
-      <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/offers-admin.png"
-        (click)="openMenuOption(1,false)"></ion-img>
+      <ion-button fill="clear" color="primary" (click)="download()">
+        <ion-icon color="primary" slot="end" name="cloud-download-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row [ngClass]="{ocult: loaded}">
+    <ion-col>
+      <div *ngIf="!loaded" class="spinner">
+        <ion-spinner name="dots"></ion-spinner>
+        <ion-label>Carregando dados</ion-label>
+        <ion-spinner name="dots"></ion-spinner>
+      </div>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col class="card-options">
-      <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/inputs-admin.png"
-        (click)="openMenuOption(0,true)"></ion-img>
-    </ion-col>
-    <ion-col class="card-options">
-      <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/outputs-admin.png"
-        (click)="openMenuOption(0,false)"></ion-img>
+    <ion-col>
+      <ion-card class="div-canvas">
+        <ion-label class="lb-title">Resumo Entradas e Saídas</ion-label><br>
+        <canvas #canvasMnth (chartClick)="onChartClick($event)"></canvas>
+      </ion-card>
     </ion-col>
   </ion-row>
-
+  <!-- <ion-row>
+    <ion-col>
+      <ion-card [ngClass]="{'ocult': !loaded}" class="div-canvas">
+        <ion-label class="lb-title">Relatório do Ano {{ano}}</ion-label>
+        <canvas #canvasYear></canvas>
+      </ion-card>
+    </ion-col>
+  </ion-row> -->
 </ion-grid>

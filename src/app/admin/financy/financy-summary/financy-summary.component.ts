@@ -58,7 +58,6 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
   wallet: Wallet;
   constructor(
     private financyService: FinancyService,
-    private caixaFacade: CaixaFacadeService,
     private modalController: ModalController,
     private exeptionService: ExceptionService,
     private downloadService: DownloadService
@@ -72,11 +71,6 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
     this.checkFilter();
 
     this.load();
-  }
-
-  async download() {
-    // this.exceptionService.loadingFunction('Processando Tabela Excel...');
-    this.downloadService.buildFinancialReport([], 'Relatório Financeiro');
   }
 
   checkFilter() {
@@ -155,6 +149,9 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
   goToBalance() {
     this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_BALANCE);
   }
+  goToReport() {
+    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_REPORT);
+  }
 
   goToExpence() {
     this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_EXPENSE);
@@ -179,10 +176,6 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
       Constants.MENU_FINANCY_OPTION_SUMMARY
     );
     this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_TITHE_REGISTER);
-  }
-
-  delete(caixa: Caixa) {
-    this.caixaFacade.delete(caixa);
   }
 
   setIntialDate(date: any) {

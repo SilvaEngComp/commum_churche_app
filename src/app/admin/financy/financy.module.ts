@@ -18,6 +18,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { FinancySummaryComponent } from './financy-summary/financy-summary.component';
 import { CaixaSummaryComponent } from './financy-summary/caixa-summary/caixa-summary.component';
 import { TitheSummaryComponent } from './financy-summary/tithe-summary/tithe-summary.component';
+import { FinancyReportModule } from './financy-report/financy-report.module';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { TitheSummaryComponent } from './financy-summary/tithe-summary/tithe-sum
     CaixaModule,
     ChurchModule,
     UiModule,
+    FinancyReportModule,
   ],
   exports: [FinancyAdminComponent, TitheComponent, TitheRegisterComponent],
   providers: [],

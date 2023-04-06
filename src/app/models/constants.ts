@@ -90,6 +90,7 @@ export class Constants {
   static MENU_FINANCY_OPTION_TITHE_REGISTER = '3';
   static MENU_FINANCY_OPTION_BALANCE = '4';
   static MENU_FINANCY_OPTION_EXPENSE = '5';
+  static MENU_FINANCY_OPTION_REPORT = '6';
 
   static OFFER_MAINTAINCE = 'offerMaintaince';
   static TITHE_MAINTAINCE = 'titheMaintaince';
@@ -139,6 +140,7 @@ export class Constants {
   static TITLE_CURRENT_PAGE = 'currentPageTitle';
   static TITLE_DAILY_READER = 'Leitura Bíblica';
   static TITLE_SUMMARY_FINANCY_SUB = 'Resumo Financeiro';
+  static TITLE_SUMMARY_FINANCY_REPORT = 'Relatório Financeiro';
   static TITLE_SUMMARY_BALANCE = 'Receitas';
   static TITLE_BIRTHDAYS = 'Aniversariantes';
   static TITLE_SUMMARY_EXPANSE = 'Saídas';
