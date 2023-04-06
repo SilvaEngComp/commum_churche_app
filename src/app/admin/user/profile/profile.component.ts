@@ -1,6 +1,6 @@
 import { UiService } from 'src/app/services/ui.service';
 import { Constants } from 'src/app/models/constants';
-import { AfterViewInit } from '@angular/core';
+import { AfterViewInit, Input } from '@angular/core';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
@@ -11,14 +11,13 @@ import { User } from 'src/app/models/User';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
-import { environment } from 'src/environments/environment';
 import { Church } from 'src/app/models/church';
 import { InputMethod } from 'src/app/models/inputhMethod';
 import { MaritalStatus } from 'src/app/models/maritalStatus';
-import { DayToSelectComponent } from 'src/app/home/home-user-register/register-personal-info/day-to-select/day-to-select.component';
 import { ChurchService } from 'src/app/services/church.service';
 import { InputMethodService } from 'src/app/services/input-method.service';
 import { MaritalStatusService } from 'src/app/services/marital-status.service';
+import { DayToSelectComponent } from 'src/app/resources/day-to-select/day-to-select.component';
 
 @Component({
   selector: 'app-profile',
@@ -27,12 +26,11 @@ import { MaritalStatusService } from 'src/app/services/marital-status.service';
 })
 export class ProfileComponent implements OnInit {
   @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
-
+  @Input() hasBackPage: boolean;
   is_loading: boolean;
   user: User;
   userAux: User;
   op: string;
-  edit: boolean;
   is_localImage: boolean;
   selectedCard: string;
   // public fGroup: FormGroup;
@@ -53,7 +51,7 @@ export class ProfileComponent implements OnInit {
   days: string[] = [];
   day: string;
   monthYear: string;
-  hasBackPage: boolean;
+
   isImageButtonVisible = false;
   showLoadEditImage = false;
   constructor(
@@ -76,13 +74,7 @@ export class ProfileComponent implements OnInit {
 
     UiService.pageTitle.emit(Constants.TITLE_USER_PROFILE);
 
-    if (UiService.localGet(Constants.HAS_BACK_PAGE)) {
-      this.hasBackPage = true;
-    } else {
-      this.hasBackPage = false;
-    }
     console.log('entrei profile');
-    this.edit = true;
     this.section = 1;
     this.is_loading = true;
 
@@ -132,15 +124,6 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  setEdit() {
-    this.checkImageExists();
-    this.edit = !this.edit;
-    localStorage.setItem(
-      environment.LOCALSTORAGE + 'edit',
-      JSON.stringify(this.edit)
-    );
-  }
-
   onSetBrmaskers(ev, op: number) {
     switch (op) {
       case 1:
@@ -158,18 +141,8 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  async back() {
-    if (this.isSmallDevice) {
-      this.returnPage.emit({ page: 'more' });
-    } else {
-      this.returnPage.emit(Constants.MENU_USER_OPTION_MEMBERS);
-    }
-  }
-  segmentChanged(ev) {}
-
   cancel() {
     this.checkImageExists();
-    this.edit = !this.edit;
     this.user = this.userAux;
   }
   onSelectGender(ev: any) {
@@ -186,13 +159,6 @@ export class ProfileComponent implements OnInit {
           this.user.contact.state = response.uf;
         });
     }
-  }
-
-  async editImage() {
-    this.returnPage.emit({
-      page: 'load-image',
-      callbackPage: 'profile',
-    });
   }
 
   setShowEditImageButtons() {
@@ -229,6 +195,7 @@ export class ProfileComponent implements OnInit {
         .upload(obj.files.formData, this.user)
         .then((responser) => {
           this.user = responser.data;
+
           this.validUser();
           UiService.localSet(Constants.USER_MAINTAINCE, this.user);
           LoginService.updateUserToken(this.user, true);
@@ -279,17 +246,19 @@ export class ProfileComponent implements OnInit {
 
   update() {
     this.checkImageExists();
-    this.setEdit();
-    this.exceptionService.loadingFunction();
+    this.is_loading = true;
     this.userService
       .update(this.user)
-      .then((responser) => {
+      .then(() => {
         this.validUser();
-        this.edit = true;
+        this.exceptionService.alertDialog('Alteração realizada com sucesso');
+        this.user.isEditing = true;
+        this.returnPage.emit(this.user);
       })
       .catch((erro) => {
         this.exceptionService.error(erro.error.message);
-      });
+      })
+      .finally(() => (this.is_loading = false));
   }
 
   checkContact() {

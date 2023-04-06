@@ -4,7 +4,7 @@
       <div class="div-drop-image" ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
         (fileOver)="fileOverBase($event)" (onFileDrop)="onReceiveImage()" [uploader]="uploader">
 
-        <ion-icon *ngIf="!selectedImge" color="secondary" name="image-outline"></ion-icon>
+        <ion-icon class="image-icon" *ngIf="!selectedImge" color="secondary" name="image-outline"></ion-icon>
         <ion-img alt="Igreaja Batista Nova Betel" [src]="selectedImge" *ngIf="selectedImge"
           class="selected-image"></ion-img>
 

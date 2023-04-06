@@ -1,11 +1,6 @@
-import { ChurchService } from './../../../services/church.service';
-import { InputMethod } from './../../../models/inputhMethod';
-import { MaritalStatusService } from './../../../services/marital-status.service';
-import { InputMethodService } from './../../../services/input-method.service';
+import { DayToSelectComponent } from '../../../../resources/day-to-select/day-to-select.component';
 import { DatePipe } from '@angular/common';
 /* eslint-disable @typescript-eslint/member-ordering */
-import { ConstantMessages } from './../../../models/messages';
-import { ExceptionService } from './../../../services/exception-service.service';
 import {
   Component,
   EventEmitter,
@@ -24,14 +19,20 @@ import {
 } from '@ionic/angular';
 import { MaritalStatus } from 'src/app/models/maritalStatus';
 import { Church } from 'src/app/models/church';
-import { DayToSelectComponent } from 'src/app/resources/day-to-select/day-to-select.component';
+import { InputMethod } from 'src/app/models/inputhMethod';
+import { ConstantMessages } from 'src/app/models/messages';
+import { ChurchService } from 'src/app/services/church.service';
+import { ExceptionService } from 'src/app/services/exception-service.service';
+import { InputMethodService } from 'src/app/services/input-method.service';
+import { MaritalStatusService } from 'src/app/services/marital-status.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-register-personal-info',
-  templateUrl: './register-personal-info.component.html',
-  styleUrls: ['./register-personal-info.component.scss'],
+  selector: 'app-register-card',
+  templateUrl: './register-card.component.html',
+  styleUrls: ['./register-card.component.scss'],
 })
-export class RegisterPersonalInfoComponent implements OnInit {
+export class RegisterCardComponent implements OnInit {
   @Output() session: EventEmitter<number> = new EventEmitter<number>();
   user: User;
   dateSelected: boolean;
@@ -52,7 +53,8 @@ export class RegisterPersonalInfoComponent implements OnInit {
     private maritalStatusService: MaritalStatusService,
     private platform: Platform,
     private churchService: ChurchService,
-    private popCtrl: PopoverController
+    private popCtrl: PopoverController,
+    private usuarioService: UserService
   ) {}
   ngOnInit() {
     this.user = UiService.localGet(Constants.REGISTRING_USER);
@@ -83,21 +85,7 @@ export class RegisterPersonalInfoComponent implements OnInit {
     UiService.localSet(Constants.REGISTRING_USER, this.user);
   }
 
-  setSession(session: number) {
-    const lastSession = UiService.localGet(Constants.CURRENT_REGISTER_SESSION);
-    let flag = true;
-    if (lastSession < session) {
-      if (!this.check()) {
-        flag = false;
-      }
-    }
-    if (flag) {
-      this.save();
-      this.session.emit(session);
-    }
-  }
-
-  check() {
+  validForm() {
     if (this.user.name.length <= 0) {
       this.exceptionService.alertDialog(ConstantMessages.NAME_INVALID, 'Erro');
       return false;
@@ -179,6 +167,7 @@ export class RegisterPersonalInfoComponent implements OnInit {
       return false;
     }
 
+    this.user.password = this.user.birthDate;
     return true;
   }
 
@@ -246,6 +235,27 @@ export class RegisterPersonalInfoComponent implements OnInit {
     if (data) {
       this.day = data.day;
       this.setBirthdate();
+    }
+  }
+
+  register() {
+    if (this.validForm()) {
+      this.exceptionService.loadingFunction();
+
+      this.usuarioService
+        .createByCard(this.user)
+        .then(() => {
+          this.user = new User();
+          this.exceptionService.openLoading(
+            ConstantMessages.FINISHING_REGISTRATION_TITLE,
+            ConstantMessages.FINISHING_ADMIN_REGISTRATION_SUCCESS,
+            true,
+            30000
+          );
+        })
+        .catch((erro) => {
+          this.exceptionService.error(erro);
+        });
     }
   }
 }

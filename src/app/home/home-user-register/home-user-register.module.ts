@@ -1,4 +1,3 @@
-import { DayToSelectComponent } from './register-personal-info/day-to-select/day-to-select.component';
 import { RegisterJustificationComponent } from './register-justification/register-justification.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 import { RegisterPersonalInfoComponent } from './register-personal-info/register-personal-info.component';
@@ -9,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { BrMaskerModule } from 'br-mask';
 import { HomeUserRegisterComponent } from './home-user-register.component';
+import { ResourcesModule } from 'src/app/resources/resources.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,6 @@ import { HomeUserRegisterComponent } from './home-user-register.component';
     RegisterLoginComponent,
     HomeUserRegisterComponent,
     RegisterJustificationComponent,
-    DayToSelectComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +24,7 @@ import { HomeUserRegisterComponent } from './home-user-register.component';
     ReactiveFormsModule,
     IonicModule,
     BrMaskerModule,
+    ResourcesModule,
   ],
   exports: [HomeUserRegisterComponent],
 })

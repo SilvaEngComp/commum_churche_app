@@ -5,11 +5,11 @@ import { UserFilter } from '../models/userFilter';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from './login.service';
 
-import { User } from '../models/user';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root',
@@ -77,6 +77,14 @@ export class UserService extends ServiceInterface {
     console.log(JSON.stringify(user));
     return this.http
       .post<Responser>(`${environment.API}/users`, user, {
+        headers: LoginService.getHeaders(),
+      })
+      .toPromise();
+  }
+  async createByCard(user: User): Promise<Responser> {
+    console.log(JSON.stringify(user));
+    return this.http
+      .post<Responser>(`${environment.API2}/users/createByCsv`, user, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();

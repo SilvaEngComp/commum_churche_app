@@ -1,4 +1,6 @@
 import { User } from './User';
+import * as Excel from 'exceljs/dist/exceljs.min.js';
+import * as ExcelProper from 'exceljs';
 
 export class UserCSV {
   name: string;

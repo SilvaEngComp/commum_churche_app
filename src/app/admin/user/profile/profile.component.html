@@ -1,14 +1,3 @@
-<ion-header *ngIf="hasBackPage">
-  <ion-toolbar>
-    <ion-buttons slot="start" (click)="back()">
-      <ion-icon name="arrow-undo-circle-outline"></ion-icon>
-    </ion-buttons>
-    <ion-item class="header" lines="none">
-      <ion-label>VOLTAR PARA LISTA</ion-label>
-    </ion-item>
-  </ion-toolbar>
-</ion-header>
-
 <ion-spinner name="bubbles" *ngIf="is_loading"></ion-spinner>
 
 <div class="div-body" *ngIf="!is_loading">
@@ -26,10 +15,10 @@
               </ion-avatar>
             </ion-col>
           </ion-row>
-          <ion-row *ngIf="!edit">
+          <ion-row>
             <ion-col>
               <ion-item lines="none" color="light" class="edit-image-buttons">
-                <ion-button fill="clear" color="warning" (click)="setshowLoadEditImage()">editar</ion-button>
+                <ion-button fill="clear" color="warning" (click)="setshowLoadEditImage()">alterar</ion-button>
                 <ion-button fill="clear" color="danger" (click)="deleteImage()">deletar</ion-button>
               </ion-item>
             </ion-col>
@@ -43,18 +32,14 @@
           [confirmButton]="true"></app-load-images>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="!showLoadEditImage">
       <ion-col>
         <ion-item lines="none" color="light" class="control-buttons">
-          <ion-button (click)="setEdit()" *ngIf="edit">
-            <ion-icon src="./assets/icons/edit-light.svg"></ion-icon>
-            <ion-label>EDITAR</ion-label>
-          </ion-button>
-          <ion-button (click)="cancel()" *ngIf="!edit" color="danger">
+          <ion-button (click)="cancel()" color="danger">
             <ion-icon name="close-circle-outline"></ion-icon>
             <ion-label>CANCELAR</ion-label>
           </ion-button>
-          <ion-button (click)="update()" *ngIf="!edit" color="success">
+          <ion-button (click)="update()" color="success">
             <ion-icon name="save-outline"></ion-icon>
             <ion-label>SALVAR</ion-label>
           </ion-button>
@@ -66,18 +51,17 @@
       <ion-col>
         <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label position="floating">*NOME</ion-label>
-          <ion-input [disabled]="edit" [(ngModel)]="user.name"></ion-input>
+          <ion-input [(ngModel)]="user.name"></ion-input>
         </ion-item>
 
         <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label position="floating">*FONE</ion-label>
-          <ion-input [disabled]="edit" [(ngModel)]="user.contact.phone1" [brmasker]="{phone: true}"></ion-input>
+          <ion-input [(ngModel)]="user.contact.phone1" [brmasker]="{phone: true}"></ion-input>
         </ion-item>
 
         <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label position="floating">Profissão </ion-label>
-          <ion-input [disabled]="edit" placeholder="Com o que trabalha (Opcional)" type="text"
-            [(ngModel)]="user.occupation"></ion-input>
+          <ion-input placeholder="Com o que trabalha (Opcional)" type="text" [(ngModel)]="user.occupation"></ion-input>
         </ion-item>
 
 
@@ -89,12 +73,12 @@
 
           <ion-item>
             <ion-item lines="none">
-              <ion-button [disabled]="edit" fill="clear" (click)="openDay($event)" expand="full">
+              <ion-button fill="clear" (click)="openDay($event)" expand="full">
                 <label>Dia: {{day}}</label>
               </ion-button>
             </ion-item>
             <ion-item lines="none">
-              <ion-button [disabled]="edit" fill="clear" id="popover-button-month" expand="block">
+              <ion-button fill="clear" id="popover-button-month" expand="block">
                 <label>Mês/Ano: {{monthYear | date: 'MM/yyyy'}}</label>
               </ion-button>
 
@@ -117,12 +101,12 @@
           <ion-item lines="none">
             <ion-radio-group (click)="setIsBaptized($event)" [value]="user?.isBaptized" [allowEmptySelection]="false">
               <ion-item lines="none">
-                <ion-radio [disabled]="edit" slot="start" value="0"></ion-radio>
+                <ion-radio slot="start" value="0"></ion-radio>
                 <ion-label>Não</ion-label>
               </ion-item>
 
               <ion-item lines="none">
-                <ion-radio [disabled]="edit" slot="start" value="1"></ion-radio>
+                <ion-radio slot="start" value="1"></ion-radio>
                 <ion-label>Sim</ion-label>
               </ion-item>
             </ion-radio-group>
@@ -134,20 +118,20 @@
           <ion-radio-group (click)="setGender($event)" [value]="user?.gender" [allowEmptySelection]="false">
             <ion-item lines="none">
               <ion-label>Masc.</ion-label>
-              <ion-radio [disabled]="edit" slot="start" value="masculino"></ion-radio>
+              <ion-radio slot="start" value="masculino"></ion-radio>
             </ion-item>
 
             <ion-item lines="none">
               <ion-label>Femi.</ion-label>
-              <ion-radio [disabled]="edit" slot="start" value="feminino"></ion-radio>
+              <ion-radio slot="start" value="feminino"></ion-radio>
             </ion-item>
           </ion-radio-group>
         </ion-item>
 
         <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label>*Qual seu estado civil? </ion-label>
-          <ion-select [disabled]="edit" [value]="user?.maritalStatus.id" [selectedText]="user?.maritalStatus?.name"
-            interface="popover" (ionChange)="setMaritalStatus($event)">
+          <ion-select [value]="user?.maritalStatus.id" [selectedText]="user?.maritalStatus?.name" interface="popover"
+            (ionChange)="setMaritalStatus($event)">
             <ion-select-option [value]="item?.id" *ngFor="let item of maritalStatuses">{{item?.name | uppercase}}
             </ion-select-option>
           </ion-select>
@@ -155,8 +139,8 @@
 
         <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label>*Como veio para a igreja? </ion-label>
-          <ion-select [disabled]="edit" [value]="user?.inputMethod?.id" [selectedText]="user?.inputMethod?.name"
-            interface="popover" (ionChange)="setInputMethod($event)">
+          <ion-select [value]="user?.inputMethod?.id" [selectedText]="user?.inputMethod?.name" interface="popover"
+            (ionChange)="setInputMethod($event)">
             <ion-select-option [value]="item?.id" *ngFor="let item of inputMethods">{{item?.name | uppercase}}
             </ion-select-option>
           </ion-select>
@@ -164,8 +148,8 @@
 
         <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label>*Onde frequenta? </ion-label>
-          <ion-select [disabled]="edit" [value]="user?.church?.id" [selectedText]="user?.church?.name"
-            interface="popover" (ionChange)="setChurch($event)">
+          <ion-select [value]="user?.church?.id" [selectedText]="user?.church?.name" interface="popover"
+            (ionChange)="setChurch($event)">
             <ion-select-option [value]="item?.id" *ngFor="let item of churches">{{item?.name | uppercase}}
             </ion-select-option>
           </ion-select>
@@ -173,33 +157,33 @@
 
         <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label position="floating">*E-MAIL</ion-label>
-          <ion-input [disabled]="edit" [(ngModel)]="user.email"></ion-input>
+          <ion-input [(ngModel)]="user.email"></ion-input>
         </ion-item>
 
 
 
         <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label position="floating">*LOGRADOURO</ion-label>
-          <ion-input [disabled]="edit" [value]="user?.contact?.street" (keyup)="onSetAddress($event, 1)">
+          <ion-input [value]="user?.contact?.street" (keyup)="onSetAddress($event, 1)">
           </ion-input>
         </ion-item>
 
         <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label position="floating">NUMERO</ion-label>
-          <ion-input [disabled]="edit" [value]="user?.contact?.hauseNumber" (keyup)="onSetAddress($event, 2)">
+          <ion-input [value]="user?.contact?.hauseNumber" (keyup)="onSetAddress($event, 2)">
           </ion-input>
         </ion-item>
 
         <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label position="floating">*BAIRRO</ion-label>
-          <ion-input [disabled]="edit" [value]="user?.contact?.district" (keyup)="onSetAddress($event, 3)">
+          <ion-input [value]="user?.contact?.district" (keyup)="onSetAddress($event, 3)">
           </ion-input>
         </ion-item>
 
 
         <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label position="floating">COMPLEMENTO</ion-label>
-          <ion-input [disabled]="edit" [value]="user?.contact?.complement" (keyup)="onSetAddress($event, 4)">
+          <ion-input [value]="user?.contact?.complement" (keyup)="onSetAddress($event, 4)">
           </ion-input>
         </ion-item>
 

@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ColorMarkerComponent } from './color-manager/color-marker/color-marker.component';
+import { DayToSelectComponent } from './day-to-select/day-to-select.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ColorMarkerComponent } from './color-manager/color-marker/color-marker.
     ColorManagerComponent,
     ColorMarkerComponent,
     CommentMakerComponent,
+    DayToSelectComponent,
   ],
   imports: [CommonModule, IonicModule, FileUploadModule, FormsModule],
   exports: [
@@ -25,7 +27,8 @@ import { ColorMarkerComponent } from './color-manager/color-marker/color-marker.
     ValidCodeComponent,
     EmailCodeComponent,
     ColorManagerComponent,
+    DayToSelectComponent,
   ],
-  entryComponents: [LoadImagesComponent],
+  entryComponents: [LoadImagesComponent, DayToSelectComponent],
 })
 export class ResourcesModule {}

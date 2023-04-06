@@ -11,7 +11,7 @@ import { TitheFacade } from 'src/app/facades/tithe-facade.service';
 export class TitheSummaryComponent implements OnInit {
   @Input() titheReport: TitheReport;
   @Input() isTithe: boolean;
-  headTitheList: string[] = ['valor', 'data', 'Registrado por'];
+  headTitheList: string[] = ['valor', 'Data', 'Tesoureiro'];
   constructor(private titheFacade: TitheFacade) {}
 
   ngOnInit() {

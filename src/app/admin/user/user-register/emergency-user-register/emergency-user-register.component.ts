@@ -4,8 +4,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { User } from 'src/app/models/User';
 import { ConstantMessages } from 'src/app/models/messages';
-import { DayToSelectComponent } from 'src/app/home/home-user-register/register-personal-info/day-to-select/day-to-select.component';
 import { UiService } from 'src/app/services/ui.service';
+import { DatePipe } from '@angular/common';
+import { Church } from 'src/app/models/church';
+import { ChurchService } from 'src/app/services/church.service';
 
 @Component({
   selector: 'app-emergency-user-register',
@@ -18,16 +20,32 @@ export class EmergencyUserRegisterComponent implements OnInit {
   days: string[] = [];
   day: string;
   monthYear: string;
+  churches: Church[];
   constructor(
     private exceptionService: ExceptionService,
     private userService: UserService,
-    private popCtrl: PopoverController
+    private popCtrl: PopoverController,
+    private churchService: ChurchService
   ) {}
 
   ngOnInit() {
     this.user = new User();
+    const datePipe = new DatePipe('en');
+    this.user.birthDate = datePipe.transform(Date.now(), 'yyyy-mm-dd');
+    this.load();
   }
 
+  async load() {
+    const churchResponser = await this.churchService.get();
+    this.churches = churchResponser.data;
+  }
+
+  setChurch(ev: any) {
+    if (!this.user.church) {
+      this.user.church = new Church();
+    }
+    this.user.church.id = ev.target.value;
+  }
   register() {
     if (!this.userIsAlreadyRegistred()) {
       if (this.validForm()) {
@@ -69,22 +87,6 @@ export class EmergencyUserRegisterComponent implements OnInit {
     console.clear();
     this.user.birthDate = this.monthYear + '-' + this.day;
     console.log(this.user.birthDate);
-  }
-
-  async openDay(ev: any) {
-    const pop = await this.popCtrl.create({
-      component: DayToSelectComponent,
-      event: ev,
-    });
-
-    pop.present();
-
-    const { data } = await pop.onDidDismiss();
-    console.log(data.day);
-    if (data) {
-      this.day = data.day;
-      this.setBirthdate();
-    }
   }
 
   onSelectMonth(value: any) {

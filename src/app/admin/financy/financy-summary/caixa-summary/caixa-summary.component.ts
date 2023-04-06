@@ -19,14 +19,7 @@ export class CaixaSummaryComponent implements OnInit {
   @Input() caixaReport: CaixaReport;
   @Input() isEntry: boolean;
   public uploader: FileUploader = new FileUploader({});
-  headCaixaList: string[] = [
-    'Valor',
-    'Data',
-    'Tesoureiro',
-    'Organização',
-    'Subcagoria',
-    '',
-  ];
+  headCaixaList: string[] = ['Valor', 'Data', 'Tesoureiro', 'Subcagoria', ''];
   constructor(
     private caixaFacade: CaixaFacadeService,
     private popCtrl: PopoverController,

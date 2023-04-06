@@ -82,6 +82,7 @@ export class UserPage implements OnInit {
       this.setConfigPagination(true);
       this.isLoading = false;
       this.users = data.data;
+      this.users.sort((a, b) => (a?.name > b?.name ? 1 : -1));
       this.checkImage();
       UiService.localSet('upperUserLimit', 10);
       UiService.localSet('inferiorUserLimit', 0);
@@ -179,13 +180,20 @@ export class UserPage implements OnInit {
   }
 
   edit(user: User = null) {
-    if (!user) {
+    let isEditing = false;
+    if (user?.isEditing) {
       UiService.localRemove(Constants.USER_MAINTAINCE);
+      isEditing = false;
     } else {
       UiService.localSet(Constants.USER_MAINTAINCE, user);
+      isEditing = true;
     }
-    UiService.localSet(Constants.HAS_BACK_PAGE, true);
-    this.sessionPage.emit(Constants.MENU_USER_OPTION_PROFILE);
+
+    this.users.filter((searchedUser) => {
+      if (searchedUser?.id === user?.id) {
+        searchedUser.isEditing = isEditing;
+      }
+    });
   }
   delete(user: User) {
     this.userFacadeService.delete(user);
@@ -209,13 +217,9 @@ export class UserPage implements OnInit {
     });
   }
 
-  download() {
+  async download() {
     this.exceptionService.loadingFunction('Processando Tabela Excel...');
-    this.downloadService.exportAsExcelFile(
-      UserCSV.getTable(UserCSV.getRelatorio(this.users)),
-      'Lista de membros',
-      1
-    );
+    this.downloadService.buildUserExcel(this.users, 'Lista de Membros');
   }
 
   receiveFilter(ev: any) {

@@ -61,6 +61,7 @@ export class BirthdaysComponent implements OnInit {
     this.userSerice.getBirthdays(this.filter).then((responser) => {
       this.isLoading = false;
       this.users = responser.data;
+
       const x = -1;
       const y = 1;
       this.users.sort((a, b) => {
@@ -89,10 +90,6 @@ export class BirthdaysComponent implements OnInit {
 
   async download() {
     this.exceptionService.loadingFunction('Processando Tabela Excel...');
-    this.downloadService.exportAsExcelFile(
-      UserCSV.getTable(UserCSV.getRelatorio(this.users)),
-      'Aniversariantes do mês de ' + this.currentMonth?.name,
-      1
-    );
+    this.downloadService.buildUserExcel(this.users, 'Aniversariantes do Mês');
   }
 }

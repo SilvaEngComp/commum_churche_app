@@ -19,11 +19,12 @@ import { FinancySummaryFilter } from 'src/app/models/financySummaryFilter';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { FinancyService } from 'src/app/services/financy-service.service';
 import { FilterCaixaComponent } from '../caixa/filter-caixa/filter-caixa.component';
-import { TitheSummary } from 'src/app/models/tithesummary';
 import { CaixaSummary } from 'src/app/models/caixaSummary';
 import { Tithe } from 'src/app/models/tithe';
 import { Wallet } from 'src/app/models/wallet';
 import { ConstantMessages } from 'src/app/models/messages';
+import { DownloadService } from 'src/app/services/download.service';
+import { TitheSummary } from 'src/app/models/titheSummary';
 
 @Component({
   selector: 'app-summary',
@@ -59,7 +60,8 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
     private financyService: FinancyService,
     private caixaFacade: CaixaFacadeService,
     private modalController: ModalController,
-    private exeptionService: ExceptionService
+    private exeptionService: ExceptionService,
+    private downloadService: DownloadService
   ) {}
   ngAfterViewInit(): void {
     UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
@@ -70,6 +72,11 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
     this.checkFilter();
 
     this.load();
+  }
+
+  async download() {
+    // this.exceptionService.loadingFunction('Processando Tabela Excel...');
+    this.downloadService.buildFinancialReport([], 'Relatório Financeiro');
   }
 
   checkFilter() {

@@ -1,7 +1,6 @@
 import { BirthdaysModule } from './../../home/birthdays/birthdays.module';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { ResourcesModule } from './../../resources/resources.module';
-import { LoadImagesComponent } from './../../resources/load-images/load-images.component';
 /* eslint-disable max-len */
 import { FilterComponent } from './filter/filter.component';
 import { HomeUserRegisterModule } from './../../home/home-user-register/home-user-register.module';
@@ -23,6 +22,7 @@ import { UserPage } from './user.page';
 import { UserAdminComponent } from './user-admin/user-admin.component';
 import { UserSearchModule } from './user-search/user-search.module';
 import { EmergencyUserRegisterComponent } from './user-register/emergency-user-register/emergency-user-register.component';
+import { RegisterCardComponent } from './user-register/register-personal-info/register-card.component';
 
 @NgModule({
   imports: [
@@ -46,6 +46,7 @@ import { EmergencyUserRegisterComponent } from './user-register/emergency-user-r
     FilterComponent,
     EmergencyUserRegisterComponent,
     UserHomeComponent,
+    RegisterCardComponent,
   ],
   exports: [
     UserAdminComponent,

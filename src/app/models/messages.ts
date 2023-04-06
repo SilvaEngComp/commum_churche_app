@@ -23,6 +23,9 @@ export class ConstantMessages {
   static FINISHING_REGISTRATION_SUCCESS =
     'Parabéns! Você realizou seu cadastro com sucesso! Agora você pode clicar no menu LOGIN e acessar sua conta usando seu email e senha.';
 
+  static FINISHING_ADMIN_REGISTRATION_SUCCESS =
+    'Parabéns! Você realizou o cadastro com sucesso! ';
+
   //caixa register
   static AMOUNT_INVALID = 'Digite um valor válido';
   static DAY_INVALID = 'Selecione um dia válido';

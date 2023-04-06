@@ -5,6 +5,7 @@ import { Constants } from './constants';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Contact } from './contact';
 import { MaritalStatus } from './maritalStatus';
+import { DatePipe } from '@angular/common';
 
 export class User {
   id: number;
@@ -29,6 +30,7 @@ export class User {
   fcm_web_key: string;
   fcm_mobile_key: string;
   fcm_mobile_web_key: string;
+  isEditing: boolean;
 
   constructor(started?: boolean) {
     if (!started) {
