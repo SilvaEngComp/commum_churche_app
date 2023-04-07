@@ -146,8 +146,8 @@ export class DailyReaderComponent implements OnInit {
   }
 
   copy() {
-    const text: string = `${this.selectedVerseDay?.startVerse?.book}
-    ${this.selectedVerseDay?.startVerse?.chapter}:${this.selectedVerseDay?.startVerse?.verse}/${this.selectedVerseDay?.endVerse?.book}
+    const text: string = `${this.selectedVerseDay?.startVerse?.book?.name}
+    ${this.selectedVerseDay?.startVerse?.chapter}:${this.selectedVerseDay?.startVerse?.verse}/${this.selectedVerseDay?.endVerse?.book?.name}
     ${this.selectedVerseDay?.endVerse?.chapter}:${this.selectedVerseDay?.endVerse?.verse}`;
     this.clipboardService.copy(text);
     this.exceptionService.toastHandler('Texto Copiado');
