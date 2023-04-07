@@ -37,6 +37,8 @@ export class ProgramReadersComponent implements OnInit {
         reader.user = this.checkImage(reader.user);
       });
 
+      this.readers.sort((a, b) => (a?.verseDay?.id > b?.verseDay?.id ? -1 : 1));
+
       console.log(this.readers);
     });
   }

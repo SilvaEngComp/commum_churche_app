@@ -31,8 +31,8 @@
               uppercase}}</ion-card-title>
             <ion-card *ngFor="let verse of month?.verses | slice:0:7">
               <ion-item color="medium">
-                <ion-label>{{verse?.day}}: {{verse?.startVerse?.book}}
-                  {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}} Até {{verse?.endVerse?.book}}
+                <ion-label>{{verse?.day}}: {{verse?.startVerse?.book?.name}}
+                  {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}} Até {{verse?.endVerse?.book?.name}}
                   {{verse?.endVerse?.chapter}}:{{verse?.endVerse?.verse}}</ion-label>
               </ion-item>
             </ion-card>
@@ -43,8 +43,8 @@
               uppercase}}</ion-card-title>
             <ion-card *ngFor="let verse of month?.verses | slice:7:14">
               <ion-item color="medium">
-                <ion-label>{{verse?.day}}: {{verse?.startVerse?.book}}
-                  {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}} Até {{verse?.endVerse?.book}}
+                <ion-label>{{verse?.day}}: {{verse?.startVerse?.book?.name}}
+                  {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}} Até {{verse?.endVerse?.book?.name}}
                   {{verse?.endVerse?.chapter}}:{{verse?.endVerse?.verse}}</ion-label>
               </ion-item>
             </ion-card>
@@ -55,8 +55,8 @@
               uppercase}}</ion-card-title>
             <ion-card *ngFor="let verse of month?.verses | slice:14:21">
               <ion-item color="medium">
-                <ion-label>{{verse?.day}}: {{verse?.startVerse?.book}}
-                  {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}} Até {{verse?.endVerse?.book}}
+                <ion-label>{{verse?.day}}: {{verse?.startVerse?.book?.name}}
+                  {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}} Até {{verse?.endVerse?.book?.name}}
                   {{verse?.endVerse?.chapter}}:{{verse?.endVerse?.verse}}</ion-label>
               </ion-item>
             </ion-card>
@@ -68,8 +68,8 @@
               uppercase}}</ion-card-title>
             <ion-card *ngFor="let verse of month?.verses | slice:21">
               <ion-item color="medium">
-                <ion-label>{{verse?.day}}: {{verse?.startVerse?.book}}
-                  {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}} Até {{verse?.endVerse?.book}}
+                <ion-label>{{verse?.day}}: {{verse?.startVerse?.book?.name}}
+                  {{verse?.startVerse?.chapter}}:{{verse?.startVerse?.verse}} Até {{verse?.endVerse?.book?.name}}
                   {{verse?.endVerse?.chapter}}:{{verse?.endVerse?.verse}}</ion-label>
               </ion-item>
             </ion-card>

@@ -26,7 +26,6 @@ export class BibleProgramComponent implements OnInit {
       .get()
       .then((responser) => {
         this.biblePrograms = responser.data;
-        console.log(this.biblePrograms);
       })
       .finally(() => (this.isLoading = false));
   }

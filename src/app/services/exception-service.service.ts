@@ -1,5 +1,3 @@
-import { WelcomeComponent } from './../Ui/welcome/welcome.component';
-import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import {
   ToastController,
@@ -12,6 +10,7 @@ import { FinishActionComponent } from '../ui/finish-action/finish-action.compone
 // import { SocialAuthService } from 'angularx-social-login';
 import { PushNotify } from '../models/pushNotification';
 import { Responser } from '../models/responser';
+import { WelcomeComponent } from '../ui/welcome/welcome.component';
 // import { NotificationsService } from 'angular2-notifications';
 
 @Injectable({
@@ -54,7 +53,6 @@ export class ExceptionService {
   }
 
   async pushMessage(msg: PushNotify) {
-    console.log(msg.click_action);
     const audio = new Audio(msg.audio);
 
     if (msg.click_action) {
