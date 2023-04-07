@@ -35,7 +35,7 @@ export class CommentMakerComponent implements OnInit {
   setComment() {
     this.verse.userVerseMark.comment = this.comment;
 
-    this.userVerseMarkService.store(this.verse.userVerseMark);
+    this.userVerseMarkService.store([this.verse.userVerseMark]);
     this.back();
   }
 

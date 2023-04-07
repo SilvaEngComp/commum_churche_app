@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { PopoverController, Platform } from '@ionic/angular';
 import { Feed } from 'src/app/models/feed';
 import { FeedComment } from 'src/app/models/feedReaction';
 import { User } from 'src/app/models/User';
-import { ExceptionService } from 'src/app/services/exception-service.service';
-import { FeedCommentService } from 'src/app/services/feed-reaction.service';
-import { FeedService } from 'src/app/services/feed.service';
 import { UiService } from 'src/app/services/ui.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -21,20 +16,13 @@ export class HomePage implements OnInit {
   @Input() feed: Feed;
   user: User;
   feeds: Feed[] = [];
-  base_url: string = environment.IMAGE_URL;
   is_loading: boolean;
   showComments: boolean;
   feedReaction: FeedComment;
   is_menu_oppened: boolean;
   is_a_selected_post: boolean;
   permission: boolean;
-  constructor(
-    private feedService: FeedService,
-    private popCtrl: PopoverController,
-    private exeptionService: ExceptionService,
-    private feedReactionService: FeedCommentService,
-    private platform: Platform
-  ) {}
+  constructor() {}
 
   ngOnInit() {
     if (!this.feed) {

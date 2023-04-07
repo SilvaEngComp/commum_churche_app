@@ -26,7 +26,6 @@ export class PublicationComponent implements OnInit {
   @Input() showReactions: boolean;
   @Input() editable: boolean;
   user: User;
-  base_url: string = environment.IMAGE_URL;
   is_loading: boolean;
   showComments: boolean;
   feedReaction: FeedComment;

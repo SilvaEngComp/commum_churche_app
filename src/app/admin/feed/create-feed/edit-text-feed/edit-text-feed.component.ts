@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Constants } from 'src/app/models/constants';
 import { Feed } from 'src/app/models/feed';
@@ -19,7 +18,6 @@ export class EditTextFeedComponent implements OnInit {
   @Input() feed: Feed;
   publisher: User;
   is_loading: boolean;
-  base_url: string = environment.IMAGE_URL;
   image: FormData;
 
   session: number;

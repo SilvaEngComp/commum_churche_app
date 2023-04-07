@@ -41,7 +41,7 @@ export class BibleVersesComponent implements OnInit {
   letterSizeBook: string;
   showCheckBox: boolean;
   active: boolean;
-  selectedVerse: Verse;
+  selectedVerses: Verse[];
   action: any;
   localPageTitle: string;
   customizedMonth: CustomizedMonth;
@@ -82,6 +82,12 @@ export class BibleVersesComponent implements OnInit {
   checkEventPress() {
     UiService.scrollVerseRead.subscribe((data) => {
       this.active = data.status;
+    });
+
+    UiService.closeColorMarkEmitter.subscribe(() => {
+      this.selectedVerses.filter((verse) => {
+        this.clearFormat(verse);
+      });
     });
   }
 
@@ -188,23 +194,41 @@ export class BibleVersesComponent implements OnInit {
     return flag;
   }
 
-  pressMark(verse: Verse) {
-    console.log(this.selectedVerse);
-    if (!this.selectedVerse) {
-      this.selectedVerse = verse;
+  checkSelected(verse: Verse) {
+    if (this.selectedVerses.indexOf(verse) >= 0) {
+      return true;
     }
-    this.active = UiService.localGet(Constants.IS_COLOR_MANAGER_OPPENED);
-    console.log(this.active);
-    if (this.active) {
-      UiService.showColorMarkEmitter.emit({
-        status: false,
-      });
+    return false;
+  }
 
-      this.clearFormat();
-      this.checkResetColor();
+  removeVerse(verse) {
+    const position: number = this.selectedVerses.indexOf(verse);
+    this.selectedVerses.splice(position, 1);
+    if (this.selectedVerses?.length === 0) {
+      UiService.localRemove(Constants.SELECTED_VERSES_PRESSED);
+      UiService.returnColorMaker.emit(false);
     } else {
-      this.longPressCheck();
+      UiService.localSet(
+        Constants.SELECTED_VERSES_PRESSED,
+        this.selectedVerses
+      );
     }
+  }
+
+  pressMark(verse: Verse) {
+    if (!this.selectedVerses) {
+      this.selectedVerses = [];
+    }
+
+    if (this.checkSelected(verse)) {
+      this.clearFormat(verse);
+      return;
+    }
+
+    this.selectedVerses.push(verse);
+    UiService.localSet(Constants.SELECTED_VERSES_PRESSED, this.selectedVerses);
+    UiService.colorMarkerVerseAdded.emit(true);
+    this.longPressCheck();
   }
 
   longPressCheck() {
@@ -213,13 +237,15 @@ export class BibleVersesComponent implements OnInit {
     }
     this.action = setTimeout(async () => {
       if (!this.active) {
-        document.getElementById(
-          `${this.selectedVerse?.id}`
-        ).style.backgroundColor = 'gray';
-        UiService.showColorMarkEmitter.emit({
-          status: true,
-          verse: this.selectedVerse,
+        this.selectedVerses.filter((verse) => {
+          document.getElementById(`${verse?.id}`).style.backgroundColor =
+            'gray';
+          UiService.showColorMarkEmitter.emit({
+            status: true,
+            verse: this.selectedVerses,
+          });
         });
+
         this.receiveReturn();
       }
     }, this.DOUBLE_CLICK_THRESHOLD);
@@ -231,7 +257,7 @@ export class BibleVersesComponent implements OnInit {
       if (!isReceived) {
         isReceived = true;
         if (data) {
-          this.selectedVerse = data.verse;
+          this.selectedVerses = data.selectedVerses;
           if (data.color) {
             if (data.color !== Constants.COLOR_TRANSPARENT) {
               this.setModifiedColor(data.color);
@@ -240,51 +266,52 @@ export class BibleVersesComponent implements OnInit {
           this.checkResetColor();
         } else {
           this.checkResetColor();
-          this.clearFormat();
+          this.selectedVerses.filter((verse) => {
+            this.clearFormat(verse);
+          });
         }
       } else {
         this.checkResetColor();
-        this.clearFormat();
+        this.selectedVerses.filter((verse) => {
+          this.clearFormat(verse);
+        });
       }
     });
   }
 
   setModifiedColor(color: string) {
-    document.getElementById(`${this.selectedVerse?.id}`).style.backgroundColor =
-      color;
+    this.selectedVerses.filter((verse) => {
+      document.getElementById(`${verse?.id}`).style.backgroundColor = color;
 
-    if (color !== 'Yellow') {
-      document.getElementById(`${this.selectedVerse?.id}`).style.color =
-        'white';
-    }
-    document.getElementById(`${this.selectedVerse?.id}`).style.fontFamily =
-      'Qanelas-bold';
-
-    this.selectedVerse = null;
+      if (color !== 'Yellow') {
+        document.getElementById(`${verse.id}`).style.color = 'white';
+      }
+      document.getElementById(`${verse.id}`).style.fontFamily = 'Qanelas-bold';
+    });
+    this.selectedVerses = [];
   }
 
   checkResetColor() {
-    if (
-      this.selectedVerse?.userVerseMark?.color?.length > 0 &&
-      this.selectedVerse?.userVerseMark?.color !== Constants.COLOR_TRANSPARENT
-    ) {
-      document.getElementById(
-        `${this.selectedVerse?.id}`
-      ).style.backgroundColor = this.selectedVerse?.userVerseMark?.color;
-    } else {
-      this.clearFormat();
-    }
-
-    this.selectedVerse = null;
+    this.selectedVerses.filter((verse) => {
+      if (
+        verse?.userVerseMark?.color?.length > 0 &&
+        verse?.userVerseMark?.color !== Constants.COLOR_TRANSPARENT
+      ) {
+        document.getElementById(`${verse?.id}`).style.backgroundColor =
+          verse?.userVerseMark?.color;
+      } else {
+        this.clearFormat(verse);
+      }
+    });
+    this.selectedVerses = [];
   }
 
-  clearFormat() {
-    document.getElementById(`${this.selectedVerse?.id}`).style.fontFamily =
-      'Qanelas';
-    document.getElementById(`${this.selectedVerse?.id}`).style.color = 'black';
-    document.getElementById(`${this.selectedVerse?.id}`).style.backgroundColor =
+  clearFormat(verse) {
+    document.getElementById(`${verse?.id}`).style.fontFamily = 'Qanelas';
+    document.getElementById(`${verse?.id}`).style.color = 'black';
+    document.getElementById(`${verse?.id}`).style.backgroundColor =
       Constants.COLOR_TRANSPARENT;
-    this.selectedVerse = null;
+    this.removeVerse(verse);
   }
 
   setAsReadUnread() {

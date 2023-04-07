@@ -7,12 +7,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
-import { environment } from 'src/environments/environment';
 import { MenuPostChurchScheduleComponent } from '../menu-post-church-schedule/menu-post-church-schedule.component';
 import { ChurchSchedule } from 'src/app/models/churchSchedule';
 import { User } from 'src/app/models/User';
 import { Constants } from 'src/app/models/constants';
-import { Church } from 'src/app/models/church';
 
 @Component({
   selector: 'app-publication-church-schedule',
@@ -24,7 +22,6 @@ export class PublicationChurchScheduleComponent implements OnInit {
   @Input() expandAll: boolean;
   @Input() churchSchedule: ChurchSchedule;
   user: User;
-  base_url: string = environment.IMAGE_URL;
   is_loading: boolean;
   is_menu_oppened: boolean;
   is_a_selected_post: boolean;

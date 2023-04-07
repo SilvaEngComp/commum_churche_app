@@ -1,7 +1,6 @@
 import { Constants } from 'src/app/models/constants';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { FeedService } from 'src/app/services/feed.service';
 import { DatePipe } from '@angular/common';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -21,7 +20,6 @@ export class PublicFeedComponent implements OnInit {
   @Input() editable: boolean;
   user: User;
   feeds: Feed[];
-  base_url: string = environment.IMAGE_URL;
   is_loading: boolean;
   showComment: boolean;
   feedReaction: FeedComment;

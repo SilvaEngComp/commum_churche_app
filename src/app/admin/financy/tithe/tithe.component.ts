@@ -6,9 +6,7 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { Constants } from 'src/app/models/constants';
 import { Tithe } from 'src/app/models/tithe';
-import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
-import { environment } from 'src/environments/environment';
 import { TitheFacade } from 'src/app/facades/tithe-facade.service';
 import { FilterTitheComponent } from './filter-tithe/filter-tithe.component';
 import { DatePipe } from '@angular/common';
@@ -26,7 +24,6 @@ export class TitheComponent implements OnInit {
   permission: number;
   tithes: Tithe[];
   limit: number;
-  base_url: string = environment.IMAGE_URL;
   isSearching: boolean;
   isSellerShowed: boolean;
   isFilterCustomerShowed: boolean;

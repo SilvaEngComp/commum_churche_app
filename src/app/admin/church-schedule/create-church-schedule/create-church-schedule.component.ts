@@ -2,8 +2,6 @@ import { ConstantMessages } from 'src/app/models/messages';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { LoginService } from 'src/app/services/login.service';
-import { environment } from 'src/environments/environment';
 import { MessagingService } from 'src/app/services/messaging.service';
 import { UiService } from 'src/app/services/ui.service';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -24,7 +22,6 @@ export class CreateChurchScheduleComponent implements OnInit {
   @Input() churchSchedule: ChurchSchedule;
   publisher: User;
   is_loading: boolean;
-  base_url: string = environment.IMAGE_URL;
   image: FormData;
   minDate: string;
   maxDate: string;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Constants } from 'src/app/models/constants';
 import { UserVerseMark } from 'src/app/models/userVerseMark';
 import { Verse } from 'src/app/models/verse';
@@ -13,7 +13,6 @@ import { UserVerseMarkService } from 'src/app/services/user-verse-mark.service';
 })
 export class ColorMarkerComponent implements OnInit {
   @Output() retrurnAction: EventEmitter<any> = new EventEmitter<any>();
-  @Input() verse: Verse;
 
   colors = [
     'blue',
@@ -36,28 +35,34 @@ export class ColorMarkerComponent implements OnInit {
 
   constructor(private userVerseMarkService: UserVerseMarkService) {}
 
-  ngOnInit() {
-    console.log(this.verse);
-    if (this.verse) {
-      if (!this.verse?.userVerseMark) {
-        this.verse.userVerseMark = new UserVerseMark();
-      }
+  ngOnInit() {}
 
-      const user = LoginService.getUser();
-      this.verse.userVerseMark.user_id = user.id;
-      this.verse.userVerseMark.verse_id = this.verse.id;
-    }
-  }
+  prepareVerses() {}
 
   selectColor(color = Constants.COLOR_TRANSPARENT) {
-    this.verse.userVerseMark.color = color;
-    this.userVerseMarkService.store(this.verse.userVerseMark);
-    this.back();
+    const selectedVerses: Verse[] = UiService.localGet(
+      Constants.SELECTED_VERSES_PRESSED
+    );
+    const userVerseMarks: UserVerseMark[] = [];
+    const user = LoginService.getUser();
+    selectedVerses.filter((verse) => {
+      if (!verse?.userVerseMark) {
+        verse.userVerseMark = new UserVerseMark();
+      }
+      verse.userVerseMark.user_id = user.id;
+      verse.userVerseMark.verse_id = verse.id;
+      verse.userVerseMark.color = color;
+      userVerseMarks.push(verse.userVerseMark);
+    });
+
+    this.userVerseMarkService.store(userVerseMarks);
+
+    this.back(selectedVerses);
   }
 
-  back() {
+  back(selectedVerses: Verse[]) {
     UiService.returnColorMaker.emit({
-      verse: this.verse,
+      selectedVerses,
     });
   }
 }

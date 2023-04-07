@@ -51,6 +51,10 @@ export class UiService {
 
   @Output()
   static showColorMarkEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  static closeColorMarkEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  static colorMarkerVerseAdded: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
   static returnColorMaker: EventEmitter<any> = new EventEmitter<any>();

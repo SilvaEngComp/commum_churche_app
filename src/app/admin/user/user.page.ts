@@ -12,7 +12,6 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { UiService } from 'src/app/services/ui.service';
 import { UserFacadeService } from 'src/app/facades/user-facade.service';
 import { Constants } from 'src/app/models/constants';
@@ -30,7 +29,6 @@ export class UserPage implements OnInit {
   permission: number;
   users: User[];
   limit: number;
-  base_url: string = environment.IMAGE_URL;
   isSearching: boolean;
   isSellerShowed: boolean;
   isFilterCustomerShowed: boolean;

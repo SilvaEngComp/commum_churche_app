@@ -1,10 +1,8 @@
 import { ConstantMessages } from 'src/app/models/messages';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IonToggle } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { LoginService } from 'src/app/services/login.service';
-import { environment } from 'src/environments/environment';
 import { FeedService } from 'src/app/services/feed.service';
 import { MessagingService } from 'src/app/services/messaging.service';
 import { UiService } from 'src/app/services/ui.service';
@@ -25,7 +23,6 @@ export class CreateFeedComponent implements OnInit {
   @Input() feed: Feed;
   publisher: User;
   is_loading: boolean;
-  base_url: string = environment.IMAGE_URL;
   image: FormData;
   minDate: string;
   maxDate: string;

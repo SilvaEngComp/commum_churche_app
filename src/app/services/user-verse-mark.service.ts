@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Responser } from '../models/responser';
-import { UserVerseMark } from '../models/userversemark';
 import { ExceptionService } from './exception-service.service';
 import { LoginService } from './login.service';
 import { ServiceInterface } from './serviceInterface';
+import { UserVerseMark } from '../models/userVerseMark';
 
 @Injectable({
   providedIn: 'root',
@@ -26,14 +26,15 @@ export class UserVerseMarkService extends ServiceInterface {
     );
   }
 
-  async store(userversemark: UserVerseMark): Promise<Responser> {
-    console.log(JSON.stringify(userversemark));
+  async store(userVerseMarks: UserVerseMark[]): Promise<Responser> {
+    console.log(JSON.stringify(userVerseMarks));
     return this.http
-      .post<Responser>(`${environment.API2}/userVerseMarks`, userversemark, {
+      .post<Responser>(`${environment.API2}/userVerseMarks`, userVerseMarks, {
         headers: LoginService.getHeaders(),
       })
       .toPromise();
   }
+
   async destroy(userversemark: UserVerseMark): Promise<Responser> {
     console.log(`${environment.API2}/userVerseMarks/${userversemark.id}`);
     return this.http

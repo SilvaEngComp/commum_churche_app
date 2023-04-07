@@ -34,7 +34,6 @@ export class FeedCommentComponent implements OnInit {
   permission: boolean;
   newComment: FeedComment;
   commenter: User;
-  base_url: string = environment.IMAGE_URL;
   is_editting: boolean;
   constructor(
     private popCtrl: PopoverController,

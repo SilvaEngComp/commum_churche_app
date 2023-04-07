@@ -211,4 +211,5 @@ export class Constants {
   static FINANCY_REPORT_INPUT = 'financyReportInput';
   static FINANCY_REPORT_OUTPUT = 'financyReportOutput';
   static FINANCY_REPORT_GENERAL = 'financyReportGeneral';
+  static SELECTED_VERSES_PRESSED = 'selectedVesesPressed';
 }

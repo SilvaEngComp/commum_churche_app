@@ -1,18 +1,19 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <div class="close" (click)="close()"></div>
+      <div class="close" (click)="close()">
+      </div>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col class="flex-content">
       <ion-icon (click)="share()" name="share-social-outline"></ion-icon>
       <ion-icon (click)="copy()" name="copy-outline"></ion-icon>
-      <ion-icon (click)="comment()" name="chatbox-ellipses-outline"></ion-icon>
+      <ion-icon *ngIf="isThereOne" (click)="comment()" name="chatbox-ellipses-outline"></ion-icon>
     </ion-col>
   </ion-row>
   <ion-row>
-    <app-color-marker [verse]="verse"></app-color-marker>
+    <app-color-marker></app-color-marker>
   </ion-row>
 
 </ion-grid>
