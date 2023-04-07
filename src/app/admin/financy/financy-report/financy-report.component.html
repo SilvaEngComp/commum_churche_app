@@ -52,24 +52,46 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-button fill="clear" color="primary" (click)="download()">
-        <ion-icon color="primary" slot="end" name="cloud-download-outline"></ion-icon>
-      </ion-button>
+
+      <div class="card-options" (click)="download()">
+        <ion-icon class="report-graph" color="primary" name="cloud-download-outline"></ion-icon>
+        <ion-label class="balance-label">Relatórios</ion-label>
+      </div>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col class="card-options">
+      <ion-card class="div-canvas">
+        <ion-card-content>
+          <app-general-summary-graph></app-general-summary-graph>
+        </ion-card-content>
+      </ion-card>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col>
-      <app-general-summary-graph></app-general-summary-graph>
+    <ion-col class="card-options">
+      <ion-card class="div-canvas">
+        <ion-card-header>
+          <ion-title>Resumo de Entradas Por Organização</ion-title>
+        </ion-card-header>
+        <ion-card-content>
+          <app-inputs-graph></app-inputs-graph>
+        </ion-card-content>
+      </ion-card>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col>
-      <app-inputs-graph></app-inputs-graph>
+    <ion-col class="card-options">
+      <ion-card class="div-canvas">
+        <ion-card-header>
+          <ion-title>Resumo de Saídas Por Organização</ion-title>
+        </ion-card-header>
+        <ion-card-content>
+          <app-outputs-graph></app-outputs-graph>
+        </ion-card-content>
+      </ion-card>
     </ion-col>
   </ion-row>
-  <ion-row>
-    <ion-col>
-      <app-outputs-graph></app-outputs-graph>
-    </ion-col>
-  </ion-row>
+
 </ion-grid>

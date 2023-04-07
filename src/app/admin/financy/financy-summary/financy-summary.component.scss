@@ -122,6 +122,7 @@ ion-spinner {
   align-content: center;
   justify-content: center;
   flex-wrap: wrap;
+  cursor: pointer;
 }
 
 .flex-container-row {
@@ -149,4 +150,8 @@ ion-spinner {
   ion-card-title {
     font-size: 10pt;
   }
+}
+
+.report-graph {
+  font-size: 40px;
 }

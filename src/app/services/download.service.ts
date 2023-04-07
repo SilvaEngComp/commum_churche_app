@@ -123,9 +123,7 @@ export class DownloadService {
     const outputs: SummaryOutput = UiService.localGet(
       Constants.FINANCY_REPORT_OUTPUT
     );
-    const general: TotalInputOutput = UiService.localGet(
-      Constants.FINANCY_REPORT_GENERAL
-    );
+    const filter = UiService.localGet(Constants.FINANCY_REPORT_FILTER);
     churches.filter((church) => {
       const inputsData: any[] = [];
       inputs.reports.filter((report) => {
@@ -235,7 +233,12 @@ export class DownloadService {
         data.push(completeRow);
       }
 
-      userExcelFormat.setWorksheetGeneral(generalTitle, church?.name, data);
+      userExcelFormat.setWorksheetGeneral(
+        generalTitle,
+        church?.name,
+        data,
+        filter
+      );
     });
 
     this.testDownloadXls(userExcelFormat?.workbook, generalTitle);

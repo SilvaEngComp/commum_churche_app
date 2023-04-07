@@ -62,6 +62,7 @@ export class InputsGraphComponent implements OnInit {
     if (!this.canvasGraph) {
       this.canvasGraph = document.getElementById('inputsCanvasGraph');
     }
+
     this.graphicMonth = UiService.buildChartMonth(
       this.canvasGraph,
       'doughnut',

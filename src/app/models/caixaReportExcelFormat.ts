@@ -1,3 +1,4 @@
+import { FilterCaixaComponent } from './../admin/financy/caixa/filter-caixa/filter-caixa.component';
 import { Constants } from 'src/app/models/constants';
 import { CaixaReportExcelTithe } from './caixaReportExcelTithe';
 /* eslint-disable max-len */
@@ -5,6 +6,7 @@ import * as Excel from 'exceljs/dist/exceljs.min.js';
 import * as ExcelProper from 'exceljs';
 import { DatePipe } from '@angular/common';
 import * as logoFile from './logo.js';
+import { FinancySummaryFilter } from './financySummaryFilter';
 
 export class CaixaReportExcelFormat {
   workbook: ExcelProper.Workbook;
@@ -16,25 +18,30 @@ export class CaixaReportExcelFormat {
   setWorksheetGeneral(
     generalTitle: string,
     worksheetTitle: string,
-    data: any[][]
+    data: any[][],
+    filter: FinancySummaryFilter
   ) {
     this.worksheet = this.workbook.addWorksheet(worksheetTitle);
     this.setImage();
-    this.setDate();
+    this.setDate(filter);
     this.setTitle(generalTitle);
     this.setHeadTypeRow();
     this.setHeadRow();
     this.worksheet.addRows(data);
   }
 
-  setDate() {
+  setDate(filter: FinancySummaryFilter) {
     //Add row with current date
     const datePipe: DatePipe = new DatePipe('en');
     const row = this.worksheet.addRow([
       '',
-      'Data : ' + datePipe.transform(new Date(), 'dd/MM/yyyy hh:mm'),
+      '',
+      'Período \n De ' +
+        datePipe.transform(filter?.dateI, 'dd/MM/yyyy') +
+        ' Até ' +
+        datePipe.transform(filter?.dateF, 'dd/MM/yyyy'),
     ]);
-    this.worksheet.mergeCells('B1:T2');
+    this.worksheet.mergeCells('C1:S2');
     row.alignment = {
       horizontal: 'center',
       vertical: 'middle',
@@ -43,7 +50,7 @@ export class CaixaReportExcelFormat {
   }
   setTitle(generalTitle: string) {
     // Add new row
-    const titleRow = this.worksheet.addRow([generalTitle]);
+    const titleRow = this.worksheet.addRow(['', '', generalTitle]);
 
     // Set font, size and style in title row.
     titleRow.font = {
@@ -60,7 +67,7 @@ export class CaixaReportExcelFormat {
       wrapText: true,
     };
 
-    this.worksheet.mergeCells('A3:U4');
+    this.worksheet.mergeCells('C3:S4');
   }
 
   setImage() {
@@ -69,14 +76,14 @@ export class CaixaReportExcelFormat {
       extension: 'png',
     });
 
-    this.worksheet.addImage(logo, 'A1:A2');
+    this.worksheet.addImage(logo, 'A1:B4');
 
     const logo2 = this.workbook.addImage({
       base64: logoFile.logo,
       extension: 'png',
     });
 
-    this.worksheet.addImage(logo2, 'U1:U2');
+    this.worksheet.addImage(logo2, 'T1:U4');
   }
 
   setHeadTypeRow() {
