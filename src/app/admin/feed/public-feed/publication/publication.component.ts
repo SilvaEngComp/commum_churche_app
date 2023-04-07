@@ -52,7 +52,9 @@ export class PublicationComponent implements OnInit {
 
     this.feedReaction = new FeedComment();
   }
-
+  goToWhatsapp() {
+    UiService.socialNetworks('w');
+  }
   setLove() {
     this.feed.love = !this.feed.love;
     this.feedReactionService.setLove(this.feed).catch((error) => {

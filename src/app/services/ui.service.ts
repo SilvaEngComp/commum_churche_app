@@ -265,8 +265,7 @@ export class UiService {
     switch (op) {
       case 'w':
         window.open(
-          `https://api.whatsapp.com/send?phone=5575983256990&message='Olá!
-          Gostaria de falar com a secretaria da Igreja Batista Nova Betel. Está disponível?'`
+          `https://api.whatsapp.com/send?phone=557583256990&text=Gostaria%20de%20falar%20com%20a%20secretaria%20da%20Igreja%20Batista%20Nova%20Betel.%20Est%C3%A1%20dispon%C3%ADvel?`
         );
         break;
       case 'm':
