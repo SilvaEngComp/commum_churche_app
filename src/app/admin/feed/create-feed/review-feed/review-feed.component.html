@@ -1,7 +1,8 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <app-publication [feed]="feed" [showReactions]="false" [expandAll]="feed?.message?.length>500"></app-publication>
+      <app-publication [editable]="false" [feed]="feed" [showReactions]="false"
+        [expandAll]="feed?.message?.length>500"></app-publication>
     </ion-col>
   </ion-row>
   <ion-row>

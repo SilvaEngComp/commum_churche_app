@@ -33,9 +33,12 @@
         <div class="open-div">
           <ion-label *ngIf="filtredSearch?.length===0">Lista vazia</ion-label>
           <ul>
-            <li *ngFor="let item of filtredSearch" [ngClass]="{'selected-in-list': selected===item?.value}">
+            <li *ngFor="let item of filtredSearch" class="li-flex-list"
+              [ngClass]="{'selected-in-list': selected===item?.value}">
               <ion-label detail (click)="onSelect(item)" class="item-search">
                 {{ item?.value | uppercase}}</ion-label>
+              <br>
+              <ion-note>{{item?.auxValue}}</ion-note>
             </li>
           </ul>
 

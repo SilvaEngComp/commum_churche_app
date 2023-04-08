@@ -4,13 +4,11 @@ export const environment = {
   API: 'https://apis3.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
   API2: 'https://apis3.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
   API3: 'https://apis3.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v3',
-
   TEST: false,
 
   // API: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
   // API2: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
   // API3: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v3',
-
   // TEST: true,
 
   PRIVATEKEY: 'QUBjZW1lY2FkZUBlbmdpbnlkaWdpdGFsZWNvLmNvbQ==', // ...

@@ -36,6 +36,7 @@ export class MySelectListComponent implements OnInit {
   @Input() obj?: any;
   @Input() color?: string;
   @Input() itemSelectedcolor?: string;
+  @Input() isThereAux?: boolean;
   showSelect?: boolean;
   isLoading: boolean;
   limit: number;
@@ -134,10 +135,15 @@ export class MySelectListComponent implements OnInit {
       this.apiResponse = responser.data;
     }
 
-    this.apiResponseAdapted = MySelectAdapter.toMySelectAny(this.apiResponse);
-    this.listAux = this.apiResponseAdapted;
-    this.apiResponseAdapted = MySelectAdapter.toMySelectAny(this.apiResponse);
-    this.listAux = this.apiResponseAdapted;
+    if (this.listName === 'users') {
+      this.apiResponseAdapted = MySelectAdapter.userToMySelectAny(
+        this.apiResponse
+      );
+      this.listAux = this.apiResponseAdapted;
+    } else {
+      this.apiResponseAdapted = MySelectAdapter.toMySelectAny(this.apiResponse);
+      this.listAux = this.apiResponseAdapted;
+    }
     this.filtredSearch = this.apiResponseAdapted;
     if (this.apiResponse.length < this.limit) {
       this.limit = this.apiResponse.length;

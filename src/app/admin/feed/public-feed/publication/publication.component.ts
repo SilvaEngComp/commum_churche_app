@@ -25,13 +25,13 @@ export class PublicationComponent implements OnInit {
   @Input() feed: Feed;
   @Input() showReactions: boolean;
   @Input() editable: boolean;
+
   user: User;
   is_loading: boolean;
   showComments: boolean;
   feedReaction: FeedComment;
   is_menu_oppened: boolean;
   is_a_selected_post: boolean;
-  permission: boolean;
   constructor(
     private feedService: FeedService,
     private popCtrl: PopoverController,
@@ -43,7 +43,6 @@ export class PublicationComponent implements OnInit {
     if (!this.feed) {
       this.feed = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
     }
-    console.log(this.feed);
 
     if (UiService.localGet(Constants.FEED_SUBPAGE) === 'selected-feed') {
       this.is_a_selected_post = true;

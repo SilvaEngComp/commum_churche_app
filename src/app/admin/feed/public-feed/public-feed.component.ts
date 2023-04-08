@@ -9,6 +9,7 @@ import { Feed } from 'src/app/models/feed';
 import { FeedComment } from 'src/app/models/feedReaction';
 import { User } from 'src/app/models/User';
 import { FilterFeed } from 'src/app/models/filterFeed';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-public-feed',
@@ -36,7 +37,12 @@ export class PublicFeedComponent implements OnInit {
     this.user = LoginService.getUser();
     this.feedReaction = new FeedComment();
     this.filterFeed = new FilterFeed();
+    this.checkPermission();
     this.load();
+  }
+
+  checkPermission() {
+    this.editable = UiService.validPermissions(Constants.ROLE_MULTIMIDIA);
   }
 
   back() {

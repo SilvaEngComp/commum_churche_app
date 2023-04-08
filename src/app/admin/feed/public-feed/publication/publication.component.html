@@ -10,8 +10,7 @@
           <p class="lb-feed-subtitle">Sede-Cruz das Almas</p>
         </div>
 
-        <ion-icon *permission="'multimidia'" (click)="menuPost(feed, $event)"
-          name="ellipsis-vertical-outline"></ion-icon>
+        <ion-icon *ngIf="editable" (click)="menuPost(feed, $event)" name="ellipsis-vertical-outline"></ion-icon>
       </div>
     </ion-col>
   </ion-row>
