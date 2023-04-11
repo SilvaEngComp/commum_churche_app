@@ -1,3 +1,4 @@
+import { Tithe } from './../models/tithe';
 import { LoginService } from './login.service';
 import { Injectable, Provider } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -9,6 +10,7 @@ import { CaixaType } from '../models/caixaType';
 import { Responser } from '../models/responser';
 import { UiService } from './ui.service';
 import { ServiceInterface } from './serviceInterface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

@@ -5,6 +5,7 @@ export class TempFile {
   type: string;
   extension: string;
   checked: boolean;
+  isValid: boolean;
 
   constructor(
     name?: string,
@@ -17,24 +18,18 @@ export class TempFile {
 
     this.checked = checked;
     if (type) {
-      this.checkType(type);
+      const typePart: string[] = type.split('/');
+      this.type = typePart[0];
+      this.extension = typePart[1];
     }
   }
 
-  checkType(type: string) {
-    const t: string[] = type.split('/');
-    if (
-      t[1] !== 'mp4' &&
-      t[1] !== 'pdf' &&
-      t[1] !== 'png' &&
-      t[1] !== 'jpg' &&
-      t[1] !== 'jpeg' &&
-      t[1] !== 'webp'
-    ) {
-    } else {
-      this.type = t[0];
-      this.extension = t[1];
-    }
+  checkExpectedType(expectedType: string[]) {
+    expectedType.filter((type) => {
+      if (type === this?.extension) {
+        this.isValid = true;
+      }
+    });
   }
 
   setTempImage(fileItem: File, name?: string, checked: boolean = false) {

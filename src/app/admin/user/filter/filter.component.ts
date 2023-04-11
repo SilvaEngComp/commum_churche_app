@@ -30,8 +30,7 @@ export class FilterComponent implements OnInit {
     private inputMethodService: InputMethodService,
     private maritalStatusService: MaritalStatusService,
     private churchService: ChurchService,
-    private platform: Platform,
-    private modalCtrl: ModalController
+    private platform: Platform
   ) {}
 
   ngOnInit() {

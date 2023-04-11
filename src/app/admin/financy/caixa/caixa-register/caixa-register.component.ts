@@ -253,10 +253,6 @@ export class CaixaRegisterComponent implements OnInit {
     }
   }
 
-  onWindowScroll(ev: any) {
-    UiService.scrollVerseRead.emit({ status: true });
-  }
-
   getFiles(): FileLikeObject[] {
     let cont = 0;
     this.localFiles = new ModelFileUplod();

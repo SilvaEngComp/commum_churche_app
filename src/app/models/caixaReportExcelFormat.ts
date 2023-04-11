@@ -19,29 +19,33 @@ export class CaixaReportExcelFormat {
     generalTitle: string,
     worksheetTitle: string,
     data: any[][],
-    filter: FinancySummaryFilter
+    filter: FinancySummaryFilter,
+    isModel: boolean = false
   ) {
     this.worksheet = this.workbook.addWorksheet(worksheetTitle);
-    this.setImage();
-    this.setDate(filter);
+    this.setImage(isModel);
+    this.setDate(filter, isModel);
     this.setTitle(generalTitle);
-    this.setHeadTypeRow();
-    this.setHeadRow();
+    this.setHeadTypeRow(isModel);
+    this.setHeadRow(isModel);
     this.worksheet.addRows(data);
   }
 
-  setDate(filter: FinancySummaryFilter) {
+  setDate(filter: FinancySummaryFilter, isModel: boolean) {
     //Add row with current date
     const datePipe: DatePipe = new DatePipe('en');
-    const row = this.worksheet.addRow([
-      '',
-      '',
-      'Período \n De ' +
+    let date;
+    if (isModel) {
+      date = 'Data : ' + datePipe.transform(new Date(), 'dd/MM/yyyy hh:mm');
+    } else {
+      date =
+        'Período \n De ' +
         datePipe.transform(filter?.dateI, 'dd/MM/yyyy') +
         ' Até ' +
-        datePipe.transform(filter?.dateF, 'dd/MM/yyyy'),
-    ]);
-    this.worksheet.mergeCells('C1:S2');
+        datePipe.transform(filter?.dateF, 'dd/MM/yyyy');
+    }
+    const row = this.worksheet.addRow(['', '', date]);
+    this.worksheet.mergeCells('C1:U2');
     row.alignment = {
       horizontal: 'center',
       vertical: 'middle',
@@ -67,55 +71,89 @@ export class CaixaReportExcelFormat {
       wrapText: true,
     };
 
-    this.worksheet.mergeCells('C3:S4');
+    this.worksheet.mergeCells('C3:U4');
   }
 
-  setImage() {
+  setImage(isModel: boolean) {
     const logo = this.workbook.addImage({
       base64: logoFile.logo,
       extension: 'png',
     });
-
     this.worksheet.addImage(logo, 'A1:B4');
 
     const logo2 = this.workbook.addImage({
       base64: logoFile.logo,
       extension: 'png',
     });
-
-    this.worksheet.addImage(logo2, 'T1:U4');
+    if (!isModel) {
+      this.worksheet.addImage(logo2, 'V1:W4');
+    } else {
+      this.worksheet.addImage(logo2, 'T1:U4');
+    }
   }
 
-  setHeadTypeRow() {
+  setHeadTypeRow(isModel: boolean) {
     //Add Header Row
-    const headerRow = this.worksheet.addRow([
-      'Dízimos',
-      '',
-      '',
-      '',
-      '',
-      'Ofertas',
-      '',
-      '',
-      '',
-      '',
-      'Entradas',
-      '',
-      '',
-      '',
-      '',
-      '',
-      'Saídas',
-      '',
-      '',
-      '',
-      '',
-    ]);
-
-    this.worksheet.mergeCells('A5:D5');
-    this.worksheet.mergeCells('F5:I5');
-    this.worksheet.mergeCells('K5:O5');
-    this.worksheet.mergeCells('Q5:U5');
+    let headerRow;
+    if (!isModel) {
+      headerRow = this.worksheet.addRow([
+        'Dízimos',
+        '',
+        '',
+        '',
+        '',
+        '',
+        'Ofertas',
+        '',
+        '',
+        '',
+        '',
+        '',
+        'Entradas',
+        '',
+        '',
+        '',
+        '',
+        '',
+        'Saídas',
+        '',
+        '',
+        '',
+        '',
+      ]);
+      this.worksheet.mergeCells('A5:E5');
+      this.worksheet.mergeCells('G5:J5');
+      this.worksheet.mergeCells('L5:P5');
+      this.worksheet.mergeCells('R5:V5');
+    } else {
+      headerRow = this.worksheet.addRow([
+        'Dízimos',
+        '',
+        '',
+        '',
+        '',
+        'Ofertas',
+        '',
+        '',
+        '',
+        '',
+        'Entradas',
+        '',
+        '',
+        '',
+        '',
+        '',
+        'Saídas',
+        '',
+        '',
+        '',
+        '',
+      ]);
+      this.worksheet.mergeCells('A5:D5');
+      this.worksheet.mergeCells('F5:I5');
+      this.worksheet.mergeCells('K5:O5');
+      this.worksheet.mergeCells('Q5:U5');
+    }
 
     // Cell Style : Fill and Border
     headerRow.eachCell((cell) => {
@@ -149,13 +187,20 @@ export class CaixaReportExcelFormat {
     };
   }
 
-  setHeadRow() {
+  setHeadRow(isModel: boolean) {
     //Add Header Row
     let hearder = [];
-    hearder = hearder.concat(Constants.TITHE_REPORT_HEADER);
-    hearder = hearder.concat(Constants.TITHE_REPORT_HEADER);
-    hearder = hearder.concat(Constants.CAIXA_REPORT_HEADER);
-    hearder = hearder.concat(Constants.CAIXA_REPORT_HEADER);
+    if (!isModel) {
+      hearder = hearder.concat(Constants.TITHE_REPORT_HEADER);
+      hearder = hearder.concat(Constants.OFFER_REPORT_HEADER);
+      hearder = hearder.concat(Constants.CAIXA_REPORT_HEADER);
+      hearder = hearder.concat(Constants.CAIXA_REPORT_HEADER);
+    } else {
+      hearder = hearder.concat(Constants.TITHE_REPORT_HEADER_MODEL);
+      hearder = hearder.concat(Constants.OFFER_REPORT_HEADER_MODEL);
+      hearder = hearder.concat(Constants.CAIXA_REPORT_HEADER_MODEL);
+      hearder = hearder.concat(Constants.CAIXA_REPORT_HEADER_MODEL);
+    }
     hearder.pop();
     const headerRow = this.worksheet.addRow(hearder);
 

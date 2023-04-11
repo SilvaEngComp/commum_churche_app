@@ -20,6 +20,8 @@ import { CaixaSummaryComponent } from './financy-summary/caixa-summary/caixa-sum
 import { TitheSummaryComponent } from './financy-summary/tithe-summary/tithe-summary.component';
 import { FinancyReportModule } from './financy-report/financy-report.module';
 import { DirectivesModule } from 'src/app/directives/directives.module';
+import { FileUploadModule } from 'ng2-file-upload';
+import { RegisterByExcelModule } from './register-by-excel/register-by-excel.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { DirectivesModule } from 'src/app/directives/directives.module';
     UiModule,
     FinancyReportModule,
     DirectivesModule,
+    FileUploadModule,
+    RegisterByExcelModule,
   ],
   exports: [FinancyAdminComponent, TitheComponent, TitheRegisterComponent],
   providers: [],

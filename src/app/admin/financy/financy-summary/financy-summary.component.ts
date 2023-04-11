@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { TotalInputOutput } from './../../../models/totalInputOutput';
 import { MenuSummaryComponent } from './menu-summary/menu-summary.component';
 import { UiService } from 'src/app/services/ui.service';
@@ -25,7 +26,8 @@ import { Wallet } from 'src/app/models/wallet';
 import { ConstantMessages } from 'src/app/models/messages';
 import { DownloadService } from 'src/app/services/download.service';
 import { TitheSummary } from 'src/app/models/titheSummary';
-
+import { FileUploader, FileLikeObject } from 'ng2-file-upload';
+import { TempFile } from 'src/app/models/temFile';
 @Component({
   selector: 'app-summary',
   templateUrl: './financy-summary.component.html',
@@ -56,11 +58,11 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
   localPageTitle: string;
   balance: number;
   wallet: Wallet;
+
   constructor(
     private financyService: FinancyService,
     private modalController: ModalController,
-    private exeptionService: ExceptionService,
-    private downloadService: DownloadService
+    private exeptionService: ExceptionService
   ) {}
   ngAfterViewInit(): void {
     UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
@@ -68,6 +70,7 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.localPageTitle = Constants.TITLE_SUMMARY_FINANCY_SUB;
+
     this.checkFilter();
 
     this.load();
@@ -155,6 +158,9 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
 
   goToExpence() {
     this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_EXPENSE);
+  }
+  goToExcelRegister() {
+    this.sessionPage.emit(Constants.MENU_FINANCY_EXCEL_REGISTER);
   }
 
   async newCaixa(op: boolean) {

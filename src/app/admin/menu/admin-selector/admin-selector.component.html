@@ -1,6 +1,3 @@
-<!-- <ion-content ionScroll="true" #main *ngIf="isLarge">
-  <app-admin-large></app-admin-large>
-</ion-content> -->
 <app-admin-small *ngIf="isLarge" (selectedPage)="onSelectPage($event)"></app-admin-small>
 <div class="div-header">
   <ion-avatar class="left" [ngClass]="{'hasBorder': user?.image}" (click)="setPage('0')">

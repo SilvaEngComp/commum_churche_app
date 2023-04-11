@@ -5,9 +5,9 @@ import { ViewChild, AfterViewInit } from '@angular/core';
 import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController, IonInput, ModalController } from '@ionic/angular';
 import { UserFilter } from 'src/app/models/userFilter';
-import { User } from 'src/app/models/user';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UserFacadeService } from 'src/app/facades/user-facade.service';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-user-search',
@@ -26,8 +26,7 @@ export class SearchUserComponent implements OnInit, AfterViewInit {
   role: string;
   constructor(
     private popoverController: PopoverController,
-    private userFacadeService: UserFacadeService,
-    private excptionService: ExceptionService
+    private userFacadeService: UserFacadeService
   ) {}
   ngAfterViewInit(): void {
     this.searchInput.setFocus();

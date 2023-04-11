@@ -1,0 +1,45 @@
+.report-graph {
+  font-size: 40px;
+}
+
+.report-excel-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.input-file {
+  display: none;
+}
+.card-options {
+  margin: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  cursor: pointer;
+
+  ion-label {
+    width: 80px;
+    text-align: center;
+  }
+}
+.lb-input {
+  font-family: Qanelas-bold;
+  color: var(--ion-color-secondary);
+}
+.balance-label {
+  font-family: Qanelas-bold;
+  color: var(--ion-color-primary);
+  text-align: center;
+}
+.item-page-title {
+  font-family: Qanelas;
+  font-size: 14pt;
+  color: var(--ion-color-primary);
+  text-align: center;
+}

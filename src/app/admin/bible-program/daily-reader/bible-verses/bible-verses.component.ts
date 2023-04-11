@@ -80,9 +80,9 @@ export class BibleVersesComponent implements OnInit {
   }
 
   checkEventPress() {
-    UiService.scrollVerseRead.subscribe((data) => {
-      this.active = data.status;
-    });
+    // UiService.scrollVerseRead.subscribe((data) => {
+    //   this.active = data.status;
+    // });
 
     UiService.closeColorMarkEmitter.subscribe(() => {
       this.selectedVerses.filter((verse) => {
@@ -116,9 +116,6 @@ export class BibleVersesComponent implements OnInit {
     UiService.localSet(Constants.SELECTED_VERSE_DAY, this.verseDay);
   }
 
-  onWindowScroll(ev: any) {
-    UiService.scrollVerseRead.emit({ status: true });
-  }
   async showTutorial(event: any) {
     const pop = await this.popCtrl.create({
       component: TutorialComponent,

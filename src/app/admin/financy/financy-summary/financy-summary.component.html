@@ -57,10 +57,15 @@
         <ion-label class="balance-label">Saldo em Conta</ion-label>
         <ion-label class="balance-value">{{balance | currencyBrl}}</ion-label>
       </div>
-
-      <div class="card-options" (click)="goToReport()">
-        <ion-icon class="report-graph" color="primary" name="stats-chart-outline"></ion-icon>
-        <ion-label class="balance-label">Relatórios</ion-label>
+      <div class="report-excel-div">
+        <div class="card-options" (click)="goToReport()">
+          <ion-icon class="report-graph" color="primary" name="stats-chart-outline"></ion-icon>
+          <ion-label class="balance-label">Relatórios</ion-label>
+        </div>
+        <div class="card-options" (click)="goToExcelRegister()">
+          <ion-icon class="report-graph" color="primary" name="file-tray-full-outline"></ion-icon>
+          <ion-label class="balance-label">Planilha</ion-label>
+        </div>
       </div>
 
     </ion-col>

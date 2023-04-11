@@ -93,6 +93,7 @@ export class Constants {
   static MENU_FINANCY_OPTION_BALANCE = '4';
   static MENU_FINANCY_OPTION_EXPENSE = '5';
   static MENU_FINANCY_OPTION_REPORT = '6';
+  static MENU_FINANCY_EXCEL_REGISTER = '7';
 
   static OFFER_MAINTAINCE = 'offerMaintaince';
   static TITHE_MAINTAINCE = 'titheMaintaince';
@@ -143,6 +144,7 @@ export class Constants {
   static TITLE_DAILY_READER = 'Leitura Bíblica';
   static TITLE_SUMMARY_FINANCY_SUB = 'Resumo Financeiro';
   static TITLE_SUMMARY_FINANCY_REPORT = 'Relatório Financeiro';
+  static TITLE_SUMMARY_REGISTER_BY_EXCEL = 'Registro Via Planilha';
   static TITLE_SUMMARY_BALANCE = 'Receitas';
   static TITLE_BIRTHDAYS = 'Aniversariantes';
   static TITLE_SUMMARY_EXPANSE = 'Saídas';
@@ -198,13 +200,39 @@ export class Constants {
   static ELEMENT_MARKER_REF = 'elementMarkerRef';
   static ELEMENT_MARKER_RENDERER = 'elementMarkerRenderer';
   static LOCALSTORAGE_REQUEST_EMAIL = 'localStorageRequestEmail';
-  static TITHE_REPORT_HEADER = ['VALOR', 'DATA', 'DIZIMISTA', 'TESOUREIRO', ''];
+  static TITHE_REPORT_HEADER = [
+    'REF.',
+    'DIZIMISTA',
+    'VALOR',
+    'DATA',
+    'TESOUREIRO',
+    '',
+  ];
+  static OFFER_REPORT_HEADER = [
+    'REF.',
+    'OFERTANTE',
+    'VALOR',
+    'DATA',
+    'TESOUREIRO',
+    '',
+  ];
   static CAIXA_REPORT_HEADER = [
     'VALOR',
     'DATA',
     'TESOUREIRO',
     'CATEGORIA',
     'SUBCATEGORIA',
+    'DESCRIÇÃO',
+    '',
+  ];
+  static TITHE_REPORT_HEADER_MODEL = ['REF.', 'DIZIMISTA', 'VALOR', 'DATA', ''];
+  static OFFER_REPORT_HEADER_MODEL = ['REF.', 'OFERTANTE', 'VALOR', 'DATA', ''];
+  static CAIXA_REPORT_HEADER_MODEL = [
+    'VALOR',
+    'DATA',
+    'CATEGORIA',
+    'SUBCATEGORIA',
+    'DESCRIÇÃO',
     '',
   ];
 

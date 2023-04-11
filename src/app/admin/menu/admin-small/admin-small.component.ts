@@ -46,7 +46,6 @@ export class AdminSmallComponent implements OnInit {
     this.isTest = environment.TEST;
     UiService.showColorMarkEmitter.subscribe((data) => {
       this.verse = data.verse;
-      // this.renderer = data.renderer;
       this.setShowColorMark(data.status);
     });
 

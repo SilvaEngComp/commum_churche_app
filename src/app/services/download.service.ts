@@ -19,9 +19,10 @@ import { Church } from '../models/church';
 import { CaixaReportExcelFormat } from '../models/caixaReportExcelFormat';
 import { UiService } from './ui.service';
 import { Constants } from '../models/constants';
-import { TotalInputOutput } from '../models/totalInputOutput';
 import { SummaryInput } from '../models/sumaryInput';
 import { SummaryOutput } from '../models/sumaryOutput';
+import { UserFilter } from '../models/userFilter';
+import { UserService } from './user.service';
 const EXCEL_TYPE =
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
@@ -32,7 +33,8 @@ export class DownloadService {
   constructor(
     private http: HttpClient,
     private exceptionService: ExceptionService,
-    private churchService: ChurchService
+    private churchService: ChurchService,
+    private userService: UserService
   ) {}
 
   testDownloadXls(workbook: ExcelProper.Workbook, fileName: string) {
@@ -111,120 +113,184 @@ export class DownloadService {
     this.testDownloadXls(userExcelFormat?.workbook, generalTitle);
   }
 
-  async buildFinancialReport(generalTitle: string) {
+  async buildFinancialReport(generalTitle: string, isModel: boolean = false) {
     const userExcelFormat = new CaixaReportExcelFormat();
 
     const churchResponser = await this.churchService.get();
     const churches: Church[] = churchResponser.data;
 
+    let data = [];
+    let cont = 0;
+    const filter = UiService.localGet(Constants.FINANCY_REPORT_FILTER);
+    let members: User[];
+    if (isModel) {
+      const responser = await this.userService.get(filter);
+      members = responser.data;
+      members.sort((a, b) => (a.church?.name > b.church?.name ? 1 : -1));
+    }
+    churches.filter(async (church) => {
+      if (!isModel) {
+        data = this.setFinancyDataSearch(church);
+      } else {
+        const membersByChurch = members.filter((member) => {
+          if (member?.church?.id === church?.id) {
+            return member;
+          }
+        });
+
+        membersByChurch.sort((a, b) => (a.name > b.name ? 1 : -1));
+        data = this.setFinancyDataModel(church, cont, membersByChurch);
+      }
+      userExcelFormat.setWorksheetGeneral(
+        generalTitle,
+        church?.name,
+        data,
+        filter,
+        isModel
+      );
+    });
+
+    this.testDownloadXls(userExcelFormat?.workbook, generalTitle);
+    cont++;
+  }
+
+  public setFinancyDataSearch(church: Church) {
     const inputs: SummaryInput = UiService.localGet(
       Constants.FINANCY_REPORT_INPUT
     );
     const outputs: SummaryOutput = UiService.localGet(
       Constants.FINANCY_REPORT_OUTPUT
     );
-    const filter = UiService.localGet(Constants.FINANCY_REPORT_FILTER);
-    churches.filter((church) => {
-      const inputsData: any[] = [];
-      inputs.reports.filter((report) => {
-        if (report?.church?.id === church?.id) {
-          report?.caixaReport?.caixaReportCategory?.caixaSummary.filter(
-            (summary) =>
-              summary?.caixas.filter((obj) =>
-                inputsData.push([
-                  UiService.convertToCurrency(obj?.amount),
-                  obj?.date,
-                  obj?.register?.name,
-                  obj?.caixaCategory?.name,
-                  obj?.caixaType?.name ? obj?.caixaType?.name : '',
-                  '',
-                ])
-              )
-          );
-        }
-      });
+    const inputsData: any[] = [];
+    inputs.reports.filter((report) => {
+      if (report?.church?.id === church?.id) {
+        report?.caixaReport?.caixaReportCategory?.caixaSummary.filter(
+          (summary) =>
+            summary?.caixas.filter((obj) =>
+              inputsData.push([
+                UiService.convertToCurrency(obj?.amount),
+                obj?.date,
+                obj?.register?.name,
+                obj?.caixaCategory?.name,
+                obj?.caixaType?.name ? obj?.caixaType?.name : '',
+                '',
+              ])
+            )
+        );
+      }
+    });
 
-      let count = inputsData?.length;
-      const titheData: any[] = [];
-      inputs.reports.filter((report) => {
-        if (report?.church?.id === church?.id) {
-          report?.tithe?.titheSummary.tithes.filter((obj) =>
-            titheData.push([
-              UiService.convertToCurrency(obj?.amount),
-              obj?.date,
-              obj?.user?.name,
-              obj?.register?.name,
-              '',
-            ])
-          );
-        }
-      });
+    let count = inputsData?.length;
+    const titheData: any[] = [];
+    inputs.reports.filter((report) => {
+      if (report?.church?.id === church?.id) {
+        report?.tithe?.titheSummary.tithes.filter((obj) =>
+          titheData.push([
+            UiService.convertToCurrency(obj?.amount),
+            obj?.date,
+            obj?.user?.name,
+            obj?.register?.name,
+            '',
+          ])
+        );
+      }
+    });
 
-      if (titheData?.length > count) {
-        count = titheData?.length;
+    if (titheData?.length > count) {
+      count = titheData?.length;
+    }
+
+    const offerData: any[] = [];
+    inputs.reports.filter((report) => {
+      if (report?.church?.id === church?.id) {
+        report?.offer?.titheSummary.tithes.filter((obj) =>
+          offerData.push([
+            UiService.convertToCurrency(obj?.amount),
+            obj?.date,
+            obj?.user?.name,
+            obj?.register?.name,
+            '',
+          ])
+        );
+      }
+    });
+
+    if (offerData?.length > count) {
+      count = offerData?.length;
+    }
+    const outputsData: any[] = [];
+    outputs.reports.filter((report) => {
+      if (report?.church?.id === church?.id) {
+        report?.caixaReport?.caixaReportCategory?.caixaSummary.filter(
+          (summary) =>
+            summary?.caixas.filter((caixa) =>
+              outputsData.push([
+                UiService.convertToCurrency(caixa?.amount),
+                caixa?.date,
+                caixa?.register?.name,
+                caixa?.caixaCategory?.name,
+                caixa?.caixaType?.name ? caixa?.caixaType?.name : '',
+              ])
+            )
+        );
+      }
+    });
+
+    if (outputsData?.length > count) {
+      count = outputsData?.length;
+    }
+    const data = [];
+
+    for (let i = 0; i < count; i++) {
+      let rowTithe = ['', '', '', '', ''];
+      let rowOffer = ['', '', '', '', ''];
+      let rowInput = ['', '', '', '', '', ''];
+      let rowOutput = ['', '', '', '', '', ''];
+
+      if (i < titheData?.length) {
+        rowTithe = titheData[i];
+      }
+      if (i < offerData?.length) {
+        rowOffer = offerData[i];
+      }
+      if (i < inputsData?.length) {
+        rowInput = inputsData[i];
+      }
+      if (i < outputsData?.length) {
+        rowOutput = outputsData[i];
       }
 
-      const offerData: any[] = [];
-      inputs.reports.filter((report) => {
-        if (report?.church?.id === church?.id) {
-          report?.offer?.titheSummary.tithes.filter((obj) =>
-            offerData.push([
-              UiService.convertToCurrency(obj?.amount),
-              obj?.date,
-              obj?.user?.name,
-              obj?.register?.name,
-              '',
-            ])
-          );
-        }
-      });
+      let completeRow = [];
+      completeRow = completeRow.concat(rowTithe);
+      completeRow = completeRow.concat(rowOffer);
+      completeRow = completeRow.concat(rowInput);
+      completeRow = completeRow.concat(rowOutput);
 
-      if (offerData?.length > count) {
-        count = offerData?.length;
-      }
-      const outputsData: any[] = [];
-      outputs.reports.filter((report) => {
-        if (report?.church?.id === church?.id) {
-          report?.caixaReport?.caixaReportCategory?.caixaSummary.filter(
-            (summary) =>
-              summary?.caixas.filter((caixa) =>
-                outputsData.push([
-                  UiService.convertToCurrency(caixa?.amount),
-                  caixa?.date,
-                  caixa?.register?.name,
-                  caixa?.caixaCategory?.name,
-                  caixa?.caixaType?.name ? caixa?.caixaType?.name : '',
-                ])
-              )
-          );
-        }
-      });
+      data.push(completeRow);
+    }
 
-      if (outputsData?.length > count) {
-        count = outputsData?.length;
-      }
-      const data = [];
-
-      for (let i = 0; i < count; i++) {
-        let rowTithe = ['', '', '', '', ''];
-        let rowOffer = ['', '', '', '', ''];
-        let rowInput = ['', '', '', '', '', ''];
-        let rowOutput = ['', '', '', '', '', ''];
-
-        if (i < titheData?.length) {
-          rowTithe = titheData[i];
-        }
-        if (i < offerData?.length) {
-          rowOffer = offerData[i];
-        }
-        if (i < inputsData?.length) {
-          rowInput = inputsData[i];
-        }
-        if (i < outputsData?.length) {
-          rowOutput = outputsData[i];
-        }
-
+    return data;
+  }
+  public setFinancyDataModel(
+    church: Church,
+    churchNumber: number,
+    members: User[]
+  ) {
+    const filter: UserFilter = new UserFilter();
+    filter.church = church;
+    const data = [];
+    members.filter((member) => {
+      if (member?.church?.id === church?.id) {
+        const rowTithe = ['', '', '', '', ''];
+        const rowOffer = ['', '', '', '', ''];
+        const rowInput = ['', '', '', '', '', ''];
+        const rowOutput = ['', '', '', '', '', ''];
         let completeRow = [];
+        rowTithe[0] = String(member?.id);
+        rowTithe[1] = member?.name;
+        rowOffer[1] = String(member?.id);
+        rowOffer[2] = member?.name;
+
         completeRow = completeRow.concat(rowTithe);
         completeRow = completeRow.concat(rowOffer);
         completeRow = completeRow.concat(rowInput);
@@ -232,16 +298,8 @@ export class DownloadService {
 
         data.push(completeRow);
       }
-
-      userExcelFormat.setWorksheetGeneral(
-        generalTitle,
-        church?.name,
-        data,
-        filter
-      );
     });
-
-    this.testDownloadXls(userExcelFormat?.workbook, generalTitle);
+    return data;
   }
 
   public exportAsExcelFile(json: any[], excelFileName: string, op): void {
@@ -290,28 +348,6 @@ export class DownloadService {
       });
   }
 
-  downloadXls(data, filename = 'Tabela de Fiis', headerList) {
-    const csvData = this.convertToCSV(data, headerList);
-
-    const blob = new Blob(['\ufeff' + csvData], {
-      type: 'text/csv;charset=utf-8;',
-    });
-    const dwldLink = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    const isSafariBrowser =
-      navigator.userAgent.indexOf('Safari') !== -1 &&
-      navigator.userAgent.indexOf('Chrome') === -1;
-    if (isSafariBrowser) {
-      //if Safari open in new window to save file with random filename.
-      dwldLink.setAttribute('target', '_blank');
-    }
-    dwldLink.setAttribute('href', url);
-    dwldLink.setAttribute('download', filename + '.csv');
-    dwldLink.style.visibility = 'hidden';
-    document.body.appendChild(dwldLink);
-    dwldLink.click();
-    document.body.removeChild(dwldLink);
-  }
   download(caixa: Caixa) {
     return this.http.get(caixa?.file, { responseType: 'blob' });
   }
@@ -342,35 +378,5 @@ export class DownloadService {
     const values = caixa?.file.split('.');
     const filename = 'comprovante.' + values[values.length - 1];
     return this.webDownload(caixa, filename);
-  }
-
-  convertToCSV(objArray, headerList) {
-    const array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-    let str = '';
-    let row = '';
-    for (const index in headerList) {
-      row += headerList[index] + ';';
-    }
-
-    row = row.slice(0, -1);
-
-    str += row + '\r\n';
-    for (let i = 0; i < array.length; i++) {
-      let line = '';
-      let j = 0;
-
-      // tslint:disable-next-line: forin
-      for (const index in headerList) {
-        const head = headerList[index];
-        if (j <= 1) {
-          line += array[i][head] + ';';
-        } else {
-          line += array[i][head] + ';';
-        }
-        j++;
-      }
-      str += line + '\r\n';
-    }
-    return str;
   }
 }

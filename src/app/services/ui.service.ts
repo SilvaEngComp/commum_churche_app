@@ -47,9 +47,6 @@ export class UiService {
   static mySelectEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
-  static scrollVerseRead: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
   static showColorMarkEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Output()
   static closeColorMarkEmitter: EventEmitter<any> = new EventEmitter<any>();
