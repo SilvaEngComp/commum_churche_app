@@ -205,32 +205,32 @@ export class UiService {
     return true;
   }
   static validDate(date, year = null, convert: boolean): ValidDateObj {
-    const validDateObj = new ValidDateObj();
+    if (date) {
+      const validDateObj = new ValidDateObj();
 
-    if (!year) {
-      year = new Date().getFullYear();
-    }
-    if (date.length >= 8) {
-      const dates = date.split('/');
-
-      if (dates[2]?.length === 2) {
-        dates[2] = String(year).substring(0, 2) + dates[2];
+      if (!year) {
+        year = new Date().getFullYear();
       }
-      if (dates[0] > 24 || dates[0] < 1) {
-        validDateObj.message = 'Dia inválido';
-      } else if (dates[1] > 12 || dates[1] < 1) {
-        validDateObj.message = 'Mês inválido';
-      } else if (dates[2] > year || dates[2] < 1) {
-        validDateObj.message = 'Ano inválido';
-      }
+      if (date.length >= 8) {
+        const dates = date.split('/');
+        if (dates[2]?.length === 2) {
+          dates[2] = String(year).substring(0, 2) + dates[2];
+        }
+        if (dates[0] > 24 || dates[0] < 1) {
+          validDateObj.message = 'Dia inválido';
+        } else if (dates[1] > 12 || dates[1] < 1) {
+          validDateObj.message = 'Mês inválido';
+        } else if (dates[2] > year || dates[2] < 1) {
+          validDateObj.message = 'Ano inválido';
+        }
 
-      validDateObj.status = true;
-      if (convert) {
-        date = dates[2] + '-' + dates[1] + '-' + dates[0];
+        validDateObj.status = true;
+        if (convert) {
+          date = dates[2] + '-' + dates[1] + '-' + dates[0];
+        }
+        validDateObj.date = date;
+        return validDateObj;
       }
-
-      validDateObj.date = date;
-      return validDateObj;
     }
     return null;
   }

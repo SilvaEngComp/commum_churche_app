@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { Caixa } from 'src/app/models/caixa';
-import { Constants } from 'src/app/models/constants';
+import { ConstantMessages } from 'src/app/models/messages';
 
 @Component({
   selector: 'app-caixa-view-table',
@@ -8,12 +9,52 @@ import { Constants } from 'src/app/models/constants';
   styleUrls: ['./caixa-view-table.component.scss'],
 })
 export class CaixaViewTableComponent implements OnInit {
-  @Input() caixas: Caixa[];
+  @Input() datas: Caixa[];
 
-  headCaixaList: string[] = Constants.CAIXA_REPORT_HEADER;
-  constructor() {}
+  headCaixaList: string[] = ['', 'VALOR', 'DATA', 'CATEGORIA', 'SUBCATEGORIA'];
+  constructor(
+    private actionSheetCtrl: ActionSheetController,
+    private alertCtrl: AlertController
+  ) {}
 
   ngOnInit() {}
 
-  delete(caixa: Caixa) {}
+  async delete(caixa: Caixa) {
+    const position = this.datas.indexOf(caixa);
+    if (position >= 0) {
+      const alert = await this.alertCtrl.create({
+        message: ConstantMessages.CONFIRM_DELETE,
+        buttons: [
+          {
+            text: 'NÃo',
+            handler: () => {},
+          },
+          {
+            text: 'SIM',
+            handler: () => {
+              this.datas.splice(position, 1);
+            },
+          },
+        ],
+      });
+      alert.present();
+    }
+  }
+  async openDescription(caixa: Caixa) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Descrição',
+      subHeader: caixa?.description,
+
+      buttons: [
+        {
+          text: 'ok',
+          data: {
+            action: () => {},
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
+  }
 }

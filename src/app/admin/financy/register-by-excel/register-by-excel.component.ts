@@ -1,21 +1,21 @@
-import { DatePipe } from '@angular/common';
-import { Church } from './../../../models/church';
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 /* eslint-disable no-underscore-dangle */
-import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
-import { User } from 'src/app/models/User';
 import { Caixa } from 'src/app/models/caixa';
 import { Constants } from 'src/app/models/constants';
 import { TempFile } from 'src/app/models/temFile';
 import { Tithe } from 'src/app/models/tithe';
-import { ValidDateObj } from 'src/app/models/validDateObj';
 import { DownloadService } from 'src/app/services/download.service';
 import { ExcelFinancyRegistrationService } from 'src/app/services/excel-financy-registration.service';
-import { ExceptionService } from 'src/app/services/exception-service.service';
-import { UiService } from 'src/app/services/ui.service';
 import * as XLSX from 'xlsx';
+import { ChurchService } from 'src/app/services/church.service';
+import { CaixaTypeService } from 'src/app/services/caixa-type.service';
+import { CaixaCategory } from 'src/app/models/caixaCategory';
+import { CaixaType } from 'src/app/models/caixaType';
+import { ImportCaixaExcel } from 'src/app/models/importCaixaExcel';
+import { ExceptionService } from './../../../services/exception-service.service';
+import { Church } from './../../../models/church';
 @Component({
   selector: 'app-register-by-excel',
   templateUrl: './register-by-excel.component.html',
@@ -29,17 +29,36 @@ export class RegisterByExcelComponent implements OnInit {
   isValide: boolean;
   isUploading: boolean;
   localPageTitle: string;
+  importCaixaExcel: ImportCaixaExcel[];
   caixas: Caixa[];
   tithes: Tithe[];
+  churches: Church[];
+  categories: CaixaCategory[];
+  types: CaixaType[];
   constructor(
     private exeptionService: ExceptionService,
     private excelFinancyRegistrationService: ExcelFinancyRegistrationService,
     private downloadService: DownloadService,
-    private http: HttpClient
+    private churchService: ChurchService,
+    private categoryService: CaixaTypeService,
+    private caixaTypeService: CaixaTypeService
   ) {}
 
   ngOnInit() {
+    this.importCaixaExcel = [];
     this.localPageTitle = Constants.TITLE_SUMMARY_REGISTER_BY_EXCEL;
+    this.load();
+  }
+
+  async load() {
+    const churchResponser = await this.churchService.get();
+    this.churches = churchResponser.data;
+
+    const responser2 = await this.categoryService.get();
+    this.categories = responser2.data;
+
+    const responser3 = await this.caixaTypeService.get();
+    this.types = responser3.data;
   }
 
   clean() {
@@ -99,27 +118,27 @@ export class RegisterByExcelComponent implements OnInit {
     }
   }
 
-  distincData(data: any[][], churchName: string) {
-    console.log(churchName);
-    const datePipe = new DatePipe('en');
+  async distincData(data: any[][], churchName: string) {
+    let church;
+    this.churches.filter((obj) => {
+      if (obj.name.includes(churchName)) {
+        church = obj;
+      }
+    });
+    this.tithes = [];
+    this.caixas = [];
+    const sheet = new ImportCaixaExcel(church);
     data.filter((row) => {
-      const user = new User();
-      user.id = row[0];
-      user.name = row[1];
-      console.log(row[3]);
-      const validDateObj: ValidDateObj = UiService.validDate(
-        row[3],
-        null,
-        true
-      );
-      console.log(validDateObj);
-      const church = new Church();
-      church.name = churchName;
-      const tithe = new Tithe(row[2], validDateObj.date, user, church);
-      this.tithes.push(tithe);
+      sheet.buildTithe(row, church, true);
+      sheet.buildTithe(row, church, false);
+      sheet.buildCaixa(row, church, true, this.categories, this.types);
+      sheet.buildCaixa(row, church, false, this.categories, this.types);
     });
 
-    console.log(this.tithes);
+    if (sheet.thereIsAnyData()) {
+      this.importCaixaExcel.push(sheet);
+      console.log(this.importCaixaExcel);
+    }
   }
 
   async download() {
@@ -133,15 +152,16 @@ export class RegisterByExcelComponent implements OnInit {
   }
 
   async upload() {
-    if (this.isValide) {
-      this.excelFinancyRegistrationService
-        .importExcelResgistration(this.caixas, this.tithes)
-        .then((responser) => {});
-    } else {
-      this.exeptionService.alertDialog(
-        'Selecione um arquivo válido no formato  xls, xlsx ou csv',
-        'Arquivo inválido!'
-      );
-    }
+    this.exeptionService.loadingFunction();
+    this.excelFinancyRegistrationService
+      .importExcelResgistration(this.importCaixaExcel)
+      .then((responser) => {
+        console.log(responser);
+        this.exeptionService.openLoading(
+          'Registro Realizado com Sucesso!',
+          'Seu cadastro de entradas e saídas via Excel foi realizado!'
+        );
+      })
+      .catch((error) => this.exeptionService.error(error));
   }
 }

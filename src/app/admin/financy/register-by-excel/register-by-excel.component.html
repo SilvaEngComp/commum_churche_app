@@ -21,17 +21,51 @@
       </div>
     </ion-col>
   </ion-row>
+  <ion-row *ngIf="importCaixaExcel?.length>0">
+    <ion-col>
+      <ion-item lines="none" (click)=" upload()">
+        <ion-label class="balance-label" slot="end">Enviar</ion-label>
+        <ion-icon color="primary" slot="end" name="send-outline"></ion-icon>
+      </ion-item>
+    </ion-col>
+  </ion-row>
 </ion-grid>
 
-<ion-accordion-group>
-  <ion-accordion value="fourth">
-    <ion-item slot="header" color="light">
-      <ion-card-title>Entradas</ion-card-title>
-    </ion-item>
-    <div class="ion-padding" slot="content">
-      <table>
-        <tr></tr>
-      </table>
-    </div>
-  </ion-accordion>
-</ion-accordion-group>
+<div *ngFor="let sheet of importCaixaExcel">
+  <ion-item>
+    <ion-label class="balance-label">{{sheet?.church?.name}}</ion-label>
+  </ion-item>
+  <ion-accordion-group>
+    <ion-accordion value="tithes" *ngIf="sheet?.tithes?.length>0">
+      <ion-item slot="header" color="light">
+        <ion-card-title>Dízimos</ion-card-title>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <app-tithe-view-table [datas]="sheet?.tithes" [isTithe]="true"></app-tithe-view-table>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="offers" *ngIf="sheet?.offers?.length>0">
+      <ion-item slot="header" color="light">
+        <ion-card-title>Ofertas</ion-card-title>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <app-tithe-view-table [datas]="sheet?.offers" [isTithe]="false"></app-tithe-view-table>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="inputs" *ngIf="sheet?.inputs?.length>0">
+      <ion-item slot="header" color="light">
+        <ion-card-title>Entradas</ion-card-title>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <app-caixa-view-table [datas]="sheet?.inputs"></app-caixa-view-table>
+      </div>
+    </ion-accordion> <ion-accordion value="outputs" *ngIf="sheet?.outputs?.length>0">
+      <ion-item slot="header" color="light">
+        <ion-card-title>Saídas</ion-card-title>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <app-caixa-view-table [datas]="sheet?.outputs"></app-caixa-view-table>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</div>

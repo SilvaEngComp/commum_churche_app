@@ -1,3 +1,31 @@
-<p>
-  tithe-view-table works!
-</p>
+<div class="table-responsive">
+  <table class="table  align-middle table-sm">
+    <thead>
+      <tr class="table-dark">
+        <th *ngFor="let header of headTitheList">{{header | uppercase}}</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let item of datas">
+        <td>
+          <div class="buttons">
+            <ion-tab-button (click)="delete(item)">
+              <ion-icon name="trash-outline"></ion-icon>
+              <ion-label>Excluir</ion-label>
+            </ion-tab-button>
+          </div>
+        </td>
+        <td>
+          <ion-label>R$ {{item?.amount | currencyBrl}}</ion-label>
+        </td>
+        <td>
+          <ion-label>{{item?.date | date:'dd/MM/yyyy'}}</ion-label>
+        </td>
+        <td>
+          <ion-label>{{ item?.user?.name}}</ion-label>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>

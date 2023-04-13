@@ -60,4 +60,5 @@ export class ConstantMessages {
   static INVALIDE_DATE_INTERVAL =
     'Selecione a data de inicio e fim da consulta';
   static ENDED_SESSION = 'Sessão Expirada. Tente novamente';
+  static CONFIRM_DELETE = 'Tem certeza que deseja excluir esse item?';
 }

@@ -60,21 +60,6 @@ export class Constants {
     Constants.MEMBER,
   ];
 
-  static CAIXA_TYPES = [
-    'saída genérica',
-    'entrada genérica',
-    'salário',
-    'Comunicação',
-    'saneamento',
-    'Energia',
-    'ministério',
-    'manutenção',
-    'encargo social',
-    'taxa',
-    'previsionado',
-    'patrimônio',
-  ];
-
   static ENDPOINT_TITHE = 'tithes';
   static ENDPOINT_CHURCH_SCHEDULE_TIME = 'churchScheduleTypes';
 

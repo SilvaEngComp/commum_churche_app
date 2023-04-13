@@ -7,6 +7,7 @@ import { ExceptionService } from './exception-service.service';
 import { LoginService } from './login.service';
 import { ServiceInterface } from './serviceInterface';
 import { Tithe } from '../models/tithe';
+import { ImportCaixaExcel } from '../models/importCaixaExcel';
 
 @Injectable({
   providedIn: 'root',
@@ -27,8 +28,7 @@ export class ExcelFinancyRegistrationService extends ServiceInterface {
     );
   }
   async importExcelResgistration(
-    caixas: Caixa[],
-    tithes: Tithe[]
+    importCaixaExcel: ImportCaixaExcel[]
   ): Promise<Responser> {
     if (!(await LoginService.getHeaders())) {
       this.checkLogged();
@@ -37,7 +37,7 @@ export class ExcelFinancyRegistrationService extends ServiceInterface {
     return this.http
       .post<Responser>(
         `${environment.API2}/excelManage/registration`,
-        { caixas, tithes },
+        importCaixaExcel,
         {
           headers: await LoginService.getHeaders(true),
         }
