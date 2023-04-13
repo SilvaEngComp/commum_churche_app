@@ -200,9 +200,13 @@ export class CaixaReportExcelFormat {
       hearder = hearder.concat(Constants.OFFER_REPORT_HEADER_MODEL);
       hearder = hearder.concat(Constants.CAIXA_REPORT_HEADER_MODEL);
       hearder = hearder.concat(Constants.CAIXA_REPORT_HEADER_MODEL);
+      hearder = hearder.concat(Constants.CATEGORY_REPORT_HEADER_MODEL);
+      hearder = hearder.concat(Constants.TYPE_REPORT_HEADER_MODEL);
     }
     hearder.pop();
     const headerRow = this.worksheet.addRow(hearder);
+    this.worksheet.mergeCells('W6:X6');
+    this.worksheet.mergeCells('Z6:AA6');
 
     // Cell Style : Fill and Border
     headerRow.eachCell((cell) => {

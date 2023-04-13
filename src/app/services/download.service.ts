@@ -23,6 +23,10 @@ import { SummaryInput } from '../models/sumaryInput';
 import { SummaryOutput } from '../models/sumaryOutput';
 import { UserFilter } from '../models/userFilter';
 import { UserService } from './user.service';
+import { CaixaTypeService } from './caixa-type.service';
+import { CaixaCategoryService } from './caixa-category.service';
+import { CaixaCategory } from '../models/caixaCategory';
+import { CaixaType } from '../models/caixaType';
 const EXCEL_TYPE =
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
@@ -34,7 +38,9 @@ export class DownloadService {
     private http: HttpClient,
     private exceptionService: ExceptionService,
     private churchService: ChurchService,
-    private userService: UserService
+    private userService: UserService,
+    private caixaTypeService: CaixaTypeService,
+    private categoryService: CaixaCategoryService
   ) {}
 
   testDownloadXls(workbook: ExcelProper.Workbook, fileName: string) {
@@ -123,10 +129,18 @@ export class DownloadService {
     let cont = 0;
     const filter = UiService.localGet(Constants.FINANCY_REPORT_FILTER);
     let members: User[];
+    let categories: CaixaCategory[];
+    let types: CaixaType[];
     if (isModel) {
       const responser = await this.userService.get(filter);
       members = responser.data;
       members.sort((a, b) => (a.church?.name > b.church?.name ? 1 : -1));
+
+      const responser2 = await this.categoryService.get();
+      categories = responser2.data;
+
+      const responser3 = await this.caixaTypeService.get();
+      types = responser3.data;
     }
     churches.filter(async (church) => {
       if (!isModel) {
@@ -139,7 +153,12 @@ export class DownloadService {
         });
 
         membersByChurch.sort((a, b) => (a.name > b.name ? 1 : -1));
-        data = this.setFinancyDataModel(church, cont, membersByChurch);
+        data = this.setFinancyDataModel(
+          church,
+          membersByChurch,
+          categories,
+          types
+        );
       }
       userExcelFormat.setWorksheetGeneral(
         generalTitle,
@@ -273,31 +292,56 @@ export class DownloadService {
   }
   public setFinancyDataModel(
     church: Church,
-    churchNumber: number,
-    members: User[]
+    members: User[],
+    categories: CaixaCategory[],
+    types: CaixaType[]
   ) {
     const filter: UserFilter = new UserFilter();
     filter.church = church;
     const data = [];
+
+    const rowCategory: string[][] = [];
+    const rowType: string[][] = [];
+
+    categories.filter((category) => {
+      const row = [`${category?.id}`, category?.name, ''];
+      rowCategory.push(row);
+    });
+
+    types.filter((type) => {
+      const row = [`${type?.id}`, type?.name];
+      rowType.push(row);
+    });
+
     members.filter((member) => {
       if (member?.church?.id === church?.id) {
         const rowTithe = ['', '', '', '', ''];
         const rowOffer = ['', '', '', '', ''];
         const rowInput = ['', '', '', '', '', ''];
         const rowOutput = ['', '', '', '', '', ''];
+
         let completeRow = [];
         rowTithe[0] = String(member?.id);
         rowTithe[1] = member?.name;
-        rowOffer[1] = String(member?.id);
-        rowOffer[2] = member?.name;
+        rowOffer[0] = String(member?.id);
+        rowOffer[1] = member?.name;
 
         completeRow = completeRow.concat(rowTithe);
         completeRow = completeRow.concat(rowOffer);
         completeRow = completeRow.concat(rowInput);
         completeRow = completeRow.concat(rowOutput);
-
         data.push(completeRow);
       }
+    });
+    let cont = 0;
+    rowCategory.filter((obj) => {
+      data[cont] = data[cont].concat(obj);
+      cont++;
+    });
+    cont = 0;
+    rowType.filter((obj) => {
+      data[cont] = data[cont].concat(obj);
+      cont++;
     });
     return data;
   }

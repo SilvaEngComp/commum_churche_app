@@ -56,7 +56,7 @@ export class ReviewFeedComponent implements OnInit {
   }
 
   setDate(date) {
-    const validDateObj = UiService.validDate(date);
+    const validDateObj = UiService.validDate(date, null, false);
     if (validDateObj) {
       if (validDateObj.status) {
         this.feed.date = validDateObj.date;

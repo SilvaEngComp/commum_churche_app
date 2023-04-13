@@ -36,7 +36,7 @@ export class ExcelFinancyRegistrationService extends ServiceInterface {
     }
     return this.http
       .post<Responser>(
-        `${environment.API2}/caixas/excelRegistration`,
+        `${environment.API2}/excelManage/registration`,
         { caixas, tithes },
         {
           headers: await LoginService.getHeaders(true),

@@ -235,6 +235,8 @@ export class Constants {
     'DESCRIÇÃO',
     '',
   ];
+  static CATEGORY_REPORT_HEADER_MODEL = ['CATEGORIA', '', ''];
+  static TYPE_REPORT_HEADER_MODEL = ['SUBCATEGORIA', ''];
 
   static FINANCY_REPORT_INPUT = 'financyReportInput';
   static FINANCY_REPORT_OUTPUT = 'financyReportOutput';
