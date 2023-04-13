@@ -210,7 +210,6 @@ export class UiService {
     if (!year) {
       year = new Date().getFullYear();
     }
-    console.log(date?.len);
     if (date.length >= 8) {
       const dates = date.split('/');
 
@@ -224,13 +223,11 @@ export class UiService {
       } else if (dates[2] > year || dates[2] < 1) {
         validDateObj.message = 'Ano inválido';
       }
-      console.log(validDateObj);
 
       validDateObj.status = true;
       if (convert) {
         date = dates[2] + '-' + dates[1] + '-' + dates[0];
       }
-      console.log(date);
 
       validDateObj.date = date;
       return validDateObj;
