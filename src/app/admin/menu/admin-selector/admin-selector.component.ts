@@ -120,6 +120,11 @@ export class AdminSelectorComponent implements OnInit {
 
   onSelectPage(page: any) {
     if (page < -1) {
+      caches
+        .keys()
+        .then((keyList) =>
+          Promise.all(keyList.map((key) => caches.delete(key)))
+        );
       localStorage.clear();
       this.router.navigate(['']);
     } else {

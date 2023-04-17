@@ -175,10 +175,11 @@ export class UiService {
   }
 
   static convertToNumber(value: string) {
+    debugger;
     if (!value) {
       value = '0,0';
     }
-    const splitDecimal = value.split(',');
+    let splitDecimal = value.split(',');
     if (splitDecimal.length === 2) {
       console.log(splitDecimal);
       const integerPart = splitDecimal[0]?.replace(/[^\d]+/g, '');
@@ -186,6 +187,15 @@ export class UiService {
       const result = integerPart + '.' + splitDecimal[1];
       console.log(result);
       return parseFloat(result);
+    } else {
+      splitDecimal = value.split('.');
+      if (splitDecimal.length === 2) {
+        console.log(splitDecimal);
+        const integerPart = splitDecimal[0]?.replace(/[^\d]+/g, '');
+        console.log(integerPart);
+        console.log(integerPart);
+        return parseFloat(integerPart);
+      }
     }
     return parseFloat(value);
   }
@@ -205,34 +215,55 @@ export class UiService {
     return true;
   }
   static validDate(date, year = null, convert: boolean): ValidDateObj {
-    if (date) {
-      const validDateObj = new ValidDateObj();
-
-      if (!year) {
-        year = new Date().getFullYear();
-      }
-      if (date.length >= 8) {
-        const dates = date.split('/');
-        if (dates[2]?.length === 2) {
-          dates[2] = String(year).substring(0, 2) + dates[2];
-        }
-        if (dates[0] > 24 || dates[0] < 1) {
-          validDateObj.message = 'Dia inválido';
-        } else if (dates[1] > 12 || dates[1] < 1) {
-          validDateObj.message = 'Mês inválido';
-        } else if (dates[2] > year || dates[2] < 1) {
-          validDateObj.message = 'Ano inválido';
-        }
-
-        validDateObj.status = true;
-        if (convert) {
-          date = dates[2] + '-' + dates[1] + '-' + dates[0];
-        }
-        validDateObj.date = date;
-        return validDateObj;
-      }
+    const validDateObj = new ValidDateObj();
+    let dates = [];
+    if (!year) {
+      year = new Date().getFullYear();
     }
-    return null;
+    if (date) {
+      const datePipe = new DatePipe('en');
+      try {
+        date = datePipe.transform(date, 'yyyy-MM-dd');
+      } catch (e) {
+        const dateSplited = date.split('/');
+        if (dateSplited?.length === 3) {
+          if (dateSplited[2]?.length === 2) {
+            dateSplited[2] = String(year).substring(0, 2) + dateSplited[2];
+          }
+        } else {
+          return;
+        }
+
+        date = dateSplited[2] + '-' + dateSplited[1] + '-' + dateSplited[0];
+      }
+
+      dates = date.split('-');
+
+      validDateObj.status = true;
+      if (dates[0]?.length === 2) {
+        dates[0] = String(year).substring(0, 2) + dates[0];
+      }
+
+      if (dates[2] > 24 || dates[2] < 1) {
+        validDateObj.message = 'Dia inválido';
+        validDateObj.status = false;
+      } else if (dates[1] > 12 || dates[1] < 1) {
+        if (dates[1] > dates[0]) {
+          const aux = dates[0];
+          dates[1] = dates[0];
+          dates[0] = aux;
+        } else {
+          validDateObj.message = 'Mês inválido';
+          validDateObj.status = false;
+        }
+      } else if (dates[0] > year || dates[0] < 1) {
+        validDateObj.message = 'Ano inválido';
+        validDateObj.status = false;
+      }
+
+      validDateObj.date = date;
+    }
+    return validDateObj;
   }
 
   static validTime(time, year = null): ValidDateObj {

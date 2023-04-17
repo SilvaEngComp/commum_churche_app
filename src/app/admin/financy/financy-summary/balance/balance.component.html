@@ -62,7 +62,7 @@
     <ion-col>
       <ion-item color="primary"><ion-label>{{summary?.church?.name}}</ion-label></ion-item>
       <ion-accordion-group>
-        <ion-accordion value="second">
+        <ion-accordion value="tithe" *ngIf="filter?.wallet_id===1">
           <ion-item slot="header" color="light">
             <ion-card-title>Dízimos</ion-card-title>
             <ion-note slot="end">R$ {{summary?.tithe?.titheSummary?.total | currencyBrl}}</ion-note>
@@ -76,7 +76,7 @@
               *ngIf="summary?.tithe?.titheSummary?.total>0"></app-tithe-summary>
           </div>
         </ion-accordion>
-        <ion-accordion value="third">
+        <ion-accordion value="offer" *ngIf="filter?.wallet_id===1">
           <ion-item slot="header" color="light">
             <ion-card-title>Ofertas</ion-card-title>
             <ion-note slot="end">R$ {{summary?.offer?.titheSummary?.total | currencyBrl}}</ion-note>
@@ -91,9 +91,9 @@
                 *ngIf="summary?.offer?.titheSummary?.total>0"></app-tithe-summary>
             </div>
           </div>
-        </ion-accordion> <ion-accordion value="fourth">
+        </ion-accordion> <ion-accordion value="caixaReport">
           <ion-item slot="header" color="light">
-            <ion-card-title>Outras Entradas</ion-card-title>
+            <ion-card-title>Entradas</ion-card-title>
             <ion-note slot="end">R$ {{summary?.caixaReport?.caixaReportCategory?.total | currencyBrl }}</ion-note>
           </ion-item>
           <div class="ion-padding" slot="content">

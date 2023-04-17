@@ -6,7 +6,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let item of datas">
+      <tr *ngFor="let item of datas" [ngClass]="{'color-problem': item?.problems?.length>0}">
         <td>
           <div class="buttons">
             <ion-tab-button [disabled]="!item?.description" (click)="openDescription(item)">
@@ -32,7 +32,9 @@
         <td>
           <ion-label class="label-body">{{item?.caixaType?.name | uppercase}}</ion-label>
         </td>
-
+        <td>
+          <ion-label *ngFor="let problem of item?.problems">{{ problem}}</ion-label><br>
+        </td>
       </tr>
     </tbody>
   </table>

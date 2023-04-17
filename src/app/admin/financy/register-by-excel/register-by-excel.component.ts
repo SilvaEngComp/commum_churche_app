@@ -16,6 +16,7 @@ import { CaixaType } from 'src/app/models/caixaType';
 import { ImportCaixaExcel } from 'src/app/models/importCaixaExcel';
 import { ExceptionService } from './../../../services/exception-service.service';
 import { Church } from './../../../models/church';
+import { CaixaCategoryService } from 'src/app/services/caixa-category.service';
 @Component({
   selector: 'app-register-by-excel',
   templateUrl: './register-by-excel.component.html',
@@ -40,7 +41,7 @@ export class RegisterByExcelComponent implements OnInit {
     private excelFinancyRegistrationService: ExcelFinancyRegistrationService,
     private downloadService: DownloadService,
     private churchService: ChurchService,
-    private categoryService: CaixaTypeService,
+    private categoryService: CaixaCategoryService,
     private caixaTypeService: CaixaTypeService
   ) {}
 
@@ -51,6 +52,7 @@ export class RegisterByExcelComponent implements OnInit {
   }
 
   async load() {
+    this.isUploading = true;
     const churchResponser = await this.churchService.get();
     this.churches = churchResponser.data;
 
@@ -59,12 +61,12 @@ export class RegisterByExcelComponent implements OnInit {
 
     const responser3 = await this.caixaTypeService.get();
     this.types = responser3.data;
+
+    if (this.categories) {
+      this.isUploading = false;
+    }
   }
 
-  clean() {
-    this.uploader = new FileUploader({});
-    this.isUploading = false;
-  }
   getFile(ev: any): File {
     const target: DataTransfer = <DataTransfer>ev.target;
     const file = target.files[0];
@@ -102,19 +104,36 @@ export class RegisterByExcelComponent implements OnInit {
       reader.onload = (e: any) => {
         const bstr: string = e.target.result;
         const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
-        wb.SheetNames.filter((wsname) => {
-          const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-          const data: any[][] = XLSX.utils.sheet_to_json(ws, {
-            header: 1,
-            raw: false,
-          });
-          // Print the Excel Data
 
-          data.splice(0, 6);
-          this.distincData(data, wsname);
+        wb.SheetNames.filter((wsname) => {
+          if (!wsname.toLocaleLowerCase().includes('instruções')) {
+            const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+            const data: any[][] = XLSX.utils.sheet_to_json(ws, {
+              header: 1,
+              raw: false,
+            });
+            // Print the Excel Data
+
+            data.splice(0, 6);
+            this.distincData(data, wsname);
+          }
         });
+
+        if (this.importCaixaExcel?.length <= 0) {
+          console.log(this.importCaixaExcel);
+          this.exeptionService.alertDialog(
+            'Não existem linhas com dados validos para importação. Revise a planilha e importe novamente'
+          );
+          this.clean();
+        }
       };
       reader.readAsBinaryString(file);
+    }
+  }
+
+  setCategory(caixaCategory: CaixaCategory) {
+    if (caixaCategory) {
+      window.location.reload();
     }
   }
 
@@ -128,24 +147,43 @@ export class RegisterByExcelComponent implements OnInit {
     this.tithes = [];
     this.caixas = [];
     const sheet = new ImportCaixaExcel(church);
+    let cont = 7;
     data.filter((row) => {
-      sheet.buildTithe(row, church, true);
-      sheet.buildTithe(row, church, false);
-      sheet.buildCaixa(row, church, true, this.categories, this.types);
-      sheet.buildCaixa(row, church, false, this.categories, this.types);
+      sheet.buildTithe(row, church, true, cont);
+      sheet.buildTithe(row, church, false, cont);
+      sheet.buildCaixa(row, church, true, this.categories, this.types, cont, 1);
+      sheet.buildCaixa(
+        row,
+        church,
+        false,
+        this.categories,
+        this.types,
+        cont,
+        1
+      );
+      cont++;
     });
-
     if (sheet.thereIsAnyData()) {
       this.importCaixaExcel.push(sheet);
-      console.log(this.importCaixaExcel);
     }
   }
 
-  async download() {
-    this.downloadService.buildFinancialReport(
-      'Cadastro de Operações Via Planilha',
-      true
-    );
+  clean() {
+    this.importCaixaExcel = [];
+    this.excelFile = null;
+    this.uploader = new FileUploader({});
+    this.isUploading = false;
+  }
+
+  download() {
+    this.isUploading = true;
+    setTimeout(async () => {
+      await this.downloadService.buildFinancialReport(
+        'Cadastro de Operações Via Planilha',
+        true
+      );
+      this.isUploading = false;
+    }, 1000);
   }
   back() {
     this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_SUMMARY);
@@ -156,7 +194,7 @@ export class RegisterByExcelComponent implements OnInit {
     this.excelFinancyRegistrationService
       .importExcelResgistration(this.importCaixaExcel)
       .then((responser) => {
-        console.log(responser);
+        this.clean();
         this.exeptionService.openLoading(
           'Registro Realizado com Sucesso!',
           'Seu cadastro de entradas e saídas via Excel foi realizado!'

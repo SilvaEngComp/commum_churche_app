@@ -28,6 +28,32 @@
     text-align: center;
   }
 }
+.spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  ion-spinner {
+    margin-top: 25px;
+    color: var(--ion-color-primary);
+  }
+  ion-label {
+    margin: 1px;
+    font-size: 24pt;
+    font-family: Qanelas-bold;
+    color: var(--ion-color-primary);
+  }
+}
+.no-categories {
+  margin: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 .lb-input {
   font-family: Qanelas-bold;
   color: var(--ion-color-secondary);

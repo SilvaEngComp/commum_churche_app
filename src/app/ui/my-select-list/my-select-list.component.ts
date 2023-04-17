@@ -107,12 +107,11 @@ export class MySelectListComponent implements OnInit {
       // this.apiResponse = UiService.localGet('localUsers');
       const responser = await this.userService.get(new UserFilter());
       this.apiResponse = responser.data;
-    } else if (this.listName === 'groups') {
-      // this.apiResponse = UiService.localGet('localGroups');
+    } else if (this.listName === 'categories') {
       const responser = await this.caixaCategoryService.get();
       this.apiResponse = responser.data;
     } else if (this.listName === 'types') {
-      // this.apiResponse = UiService.localGet('localGroups');
+      // this.apiResponse = UiService.localGet('localcategories');
       const responser = await this.caixaTypeService.get();
       this.apiResponse = responser.data;
     } else if (this.listName === 'wallets') {
@@ -123,7 +122,7 @@ export class MySelectListComponent implements OnInit {
       const responser = await this.walletService.get();
       this.apiResponse = responser.data;
     } else if (this.listName === 'churches') {
-      // this.apiResponse = UiService.localGet('localGroups');
+      // this.apiResponse = UiService.localGet('localcategories');
       const responser = await this.churchService.get();
       this.apiResponse = responser.data;
     } else if (this.listName === 'churchScheduleTypes') {
@@ -168,25 +167,26 @@ export class MySelectListComponent implements OnInit {
     this.isLoading = false;
   }
 
-  onSelect(mySelectAdapter: MySelectAdapter) {
+  onSelect(mySelectAdapter: MySelectAdapter, checkShowSelect = true) {
     const result = this.apiResponse.filter((obj) =>
       obj.name.toLowerCase().includes(mySelectAdapter.value.toLowerCase())
     );
-
     if (result?.length > 0) {
       const obj = result[0];
       this.selectEmiter.emit(obj);
       this.selected = obj.name;
     }
     this.filtredSearch = this.apiResponseAdapted;
-    this.setShowSelect();
+    if (checkShowSelect) {
+      this.setShowSelect();
+    }
   }
 
   async createNew(event: any) {
     let component = null;
     if (this.listName === 'users') {
       component = EmergencyUserRegisterComponent;
-    } else if (this.listName === 'groups') {
+    } else if (this.listName === 'categories') {
       component = CaixaCategoryRegisterComponent;
     } else if (this.listName === 'types') {
       component = CaixaTypeRegisterComponent;
@@ -204,12 +204,11 @@ export class MySelectListComponent implements OnInit {
     await modal.present();
 
     const { data } = await modal.onDidDismiss();
-    console.log(data);
+
     if (data) {
-      this.load();
+      await this.load();
       const selected = MySelectAdapter.toSingleMySelectAny(data?.obj);
-      console.log(selected);
-      this.onSelect(selected);
+      this.onSelect(selected, false);
     } else {
       this.load(true);
     }

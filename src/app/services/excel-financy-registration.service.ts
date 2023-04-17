@@ -34,6 +34,7 @@ export class ExcelFinancyRegistrationService extends ServiceInterface {
       this.checkLogged();
       return Promise.resolve(null);
     }
+    console.log(JSON.stringify(importCaixaExcel));
     return this.http
       .post<Responser>(
         `${environment.API2}/excelManage/registration`,

@@ -11,29 +11,23 @@ export class Tithe {
   user: User;
   register: User;
   church: Church;
+  rowNumber: number;
+  problems: string[];
   constructor(
     amount?: number,
     date?: string,
     user?: User,
     church?: Church,
-    isTithe?: boolean
+    isTithe?: boolean,
+    rowNumber?: number,
+    problems?: string[]
   ) {
-    if (amount) {
-      this.amount = amount;
-    }
-    if (date) {
-      this.date = date;
-    }
-    if (user) {
-      this.user = user;
-    }
-    if (church) {
-      this.church = church;
-    }
-    if (isTithe) {
-      this.isTithe = isTithe;
-    } else {
-      this.isTithe = true;
-    }
+    this.amount = amount;
+    this.date = date;
+    this.user = user;
+    this.church = church;
+    this.isTithe = isTithe;
+    this.rowNumber = rowNumber;
+    this.problems = problems;
   }
 }

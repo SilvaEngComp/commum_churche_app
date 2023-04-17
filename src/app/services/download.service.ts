@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Caixa } from 'src/app/models/caixa';
 /* eslint-disable @typescript-eslint/prefer-for-of */
@@ -131,6 +132,9 @@ export class DownloadService {
     let members: User[];
     let categories: CaixaCategory[];
     let types: CaixaType[];
+
+    const rowCategory: string[][] = [];
+    const rowType: string[][] = [];
     if (isModel) {
       const responser = await this.userService.get(filter);
       members = responser.data;
@@ -141,23 +145,38 @@ export class DownloadService {
 
       const responser3 = await this.caixaTypeService.get();
       types = responser3.data;
+
+      categories.filter((category) => {
+        const row = [`${category?.id}`, category?.name, ''];
+        rowCategory.push(row);
+      });
+
+      types.filter((type) => {
+        const row = [`${type?.id}`, type?.name];
+        rowType.push(row);
+      });
+    }
+    if (isModel) {
+      userExcelFormat.setInfoWorksheet();
     }
     churches.filter(async (church) => {
       if (!isModel) {
         data = this.setFinancyDataSearch(church);
       } else {
-        const membersByChurch = members.filter((member) => {
+        const membersByChurch = members?.filter((member) => {
           if (member?.church?.id === church?.id) {
             return member;
           }
         });
 
-        membersByChurch.sort((a, b) => (a.name > b.name ? 1 : -1));
+        if (membersByChurch) {
+          membersByChurch?.sort((a, b) => (a.name > b.name ? 1 : -1));
+        }
         data = this.setFinancyDataModel(
           church,
           membersByChurch,
-          categories,
-          types
+          rowCategory,
+          rowType
         );
       }
       userExcelFormat.setWorksheetGeneral(
@@ -168,7 +187,6 @@ export class DownloadService {
         isModel
       );
     });
-
     this.testDownloadXls(userExcelFormat?.workbook, generalTitle);
     cont++;
   }
@@ -180,26 +198,7 @@ export class DownloadService {
     const outputs: SummaryOutput = UiService.localGet(
       Constants.FINANCY_REPORT_OUTPUT
     );
-    const inputsData: any[] = [];
-    inputs.reports.filter((report) => {
-      if (report?.church?.id === church?.id) {
-        report?.caixaReport?.caixaReportCategory?.caixaSummary.filter(
-          (summary) =>
-            summary?.caixas.filter((obj) =>
-              inputsData.push([
-                UiService.convertToCurrency(obj?.amount),
-                obj?.date,
-                obj?.register?.name,
-                obj?.caixaCategory?.name,
-                obj?.caixaType?.name ? obj?.caixaType?.name : '',
-                '',
-              ])
-            )
-        );
-      }
-    });
 
-    let count = inputsData?.length;
     const titheData: any[] = [];
     inputs.reports.filter((report) => {
       if (report?.church?.id === church?.id) {
@@ -215,9 +214,7 @@ export class DownloadService {
       }
     });
 
-    if (titheData?.length > count) {
-      count = titheData?.length;
-    }
+    let count = titheData?.length;
 
     const offerData: any[] = [];
     inputs.reports.filter((report) => {
@@ -237,6 +234,29 @@ export class DownloadService {
     if (offerData?.length > count) {
       count = offerData?.length;
     }
+    const inputsData: any[] = [];
+    inputs.reports.filter((report) => {
+      if (report?.church?.id === church?.id) {
+        report?.caixaReport?.caixaReportCategory?.caixaSummary.filter(
+          (summary) =>
+            summary?.caixas.filter((obj) =>
+              inputsData.push([
+                UiService.convertToCurrency(obj?.amount),
+                obj?.date,
+                obj?.caixaCategory?.name,
+                obj?.caixaType?.name ? obj?.caixaType?.name : '',
+                obj?.description,
+                obj?.register?.name,
+                '',
+              ])
+            )
+        );
+      }
+    });
+    if (inputsData?.length > count) {
+      count = offerData?.length;
+    }
+
     const outputsData: any[] = [];
     outputs.reports.filter((report) => {
       if (report?.church?.id === church?.id) {
@@ -246,9 +266,11 @@ export class DownloadService {
               outputsData.push([
                 UiService.convertToCurrency(caixa?.amount),
                 caixa?.date,
-                caixa?.register?.name,
                 caixa?.caixaCategory?.name,
                 caixa?.caixaType?.name ? caixa?.caixaType?.name : '',
+                caixa?.description,
+                caixa?.register?.name,
+                '',
               ])
             )
         );
@@ -263,8 +285,8 @@ export class DownloadService {
     for (let i = 0; i < count; i++) {
       let rowTithe = ['', '', '', '', ''];
       let rowOffer = ['', '', '', '', ''];
-      let rowInput = ['', '', '', '', '', ''];
-      let rowOutput = ['', '', '', '', '', ''];
+      let rowInput = ['', '', '', '', '', '', ''];
+      let rowOutput = ['', '', '', '', '', '', ''];
 
       if (i < titheData?.length) {
         rowTithe = titheData[i];
@@ -293,56 +315,43 @@ export class DownloadService {
   public setFinancyDataModel(
     church: Church,
     members: User[],
-    categories: CaixaCategory[],
-    types: CaixaType[]
+    rowCategory: string[][],
+    rowType: string[][]
   ) {
-    const filter: UserFilter = new UserFilter();
-    filter.church = church;
     const data = [];
+    if (members?.length > 0) {
+      members.filter((member) => {
+        if (member?.church?.id === church?.id) {
+          const rowTithe = ['', '', '', '', ''];
+          const rowOffer = ['', '', '', '', ''];
+          const rowInput = ['', '', '', '', '', ''];
+          const rowOutput = ['', '', '', '', '', ''];
 
-    const rowCategory: string[][] = [];
-    const rowType: string[][] = [];
+          let completeRow = [];
+          rowTithe[0] = String(member?.id);
+          rowTithe[1] = member?.name;
+          rowOffer[0] = String(member?.id);
+          rowOffer[1] = member?.name;
 
-    categories.filter((category) => {
-      const row = [`${category?.id}`, category?.name, ''];
-      rowCategory.push(row);
-    });
+          completeRow = completeRow.concat(rowTithe);
+          completeRow = completeRow.concat(rowOffer);
+          completeRow = completeRow.concat(rowInput);
+          completeRow = completeRow.concat(rowOutput);
+          data.push(completeRow);
+        }
+      });
 
-    types.filter((type) => {
-      const row = [`${type?.id}`, type?.name];
-      rowType.push(row);
-    });
-
-    members.filter((member) => {
-      if (member?.church?.id === church?.id) {
-        const rowTithe = ['', '', '', '', ''];
-        const rowOffer = ['', '', '', '', ''];
-        const rowInput = ['', '', '', '', '', ''];
-        const rowOutput = ['', '', '', '', '', ''];
-
-        let completeRow = [];
-        rowTithe[0] = String(member?.id);
-        rowTithe[1] = member?.name;
-        rowOffer[0] = String(member?.id);
-        rowOffer[1] = member?.name;
-
-        completeRow = completeRow.concat(rowTithe);
-        completeRow = completeRow.concat(rowOffer);
-        completeRow = completeRow.concat(rowInput);
-        completeRow = completeRow.concat(rowOutput);
-        data.push(completeRow);
-      }
-    });
-    let cont = 0;
-    rowCategory.filter((obj) => {
-      data[cont] = data[cont].concat(obj);
-      cont++;
-    });
-    cont = 0;
-    rowType.filter((obj) => {
-      data[cont] = data[cont].concat(obj);
-      cont++;
-    });
+      let cont = 0;
+      rowCategory?.filter((obj) => {
+        data[cont] = data[cont]?.concat(obj);
+        cont++;
+      });
+      cont = 0;
+      rowType?.filter((obj) => {
+        data[cont] = data[cont]?.concat(obj);
+        cont++;
+      });
+    }
     return data;
   }
 

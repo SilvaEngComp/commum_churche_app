@@ -18,6 +18,8 @@ export class Caixa {
   caixaCategory: CaixaCategory;
   wallet: Wallet;
   file: string;
+  rowNumber: number;
+  problems: string[];
 
   constructor(
     amount?: number,
@@ -27,7 +29,9 @@ export class Caixa {
     caixaCategory?: CaixaCategory,
     caixaType?: CaixaType,
     isEntry?: boolean,
-    wallet?: number
+    wallet?: number,
+    rowNumber?: number,
+    problems?: string[]
   ) {
     this.wallet = new Wallet(wallet);
     if (caixaCategory) {
@@ -41,23 +45,13 @@ export class Caixa {
       this.caixaType = new CaixaType();
     }
 
-    if (amount) {
-      this.amount = amount;
-    }
-    if (date) {
-      this.date = date;
-    }
-    if (description) {
-      this.description = description;
-    }
-    if (church) {
-      this.church = church;
-    }
-    if (isEntry) {
-      this.isEntry = isEntry;
-    } else {
-      this.isEntry = false;
-    }
+    this.amount = amount;
+    this.date = date;
+    this.description = description;
+    this.church = church;
+    this.isEntry = isEntry;
+    this.rowNumber = rowNumber;
+    this.problems = problems;
 
     this.register = new User();
   }

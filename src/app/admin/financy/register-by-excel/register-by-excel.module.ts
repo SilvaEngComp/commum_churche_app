@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { BrMaskerModule } from 'br-mask';
 import { FileUploadModule } from 'ng2-file-upload';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { UiModule } from 'src/app/ui/ui.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     ReactiveFormsModule,
     PipesModule,
     FileUploadModule,
+    UiModule,
   ],
   exports: [RegisterByExcelComponent],
 })

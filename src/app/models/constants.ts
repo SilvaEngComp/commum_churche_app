@@ -185,29 +185,15 @@ export class Constants {
   static ELEMENT_MARKER_REF = 'elementMarkerRef';
   static ELEMENT_MARKER_RENDERER = 'elementMarkerRenderer';
   static LOCALSTORAGE_REQUEST_EMAIL = 'localStorageRequestEmail';
-  static TITHE_REPORT_HEADER = [
-    'REF.',
-    'DIZIMISTA',
-    'VALOR',
-    'DATA',
-    'TESOUREIRO',
-    '',
-  ];
-  static OFFER_REPORT_HEADER = [
-    'REF.',
-    'OFERTANTE',
-    'VALOR',
-    'DATA',
-    'TESOUREIRO',
-    '',
-  ];
+  static TITHE_REPORT_HEADER = ['VALOR', 'DATA', 'DIZIMISTA', 'TESOUREIRO', ''];
+  static OFFER_REPORT_HEADER = ['VALOR', 'DATA', 'OFERTANTE', 'TESOUREIRO', ''];
   static CAIXA_REPORT_HEADER = [
     'VALOR',
     'DATA',
-    'TESOUREIRO',
     'CATEGORIA',
     'SUBCATEGORIA',
     'DESCRIÇÃO',
+    'TESOUREIRO',
     '',
   ];
   static TITHE_REPORT_HEADER_MODEL = ['REF.', 'DIZIMISTA', 'VALOR', 'DATA', ''];

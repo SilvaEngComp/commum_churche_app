@@ -3,69 +3,96 @@
   <ion-title>{{localPageTitle}}</ion-title>
 </ion-item>
 
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <div class="report-excel-div">
-        <div class="card-options" (click)="download()">
-          <ion-icon class="report-graph" color="primary" name="cloud-download-outline"></ion-icon>
-          <ion-label class="balance-label">Baixar Planilha</ion-label>
-        </div>
-        <div class="card-options">
-          <ion-icon class="report-graph" color="primary" name="folder-outline" (click)="importFile()"></ion-icon>
-          <!-- <ion-icon class="report-graph" color="primary" name="cloud-upload-outline"></ion-icon> -->
-          <ion-label class="balance-label">Importar Planilha</ion-label>
-          <input type='file' class="input-file" id="inputFileImport" ng2FileSelect [uploader]="uploader"
-            title="Importar Planilha" (input)="onSelect($event)" />
-        </div>
-      </div>
-    </ion-col>
-  </ion-row>
-  <ion-row *ngIf="importCaixaExcel?.length>0">
-    <ion-col>
-      <ion-item lines="none" (click)=" upload()">
-        <ion-label class="balance-label" slot="end">Enviar</ion-label>
-        <ion-icon color="primary" slot="end" name="send-outline"></ion-icon>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<div *ngIf="isUploading" class="spinner">
+  <ion-spinner name="dots"></ion-spinner>
+  <ion-label>Carregando</ion-label>
+  <ion-spinner name="dots"></ion-spinner>
+</div>
 
-<div *ngFor="let sheet of importCaixaExcel">
-  <ion-item>
-    <ion-label class="balance-label">{{sheet?.church?.name}}</ion-label>
-  </ion-item>
-  <ion-accordion-group>
-    <ion-accordion value="tithes" *ngIf="sheet?.tithes?.length>0">
-      <ion-item slot="header" color="light">
-        <ion-card-title>Dízimos</ion-card-title>
-      </ion-item>
-      <div class="ion-padding" slot="content">
-        <app-tithe-view-table [datas]="sheet?.tithes" [isTithe]="true"></app-tithe-view-table>
-      </div>
-    </ion-accordion>
-    <ion-accordion value="offers" *ngIf="sheet?.offers?.length>0">
-      <ion-item slot="header" color="light">
-        <ion-card-title>Ofertas</ion-card-title>
-      </ion-item>
-      <div class="ion-padding" slot="content">
-        <app-tithe-view-table [datas]="sheet?.offers" [isTithe]="false"></app-tithe-view-table>
-      </div>
-    </ion-accordion>
-    <ion-accordion value="inputs" *ngIf="sheet?.inputs?.length>0">
-      <ion-item slot="header" color="light">
-        <ion-card-title>Entradas</ion-card-title>
-      </ion-item>
-      <div class="ion-padding" slot="content">
-        <app-caixa-view-table [datas]="sheet?.inputs"></app-caixa-view-table>
-      </div>
-    </ion-accordion> <ion-accordion value="outputs" *ngIf="sheet?.outputs?.length>0">
-      <ion-item slot="header" color="light">
-        <ion-card-title>Saídas</ion-card-title>
-      </ion-item>
-      <div class="ion-padding" slot="content">
-        <app-caixa-view-table [datas]="sheet?.outputs"></app-caixa-view-table>
-      </div>
-    </ion-accordion>
-  </ion-accordion-group>
+<div *ngIf="!isUploading">
+  <div class="no-categories" *ngIf="categories?.length<=0">
+    <ion-icon class="report-graph" color="danger" name="sad-outline"></ion-icon>
+    <ion-label class="balance-label">Não existem Categorias cadastradas no sistema. Cadastre pelo menos uma categoria
+      para
+      utilizar o cadastro
+      por planilha</ion-label>
+
+    <app-my-select-list [label]="'*Categoria'" [listName]="'categories'" [create]="true" [color]="'primary'"
+      (selectEmiter)="setCategory($event)"></app-my-select-list>
+  </div>
+  <ion-grid *ngIf="categories?.length>0">
+    <ion-row *ngIf="importCaixaExcel?.length<=0">
+      <ion-col>
+        <div class="report-excel-div">
+          <div class="card-options" (click)="download()">
+            <ion-icon class="report-graph" color="secondary" name="cloud-download-outline"></ion-icon>
+            <ion-label class="balance-label">Baixar Planilha</ion-label>
+          </div>
+          <div class="card-options">
+            <ion-icon class="report-graph" color="secondary" name="folder-outline" (click)="importFile()"></ion-icon>
+            <!-- <ion-icon class="report-graph" color="primary" name="cloud-upload-outline"></ion-icon> -->
+            <ion-label class="balance-label">Importar Planilha</ion-label>
+            <input type='file' class="input-file" id="inputFileImport" ng2FileSelect [uploader]="uploader"
+              title="Importar Planilha" (input)="onSelect($event)" />
+          </div>
+        </div>
+      </ion-col>
+    </ion-row> <ion-row *ngIf="importCaixaExcel?.length>0">
+      <ion-col>
+        <div class="report-excel-div">
+          <div class="card-options" (click)="clean()">
+            <ion-icon class="report-graph" color="danger" name="close-sharp"></ion-icon>
+            <ion-label class="balance-label">Cancelar e Limpar</ion-label>
+          </div>
+          <div class="card-options">
+            <ion-icon class="report-graph" color="primary" name="send-sharp" (click)="upload()"></ion-icon>
+            <!-- <ion-icon class="report-graph" color="primary" name="cloud-upload-outline"></ion-icon> -->
+            <ion-label class="balance-label">Enviar Planilha</ion-label>
+            <input type='file' class="input-file" id="inputFileImport" ng2FileSelect [uploader]="uploader"
+              title="Importar Planilha" (input)="onSelect($event)" />
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <div *ngFor="let sheet of importCaixaExcel">
+    <ion-item>
+      <ion-label class="balance-label">{{sheet?.church?.name}}</ion-label>
+    </ion-item>
+    <ion-accordion-group>
+      <ion-accordion value="tithes" *ngIf="sheet?.tithes?.length>0">
+        <ion-item slot="header" color="light">
+          <ion-card-title>Dízimos</ion-card-title>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <app-tithe-view-table [datas]="sheet?.tithes" [isTithe]="true"></app-tithe-view-table>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="offers" *ngIf="sheet?.offers?.length>0">
+        <ion-item slot="header" color="light">
+          <ion-card-title>Ofertas</ion-card-title>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <app-tithe-view-table [datas]="sheet?.offers" [isTithe]="false"></app-tithe-view-table>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="inputs" *ngIf="sheet?.inputs?.length>0">
+        <ion-item slot="header" color="light">
+          <ion-card-title>Entradas</ion-card-title>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <app-caixa-view-table [datas]="sheet?.inputs"></app-caixa-view-table>
+        </div>
+      </ion-accordion> <ion-accordion value="outputs" *ngIf="sheet?.outputs?.length>0">
+        <ion-item slot="header" color="light">
+          <ion-card-title>Saídas</ion-card-title>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <app-caixa-view-table [datas]="sheet?.outputs"></app-caixa-view-table>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
 </div>

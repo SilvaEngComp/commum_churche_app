@@ -2,8 +2,15 @@ import { LoginService } from './../../../../services/login.service';
 import { Constants } from './../../../../models/constants';
 import { DatePipe } from '@angular/common';
 import { Tithe } from 'src/app/models/tithe';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { AlertController, IonInput, Platform } from '@ionic/angular';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { UiService } from 'src/app/services/ui.service';
@@ -17,7 +24,8 @@ import { Church } from 'src/app/models/church';
   templateUrl: './tithe-register.component.html',
   styleUrls: ['./tithe-register.component.scss'],
 })
-export class TitheRegisterComponent implements OnInit {
+export class TitheRegisterComponent implements OnInit, AfterViewInit {
+  @ViewChild('inputAmount', { static: false }) inputAmount: IonInput;
   @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
   tithe: Tithe;
   isNew: boolean;
@@ -35,27 +43,15 @@ export class TitheRegisterComponent implements OnInit {
   constructor(
     private titheService: TitheService,
     private exceptionService: ExceptionService,
-    private platform: Platform
+    private platform: Platform,
+    private actionCtrl: AlertController
   ) {}
+  ngAfterViewInit(): void {
+    this.inputAmount.setFocus();
+  }
 
   ngOnInit() {
-    this.tithe = UiService.localGet(Constants.TITHE_MAINTAINCE);
-    if (!this.tithe) {
-      this.exceptionService.alertDialog(Constants.INVALID_OPTION, 'Erro!');
-      this.back();
-    }
-    this.isNew = true;
-
-    if (this.tithe?.id) {
-      this.isNew = false;
-    } else {
-      this.value = '0,0';
-    }
-    this.isSmallDevice = this.platform.width() <= 500;
-
-    this.isSmallDevice = this.platform.width() <= 500;
-    this.datePipe = new DatePipe('en');
-    this.tithe.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+    this.validTithe();
 
     if (this.tithe.isTithe) {
       this.localPageTitle = Constants.TITLE_TITHE_REGISTER;
@@ -81,6 +77,26 @@ export class TitheRegisterComponent implements OnInit {
     }
   }
 
+  validTithe() {
+    this.tithe = UiService.localGet(Constants.TITHE_MAINTAINCE);
+    if (!this.tithe) {
+      this.exceptionService.alertDialog(Constants.INVALID_OPTION, 'Erro!');
+      this.back();
+    }
+    this.isNew = true;
+
+    if (this.tithe?.id) {
+      this.isNew = false;
+    } else {
+      this.value = '0,0';
+    }
+    this.isSmallDevice = this.platform.width() <= 500;
+
+    this.isSmallDevice = this.platform.width() <= 500;
+    this.datePipe = new DatePipe('en');
+    this.tithe.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+  }
+
   setIsTithe(ev: any) {
     this.tithe.isTithe = ev.target.value;
   }
@@ -91,24 +107,50 @@ export class TitheRegisterComponent implements OnInit {
       const tipo = this.tithe?.isTithe ? 'do dízimo' : 'da oferta';
 
       if (!this.isNew) {
-        this.titheService.update(this.tithe).then(() => {
-          this.exceptionService.toastHandler(
-            `Entrada ${tipo} alterada com Sucesso!`,
-            5000
-          );
-
-          this.back();
-        });
+        this.titheService
+          .update(this.tithe)
+          .then(() => {
+            this.exceptionService.toastHandler(
+              `Entrada ${tipo} alterada com Sucesso!`,
+              5000
+            );
+          })
+          .finally(() => this.askNeedDoAgain());
       } else {
-        await this.titheService.store(this.tithe).then(() => {
-          this.exceptionService.toastHandler(
-            `Entrada ${tipo} registrada com Sucesso!`,
-            5000
-          );
-          this.back();
-        });
+        await this.titheService
+          .store(this.tithe)
+          .then(() => {
+            this.exceptionService.toastHandler(
+              `Entrada ${tipo} registrada com Sucesso!`,
+              5000
+            );
+          })
+          .finally(() => this.askNeedDoAgain());
       }
     }
+  }
+
+  async askNeedDoAgain() {
+    const action = await this.actionCtrl.create({
+      header: 'O que deseja fazer?',
+      subHeader: 'Deseja realizar outro registro ?',
+      buttons: [
+        {
+          text: 'Sim',
+          handler: () => {
+            window.location.reload();
+          },
+        },
+        {
+          text: 'Não',
+          handler: () => {
+            this.back();
+          },
+        },
+      ],
+    });
+
+    await action.present();
   }
 
   isFormValid() {

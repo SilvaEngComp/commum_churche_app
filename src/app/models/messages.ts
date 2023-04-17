@@ -31,6 +31,7 @@ export class ConstantMessages {
   static DAY_INVALID = 'Selecione um dia válido';
   static MONTH_YEAR_INVALID = 'Selecione um mês e ano válidos';
   static DATE_INVALID = 'Selecione uma data válida';
+  static TYPE_DATE_VALIDE = 'Digite uma dada válida';
   static CAIXA_SUBCATEGORY_INVALID = 'Selecione uma subcategoria';
   static CAIXA_CATEGORY_INVALID = 'Selecione uma categoria';
   static CAIXA_CHURCH_INVALID = 'Selecione uma organização';

@@ -92,7 +92,7 @@
       </div>
     </ion-col>
   </ion-row>
-  <ion-row>
+  <ion-row *ngIf="filter?.wallet_id===1">
     <ion-col class="card-options">
       <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/tithes-admin.png"
         (click)="openMenuOption(1,true)"></ion-img>

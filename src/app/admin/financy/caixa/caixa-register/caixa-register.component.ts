@@ -5,8 +5,16 @@ import { Church } from 'src/app/models/church';
 import { ConstantMessages } from 'src/app/models/messages';
 import { CaixaType } from '../../../../models/caixaType';
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AlertController, Platform } from '@ionic/angular';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { AlertController, IonInput, Platform } from '@ionic/angular';
 import { Caixa } from 'src/app/models/caixa';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { CaixaService } from 'src/app/services/caixa.service';
@@ -22,7 +30,8 @@ import { TempFile } from 'src/app/models/temFile';
   templateUrl: './caixa-register.component.html',
   styleUrls: ['./caixa-register.component.scss'],
 })
-export class CaixaRegisterComponent implements OnInit {
+export class CaixaRegisterComponent implements OnInit, AfterViewInit {
+  @ViewChild('inputAmount', { static: false }) inputAmount: IonInput;
   @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
   @Input() caixa: Caixa;
   @Input() isNew: boolean;
@@ -56,9 +65,28 @@ export class CaixaRegisterComponent implements OnInit {
     private walletService: WalletService,
     private actionCtrl: AlertController
   ) {}
+  ngAfterViewInit(): void {
+    this.inputAmount.setFocus();
+  }
 
   ngOnInit() {
     this.height = Math.round(this.platform.height() * 0.7) + 'px';
+    this.validCaixa();
+
+    if (this.caixa.isEntry) {
+      this.localPageTitle = Constants.TITLE_CAIXA_REGISTER_IN;
+      this.buttonColor = 'success';
+    } else {
+      this.buttonColor = 'danger';
+      this.localPageTitle = Constants.TITLE_CAIXA_REGISTER_OUT;
+    }
+    UiService.localSet(Constants.TITLE_CURRENT_PAGE, this.localPageTitle);
+    this.isSmallDevice = this.platform.width() <= 500;
+    this.datePipe = new DatePipe('en');
+    this.caixa.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+  }
+
+  validCaixa() {
     this.caixa = UiService.localGet(Constants.CAIXA_MAINTAINCE);
     this.wallet = UiService.localGet(Constants.CAIXA_WALLET);
     this.singleFile = true;
@@ -72,18 +100,6 @@ export class CaixaRegisterComponent implements OnInit {
       this.value = UiService.convertToCurrency(this.caixa?.amount);
       this.isNew = false;
     }
-
-    if (this.caixa.isEntry) {
-      this.localPageTitle = Constants.TITLE_CAIXA_REGISTER_IN;
-      this.buttonColor = 'success';
-    } else {
-      this.buttonColor = 'danger';
-      this.localPageTitle = Constants.TITLE_CAIXA_REGISTER_OUT;
-    }
-    UiService.localSet(Constants.TITLE_CURRENT_PAGE, this.localPageTitle);
-    this.isSmallDevice = this.platform.width() <= 500;
-    this.datePipe = new DatePipe('en');
-    this.caixa.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
   }
 
   setShowDescription() {
@@ -116,7 +132,9 @@ export class CaixaRegisterComponent implements OnInit {
       buttons: [
         {
           text: 'Sim',
-          handler: () => {},
+          handler: () => {
+            window.location.reload();
+          },
         },
         {
           text: 'Não',
@@ -141,7 +159,6 @@ export class CaixaRegisterComponent implements OnInit {
           this.caixa = responser.data;
 
           this.fileRegister();
-          this.askNeedDoAgain();
         });
       }
     }
@@ -161,7 +178,8 @@ export class CaixaRegisterComponent implements OnInit {
         })
         .catch((error) => {
           this.exceptionService.error(error);
-        });
+        })
+        .finally(() => this.askNeedDoAgain());
     } else {
       this.exceptionService.toastHandler(
         `${tipo} registrada com Successo!`,
@@ -237,7 +255,7 @@ export class CaixaRegisterComponent implements OnInit {
       this.caixa.church = null;
     }
   }
-  setGroup(caixaCategory: CaixaCategory) {
+  setCategory(caixaCategory: CaixaCategory) {
     if (caixaCategory) {
       this.caixa.caixaCategory = caixaCategory;
     } else {
