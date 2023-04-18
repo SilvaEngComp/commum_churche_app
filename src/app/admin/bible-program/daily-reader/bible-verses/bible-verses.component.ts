@@ -19,7 +19,6 @@ import { VerseDayTree } from 'src/app/models/verseDayTree';
 import { Verse } from 'src/app/models/verse';
 import { ConstantMessages } from 'src/app/models/messages';
 import { ConstantsMidia } from 'src/app/models/contantsMidia';
-import { BibleProgramMap } from 'src/app/models/bibleProgramMap';
 import { BibleProgramUserService } from 'src/app/services/bible-program-user.service';
 
 @Component({

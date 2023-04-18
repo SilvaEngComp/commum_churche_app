@@ -126,8 +126,7 @@ export class AdminSelectorComponent implements OnInit {
           Promise.all(keyList.map((key) => caches.delete(key)))
         );
       localStorage.clear();
-      this.router.navigate(['']);
-      window.location.reload();
+      this.router.navigate(['home']);
     } else {
       this.setPage(page);
     }
