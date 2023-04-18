@@ -3,7 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.enginydigitaleco.commum.ibnb',
-  appName: 'commum_ibnovabetel_2022',
+  appName: 'IB Nova Betel',
   webDir: 'www',
   bundledWebRuntime: false,
   plugins: {

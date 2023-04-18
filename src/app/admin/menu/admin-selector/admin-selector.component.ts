@@ -127,6 +127,7 @@ export class AdminSelectorComponent implements OnInit {
         );
       localStorage.clear();
       this.router.navigate(['']);
+      window.location.reload();
     } else {
       this.setPage(page);
     }

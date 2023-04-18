@@ -5,14 +5,15 @@
 
 export const environment = {
   production: false,
-  API: 'http://127.0.0.1:8000/api/v1',
-  API2: 'http://127.0.0.1:8000/api/v2',
-  API3: 'http://127.0.0.1:8000/api/v3',
-  TEST: true,
+  // API: 'http://127.0.0.1:8000/api/v1',
+  // API2: 'http://127.0.0.1:8000/api/v2',
+  // API3: 'http://127.0.0.1:8000/api/v3',
+  // TEST: true,
 
-  // API: 'https://apis3.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
-  // API2: 'https://apis3.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
-  // API3: 'https://apis3.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v3',
+  API: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v1',
+  API2: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v2',
+  API3: 'https://api.ambienteteste.enginydigitaleco.com/commum_ibnovabetel_api/public/api/v3',
+  TEST: true,
 
   PRIVATEKEY: 'QUBjZW1lY2FkZUBlbmdpbnlkaWdpdGFsZWNvLmNvbQ==', // ...
   BASE_URL: 'https://www.ibnovabetel.enginydigitaleco.com',

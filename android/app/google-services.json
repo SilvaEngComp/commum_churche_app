@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "93614175371",
+    "project_id": "ibnb-commum",
+    "storage_bucket": "ibnb-commum.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93614175371:android:42ade2e584008c4049d08e",
+        "android_client_info": {
+          "package_name": "com.enginydigitaleco.commum.ibnb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93614175371-gs7r1emvpkb04diqi4rqskc5ene3tv8n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_YaxBPN4D9BSZwzUPyy5Xa7OlhqxtKpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93614175371-gs7r1emvpkb04diqi4rqskc5ene3tv8n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
