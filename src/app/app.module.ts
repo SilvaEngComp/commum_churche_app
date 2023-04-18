@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { environment } from 'src/environments/environment';
+import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -33,6 +34,7 @@ import { environment } from 'src/environments/environment';
   ],
   providers: [
     HttpClientModule,
+    FileOpener,
     {
       provide: SwRegistrationOptions,
       useFactory: () => ({ enabled: environment.production }),

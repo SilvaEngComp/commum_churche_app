@@ -20,49 +20,105 @@ import { Church } from '../models/church';
 import { CaixaReportExcelFormat } from '../models/caixaReportExcelFormat';
 import { UiService } from './ui.service';
 import { Constants } from '../models/constants';
-import { SummaryInput } from '../models/sumaryInput';
-import { SummaryOutput } from '../models/sumaryOutput';
-import { UserFilter } from '../models/userFilter';
+import { InputsReport, SummaryInput } from '../models/sumaryInput';
+import { OutputReport, SummaryOutput } from '../models/sumaryOutput';
 import { UserService } from './user.service';
 import { CaixaTypeService } from './caixa-type.service';
 import { CaixaCategoryService } from './caixa-category.service';
 import { CaixaCategory } from '../models/caixaCategory';
 import { CaixaType } from '../models/caixaType';
-const EXCEL_TYPE =
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-const EXCEL_EXTENSION = '.xlsx';
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { ActionSheetController, Platform } from '@ionic/angular';
+import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 @Injectable({
   providedIn: 'root',
 })
 export class DownloadService {
+  EXCEL_TYPE =
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  EXCEL_EXTENSION = '.xls';
   constructor(
     private http: HttpClient,
     private exceptionService: ExceptionService,
     private churchService: ChurchService,
     private userService: UserService,
     private caixaTypeService: CaixaTypeService,
-    private categoryService: CaixaCategoryService
+    private categoryService: CaixaCategoryService,
+    private platform: Platform,
+    private fileOpener: FileOpener,
+    private actionCtrl: ActionSheetController
   ) {}
 
   testDownloadXls(workbook: ExcelProper.Workbook, fileName: string) {
-    workbook.xlsx.writeBuffer().then((data) => {
-      const blob = new Blob([data], {
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    workbook.xlsx.writeBuffer().then(async (buffer) => {
+      const blob = new Blob([buffer], {
+        type: this.EXCEL_TYPE,
       });
-      fileName += '.xlsx';
-      FileSaver.saveAs(blob, fileName);
+      fileName += '.xls';
+      if (this.platform.is('capacitor')) {
+        this.convertBlobToBase64(blob, fileName);
+      } else {
+        FileSaver.saveAs(blob, fileName, { autoBom: true });
+      }
     });
   }
 
-  private convertBlobToBase64 = (blob: Blob) =>
-    new Promise((resolve, reject) => {
-      const reader: FileReader = new FileReader();
-      reader.onerror = reject;
-      reader.onload = (e: any) => {
-        resolve(reader.result);
-      };
-      reader.readAsDataURL(blob);
+  convertBlobToBase64(blob: Blob, fileName: string) {
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const base64 = reader.result as string;
+      let path = 'App Nova Betel';
+      Filesystem.mkdir({
+        path,
+        directory: Directory.Documents || Directory.ExternalStorage,
+      }).finally(() => {
+        path += '/' + fileName;
+        Filesystem.writeFile({
+          path,
+          data: base64,
+          encoding: Encoding.UTF8,
+          directory: Directory.Documents || Directory.ExternalStorage,
+        })
+          .then((response) => {
+            this.openFile(response.uri);
+          })
+          .catch((error) => {
+            console.log(error);
+            this.exceptionService.alertDialog('Falha ao realizar download!');
+          });
+      });
+    };
+    reader.readAsDataURL(blob);
+  }
+
+  async openFile(uri: string) {
+    const alert = await this.actionCtrl.create({
+      buttons: [
+        {
+          text: 'Abrir Arquivo',
+          handler: () => {
+            this.fileOpener.open(uri, 'application/vnd.ms-excel');
+          },
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            this.exceptionService.alertDialog(
+              'Download concluído na pasta Documents/App Nova Betel'
+            );
+          },
+        },
+      ],
     });
+
+    await alert.present();
+
+    const { data } = await alert.onDidDismiss();
+    this.exceptionService.alertDialog(
+      'Download concluído na pasta Documents/App Nova Betel'
+    );
+  }
 
   async buildUserExcel(users: User[], generalTitle: string) {
     const userExcelFormat = new UserExcelFormat();
@@ -137,7 +193,6 @@ export class DownloadService {
     const churches: Church[] = churchResponser.data;
 
     let data = [];
-    let cont = 0;
     const filter = UiService.localGet(Constants.FINANCY_REPORT_FILTER);
     let members: User[];
     let categories: CaixaCategory[];
@@ -198,7 +253,6 @@ export class DownloadService {
       );
     });
     this.testDownloadXls(userExcelFormat?.workbook, generalTitle);
-    cont++;
   }
 
   public setFinancyDataSearch(church: Church) {
@@ -209,10 +263,29 @@ export class DownloadService {
       Constants.FINANCY_REPORT_OUTPUT
     );
 
-    const titheData: any[] = [];
+    let inputDataChurch: InputsReport;
     inputs.reports.filter((report) => {
       if (report?.church?.id === church?.id) {
-        report?.tithe?.titheSummary.tithes.filter((obj) =>
+        inputDataChurch = report;
+      }
+    });
+    let outputDataChurch: OutputReport;
+    outputs.reports.filter((report) => {
+      if (report?.church?.id === church?.id) {
+        outputDataChurch = report;
+      }
+    });
+
+    const data = [];
+    let count = 0;
+    const inputsData: any[] = [];
+    const offerData: any[] = [];
+    const titheData: any[] = [];
+    const outputsData: any[] = [];
+
+    if (inputDataChurch?.total > 0) {
+      if (inputDataChurch?.tithe?.titheSummary?.total > 0) {
+        inputDataChurch?.tithe?.titheSummary.tithes.filter((obj) =>
           titheData.push([
             UiService.convertToCurrency(obj?.amount),
             obj?.date,
@@ -222,14 +295,12 @@ export class DownloadService {
           ])
         );
       }
-    });
 
-    let count = titheData?.length;
-
-    const offerData: any[] = [];
-    inputs.reports.filter((report) => {
-      if (report?.church?.id === church?.id) {
-        report?.offer?.titheSummary.tithes.filter((obj) =>
+      if (titheData?.length > count) {
+        count = titheData?.length;
+      }
+      if (inputDataChurch?.offer?.titheSummary?.total > 0) {
+        inputDataChurch?.offer?.titheSummary.tithes.filter((obj) =>
           offerData.push([
             UiService.convertToCurrency(obj?.amount),
             obj?.date,
@@ -239,15 +310,12 @@ export class DownloadService {
           ])
         );
       }
-    });
 
-    if (offerData?.length > count) {
-      count = offerData?.length;
-    }
-    const inputsData: any[] = [];
-    inputs.reports.filter((report) => {
-      if (report?.church?.id === church?.id) {
-        report?.caixaReport?.caixaReportCategory?.caixaSummary.filter(
+      if (offerData?.length > count) {
+        count = offerData?.length;
+      }
+      if (inputDataChurch.caixaReport.caixaReportCategory?.total > 0) {
+        inputDataChurch?.caixaReport?.caixaReportCategory?.caixaSummary.filter(
           (summary) =>
             summary?.caixas.filter((obj) =>
               inputsData.push([
@@ -261,37 +329,31 @@ export class DownloadService {
               ])
             )
         );
+
+        if (inputsData?.length > count) {
+          count = inputsData?.length;
+        }
       }
-    });
-    if (inputsData?.length > count) {
-      count = offerData?.length;
     }
-
-    const outputsData: any[] = [];
-    outputs.reports.filter((report) => {
-      if (report?.church?.id === church?.id) {
-        report?.caixaReport?.caixaReportCategory?.caixaSummary.filter(
-          (summary) =>
-            summary?.caixas.filter((caixa) =>
-              outputsData.push([
-                UiService.convertToCurrency(caixa?.amount),
-                caixa?.date,
-                caixa?.caixaCategory?.name,
-                caixa?.caixaType?.name ? caixa?.caixaType?.name : '',
-                caixa?.description,
-                caixa?.register?.name,
-                '',
-              ])
-            )
-        );
-      }
-    });
-
+    if (outputDataChurch.caixaReport.caixaReportCategory?.total > 0) {
+      outputDataChurch?.caixaReport?.caixaReportCategory?.caixaSummary.filter(
+        (summary) =>
+          summary?.caixas.filter((caixa) =>
+            outputsData.push([
+              UiService.convertToCurrency(caixa?.amount),
+              caixa?.date,
+              caixa?.caixaCategory?.name,
+              caixa?.caixaType?.name ? caixa?.caixaType?.name : '',
+              caixa?.description,
+              caixa?.register?.name,
+              '',
+            ])
+          )
+      );
+    }
     if (outputsData?.length > count) {
       count = outputsData?.length;
     }
-    const data = [];
-
     for (let i = 0; i < count; i++) {
       let rowTithe = ['', '', '', '', ''];
       let rowOffer = ['', '', '', '', ''];
@@ -319,7 +381,6 @@ export class DownloadService {
 
       data.push(completeRow);
     }
-
     return data;
   }
   public setFinancyDataModel(
@@ -374,7 +435,7 @@ export class DownloadService {
     workbook.SheetNames = [excelFileName];
 
     /* save to file */
-    XLSX.writeFile(workbook, excelFileName + EXCEL_EXTENSION);
+    XLSX.writeFile(workbook, excelFileName + this.EXCEL_EXTENSION);
 
     // const excelBuffer: any = XLSX.write(workbook, {
     //   bookType: 'xlsx',
@@ -392,15 +453,15 @@ export class DownloadService {
     const data: Blob = new Blob([buffer], { type: 'application/octet-stream' });
     FileSaver.saveAs(
       data,
-      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+      fileName + '_export_' + new Date().getTime() + this.EXCEL_EXTENSION
     );
   }
 
   private sendEmail(buffer: any, fileName: string): void {
-    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    const data: Blob = new Blob([buffer], { type: this.EXCEL_TYPE });
     //  FileSaver.saveAs(data, fileName + '_export_' + new  Date().getTime() + EXCEL_EXTENSION);
     const formDta = new FormData();
-    formDta.append('file', data, fileName + EXCEL_EXTENSION);
+    formDta.append('file', data, fileName + this.EXCEL_EXTENSION);
     this.http
       .post<any>(`${environment.API2}/email/send`, formDta, {
         headers: LoginService.getHeaders(true),
