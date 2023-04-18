@@ -54,6 +54,16 @@ export class DownloadService {
     });
   }
 
+  private convertBlobToBase64 = (blob: Blob) =>
+    new Promise((resolve, reject) => {
+      const reader: FileReader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = (e: any) => {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(blob);
+    });
+
   async buildUserExcel(users: User[], generalTitle: string) {
     const userExcelFormat = new UserExcelFormat();
     const header = [
