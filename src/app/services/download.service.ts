@@ -76,7 +76,6 @@ export class DownloadService {
         Filesystem.writeFile({
           path,
           data: base64,
-          encoding: Encoding.UTF8,
           directory: Directory.Documents || Directory.ExternalStorage,
         })
           .then((response) => {
