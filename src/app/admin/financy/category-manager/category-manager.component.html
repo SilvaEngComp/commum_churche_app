@@ -1,0 +1,113 @@
+<ion-item class="item-page-title">
+  <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="back()"></ion-icon>
+  <ion-label class="ion-text-wrap localPageTitle">{{localPageTitle}}</ion-label>
+</ion-item>
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-accordion-group>
+        <ion-accordion value="category">
+          <ion-item slot="header" color="light">
+            <ion-card-title>Categorias</ion-card-title>
+            <ion-icon slot="end" name="add-circle-sharp" (click)="createNew(1)"></ion-icon>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <table class="table  align-middle ">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th class="col-option">Opção</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <tr *ngFor="let item of categories">
+                  <td *ngIf="!item?.show">
+                    {{item?.name}}
+                  </td>
+                  <td *ngIf="item?.show">
+                    <ion-item color="medium">
+                      <ion-input [(ngModel)]="item.name" focus="true"></ion-input>
+                    </ion-item>
+                  </td>
+                  <td>
+                    <div class="buttons" *ngIf="!item?.show">
+                      <ion-tab-button (click)="prepareAlterCategory(item)">
+                        <ion-icon color="warning" name="create-outline"></ion-icon>
+                        <ion-label>Alterar</ion-label>
+                      </ion-tab-button>
+                      <ion-tab-button (click)="checkDelete(item,1)">
+                        <ion-icon color="danger" name="trash-outline"></ion-icon>
+                        <ion-label>Excluir</ion-label>
+                      </ion-tab-button>
+                    </div>
+                    <div class="buttons" *ngIf="item?.show">
+                      <ion-tab-button (click)="alterCategory(item)">
+                        <ion-icon color="success" name="checkmark-done-circle-outline"></ion-icon>
+                        <ion-label>Confirmar</ion-label>
+                      </ion-tab-button>
+                      <ion-tab-button (click)="prepareAlterCategory(item)">
+                        <ion-icon color="danger" name="close-circle-outline"></ion-icon>
+                        <ion-label>Cancelar</ion-label>
+                      </ion-tab-button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ion-accordion>
+        <ion-accordion value="subcategory">
+          <ion-item slot="header" color="light">
+            <ion-card-title>Subcategorias</ion-card-title>
+            <ion-icon slot="end" name="add-circle-sharp" (click)="createNew(2)"></ion-icon>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+
+            <table class="table  align-middle ">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th class="col-option">Opção</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <tr *ngFor="let item of subcategories">
+                  <td *ngIf="!item?.show">
+                    {{item?.name}}
+                  </td>
+                  <td *ngIf="item?.show">
+                    <ion-item color="medium">
+                      <ion-input [(ngModel)]="item.name" focus="true"></ion-input>
+                    </ion-item>
+                  </td>
+                  <td>
+                    <div class="buttons" *ngIf="!item?.show">
+                      <ion-tab-button (click)="prepareAlterSubcategory(item)">
+                        <ion-icon color="warning" name="create-outline"></ion-icon>
+                        <ion-label>Alterar</ion-label>
+                      </ion-tab-button>
+                      <ion-tab-button (click)="checkDelete(item,2)">
+                        <ion-icon color="danger" name="trash-outline"></ion-icon>
+                        <ion-label>Excluir</ion-label>
+                      </ion-tab-button>
+                    </div>
+                    <div class="buttons" *ngIf="item?.show">
+                      <ion-tab-button (click)="alterSubcategory(item)">
+                        <ion-icon color="success" name="checkmark-done-circle-outline"></ion-icon>
+                        <ion-label>Confirmar</ion-label>
+                      </ion-tab-button>
+                      <ion-tab-button (click)="prepareAlterSubcategory(item)">
+                        <ion-icon color="danger" name="close-circle-outline"></ion-icon>
+                        <ion-label>Cancelar</ion-label>
+                      </ion-tab-button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-col>
+  </ion-row>
+</ion-grid>

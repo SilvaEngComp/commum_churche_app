@@ -42,17 +42,21 @@ export class ImportCaixaExcel {
       user.id = row[isTartPosition];
       user.name = row[isTartPosition + 1];
       let date = row[isTartPosition + 3];
-      const amount = UiService.convertToNumber(row[isTartPosition + 2]);
+      let amount = UiService.convertToNumber(row[isTartPosition + 2]);
       const problems: string[] = [];
       const validDateObj: ValidDateObj = UiService.validDate(date, null, true);
 
       if (validDateObj?.status) {
-        date = validDateObj.date;
+        date = validDateObj?.date;
       } else {
+        if (!validDateObj?.date) {
+          date = '';
+        }
         problems.push(validDateObj?.message);
       }
 
       if (!amount) {
+        amount = -1;
         problems.push(ConstantMessages.AMOUNT_INVALID);
       }
 
@@ -94,7 +98,7 @@ export class ImportCaixaExcel {
       row[isTartPosition + 2]
     ) {
       const problems: string[] = [];
-      const amount = UiService.convertToNumber(row[isTartPosition]);
+      let amount = UiService.convertToNumber(row[isTartPosition]);
       const description = row[isTartPosition + 4];
       let date = row[isTartPosition + 1];
       let category = null;
@@ -117,16 +121,25 @@ export class ImportCaixaExcel {
       const validDateObj: ValidDateObj = UiService.validDate(date, null, true);
 
       if (validDateObj?.status) {
-        date = validDateObj.date;
+        date = validDateObj?.date;
       } else {
+        if (!validDateObj?.date) {
+          date = '';
+        }
         problems.push(validDateObj?.message);
       }
+
       if (!amount) {
+        amount = -1;
         problems.push(ConstantMessages.AMOUNT_INVALID);
       }
       if (!category) {
         problems.push(ConstantMessages.CAIXA_CATEGORY_INVALID);
       }
+      if (!caixaType && row[isTartPosition + 3]) {
+        problems.push(ConstantMessages.CAIXA_SUBCATEGORY_INVALID);
+      }
+
       if (!isEntry) {
         if (!description) {
           problems.push(ConstantMessages.CAIXA_DESCRIPTION_INVALID);

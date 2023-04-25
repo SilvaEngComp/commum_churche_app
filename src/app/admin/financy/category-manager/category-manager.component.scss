@@ -1,0 +1,31 @@
+.label-title {
+  font-family: Qanelas-bold;
+  font-size: 14pt;
+  text-align: center;
+  color: var(--ion-color-light);
+}
+.label-body {
+  font-family: Qanelas;
+  font-size: 12pt;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.color-problem {
+  background-color: var(--ion-color-danger);
+}
+
+.col-option {
+  text-align: center;
+}
+
+.localPageTitle {
+  font-family: Qanelas-bold;
+  font-size: 14pt;
+  text-align: center;
+  color: var(--ion-color-primary);
+}

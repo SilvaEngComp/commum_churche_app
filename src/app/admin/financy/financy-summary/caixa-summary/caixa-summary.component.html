@@ -2,7 +2,12 @@
   <table class="table  align-middle ">
     <thead>
       <tr class="table-dark">
-        <th colspan="6"><ion-label class="label-title">{{caixaSummary?.caixaCategory?.name}}</ion-label>
+        <th colspan="6" *ngIf="caixaSummary?.caixaCategory"><ion-label
+            class="label-title">{{caixaSummary?.caixaCategory?.name}}</ion-label>
+        </th>
+        <th colspan="6" *ngIf="!caixaSummary?.caixaCategory"><ion-label class="label-title">
+            <ion-label>Sem
+              Categoria</ion-label></ion-label>
         </th>
       </tr>
       <tr>

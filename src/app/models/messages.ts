@@ -38,7 +38,8 @@ export class ConstantMessages {
   static INPUT_OUTPUT_INVALID = 'Selecione se é ENTRADA ou SAÍDA';
   static TITHE_TYPE_INVALID = 'Selecione se é DÍZIMO ou OFERTA';
   static TITHE_USER_INVALID = 'Selecione um usuário';
-  static CAIXA_DESCRIPTION_INVALID = 'Digite o motivo do registro de saída';
+  static CAIXA_DESCRIPTION_INVALID =
+    'Digite uma descrição ou o motivo do registro de saída';
   static CAIXA_WALLET_INVALID = 'Selecione uma carteira';
 
   static MSG_MAX_LIMIT_LETTER = 'Limite atingido';
@@ -62,4 +63,5 @@ export class ConstantMessages {
     'Selecione a data de inicio e fim da consulta';
   static ENDED_SESSION = 'Sessão Expirada. Tente novamente';
   static CONFIRM_DELETE = 'Tem certeza que deseja excluir esse item?';
+  static ACTION_SUCCESS_PERFORMED = 'Ação Excecutada com sucesso!';
 }

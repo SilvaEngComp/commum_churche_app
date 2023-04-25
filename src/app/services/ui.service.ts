@@ -9,6 +9,7 @@ import * as CriptoJs from 'crypto-js';
 import { Md5 } from 'ts-md5/dist/md5';
 import { DatePipe } from '@angular/common';
 import { ValidDateObj } from '../models/validDateObj';
+import { ConstantMessages } from '../models/messages';
 
 @Injectable({
   providedIn: 'root',
@@ -175,7 +176,7 @@ export class UiService {
   }
 
   static convertToNumber(value: string) {
-    debugger;
+    let flag = 0;
     if (!value) {
       value = '0,0';
     }
@@ -188,6 +189,7 @@ export class UiService {
       console.log(result);
       return parseFloat(result);
     } else {
+      flag++;
       splitDecimal = value.split('.');
       if (splitDecimal.length === 2) {
         console.log(splitDecimal);
@@ -195,9 +197,15 @@ export class UiService {
         console.log(integerPart);
         console.log(integerPart);
         return parseFloat(integerPart);
+      } else {
+        flag++;
       }
     }
-    return parseFloat(value);
+    if (flag >= 2) {
+      return parseFloat(value);
+    } else {
+      return null;
+    }
   }
   static convertToCurrency(value: number) {
     const amount = Number(value).toFixed(2);
@@ -231,7 +239,8 @@ export class UiService {
             dateSplited[2] = String(year).substring(0, 2) + dateSplited[2];
           }
         } else {
-          return;
+          validDateObj.message = ConstantMessages.DATE_INVALID;
+          return validDateObj;
         }
 
         date = dateSplited[2] + '-' + dateSplited[1] + '-' + dateSplited[0];
@@ -262,6 +271,8 @@ export class UiService {
       }
 
       validDateObj.date = date;
+    } else {
+      validDateObj.message = ConstantMessages.DATE_INVALID;
     }
     return validDateObj;
   }

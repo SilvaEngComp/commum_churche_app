@@ -158,6 +158,7 @@ export class ExceptionService {
     // this.loadCtrl.dismiss();
   }
   error(err: any) {
+    console.log(err);
     if (err) {
       switch (err.status) {
         case 400:

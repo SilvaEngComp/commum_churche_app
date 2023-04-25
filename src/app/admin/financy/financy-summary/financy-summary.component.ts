@@ -162,6 +162,9 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
   goToExcelRegister() {
     this.sessionPage.emit(Constants.MENU_FINANCY_EXCEL_REGISTER);
   }
+  goToCategoryManager() {
+    this.sessionPage.emit(Constants.MENU_FINANCY_CATEGORY_MENAGER);
+  }
 
   async newCaixa(op: boolean) {
     UiService.localRemove(Constants.CAIXA_MAINTAINCE);

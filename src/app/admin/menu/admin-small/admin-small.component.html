@@ -16,13 +16,13 @@
   </ion-tab-button> -->
 
   <ion-tab-button tab="bible" (click)="setPage(1)">
-    <ion-icon name="home"></ion-icon>
+    <ion-icon name="book-sharp"></ion-icon>
     <ion-label>Leitura</ion-label>
   </ion-tab-button>
 
 
 
-  <ion-tab-button tab="more" (click)="setPage(3)" class="admin" *noPermission="'member'">
+  <ion-tab-button tab="admin" (click)="setPage(3)" class="admin" *noPermission="'member'">
     <ion-img alt="Igreaja Batista Nova Betel" src="./assets/images/white-logo.png"></ion-img>
     <ion-label class="label-img-icon">Admin</ion-label>
   </ion-tab-button>
@@ -36,8 +36,15 @@
     <ion-label>Convidar</ion-label>
   </ion-tab-button> -->
 
-  <ion-tab-button tab="more" (click)="setPage(-2)">
+
+  <ion-tab-button tab="out" (click)="setPage(-2)">
     <ion-icon name="power-sharp"></ion-icon>
     <ion-label>Sair</ion-label>
+  </ion-tab-button>
+
+
+  <ion-tab-button tab="test" *ngIf="isTest">
+    <ion-icon color="warning" name="logo-apple-ar"></ion-icon>
+    <ion-label color="warning">Teste!</ion-label>
   </ion-tab-button>
 </ion-tab-bar>

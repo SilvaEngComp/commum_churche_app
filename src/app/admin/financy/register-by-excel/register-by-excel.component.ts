@@ -74,6 +74,9 @@ export class RegisterByExcelComponent implements OnInit {
     this.excelFile = new TempFile(file.name, url, file.type);
     this.excelFile.checkExpectedType([
       'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'xls',
+      'xlsx',
+      'vnd.ms-excel',
       'csv',
     ]);
 
@@ -86,6 +89,7 @@ export class RegisterByExcelComponent implements OnInit {
           'não é um formato válido. Permitido apenas xls, xlsx ou csv',
         'Erro! Formato Inválido!'
       );
+      this.clean();
       return;
     }
   }
@@ -190,16 +194,50 @@ export class RegisterByExcelComponent implements OnInit {
   }
 
   async upload() {
-    this.exeptionService.loadingFunction();
-    this.excelFinancyRegistrationService
-      .importExcelResgistration(this.importCaixaExcel)
-      .then((responser) => {
-        this.clean();
-        this.exeptionService.openLoading(
-          'Registro Realizado com Sucesso!',
-          'Seu cadastro de entradas e saídas via Excel foi realizado!'
-        );
-      })
-      .catch((error) => this.exeptionService.error(error));
+    if (this.checkIsDataValide()) {
+      this.exeptionService.loadingFunction();
+      this.excelFinancyRegistrationService
+        .importExcelResgistration(this.importCaixaExcel)
+        .then((responser) => {
+          this.clean();
+          this.exeptionService.openLoading(
+            'Registro Realizado com Sucesso!',
+            'Seu cadastro de entradas e saídas via Excel foi realizado!'
+          );
+        })
+        .catch((error) => this.exeptionService.error(error));
+    } else {
+      this.exeptionService.alertDialog(
+        'Dados Inválidos!',
+        'Existem dados inválidos importados da planilha. Corrija antes de enviar'
+      );
+    }
+  }
+
+  checkIsDataValide() {
+    let flag = true;
+    this.importCaixaExcel.filter((obj) => {
+      obj.inputs.filter((input) => {
+        if (input?.problems?.length > 0) {
+          flag = false;
+        }
+      });
+      obj.tithes.filter((input) => {
+        if (input?.problems?.length > 0) {
+          flag = false;
+        }
+      });
+      obj.offers.filter((input) => {
+        if (input?.problems?.length > 0) {
+          flag = false;
+        }
+      });
+      obj.outputs.filter((input) => {
+        if (input?.problems?.length > 0) {
+          flag = false;
+        }
+      });
+    });
+    return flag;
   }
 }

@@ -79,6 +79,7 @@ export class Constants {
   static MENU_FINANCY_OPTION_EXPENSE = '5';
   static MENU_FINANCY_OPTION_REPORT = '6';
   static MENU_FINANCY_EXCEL_REGISTER = '7';
+  static MENU_FINANCY_CATEGORY_MENAGER = '8';
 
   static OFFER_MAINTAINCE = 'offerMaintaince';
   static TITHE_MAINTAINCE = 'titheMaintaince';

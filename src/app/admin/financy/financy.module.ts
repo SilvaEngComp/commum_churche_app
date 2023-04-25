@@ -22,6 +22,7 @@ import { FinancyReportModule } from './financy-report/financy-report.module';
 import { DirectivesModule } from 'src/app/directives/directives.module';
 import { FileUploadModule } from 'ng2-file-upload';
 import { RegisterByExcelModule } from './register-by-excel/register-by-excel.module';
+import { CategoryManagerModule } from './category-manager/category-manager.module';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { RegisterByExcelModule } from './register-by-excel/register-by-excel.mod
     DirectivesModule,
     FileUploadModule,
     RegisterByExcelModule,
+    CategoryManagerModule,
   ],
   exports: [FinancyAdminComponent, TitheComponent, TitheRegisterComponent],
   providers: [],

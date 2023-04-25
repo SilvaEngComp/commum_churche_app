@@ -9,7 +9,8 @@
         (selectEmiter)="setWallet($event)"></app-my-select-list>
       <ion-item class="filter-date" lines="none">
         <ion-button id="select-date" expand="block" color="primary">
-          <ion-label>De {{initialDate | date: 'dd/MM/yyyy'}} até {{endDate | date: 'dd/MM/yyyy'}}</ion-label>
+          <ion-label class="ion-text-wrap">De {{initialDate | date: 'dd/MM/yyyy'}} até {{endDate | date:
+            'dd/MM/yyyy'}}</ion-label>
         </ion-button>
 
         <ion-popover trigger="select-date" #ionPopoverFilterDate>

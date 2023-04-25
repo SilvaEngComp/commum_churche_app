@@ -33,7 +33,11 @@
           <ion-label class="label-body">{{item?.caixaType?.name | uppercase}}</ion-label>
         </td>
         <td>
-          <ion-label *ngFor="let problem of item?.problems">{{ problem}}</ion-label><br>
+          <ul>
+            <li *ngFor="let problem of item?.problems">
+              <ion-label>{{ problem}}</ion-label>
+            </li>
+          </ul>
         </td>
       </tr>
     </tbody>

@@ -57,7 +57,7 @@ export class CaixaTypeService extends ServiceInterface {
       this.checkLogged();
       return Promise.resolve(null);
     }
-
+    console.log(JSON.stringify(caixatype));
     return this.http
       .patch<Responser>(
         `${environment.API2}/caixaTypes/${caixatype.id}`,

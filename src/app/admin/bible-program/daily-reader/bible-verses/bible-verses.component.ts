@@ -248,24 +248,15 @@ export class BibleVersesComponent implements OnInit {
   }
 
   receiveReturn() {
-    let isReceived = false;
     UiService.returnColorMaker.subscribe((data) => {
-      if (!isReceived) {
-        isReceived = true;
-        if (data) {
-          this.selectedVerses = data.selectedVerses;
-          if (data.color) {
-            if (data.color !== Constants.COLOR_TRANSPARENT) {
-              this.setModifiedColor(data.color);
-            }
+      if (data) {
+        this.selectedVerses = data.selectedVerses;
+        if (data.color) {
+          if (data.color !== Constants.COLOR_TRANSPARENT) {
+            this.setModifiedColor(data.color);
           }
-          this.checkResetColor();
-        } else {
-          this.checkResetColor();
-          this.selectedVerses.filter((verse) => {
-            this.clearFormat(verse);
-          });
         }
+        this.checkResetColor();
       } else {
         this.checkResetColor();
         this.selectedVerses.filter((verse) => {

@@ -11,7 +11,8 @@
         (selectEmiter)="setWallet($event)"></app-my-select-list>
       <ion-item lines="none">
         <ion-button id="select-date" expand="block" color="primary">
-          <ion-label>De {{initialDate | date: 'dd/MM/yyyy'}} até {{endDate | date: 'dd/MM/yyyy'}}</ion-label>
+          <ion-label class="ion-text-wrap">De {{initialDate | date: 'dd/MM/yyyy'}} até {{endDate | date:
+            'dd/MM/yyyy'}}</ion-label>
         </ion-button>
 
         <ion-popover trigger="select-date" #ionPopoverFilterDate>
@@ -65,6 +66,10 @@
         <div class="card-options" (click)="goToExcelRegister()">
           <ion-icon class="report-graph" color="primary" name="file-tray-full-outline"></ion-icon>
           <ion-label class="balance-label">Planilha</ion-label>
+        </div>
+        <div class="card-options" (click)="goToCategoryManager()">
+          <ion-icon class="report-graph" color="primary" name="construct-outline"></ion-icon>
+          <ion-label class="balance-label">Categorias</ion-label>
         </div>
       </div>
 
