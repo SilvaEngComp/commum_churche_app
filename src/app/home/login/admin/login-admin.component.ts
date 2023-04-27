@@ -2,7 +2,7 @@ import { Constants } from './../../../models/constants';
 import { UiService } from './../../../services/ui.service';
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Platform } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { User } from 'src/app/models/User';
 
 @Component({
@@ -11,6 +11,7 @@ import { User } from 'src/app/models/User';
   styleUrls: ['./login-admin.component.scss'],
 })
 export class LoginAdminComponent implements OnInit {
+  @Output() sessionPage: EventEmitter<any> = new EventEmitter<any>();
   isLarge: boolean;
   user: User;
   page: number;
@@ -26,6 +27,11 @@ export class LoginAdminComponent implements OnInit {
   }
 
   onSelectPage(page: any) {
+    if (page === 4) {
+      this.sessionPage.emit(0);
+      UiService.localRemove(Constants.PAGE_MENU_LOGIN);
+      return;
+    }
     this.page = page;
     UiService.localSet(Constants.PAGE_MENU_LOGIN, this.page);
   }

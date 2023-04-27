@@ -38,13 +38,15 @@
     color: var(--ion-color-light);
     position: absolute;
     bottom: 5%;
-  }
-  .link {
-    font-family: Qanelas-bold;
-    color: var(--ion-color-light);
-    float: right;
-    text-decoration: underline;
-    margin-left: 10px;
+    z-index: 2000;
+    .link {
+      font-family: Qanelas-bold;
+      color: var(--ion-color-light);
+      float: right;
+      text-decoration: underline;
+      margin-left: 10px;
+      cursor: pointer;
+    }
   }
 
   .forgot-password {

@@ -25,7 +25,6 @@ import {
 import { MaritalStatus } from 'src/app/models/maritalStatus';
 import { Church } from 'src/app/models/church';
 import { DayToSelectComponent } from 'src/app/resources/day-to-select/day-to-select.component';
-
 @Component({
   selector: 'app-register-personal-info',
   templateUrl: './register-personal-info.component.html',
@@ -45,6 +44,8 @@ export class RegisterPersonalInfoComponent implements OnInit {
   days: string[] = [];
   day: string;
   monthYear: string;
+  subsession: number;
+  date: DatePipe;
 
   constructor(
     private exceptionService: ExceptionService,
@@ -55,14 +56,15 @@ export class RegisterPersonalInfoComponent implements OnInit {
     private popCtrl: PopoverController
   ) {}
   ngOnInit() {
+    this.subsession = 1;
     this.user = UiService.localGet(Constants.REGISTRING_USER);
     if (!this.user) {
       this.user = new User();
       this.save();
     }
-    const date = new DatePipe('en');
+    this.date = new DatePipe('en');
 
-    this.today = date.transform(Date.now(), 'yyyy-MM-dd');
+    this.today = this.date.transform(Date.now(), 'yyyy-MM-dd');
 
     this.load();
 
@@ -81,42 +83,49 @@ export class RegisterPersonalInfoComponent implements OnInit {
 
   save() {
     UiService.localSet(Constants.REGISTRING_USER, this.user);
+    UiService.localSet(Constants.REGISTRING_USER_SUBSESSION, this.subsession);
   }
 
-  setSession(session: number) {
-    const lastSession = UiService.localGet(Constants.CURRENT_REGISTER_SESSION);
-    let flag = true;
-    if (lastSession < session) {
-      if (!this.check()) {
-        flag = false;
-      }
+  setSubsession() {
+    let flag = false;
+    switch (this.subsession) {
+      case 1:
+        flag = this.checkName();
+        break;
+      case 2:
+        flag = this.checkPhone();
+        break;
+      case 3:
+        flag = this.checkBirthday();
+        break;
+      case 4:
+        flag = this.checkIsBaptized();
+        break;
+      case 5:
+        flag = this.checkGender();
+        break;
+      case 6:
+        flag = this.checkMaritalStatus();
+        break;
+      case 7:
+        flag = this.checkInputMethod();
+        break;
+      case 8:
+        flag = this.checkChurch();
+        break;
     }
+
     if (flag) {
+      this.subsession++;
       this.save();
-      this.session.emit(session);
+    }
+
+    if (this.subsession === 9) {
+      this.session.emit(2);
     }
   }
 
-  check() {
-    if (this.user.name.length <= 0) {
-      this.exceptionService.alertDialog(ConstantMessages.NAME_INVALID, 'Erro');
-      return false;
-    }
-
-    const validName: string[] = this.user.name.split(' ');
-    if (validName.length < 2) {
-      this.exceptionService.alertDialog(ConstantMessages.NAME_INVALID, 'Erro');
-      return false;
-    } else {
-      if (validName[0].length <= 0 || validName[1].length <= 0) {
-        this.exceptionService.alertDialog(
-          ConstantMessages.NAME_INVALID_SPACE,
-          'Erro'
-        );
-        return false;
-      }
-    }
-
+  checkPhone() {
     if (
       !this.user?.contact?.phone1 ||
       this.user?.contact?.phone1?.length <= 0
@@ -131,22 +140,57 @@ export class RegisterPersonalInfoComponent implements OnInit {
         );
       }
     }
+    return true;
+  }
 
-    if (!this.user.birthDate || this.user.birthDate.length < 10) {
+  checkName() {
+    if (!this?.user?.name) {
+      this.exceptionService.alertDialog(ConstantMessages.NAME_INVALID, 'Erro');
+      return false;
+    } else {
+      const validName: string[] = this?.user?.name?.split(' ');
+      if (validName?.length < 2) {
+        this.exceptionService.alertDialog(
+          ConstantMessages.NAME_INVALID,
+          'Erro'
+        );
+        return false;
+      } else {
+        if (validName[0]?.length <= 0 || validName[1]?.length <= 0) {
+          this.exceptionService.alertDialog(
+            ConstantMessages.NAME_INVALID_SPACE,
+            'Erro'
+          );
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  checkBirthday() {
+    if (!this?.user?.birthDate || this?.user?.birthDate?.length < 10) {
       this.exceptionService.alertDialog(
         ConstantMessages.BIRTHDATE_INVALID,
         'Erro'
       );
       return false;
     }
+    return true;
+  }
 
-    if (!this.user.isBaptized) {
+  checkIsBaptized() {
+    if (!this?.user?.isBaptized) {
       this.exceptionService.alertDialog(
         ConstantMessages.ISBAPTIZED_INVALID,
         'Erro'
       );
       return false;
     }
+    return true;
+  }
+
+  checkGender() {
     if (this.user?.gender?.length <= 0) {
       this.exceptionService.alertDialog(
         ConstantMessages.GENDER_INVALID,
@@ -155,6 +199,10 @@ export class RegisterPersonalInfoComponent implements OnInit {
       return false;
     }
 
+    return true;
+  }
+
+  checkMaritalStatus() {
     if (!this.user?.maritalStatus?.id) {
       this.exceptionService.alertDialog(
         ConstantMessages.MARITAL_STATUS_INVALID,
@@ -163,6 +211,10 @@ export class RegisterPersonalInfoComponent implements OnInit {
       return false;
     }
 
+    return true;
+  }
+
+  checkInputMethod() {
     if (!this.user?.inputMethod?.id) {
       this.exceptionService.alertDialog(
         ConstantMessages.INPUT_METHOD_INVALID,
@@ -171,6 +223,10 @@ export class RegisterPersonalInfoComponent implements OnInit {
       return false;
     }
 
+    return true;
+  }
+
+  checkChurch() {
     if (!this.user?.church?.id) {
       this.exceptionService.alertDialog(
         ConstantMessages.CHURCH_INVALID,
@@ -242,10 +298,24 @@ export class RegisterPersonalInfoComponent implements OnInit {
     pop.present();
 
     const { data } = await pop.onDidDismiss();
-    console.log(data.day);
     if (data) {
       this.day = data.day;
       this.setBirthdate();
+    }
+  }
+
+  onSetDate(value: any, option: number = 0) {
+    if (value) {
+      this.user.birthDate = value.substring(0, 10);
+    } else {
+      if (option === 1) {
+        this.user.birthDate = this.date.transform(Date.now(), 'yyyy-MM-dd');
+      } else {
+        const yesterday = new Date(
+          new Date().setDate(new Date().getDate() - 1)
+        );
+        this.user.birthDate = this.date.transform(yesterday, 'yyyy-MM-dd');
+      }
     }
   }
 }

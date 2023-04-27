@@ -12,6 +12,7 @@ export class Constants {
   static MENU = 'menu';
   static MENU_HOME_PAGE = 'defaultMenuPage';
   static REGISTRING_USER = 'registringUser';
+  static REGISTRING_USER_SUBSESSION = 'registringUserSubsession';
   static CURRENT_REGISTER_SESSION = 'currentRegisterSession';
   static TOKEN = 'token';
   static SIZE_ENCRIPTY_KEY = 25;
@@ -214,4 +215,9 @@ export class Constants {
   static FINANCY_REPORT_OUTPUT = 'financyReportOutput';
   static FINANCY_REPORT_GENERAL = 'financyReportGeneral';
   static SELECTED_VERSES_PRESSED = 'selectedVesesPressed';
+  static MENU_HOME_USER_REGISTRATION = 0;
+  static MENU_HOME_BIRTHDAY = 1;
+  static MENU_HOME_LOGIN = 2;
+  static MENU_HOME_USER_REGISTRATION_BY_LOGIN = 4;
+  static HOME_SELECT_PAGE = 'homeSelectPage';
 }

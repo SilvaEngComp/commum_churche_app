@@ -25,6 +25,7 @@
 }
 .large-input-date {
   width: 100%;
+
   ion-button {
     width: 100%;
     border-radius: 10px;
@@ -33,14 +34,12 @@
   margin-left: 8%;
 }
 .right-input-date {
-  width: 90%;
+  width: 100%;
+
   ion-button {
-    width: 100%;
     border-radius: 10px;
     border-bottom: 1px solid var(--ion-color-tertiary);
   }
-  margin-left: 1%;
-  margin-right: 5%;
 }
 
 .input-item {
@@ -61,6 +60,7 @@
     ion-label {
       font-size: 14pt;
       font-family: Qanelas-bold;
+      color: var(--ion-color-light);
     }
   }
 }
@@ -89,4 +89,52 @@ ion-radio-group {
 
 .separated-date {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+}
+
+ion-item {
+  display: inline-block;
+  margin: 0 0.5rem;
+
+  animation: backInDown; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 5s; /* don't forget to set a duration! */
+}
+
+ion-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.date-options-label {
+  text-align: center;
+
+  ion-label {
+    font-family: Qanelas-bold;
+    color: var(--ion-color-primary);
+    margin: 5%;
+  }
+}
+
+.icon-fomat-date {
+  font-size: 20px;
+  color: var(--ion-color-primary);
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+input {
+  border: 0px;
+  border-radius: 20px;
+  border-bottom: 1px solid var(--ion-color-primary);
+  text-align: center;
+  font-size: 14pt;
+  font-family: Qanelas-bold;
+  color: var(--ion-color-primary);
 }

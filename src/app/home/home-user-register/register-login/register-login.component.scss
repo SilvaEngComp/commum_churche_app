@@ -14,17 +14,17 @@
   width: 80%;
 }
 
-.item-button{
+.item-button {
   padding: 2px;
   margin-left: 10%;
   width: 90%;
 
-  ion-button{
-   --border-radius: 20px;
-   ion-label{
-     font-size: 14pt;
-     font-family: Qanelas-bold;
-   }
+  ion-button {
+    --border-radius: 20px;
+    ion-label {
+      font-size: 14pt;
+      font-family: Qanelas-bold;
+    }
   }
 }
 
@@ -58,30 +58,26 @@ ion-header {
 }
 
 @media only screen and (min-width: 500px) {
-  .inputs-box{
+  .inputs-box {
+    width: 100%;
     margin-left: 10%;
-    .check-item{
-      ion-label{
+    .check-item {
+      ion-label {
         font-family: Qanelas-light;
         margin-left: 5px;
       }
-
     }
   }
 }
 @media only screen and (max-width: 500px) {
-  .inputs-box{
-    margin-left: 10%;
-    .check-item{
-      ion-label{
+  .inputs-box {
+    width: 100%;
+    .check-item {
+      ion-label {
         margin-left: 5px;
         font-size: 12pt;
         font-family: Qanelas-light;
       }
-
     }
   }
-
-
 }
-

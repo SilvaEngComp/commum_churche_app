@@ -1,16 +1,16 @@
 <ion-grid>
   <ion-row>
-    <ion-col>
-      <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+    <ion-col [ngSwitch]="subsession">
+      <ion-item *ngSwitchCase="1" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
         <ion-label position="floating">*Nome Completo: </ion-label>
-        <ion-input (ionBlur)="save()" type="text" [(ngModel)]="user.name" #name="ngModel" name="userName"
+        <ion-input type="text" [(ngModel)]="user.name" #name="ngModel" name="userName"
           [ngModelOptions]="{standalone: true}" required></ion-input>
         <ion-note *ngIf="!name?.valid && name?.touched" color="danger">Este campo é obrigatório</ion-note>
 
       </ion-item>
 
 
-      <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+      <ion-item *ngSwitchCase="2" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
         <ion-label position="floating">*Celular: </ion-label>
         <ion-input name="phone" (ionBlur)="save()" [(ngModel)]="this.user.contact.phone1" type="text"
           [brmasker]="{phone: true, type:'num'}">
@@ -18,80 +18,63 @@
       </ion-item>
 
 
-      <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice} ">
-        <ion-label position="floating">Profissão </ion-label>
-        <ion-input (ionBlur)="save()" placeholder="Com o que trabalha (Opcional)" type="text"
-          [(ngModel)]="user.occupation"></ion-input>
-      </ion-item>
+      <div *ngSwitchCase="3">
 
-      <ion-item lines="none" [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}">
 
-        <ion-label>Data de
-          Nascimento: {{ user?.birthDate | date: 'dd/MM/yyyy'}}</ion-label>
-      </ion-item>
-
-      <ion-item lines="none" class="separated-date">
-        <ion-item>
-          <label>{{day}}</label>
+        <ion-item lines="none">
+          <input slot="start" type="date" [(ngModel)]="user.birthDate">
+          <ion-button slot="end" color="secondary" id="popover-button-month"><ion-label> <ion-icon
+                class="icon-fomat-date" name="calendar-clear-outline"></ion-icon></ion-label></ion-button>
         </ion-item>
-        <ion-item lines="none" [ngClass]="{'large-input-date ': !isSmallDevice, 'small-input-date':isSmallDevice}">
-          <ion-button fill="clear" (click)="openDay($event)" expand="full">
-            <label>Dia: {{day}}</label>
-          </ion-button>
+        <!-- <iosn-label>{{user?.birthDate | date:'dd/MM/yyyy'}}</iosn-label> -->
+        <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
+          <ng-template>
+            <ion-content>
+              <ion-datetime [showDefaultButtons]="true" presentation="date" display-format="MM-YYYY-DD" #timeMonth
+                (ionChange)="onSetDate(timeMonth.value)" doneText="OK" cancelText="CANCELAR">
+              </ion-datetime>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </div>
 
+      <div *ngSwitchCase="4">
+        <ion-item [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}" lines="none">
+          <ion-label>*Já é Batizado? </ion-label>
         </ion-item>
-        <ion-item lines="none" class="right-input-date ">
-          <ion-button fill="clear" id="popover-button-month" expand="block">
-            <label>Mês/Ano: {{monthYear | date: 'MM/yyyy'}}</label>
-          </ion-button>
+        <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+          <ion-radio-group (click)="setIsBaptized($event)" [value]="user?.isBaptized" [allowEmptySelection]="false">
+            <ion-item>
+              <ion-label>Não</ion-label>
+              <ion-radio slot="start" value="0"></ion-radio>
+            </ion-item>
 
-          <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
-            <ng-template>
-              <ion-content>
-                <ion-datetime [showDefaultButtons]="true" presentation="month-year" display-format="MM-YYYY" #timeMonth
-                  (ionChange)="onSelectMonth(timeMonth.value)" doneText="OK" cancelText="CANCELAR">
-                </ion-datetime>
-              </ion-content>
-            </ng-template>
-          </ion-popover>
+            <ion-item>
+              <ion-label>Sim</ion-label>
+              <ion-radio slot="start" value="1"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
         </ion-item>
-      </ion-item>
+      </div>
+      <div *ngSwitchCase="5">
+        <ion-item [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}" lines="none">
+          <ion-label>*Gênero: </ion-label>
+        </ion-item>
+        <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+          <ion-radio-group (click)="setGender($event)" [value]="user?.gender" [allowEmptySelection]="true">
+            <ion-item>
+              <ion-label>Masculino</ion-label>
+              <ion-radio slot="start" value="masculino"></ion-radio>
+            </ion-item>
 
-      <ion-item lines="none" [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}">
-        <ion-label>*Já é Batizado? </ion-label>
-      </ion-item>
-      <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-        <ion-radio-group (click)="setIsBaptized($event)" [value]="user?.isBaptized" [allowEmptySelection]="false">
-          <ion-item lines="none">
-            <ion-label>Não</ion-label>
-            <ion-radio slot="start" value="0"></ion-radio>
-          </ion-item>
-
-          <ion-item lines="none">
-            <ion-label>Sim</ion-label>
-            <ion-radio slot="start" value="1"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-      </ion-item>
-
-      <ion-item lines="none" [ngClass]="{'lebel': !isSmallDevice, 'label-small':isSmallDevice}">
-        <ion-label>*Gênero: </ion-label>
-      </ion-item>
-      <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-        <ion-radio-group (click)="setGender($event)" [value]="user?.gender" [allowEmptySelection]="true">
-          <ion-item lines="none">
-            <ion-label>Masculino</ion-label>
-            <ion-radio slot="start" value="masculino"></ion-radio>
-          </ion-item>
-
-          <ion-item lines="none">
-            <ion-label>Feminino</ion-label>
-            <ion-radio slot="start" value="feminino"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-      </ion-item>
-
-      <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+            <ion-item>
+              <ion-label>Feminino</ion-label>
+              <ion-radio slot="start" value="feminino"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-item>
+      </div>
+      <ion-item *ngSwitchCase="6" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}" lines="none">
         <ion-label>*Qual seu estado civil? </ion-label>
         <ion-select [value]="user.maritalStatus.id" interface="popover" (ionChange)="setMaritalStatus($event)">
           <ion-select-option [value]="item?.id" *ngFor="let item of maritalStatuses">{{item?.name | uppercase}}
@@ -99,7 +82,7 @@
         </ion-select>
       </ion-item>
 
-      <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+      <ion-item *ngSwitchCase="7" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}" lines="none">
         <ion-label>*Como veio para a igreja? </ion-label>
         <ion-select [value]="user?.inputMethod?.id" interface="popover" (ionChange)="setInputMethod($event)">
           <ion-select-option [value]="item?.id" *ngFor="let item of inputMethods">{{item?.name | uppercase}}
@@ -107,7 +90,7 @@
         </ion-select>
       </ion-item>
 
-      <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+      <ion-item *ngSwitchCase="8" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}" lines="none">
         <ion-label>*Onde frequenta? </ion-label>
         <ion-select [value]="user?.church?.id" interface="popover" (ionChange)="setChurch($event)">
           <ion-select-option [value]="item?.id" *ngFor="let item of churches">{{item?.name | uppercase}}
@@ -115,8 +98,16 @@
         </ion-select>
       </ion-item>
 
+
+      <ion-item *ngSwitchCase="9" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice} ">
+        <ion-label position="floating">Profissão </ion-label>
+        <ion-input (ionBlur)="save()" placeholder="Com o que trabalha (Opcional)" type="text"
+          [(ngModel)]="user.occupation"></ion-input>
+      </ion-item>
+
+
       <ion-item class="item-button" lines="none">
-        <ion-button slot="end" color="secondary" type="submit" (click)="setSession(2)">
+        <ion-button slot="end" color="secondary" type="submit" (click)="setSubsession()">
           <ion-label>PRÓXIMO</ion-label>
         </ion-button>
       </ion-item>

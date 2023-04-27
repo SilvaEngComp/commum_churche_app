@@ -72,4 +72,8 @@ export class RevoverPasswordComponent implements OnInit {
       this.typePassword = 'password';
     }
   }
+
+  goToRegister() {
+    this.selectedPage.emit(Constants.MENU_HOME_USER_REGISTRATION_BY_LOGIN);
+  }
 }

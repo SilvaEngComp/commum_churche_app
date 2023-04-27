@@ -4,6 +4,7 @@ import { UiService } from 'src/app/services/ui.service';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { User } from 'src/app/models/User';
+import { Constants } from 'src/app/models/constants';
 
 @Component({
   selector: 'app-menu-home-select',
@@ -25,6 +26,7 @@ export class MenuHomeSelectComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.page = UiService.localGet(Constants.HOME_SELECT_PAGE);
     if (!this.page || this.page < 0) {
       this.page = 2;
     }
@@ -44,6 +46,11 @@ export class MenuHomeSelectComponent implements OnInit {
     } else {
       this.page = page;
     }
+    this.save();
+  }
+
+  save() {
+    UiService.localSet(Constants.HOME_SELECT_PAGE, this.page);
   }
 
   @HostListener('window:beforeinstallprompt', ['$event'])

@@ -1,13 +1,19 @@
-<ion-content ionScroll="true" #main *ngIf="isLarge">
+<!-- <ion-content ionScroll="true" #main *ngIf="isLarge">
   <app-menu-home-large></app-menu-home-large>
-</ion-content>
+</ion-content> -->
 
-<ion-content *ngIf="!isLarge">
-  <app-home-user-register *ngIf="page===0"></app-home-user-register>
-  <app-birthdays *ngIf="page===1"></app-birthdays>
+<app-menu-home-small *ngIf="isLarge" (selectedPage)="onSelectPage($event)"></app-menu-home-small>
 
-  <app-login-admin *ngIf="page===2"></app-login-admin>
 
+<ion-content>
+  <div [ngSwitch]="page">
+    <app-home-user-register [session]="0" *ngSwitchCase="1"
+      (sessionPage)="onSelectPage($event)"></app-home-user-register>
+    <app-birthdays *ngSwitchCase="2" (sessionPage)="onSelectPage($event)"></app-birthdays>
+
+    <app-login-admin *ngSwitchCase="3" (sessionPage)="onSelectPage($event)"></app-login-admin>
+
+  </div>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
       refreshingSpinner="circles" refreshingText="Atualizando...">

@@ -1,5 +1,5 @@
 import { LoginService } from './../../services/login.service';
-import { Platform } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { ConstantMessages } from 'src/app/models/messages';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -22,7 +22,8 @@ export class HomeUserRegisterComponent implements OnInit {
   constructor(
     private usuarioService: UserService,
     private exceptionService: ExceptionService,
-    private platform: Platform
+    private platform: Platform,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -63,8 +64,7 @@ export class HomeUserRegisterComponent implements OnInit {
   }
 
   onReceiveSession(session: number) {
-    console.log(session);
-    if (session === 4) {
+    if (session === 3) {
       this.user = UiService.localGet(Constants.REGISTRING_USER);
       this.register();
     } else {
@@ -92,11 +92,26 @@ export class HomeUserRegisterComponent implements OnInit {
       });
   }
 
-  clear() {
-    UiService.localRemove(Constants.CURRENT_REGISTER_SESSION);
-    UiService.localRemove(Constants.REGISTRING_USER);
-    this.session = 0;
-    this.save();
+  async clear() {
+    const alert = await this.alertCtrl.create({
+      message: ConstantMessages.CONFIRM_DELETE,
+      buttons: [
+        {
+          text: 'Não',
+          handler: () => {},
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+            UiService.localRemove(Constants.CURRENT_REGISTER_SESSION);
+            UiService.localRemove(Constants.REGISTRING_USER);
+            this.session = 0;
+            this.save();
+          },
+        },
+      ],
+    });
+    alert.present();
   }
 
   socialNetworks(option: string) {

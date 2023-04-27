@@ -79,12 +79,4 @@ export class MenuHomeSmallComponent implements OnInit {
       }
     );
   }
-
-  setSession(op: number) {
-    this.setPage(0);
-    UiService.localRemove(Constants.CURRENT_REGISTER_SESSION);
-    UiService.localRemove(Constants.REGISTRING_USER);
-    UiService.localSet(Constants.CURRENT_REGISTER_SESSION, op);
-    UiService.pageMenuHome.emit(op);
-  }
 }

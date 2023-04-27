@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { User } from 'src/app/models/User';
+import { Constants } from 'src/app/models/constants';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -69,5 +70,9 @@ export class LoginComponent implements OnInit {
 
   recoverPassword() {
     this.selectedPage.emit(1);
+  }
+
+  goToRegister() {
+    this.selectedPage.emit(Constants.MENU_HOME_USER_REGISTRATION_BY_LOGIN);
   }
 }

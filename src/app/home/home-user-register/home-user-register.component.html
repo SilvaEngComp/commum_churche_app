@@ -6,26 +6,30 @@
           <ion-label>Informações Pessoais</ion-label>
           <ion-icon slot="separator" name="arrow-forward-circle"></ion-icon>
         </ion-breadcrumb>
-        <ion-breadcrumb [ngClass]="{'selected': session===2}">
+        <!-- <ion-breadcrumb [ngClass]="{'selected': session===2}">
           <ion-label>Contato</ion-label>
           <ion-icon slot="separator" name="arrow-forward-circle"></ion-icon>
-        </ion-breadcrumb>
-        <ion-breadcrumb [ngClass]="{'selected': session===3}">
+        </ion-breadcrumb> -->
+        <ion-breadcrumb [ngClass]="{'selected': session===2}">
           <ion-label>Login</ion-label>
           <ion-icon slot="separator" name="arrow-forward-circle"></ion-icon>
         </ion-breadcrumb>
       </ion-breadcrumbs>
 
-      <div [ngSwitch]="session">
+      <div [ngSwitch]="session" class="div-pages">
         <app-register-justification *ngSwitchCase="0" (session)="onReceiveSession($event)"></app-register-justification>
         <app-register-personal-info *ngSwitchCase="1" (session)="onReceiveSession($event)">
         </app-register-personal-info>
-        <app-register-contact *ngSwitchCase="2" (session)="onReceiveSession($event)"></app-register-contact>
-        <app-register-login *ngSwitchCase="3" (session)="onReceiveSession($event)"></app-register-login>
+        <!-- <app-register-contact *ngSwitchCase="2" (session)="onReceiveSession($event)"></app-register-contact> -->
+        <app-register-login *ngSwitchCase="2" (session)="onReceiveSession($event)"></app-register-login>
       </div>
-      <ion-item lines="none" button *ngIf="session>0">
-        <a href="#" slot="start" (click)="clear()">Limpar tudo</a>
-      </ion-item>
+
+
+      <ion-fab *ngIf="session>0" vertical="top" horizontal="end" class="float-icon">
+        <ion-fab-button (click)="clear()">
+          <ion-icon color="danger" name="close"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
     </ion-col>
   </ion-row>
 </ion-grid>
