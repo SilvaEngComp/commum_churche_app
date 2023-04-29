@@ -107,7 +107,9 @@
 
 
       <ion-item class="item-button" lines="none">
-        <ion-button slot="end" color="secondary" type="submit" (click)="setSubsession()">
+        <ion-button [disabled]="subsession<2" slot="start" type="submit" color="primary" (click)="backSubsection()">
+          <ion-label>VOLTAR</ion-label>
+        </ion-button> <ion-button slot="end" color="primary" type="submit" (click)="setSubsession()">
           <ion-label>PRÓXIMO</ion-label>
         </ion-button>
       </ion-item>

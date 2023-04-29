@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { ChurchService } from './../../../services/church.service';
 import { InputMethod } from './../../../models/inputhMethod';
 import { MaritalStatusService } from './../../../services/marital-status.service';
@@ -56,7 +57,10 @@ export class RegisterPersonalInfoComponent implements OnInit {
     private popCtrl: PopoverController
   ) {}
   ngOnInit() {
-    this.subsession = 1;
+    this.subsession = UiService.localGet(Constants.REGISTRING_USER_SUBSESSION);
+    if (!this.subsession) {
+      this.subsession = 1;
+    }
     this.user = UiService.localGet(Constants.REGISTRING_USER);
     if (!this.user) {
       this.user = new User();
@@ -84,6 +88,10 @@ export class RegisterPersonalInfoComponent implements OnInit {
   save() {
     UiService.localSet(Constants.REGISTRING_USER, this.user);
     UiService.localSet(Constants.REGISTRING_USER_SUBSESSION, this.subsession);
+  }
+
+  backSubsection() {
+    this.subsession--;
   }
 
   setSubsession() {
@@ -115,12 +123,11 @@ export class RegisterPersonalInfoComponent implements OnInit {
         break;
     }
 
-    if (flag) {
+    if (flag || this.subsession === 9) {
       this.subsession++;
       this.save();
     }
-
-    if (this.subsession === 9) {
+    if (this.subsession === 10) {
       this.session.emit(2);
     }
   }
@@ -128,7 +135,7 @@ export class RegisterPersonalInfoComponent implements OnInit {
   checkPhone() {
     if (
       !this.user?.contact?.phone1 ||
-      this.user?.contact?.phone1?.length <= 0
+      this.user?.contact?.phone1?.length < 10
     ) {
       this.exceptionService.alertDialog(ConstantMessages.PHONE_INVALID, 'Erro');
       return false;
@@ -148,6 +155,15 @@ export class RegisterPersonalInfoComponent implements OnInit {
       this.exceptionService.alertDialog(ConstantMessages.NAME_INVALID, 'Erro');
       return false;
     } else {
+      const regex = new RegExp(/^[A-Za-z\s]*$/g);
+      if (!regex.test(this?.user?.name)) {
+        this.exceptionService.alertDialog(
+          ConstantMessages.NAME_INVALID_NOT_LETTERS,
+          'Erro'
+        );
+        return false;
+      }
+
       const validName: string[] = this?.user?.name?.split(' ');
       if (validName?.length < 2) {
         this.exceptionService.alertDialog(
@@ -156,6 +172,12 @@ export class RegisterPersonalInfoComponent implements OnInit {
         );
         return false;
       } else {
+        let name = '';
+        validName.filter((text) => {
+          text = text.replace(/[^aA-zZ]+/g, '');
+          name += text + ' ';
+        });
+
         if (validName[0]?.length <= 0 || validName[1]?.length <= 0) {
           this.exceptionService.alertDialog(
             ConstantMessages.NAME_INVALID_SPACE,
@@ -163,6 +185,17 @@ export class RegisterPersonalInfoComponent implements OnInit {
           );
           return false;
         }
+
+        const regex = new RegExp(/[aA-zZ]+[\s]+[aA-zZ]+/g);
+        if (!regex.test(name)) {
+          this.exceptionService.alertDialog(
+            ConstantMessages.NAME_INVALID_NOT_LETTERS,
+            'Erro'
+          );
+          return false;
+        }
+
+        this.user.name = name;
       }
     }
     return true;

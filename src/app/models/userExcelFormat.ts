@@ -82,12 +82,13 @@ export class UserExcelFormat {
     const headerRow = this.worksheet.addRow(header);
 
     // Cell Style : Fill and Border
+    // Cell Style : Fill and Border
     headerRow.eachCell((cell) => {
       cell.fill = {
         type: 'pattern',
         pattern: 'darkGray',
-        fgColor: { argb: 'f4f5f8' },
-        bgColor: { argb: '024152' },
+        fgColor: { argb: '71c3ce' },
+        bgColor: { argb: '71c3ce' },
       };
       cell.border = {
         top: { style: 'thin' },
@@ -107,7 +108,7 @@ export class UserExcelFormat {
       name: 'Arial',
       family: 4,
       size: 12,
-      color: { argb: 'f4f5f8' },
+      color: { argb: '000000' },
       underline: 'single',
       bold: true,
     };

@@ -45,7 +45,6 @@ export class ImportCaixaExcel {
       let amount = UiService.convertToNumber(row[isTartPosition + 2]);
       const problems: string[] = [];
       const validDateObj: ValidDateObj = UiService.validDate(date, null, true);
-
       if (validDateObj?.status) {
         date = validDateObj?.date;
       } else {

@@ -20,6 +20,7 @@ export class TitheViewTableComponent implements OnInit {
     } else {
       this.headTitheList.push('Ofertante');
     }
+    this.headTitheList.push('');
   }
 
   async delete(tithe: Tithe) {

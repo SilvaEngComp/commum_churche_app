@@ -177,35 +177,29 @@ export class UiService {
 
   static convertToNumber(value: string) {
     let flag = 0;
+    let decimal;
     if (!value) {
       value = '0,0';
     }
-    let splitDecimal = value.split(',');
+    const splitDecimal = value.split(',');
     if (splitDecimal.length === 2) {
-      console.log(splitDecimal);
       const integerPart = splitDecimal[0]?.replace(/[^\d]+/g, '');
-      console.log(integerPart);
       const result = integerPart + '.' + splitDecimal[1];
-      console.log(result);
       return parseFloat(result);
     } else {
       flag++;
-      splitDecimal = value.split('.');
-      if (splitDecimal.length === 2) {
-        console.log(splitDecimal);
-        const integerPart = splitDecimal[0]?.replace(/[^\d]+/g, '');
-        console.log(integerPart);
-        console.log(integerPart);
-        return parseFloat(integerPart);
-      } else {
-        flag++;
+      try {
+        return (decimal = parseFloat(value));
+      } catch (e) {
+        if (splitDecimal.length === 2) {
+          decimal = value?.replace(/[^\d]+/g, '');
+          return parseFloat(decimal);
+        } else {
+          flag++;
+        }
       }
     }
-    if (flag >= 2) {
-      return parseFloat(value);
-    } else {
-      return null;
-    }
+    return null;
   }
   static convertToCurrency(value: number) {
     const amount = Number(value).toFixed(2);
@@ -253,7 +247,7 @@ export class UiService {
         dates[0] = String(year).substring(0, 2) + dates[0];
       }
 
-      if (dates[2] > 24 || dates[2] < 1) {
+      if (dates[2] > 31 || dates[2] < 1) {
         validDateObj.message = 'Dia inválido';
         validDateObj.status = false;
       } else if (dates[1] > 12 || dates[1] < 1) {
@@ -265,7 +259,7 @@ export class UiService {
           validDateObj.message = 'Mês inválido';
           validDateObj.status = false;
         }
-      } else if (dates[0] > year || dates[0] < 1) {
+      } else if (dates[0] < 1) {
         validDateObj.message = 'Ano inválido';
         validDateObj.status = false;
       }

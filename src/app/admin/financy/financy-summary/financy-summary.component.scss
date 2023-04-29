@@ -5,86 +5,12 @@
   text-align: center;
 }
 
-.spinner {
-  text-align: center;
-  margin: 20%;
-  ion-spinner {
-    margin-top: 25px;
-    color: var(--ion-color-primary);
-  }
-  ion-label {
-    margin: 1px;
-    font-size: 24pt;
-    font-family: Qanelas-bold;
-    color: var(--ion-color-primary);
-  }
-}
-ion-card {
-  border: 1px solid var(--ion-color-medium);
-  ion-card {
-    width: 300px;
-    height: 250px;
-  }
-}
-ion-list {
-  margin: 20px;
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-
-  ion-label {
-    font-size: 8pt;
-  }
-}
-.item-search {
-  border-radius: 20px;
-  border: 1px solid var(--ion-color-secondary);
-  margin: 10px;
-  width: 100%;
-}
-
-p {
-  font-size: 10px;
-  font-weight: bold;
-  color: var(--ion-color-medim);
-  margin: 10px;
-}
-
-.container {
-  height: 500px;
-  width: 500px;
-}
-
-ion-spinner {
-  width: 50px;
-  height: 50px;
-  color: var(--ion-color-secondary);
-  margin-left: 40%;
-  margin-right: 40%;
-}
-
 .input {
   width: 80%;
   border-radius: 20px;
   border-bottom: 1px solid var(--ion-color-tertiary);
   margin-left: 10%;
   padding: 2px;
-}
-
-.ocult-details {
-  display: none;
-}
-.filter-date {
-  ion-button {
-    margin-left: 20%;
-    --border-radius: 20px;
-
-    ion-label {
-      font-family: Qanelas-bold;
-    }
-  }
-  text-align: center;
 }
 
 .balance {
@@ -149,24 +75,20 @@ ion-spinner {
   background-color: var(--ion-color-primary);
 }
 @media only screen and (min-width: 500px) {
-  .card-summary {
-    width: 150px;
-    height: 60px;
-    text-align: center;
-    margin-top: 10%;
-  }
 }
 @media only screen and (max-width: 500px) {
-  .card-summary {
-    width: 100px;
-    height: 60px;
-    text-align: center;
-  }
-  ion-card-title {
-    font-size: 10pt;
-  }
 }
 
 .report-graph {
   font-size: 40px;
+}
+
+.date-button {
+  width: 300px;
+  text-align: center;
+
+  ion-note {
+    font-family: Qanelas;
+    color: var(--ion-color-light);
+  }
 }

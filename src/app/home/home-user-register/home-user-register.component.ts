@@ -30,12 +30,10 @@ export class HomeUserRegisterComponent implements OnInit {
     this.session = UiService.localGet(Constants.CURRENT_REGISTER_SESSION);
     if (!this.session) {
       this.session = 0;
-      console.log('cleaning');
-      this.clear();
+      this.clear(true);
     } else {
       if (this.session === 0) {
-        console.log('cleaning');
-        this.clear();
+        this.clear(true);
       }
     }
     if (this?.session === null) {
@@ -64,7 +62,7 @@ export class HomeUserRegisterComponent implements OnInit {
   }
 
   onReceiveSession(session: number) {
-    if (session === 3) {
+    if (session === 4) {
       this.user = UiService.localGet(Constants.REGISTRING_USER);
       this.register();
     } else {
@@ -75,11 +73,10 @@ export class HomeUserRegisterComponent implements OnInit {
 
   register() {
     this.exceptionService.loadingFunction();
-
     this.usuarioService
       .store(this.user)
       .then(() => {
-        this.clear();
+        this.clear(true);
         this.exceptionService.openLoading(
           ConstantMessages.FINISHING_REGISTRATION_TITLE,
           ConstantMessages.FINISHING_REGISTRATION_SUCCESS,
@@ -92,28 +89,34 @@ export class HomeUserRegisterComponent implements OnInit {
       });
   }
 
-  async clear() {
-    const alert = await this.alertCtrl.create({
-      message: ConstantMessages.CONFIRM_DELETE,
-      buttons: [
-        {
-          text: 'Não',
-          handler: () => {},
-        },
-        {
-          text: 'Sim',
-          handler: () => {
-            UiService.localRemove(Constants.CURRENT_REGISTER_SESSION);
-            UiService.localRemove(Constants.REGISTRING_USER);
-            this.session = 0;
-            this.save();
+  async clear(isResgistred = false) {
+    if (!isResgistred) {
+      const alert = await this.alertCtrl.create({
+        message: ConstantMessages.CONFIRM_DELETE,
+        buttons: [
+          {
+            text: 'Não',
+            handler: () => {},
           },
-        },
-      ],
-    });
-    alert.present();
+          {
+            text: 'Sim',
+            handler: () => {
+              this.makeClear();
+            },
+          },
+        ],
+      });
+      alert.present();
+    } else {
+      this.makeClear();
+    }
   }
-
+  makeClear() {
+    UiService.localRemove(Constants.CURRENT_REGISTER_SESSION);
+    UiService.localRemove(Constants.REGISTRING_USER);
+    this.session = 0;
+    this.save();
+  }
   socialNetworks(option: string) {
     UiService.socialNetworks(option);
   }

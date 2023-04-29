@@ -9,47 +9,45 @@
 
       <app-my-select-list [color]="'primary'" [label]="'Conta'" [listName]="'wallets'" [obj]="wallet"
         (selectEmiter)="setWallet($event)"></app-my-select-list>
-      <ion-item lines="none">
-        <ion-button id="select-date" expand="block" color="primary">
-          <ion-label class="ion-text-wrap">De {{initialDate | date: 'dd/MM/yyyy'}} até {{endDate | date:
-            'dd/MM/yyyy'}}</ion-label>
-        </ion-button>
+      <ion-button class="date-button" id="select-date" expand="block" color="primary">
+        <ion-note>De {{initialDate | date: 'dd/MM/yyyy'}} até {{endDate | date:
+          'dd/MM/yyyy'}}</ion-note>
+      </ion-button>
 
-        <ion-popover trigger="select-date" #ionPopoverFilterDate>
-          <ng-template>
-            <ion-content>
-              <ion-grid>
-                <ion-row>
-                  <ion-col>
-                    <ion-item lines="none" class="input">
-                      <ion-label position="floating">Data Inicial</ion-label>
-                      <ion-input type="date" [value]="initialDate" #InputInitialDate
-                        (ionChange)="setIntialDate(InputInitialDate.value)"></ion-input>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col>
-                    <ion-item lines="none" class="input">
-                      <ion-label position="floating">Data Final</ion-label>
+      <ion-popover trigger="select-date" #ionPopoverFilterDate>
+        <ng-template>
+          <ion-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-item lines="none" class="input">
+                    <ion-label position="floating">Data Inicial</ion-label>
+                    <ion-input type="date" [value]="initialDate" #InputInitialDate
+                      (ionChange)="setIntialDate(InputInitialDate.value)"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item lines="none" class="input">
+                    <ion-label position="floating">Data Final</ion-label>
 
-                      <ion-input type="date" [value]="endDate" #inputEndDate
-                        (ionChange)="setEndDate(inputEndDate.value)"></ion-input>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-item lines="none">
-                      <ion-button (click)="selectDateInterval(ionPopoverFilterDate)" color="primary" expand="block">
-                        <ion-label>Filtrar</ion-label>
-                      </ion-button>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-content>
-          </ng-template>
-        </ion-popover>
-      </ion-item>
+                    <ion-input type="date" [value]="endDate" #inputEndDate
+                      (ionChange)="setEndDate(inputEndDate.value)"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-item lines="none">
+                    <ion-button (click)="selectDateInterval(ionPopoverFilterDate)" color="primary" expand="block">
+                      <ion-label>Filtrar</ion-label>
+                    </ion-button>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
     </ion-col>
   </ion-row>
   <ion-row>
