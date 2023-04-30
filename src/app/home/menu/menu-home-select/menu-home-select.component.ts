@@ -28,7 +28,7 @@ export class MenuHomeSelectComponent implements OnInit {
   ngOnInit() {
     this.page = UiService.localGet(Constants.HOME_SELECT_PAGE);
     if (!this.page || this.page < 0) {
-      this.page = 2;
+      this.page = 3;
     }
     this.isLarge = this.platform.width() > 500;
     window.addEventListener('beforeinstallprompt', (e) => {

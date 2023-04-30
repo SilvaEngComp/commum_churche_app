@@ -52,7 +52,7 @@ export class ConstantMessages {
   static USER_INVALID = 'Selecione um usuário';
   static MEMBER_INVALID = 'Selecione um Membro';
   static USER_ALREADY_EXISTS =
-    'Usuário já está cadastrado e será selecionado automaticamente na lista ao fechar essa mensagem';
+    'Esse registro já existe e será selecionado automaticamente na lista ao fechar essa mensagem';
 
   static TITILE_INVALID = 'Por favor, Insira um título válido';
   static LEGEND_INVALID = 'Por favor, Insira uma legenda';

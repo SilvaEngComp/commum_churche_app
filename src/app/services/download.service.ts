@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Caixa } from 'src/app/models/caixa';
@@ -27,16 +28,32 @@ import { CaixaTypeService } from './caixa-type.service';
 import { CaixaCategoryService } from './caixa-category.service';
 import { CaixaCategory } from '../models/caixaCategory';
 import { CaixaType } from '../models/caixaType';
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 import { ActionSheetController, Platform } from '@ionic/angular';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
+const APP_DIRECTORY_LIST = [
+  Directory.Documents,
+  Directory.Data,
+  Directory.Cache,
+  Directory.Library,
+  Directory.ExternalStorage,
+  Directory.External,
+];
+
 @Injectable({
   providedIn: 'root',
 })
 export class DownloadService {
   EXCEL_TYPE =
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-  EXCEL_EXTENSION = '.xls';
+  EXCEL_EXTENSION = '.xlsx';
+  base64: string;
+  currentFolder = '';
+  folderContent = [];
+  fileName: string;
+  folder: string;
+  filename: any;
+  APP_DIRECTORY: any;
   constructor(
     private http: HttpClient,
     private exceptionService: ExceptionService,
@@ -49,44 +66,97 @@ export class DownloadService {
     private actionCtrl: ActionSheetController
   ) {}
 
-  testDownloadXls(workbook: ExcelProper.Workbook, fileName: string) {
+  testDownloadXls(
+    workbook: ExcelProper.Workbook,
+    fileName: string,
+    folder: string
+  ) {
     workbook.xlsx.writeBuffer().then(async (buffer) => {
       const blob = new Blob([buffer], {
         type: this.EXCEL_TYPE,
       });
-      fileName += '.xls';
+      this.fileName = fileName + '.xls';
+      this.folder = folder;
       if (this.platform.is('capacitor')) {
-        this.convertBlobToBase64(blob, fileName);
+        this.convertBlobToBase64(blob);
       } else {
-        FileSaver.saveAs(blob, fileName, { autoBom: true });
+        FileSaver.saveAs(blob, this.fileName, { autoBom: true });
       }
     });
   }
 
-  convertBlobToBase64(blob: Blob, fileName: string) {
-    const reader: FileReader = new FileReader();
-    reader.onload = (e: any) => {
-      const base64 = reader.result as string;
-      let path = 'App Nova Betel';
-      Filesystem.mkdir({
-        path,
-        directory: Directory.Documents || Directory.ExternalStorage,
-      }).finally(() => {
-        path += '/' + fileName;
-        Filesystem.writeFile({
-          path,
-          data: base64,
-          directory: Directory.Documents || Directory.ExternalStorage,
-        })
-          .then((response) => {
-            this.openFile(response.uri);
-          })
-          .catch((error) => {
-            console.log(error);
-            this.exceptionService.alertDialog('Falha ao realizar download!');
-          });
+  async getCurrentFolder() {
+    let folderContent = null;
+    let cont = 0;
+    while (cont < APP_DIRECTORY_LIST?.length) {
+      this.APP_DIRECTORY = APP_DIRECTORY_LIST[cont];
+      folderContent = await Filesystem.readdir({
+        directory: this.APP_DIRECTORY,
+        path: this.currentFolder,
       });
+      cont++;
+      if (this.APP_DIRECTORY) {
+        break;
+      }
+    }
+
+    console.log(folderContent);
+
+    // The directory array is just strings
+    // We add the information isFile to make life easier
+    this.folderContent = folderContent.files.filter((file) => {
+      if (file.name === this.folder) {
+        return file;
+      }
+    });
+
+    if (this.folderContent.length >= 0) {
+      const path = this.folder + '/' + this.fileName;
+      this.registerFile(path);
+    } else {
+      this.createFolder();
+    }
+  }
+
+  registerFile(path: string) {
+    Filesystem.writeFile({
+      path,
+      data: this.base64,
+      recursive: true,
+      directory: this.APP_DIRECTORY,
+    })
+      .then((response) => {
+        this.openFile(response.uri);
+      })
+      .catch((error) => {
+        console.log(error);
+        this.exceptionService.alertDialog('Falha ao realizar download!');
+      });
+  }
+
+  async createFolder() {
+    let path = '';
+    Filesystem.mkdir({
+      path: this.folder,
+      directory: this.APP_DIRECTORY,
+    })
+      .then(() => {
+        path = this.folder + '/' + this.fileName;
+        this.registerFile(path);
+      })
+      .catch(() => {
+        path = this.fileName;
+        this.registerFile(path);
+      });
+  }
+
+  convertBlobToBase64(blob: Blob) {
+    const reader: FileReader = new FileReader();
+    reader.onload = async (_e: any) => {
+      this.base64 = reader.result as string;
+      await this.getCurrentFolder();
     };
+
     reader.readAsDataURL(blob);
   }
 
@@ -104,7 +174,7 @@ export class DownloadService {
           role: 'cancel',
           handler: () => {
             this.exceptionService.alertDialog(
-              'Download concluído na pasta Documents/App Nova Betel'
+              `Download de ${this.filename} concluído na pasta ${this.folder}! `
             );
           },
         },
@@ -112,11 +182,6 @@ export class DownloadService {
     });
 
     await alert.present();
-
-    const { data } = await alert.onDidDismiss();
-    this.exceptionService.alertDialog(
-      'Download concluído na pasta Documents/App Nova Betel'
-    );
   }
 
   async buildUserExcel(users: User[], generalTitle: string) {
@@ -182,7 +247,11 @@ export class DownloadService {
     });
 
     this.exceptionService.loadingFunction('Processando Tabela Excel...');
-    this.testDownloadXls(userExcelFormat?.workbook, generalTitle);
+    this.testDownloadXls(
+      userExcelFormat?.workbook,
+      generalTitle,
+      Constants.SECRETARY_FOLDER
+    );
   }
 
   async buildFinancialReport(generalTitle: string, isModel: boolean = false) {
@@ -219,8 +288,6 @@ export class DownloadService {
         const row = [`${type?.id}`, type?.name];
         rowType.push(row);
       });
-    }
-    if (isModel) {
       userExcelFormat.setInfoWorksheet();
     }
     churches.filter(async (church) => {
@@ -251,7 +318,11 @@ export class DownloadService {
         isModel
       );
     });
-    this.testDownloadXls(userExcelFormat?.workbook, generalTitle);
+    this.testDownloadXls(
+      userExcelFormat?.workbook,
+      generalTitle,
+      Constants.FINANCIAL_FOLDER
+    );
   }
 
   public setFinancyDataSearch(church: Church) {
@@ -418,6 +489,9 @@ export class DownloadService {
       });
       cont = 0;
       rowType?.filter((obj) => {
+        if (data[cont]?.length <= 22) {
+          data[cont] = data[cont]?.concat(['', '', '']);
+        }
         data[cont] = data[cont]?.concat(obj);
         cont++;
       });

@@ -220,4 +220,6 @@ export class Constants {
   static MENU_HOME_LOGIN = 2;
   static MENU_HOME_USER_REGISTRATION_BY_LOGIN = 4;
   static HOME_SELECT_PAGE = 'homeSelectPage';
+  static SECRETARY_FOLDER = 'secretaria';
+  static FINANCIAL_FOLDER = 'tesouraria';
 }
