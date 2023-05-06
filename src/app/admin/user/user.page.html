@@ -112,7 +112,7 @@
             </ion-item>
           </ion-card-header>
           <ion-card-content>
-            <app-profile *ngIf="user?.isEditing" (returnPage)="edit($event)"></app-profile>
+            <app-profile *ngIf="user?.isEditing" [hasBackPage]="true" (returnPage)="edit($event)"></app-profile>
 
             <ion-grid *ngIf="!user?.isEditing">
               <ion-row>

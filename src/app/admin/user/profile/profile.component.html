@@ -10,19 +10,13 @@
         <ion-grid>
           <ion-row>
             <ion-col>
-              <ion-avatar class="div-avatar">
+              <ion-avatar class="div-avatar" (click)="imageOptions()">
                 <img [src]="user?.image" />
+                <ion-note>Clique na imagem para alterar</ion-note>
               </ion-avatar>
             </ion-col>
           </ion-row>
-          <ion-row>
-            <ion-col>
-              <ion-item lines="none" color="light" class="edit-image-buttons">
-                <ion-button fill="clear" color="warning" (click)="setshowLoadEditImage()">alterar</ion-button>
-                <ion-button fill="clear" color="danger" (click)="deleteImage()">deletar</ion-button>
-              </ion-item>
-            </ion-col>
-          </ion-row>
+
         </ion-grid>
       </ion-col>
     </ion-row>
@@ -36,8 +30,10 @@
       <ion-col>
         <ion-item lines="none" color="light" class="control-buttons">
           <ion-button slot="end" (click)="update()" color="success">
-            <ion-icon name="save-outline"></ion-icon>
             <ion-label>SALVAR</ion-label>
+          </ion-button>
+          <ion-button slot="end" (click)="deleteAccount()" color="danger">
+            <ion-label>EXCLUIR CONTA</ion-label>
           </ion-button>
         </ion-item>
       </ion-col>
@@ -50,21 +46,28 @@
           <ion-input [(ngModel)]="user.name"></ion-input>
         </ion-item>
 
+        <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+          <ion-label position="floating">*E-MAIL</ion-label>
+          <ion-input [(ngModel)]="user.email"></ion-input>
+        </ion-item>
+
         <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label position="floating">*FONE</ion-label>
           <ion-input [(ngModel)]="user.contact.phone1" [brmasker]="{phone: true}"></ion-input>
         </ion-item>
 
-        <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-          <ion-label position="floating">Profissão </ion-label>
-          <ion-input placeholder="Com o que trabalha (Opcional)" type="text" [(ngModel)]="user.occupation"></ion-input>
+        <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+          <ion-label>Permissões do Usuário </ion-label>
+          <ion-select [value]="user?.roles" interface="popover" multiple="true" (ionChange)="setRole($event)">
+            <ion-select-option [value]="item?.name" *ngFor="let item of roles">{{item?.name | uppercase}}
+            </ion-select-option>
+          </ion-select>
         </ion-item>
 
 
         <ion-list lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-item lines="none">
             <ion-label>Data de Nascimento: {{user.birthDate | date: 'dd/MM/yyyy'}}</ion-label>
-
           </ion-item>
 
           <ion-item>
@@ -126,7 +129,7 @@
 
         <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
           <ion-label>*Qual seu estado civil? </ion-label>
-          <ion-select [value]="user?.maritalStatus.id" [selectedText]="user?.maritalStatus?.name" interface="popover"
+          <ion-select [value]="user?.maritalStatus?.id" [selectedText]="user?.maritalStatus?.name" interface="popover"
             (ionChange)="setMaritalStatus($event)">
             <ion-select-option [value]="item?.id" *ngFor="let item of maritalStatuses">{{item?.name | uppercase}}
             </ion-select-option>
@@ -151,11 +154,10 @@
           </ion-select>
         </ion-item>
 
-        <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
-          <ion-label position="floating">*E-MAIL</ion-label>
-          <ion-input [(ngModel)]="user.email"></ion-input>
+        <ion-item lines="none" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">
+          <ion-label position="floating">Profissão </ion-label>
+          <ion-input placeholder="Com o que trabalha (Opcional)" type="text" [(ngModel)]="user.occupation"></ion-input>
         </ion-item>
-
 
 
         <ion-item [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}">

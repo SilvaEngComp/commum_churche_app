@@ -1,10 +1,16 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { UiService } from 'src/app/services/ui.service';
 import { Constants } from 'src/app/models/constants';
-import { AfterViewInit, Input } from '@angular/core';
+import { Input } from '@angular/core';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { PopoverController, AlertController, Platform } from '@ionic/angular';
+import {
+  PopoverController,
+  AlertController,
+  Platform,
+  ActionSheetController,
+} from '@ionic/angular';
 import { Contact } from 'src/app/models/contact';
 import { ConstantMessages } from 'src/app/models/messages';
 import { User } from 'src/app/models/User';
@@ -18,6 +24,9 @@ import { ChurchService } from 'src/app/services/church.service';
 import { InputMethodService } from 'src/app/services/input-method.service';
 import { MaritalStatusService } from 'src/app/services/marital-status.service';
 import { DayToSelectComponent } from 'src/app/resources/day-to-select/day-to-select.component';
+import { Router } from '@angular/router';
+import { RoleService } from 'src/app/services/role.service';
+import { UserRole } from 'src/app/models/userRole';
 
 @Component({
   selector: 'app-profile',
@@ -51,7 +60,7 @@ export class ProfileComponent implements OnInit {
   days: string[] = [];
   day: string;
   monthYear: string;
-
+  roles: UserRole[];
   isImageButtonVisible = false;
   showLoadEditImage = false;
   constructor(
@@ -63,7 +72,10 @@ export class ProfileComponent implements OnInit {
     private maritalStatusService: MaritalStatusService,
     private platform: Platform,
     private churchService: ChurchService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private actionCtrl: ActionSheetController,
+    private router: Router,
+    private roleService: RoleService
   ) {}
 
   ngOnInit() {
@@ -97,6 +109,9 @@ export class ProfileComponent implements OnInit {
     this.maritalStatuses = maritalResponser.data;
     const churchResponser = await this.churchService.get();
     this.churches = churchResponser.data;
+
+    const roleResponser = await this.roleService.get();
+    this.roles = roleResponser.data;
     this.is_loading = false;
   }
 
@@ -232,82 +247,53 @@ export class ProfileComponent implements OnInit {
     await alert.present();
   }
 
-  onSubmit() {
-    if (!this.checkPersonalInfo()) {
-      return false;
-    }
-
-    if (!this.checkContact()) {
-      return false;
-    }
-
-    return true;
-  }
-
   update() {
-    this.checkImageExists();
     this.is_loading = true;
-    this.userService
-      .update(this.user)
-      .then(() => {
-        this.validUser();
-        this.exceptionService.alertDialog('Alteração realizada com sucesso');
-        this.user.isEditing = true;
-        this.returnPage.emit(this.user);
-      })
-      .catch((erro) => {
-        this.exceptionService.error(erro.error.message);
-      })
-      .finally(() => (this.is_loading = false));
+    if (this.checkUpdateValid()) {
+      this.userService
+        .update(this.user)
+        .then(() => {
+          this.validUser();
+          this.exceptionService.alertDialog('Alteração realizada com sucesso');
+          if (this.hasBackPage) {
+            this.returnPage.emit(this.user);
+          }
+        })
+        .catch((erro) => {
+          this.exceptionService.error(erro);
+        })
+        .finally(() => (this.is_loading = false));
+    } else {
+      this.is_loading = false;
+    }
   }
 
-  checkContact() {
-    console.log(this.user);
-    if (!this.user.contact.street || this?.user?.contact?.street?.length <= 0) {
-      this.exceptionService.alertDialog(
-        ConstantMessages.STREET_INVALID,
-        'Erro'
-      );
-      return false;
-    }
-
-    if (
-      !this.user.contact.district ||
-      this.user?.contact?.district?.length <= 0
-    ) {
-      this.exceptionService.alertDialog(
-        ConstantMessages.DISTRICT_INVALID,
-        'Erro'
-      );
-      return false;
+  checkUpdateValid() {
+    if (!this.checkName()) {
+      return;
+    } else if (!this.checkPhone()) {
+      return;
+    } else if (!this.checkBirthday()) {
+      return;
+    } else if (!this.checkGender()) {
+      return;
+    } else if (!this.checkIsBaptized()) {
+      return;
+    } else if (!this.checkMaritalStatus()) {
+      return;
+    } else if (!this.checkInputMethod()) {
+      return;
+    } else if (!this.checkChurch()) {
+      return;
     }
 
     return true;
   }
 
-  checkPersonalInfo() {
-    if (this.user.name.length <= 0) {
-      this.exceptionService.alertDialog(ConstantMessages.NAME_INVALID, 'Erro');
-      return false;
-    }
-
-    const nome: string[] = this.user.name.split(' ');
-    if (nome.length < 2) {
-      this.exceptionService.alertDialog(ConstantMessages.NAME_INVALID, 'Erro');
-      return false;
-    } else {
-      if (nome[0].length <= 0 || nome[1].length <= 0) {
-        this.exceptionService.alertDialog(
-          ConstantMessages.NAME_INVALID,
-          'Erro'
-        );
-        return false;
-      }
-    }
-
+  checkPhone() {
     if (
       !this.user?.contact?.phone1 ||
-      this.user?.contact?.phone1?.length <= 0
+      this.user?.contact?.phone1?.length < 10
     ) {
       this.exceptionService.alertDialog(ConstantMessages.PHONE_INVALID, 'Erro');
       return false;
@@ -319,23 +305,84 @@ export class ProfileComponent implements OnInit {
         );
       }
     }
+    return true;
+  }
 
-    if (!this.user.birthDate || this.user.birthDate.length < 10) {
+  checkName() {
+    if (!this?.user?.name) {
+      this.exceptionService.alertDialog(ConstantMessages.NAME_INVALID, 'Erro');
+      return false;
+    } else {
+      const regex = new RegExp(/^[A-Za-z\s]*$/g);
+      if (!regex.test(this?.user?.name)) {
+        this.exceptionService.alertDialog(
+          ConstantMessages.NAME_INVALID_NOT_LETTERS,
+          'Erro'
+        );
+        return false;
+      }
+
+      const validName: string[] = this?.user?.name?.split(' ');
+      if (validName?.length < 2) {
+        this.exceptionService.alertDialog(
+          ConstantMessages.NAME_INVALID,
+          'Erro'
+        );
+        return false;
+      } else {
+        let name = '';
+        validName.filter((text) => {
+          text = text.replace(/[^aA-zZ]+/g, '');
+          name += text + ' ';
+        });
+
+        if (validName[0]?.length <= 0 || validName[1]?.length <= 0) {
+          this.exceptionService.alertDialog(
+            ConstantMessages.NAME_INVALID_SPACE,
+            'Erro'
+          );
+          return false;
+        }
+
+        const regex = new RegExp(/[aA-zZ]+[\s]+[aA-zZ]+/g);
+        if (!regex.test(name)) {
+          this.exceptionService.alertDialog(
+            ConstantMessages.NAME_INVALID_NOT_LETTERS,
+            'Erro'
+          );
+          return false;
+        }
+
+        this.user.name = name;
+      }
+    }
+    return true;
+  }
+
+  checkBirthday() {
+    if (!this?.user?.birthDate || this?.user?.birthDate?.length < 10) {
       this.exceptionService.alertDialog(
         ConstantMessages.BIRTHDATE_INVALID,
         'Erro'
       );
       return false;
     }
+    return true;
+  }
 
-    if (!this.user.isBaptized) {
+  checkIsBaptized() {
+    if (!this?.user?.isBaptized) {
       this.exceptionService.alertDialog(
         ConstantMessages.ISBAPTIZED_INVALID,
         'Erro'
       );
       return false;
     }
-    if (!this.user.gender) {
+    return true;
+  }
+
+  checkGender() {
+    if (this.user?.gender?.length <= 0) {
       this.exceptionService.alertDialog(
         ConstantMessages.GENDER_INVALID,
         'Erro'
@@ -343,6 +390,10 @@ export class ProfileComponent implements OnInit {
       return false;
     }
 
+    return true;
+  }
+
+  checkMaritalStatus() {
     if (!this.user?.maritalStatus?.id) {
       this.exceptionService.alertDialog(
         ConstantMessages.MARITAL_STATUS_INVALID,
@@ -351,6 +402,10 @@ export class ProfileComponent implements OnInit {
       return false;
     }
 
+    return true;
+  }
+
+  checkInputMethod() {
     if (!this.user?.inputMethod?.id) {
       this.exceptionService.alertDialog(
         ConstantMessages.INPUT_METHOD_INVALID,
@@ -359,6 +414,10 @@ export class ProfileComponent implements OnInit {
       return false;
     }
 
+    return true;
+  }
+
+  checkChurch() {
     if (!this.user?.church?.id) {
       this.exceptionService.alertDialog(
         ConstantMessages.CHURCH_INVALID,
@@ -366,6 +425,7 @@ export class ProfileComponent implements OnInit {
       );
       return false;
     }
+
     return true;
   }
 
@@ -410,6 +470,10 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  setRole(ev: any) {
+    this.user.roles = ev.target.value;
+  }
+
   onSelectData(date: any) {
     this.user.birthDate = date.substring(0, 10);
   }
@@ -439,5 +503,61 @@ export class ProfileComponent implements OnInit {
       this.day = data.day;
       this.setBirthdate();
     }
+  }
+
+  async imageOptions() {
+    const action = await this.actionCtrl.create({
+      buttons: [
+        {
+          text: 'Alterar',
+          handler: () => {
+            this.setshowLoadEditImage();
+          },
+        },
+        {
+          text: 'Deletar',
+          role: 'delete',
+          handler: () => {
+            this.deleteImage();
+          },
+        },
+      ],
+    });
+    action.present();
+  }
+
+  async deleteAccount() {
+    const user = LoginService.getUser();
+
+    const alert = await this.alertCtrl.create({
+      message:
+        'Tem certeza que deseja exlcuir completamente sua conta ' +
+        user.name +
+        '?',
+      mode: 'ios',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'danger',
+          handler: () => {},
+        },
+        {
+          text: 'Ok',
+          cssClass: 'success',
+          handler: () => {
+            this.userService
+              .delete(user)
+              .then(() => {
+                localStorage.clear();
+                this.router.navigate(['home']);
+              })
+              .catch((error) => this.exceptionService.error(error));
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 }
