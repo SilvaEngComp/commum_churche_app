@@ -37,7 +37,6 @@ export class RegisterPersonalInfoComponent implements OnInit {
   dateSelected: boolean;
   @ViewChild('timeData', { static: false }) timeData: IonDatetime;
   @ViewChild('popDay', { static: false }) popDay: IonPopover;
-  today: string;
   maritalStatuses: MaritalStatus[];
   inputMethods: InputMethod[];
   churches: Church[];
@@ -67,8 +66,6 @@ export class RegisterPersonalInfoComponent implements OnInit {
       this.save();
     }
     this.date = new DatePipe('en');
-
-    this.today = this.date.transform(Date.now(), 'yyyy-MM-dd');
 
     this.load();
 

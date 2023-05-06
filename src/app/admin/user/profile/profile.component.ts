@@ -27,6 +27,8 @@ import { DayToSelectComponent } from 'src/app/resources/day-to-select/day-to-sel
 import { Router } from '@angular/router';
 import { RoleService } from 'src/app/services/role.service';
 import { UserRole } from 'src/app/models/userRole';
+import { DatePipe } from '@angular/common';
+import { Responser } from 'src/app/models/responser';
 
 @Component({
   selector: 'app-profile',
@@ -63,6 +65,7 @@ export class ProfileComponent implements OnInit {
   roles: UserRole[];
   isImageButtonVisible = false;
   showLoadEditImage = false;
+  date: DatePipe;
   constructor(
     private userService: UserService,
     private alertCtrl: AlertController,
@@ -96,12 +99,15 @@ export class ProfileComponent implements OnInit {
   async load() {
     this.user = UiService.localGet(Constants.USER_MAINTAINCE);
     if (!this.user) {
-      const response = await this.loginService.loggedUser();
-      this.user = response.data;
+      this.loginService
+        .loggedUser()
+        .then((response) => {
+          this.user = response.data;
 
-      this.validUser();
+          this.validUser();
+        })
+        .catch((error) => this.exceptionService.error(error));
     }
-    console.log(this.user);
 
     const inputMethodResponser = await this.inputMethodService.get();
     this.inputMethods = inputMethodResponser.data;
@@ -250,11 +256,29 @@ export class ProfileComponent implements OnInit {
   update() {
     this.is_loading = true;
     if (this.checkUpdateValid()) {
+      const currentUser = LoginService.getUser();
+      let difference_a1: string[] = [];
+      if (this.user?.id === currentUser?.id) {
+        difference_a1 = this?.user?.roles.filter(
+          (x) => !currentUser?.roles?.includes(x)
+        );
+      }
+      console.log(difference_a1);
       this.userService
         .update(this.user)
-        .then(() => {
-          this.validUser();
+        .then((responser: Responser) => {
           this.exceptionService.alertDialog('Alteração realizada com sucesso');
+
+          if (difference_a1?.length <= 0) {
+            this.user = responser.data;
+            LoginService.setUser(this.user);
+          } else {
+            LoginService.setToken(responser);
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }
+          this.validUser();
           if (this.hasBackPage) {
             this.returnPage.emit(this.user);
           }
@@ -267,7 +291,6 @@ export class ProfileComponent implements OnInit {
       this.is_loading = false;
     }
   }
-
   checkUpdateValid() {
     if (!this.checkName()) {
       return;
@@ -487,6 +510,21 @@ export class ProfileComponent implements OnInit {
     console.clear();
     this.user.birthDate = this.monthYear + '-' + this.day;
     console.log(this.user.birthDate);
+  }
+
+  onSetDate(value: any, option: number = 0) {
+    if (value) {
+      this.user.birthDate = value.substring(0, 10);
+    } else {
+      if (option === 1) {
+        this.user.birthDate = this.date.transform(Date.now(), 'yyyy-MM-dd');
+      } else {
+        const yesterday = new Date(
+          new Date().setDate(new Date().getDate() - 1)
+        );
+        this.user.birthDate = this.date.transform(yesterday, 'yyyy-MM-dd');
+      }
+    }
   }
 
   async openDay(ev: any) {

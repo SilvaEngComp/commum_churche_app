@@ -166,3 +166,22 @@ ion-radio-group {
     }
   }
 }
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+input {
+  border: 0px;
+  border-radius: 20px;
+  border-bottom: 1px solid var(--ion-color-primary);
+  text-align: center;
+  font-size: 14pt;
+  font-family: Qanelas-bold;
+  color: var(--ion-color-primary);
+}
+.icon-fomat-date {
+  font-size: 20px;
+  color: var(--ion-color-primary);
+}

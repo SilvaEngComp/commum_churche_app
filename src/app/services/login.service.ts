@@ -33,6 +33,11 @@ export class LoginService {
   public static getUser(): User {
     return LoginService.getToken().user;
   }
+  public static setUser(user: User) {
+    const token = LoginService.getToken();
+    token.user = user;
+    LoginService.setToken(token);
+  }
   public static isLogged(): boolean {
     return LoginService.getToken()?.user ? true : false;
   }
@@ -56,7 +61,7 @@ export class LoginService {
       } else {
         httpHeaders = new HttpHeaders({
           'Content-Type': 'application/json',
-          Accept: 'application/octet-stream',
+          Accept: 'application/json',
           Authorization: 'Bearer ' + token.token,
         });
       }

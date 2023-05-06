@@ -4,13 +4,13 @@ import {
   LoadingController,
   AlertController,
   ModalController,
-  Platform,
 } from '@ionic/angular';
 import { FinishActionComponent } from '../ui/finish-action/finish-action.component';
 // import { SocialAuthService } from 'angularx-social-login';
 import { PushNotify } from '../models/pushNotification';
 import { Responser } from '../models/responser';
 import { WelcomeComponent } from '../ui/welcome/welcome.component';
+import { Router } from '@angular/router';
 // import { NotificationsService } from 'angular2-notifications';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class ExceptionService {
     private loadCtrl: LoadingController,
     private alertCtrl: AlertController,
     // private notiWeb: NotificationsService,
-    private platform: Platform
+    private router: Router
   ) {}
 
   async openLoading(
@@ -129,7 +129,9 @@ export class ExceptionService {
         {
           text: 'OK',
           handler: () => {
+            debugger;
             if (exit) {
+              this.endSession();
             }
           },
         },
@@ -158,14 +160,13 @@ export class ExceptionService {
     // this.loadCtrl.dismiss();
   }
   error(err: any) {
-    console.log(err);
     if (err) {
       switch (err.status) {
         case 400:
           this.alertDialog(err.error.message, 'Erro!');
           break;
         case 401:
-          this.alertDialog('Sessão Expridada', 'Erro!');
+          this.alertDialog('Sessão Expridada', 'Erro!', true);
           break;
         case 403:
           this.alertDialog('Login ou senha incorretos', 'Erro!');
@@ -194,6 +195,10 @@ export class ExceptionService {
     }
   }
 
+  endSession() {
+    localStorage.clear();
+    this.router.navigate(['home']);
+  }
   async loadingFunction(msg: string = 'Aguarde um instante...') {
     const loading = await this.loadCtrl.create({
       message: msg,

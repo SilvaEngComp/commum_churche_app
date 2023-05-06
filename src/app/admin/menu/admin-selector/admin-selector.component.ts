@@ -46,7 +46,7 @@ export class AdminSelectorComponent implements OnInit {
     this.page = UiService.localGet(this.defaultPageName);
 
     if (!UiService.checkValidPage(this.page)) {
-      this.page = '3';
+      this.page = '0';
     } else {
       this.page = String(this.page);
     }

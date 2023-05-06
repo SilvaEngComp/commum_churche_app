@@ -23,6 +23,7 @@ import { UserAdminComponent } from './user-admin/user-admin.component';
 import { UserSearchModule } from './user-search/user-search.module';
 import { EmergencyUserRegisterComponent } from './user-register/emergency-user-register/emergency-user-register.component';
 import { RegisterCardComponent } from './user-register/register-personal-info/register-card.component';
+import { DirectivesModule } from 'src/app/directives/directives.module';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { RegisterCardComponent } from './user-register/register-personal-info/re
     HomeUserRegisterModule,
     ResourcesModule,
     BirthdaysModule,
+    DirectivesModule,
   ],
   declarations: [
     UserPage,
