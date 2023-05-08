@@ -19,6 +19,8 @@ import { UiService } from 'src/app/services/ui.service';
 export class PublicFeedComponent implements OnInit {
   @Output() returnPage: EventEmitter<any> = new EventEmitter<any>();
   @Input() editable: boolean;
+  @Input() isAdmin: boolean;
+
   user: User;
   feeds: Feed[];
   is_loading: boolean;
@@ -46,7 +48,11 @@ export class PublicFeedComponent implements OnInit {
   }
 
   back() {
-    this.returnPage.emit({ page: Constants.MENU_GENERAL_OPTION_FEED });
+    if (this.isAdmin) {
+      this.returnPage.emit({ subpage: Constants.MENU_GENERAL_OPTION_FEED });
+    } else {
+      this.returnPage.emit({ page: Constants.MENU_GENERAL_OPTION_FEED });
+    }
   }
 
   load() {

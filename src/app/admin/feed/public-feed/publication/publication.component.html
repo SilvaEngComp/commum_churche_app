@@ -8,9 +8,16 @@
         <div class="lb-feed-title-div">
           <p class="lb-feed-title">Betel</p>
           <p class="lb-feed-subtitle">Sede-Cruz das Almas</p>
+          <p *permission="'multimidia'" class="lb-feed-subtitle" [ngStyle]="{'color': feed?.isPublished?'green':'red'}">
+            {{feed?.isPublished?'Publicado':'Não publicado'}}</p>
+
         </div>
 
-        <ion-icon *ngIf="editable" (click)="menuPost(feed, $event)" name="ellipsis-vertical-outline"></ion-icon>
+        <ion-icon *permission="'multimidia'" color="primary" (click)="menuPost(feed, $event)"
+          name="ellipsis-vertical-outline"></ion-icon>
+      </div>
+      <div>
+
       </div>
     </ion-col>
   </ion-row>

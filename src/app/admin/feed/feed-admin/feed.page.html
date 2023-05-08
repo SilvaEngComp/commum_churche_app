@@ -5,7 +5,8 @@
   <app-publication [feed]="feed" [expandAll]="true" *ngSwitchCase="'3'" (returnPage)="receive($event)"
     (returnPage)="receive($event)"></app-publication>
 
-  <app-public-feed *ngSwitchCase="'4'" [editable]="true" (returnPage)="receive($event)"></app-public-feed>
+  <app-public-feed *ngSwitchCase="'4'" [isAdmin]="true" [editable]="true"
+    (returnPage)="receive($event)"></app-public-feed>
 
 
 </div>
