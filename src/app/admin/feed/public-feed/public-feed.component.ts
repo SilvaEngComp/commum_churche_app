@@ -57,25 +57,12 @@ export class PublicFeedComponent implements OnInit {
       .then((responser) => {
         this.feeds = responser.data;
         const datePipe = new DatePipe('en');
-        const now = datePipe.transform(Date.now(), 'yyyy-MM-dd');
-        const time = datePipe.transform(Date.now(), 'HH:mm:ss');
+        const now = datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm');
         if (this.feeds) {
           this.feeds.filter((feed) => {
             feed.publisher = this.checkImage(feed?.publisher);
-            if (feed.date) {
-              if (feed.date < now) {
-                feed.checkPublish = true;
-              } else {
-                if (feed.time <= time) {
-                  feed.checkPublish = true;
-                }
-              }
-            } else {
-              if (feed.publisher.id === this.user.id) {
-                feed.checkPublish = true;
-              } else {
-                feed.checkPublish = false;
-              }
+            if (feed?.date < now) {
+              feed.checkPublish = true;
             }
           });
         }

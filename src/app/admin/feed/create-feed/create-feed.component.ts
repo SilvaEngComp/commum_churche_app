@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { ConstantMessages } from 'src/app/models/messages';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -11,6 +12,7 @@ import { Feed } from 'src/app/models/feed';
 import { User } from 'src/app/models/User';
 import { PushNotify } from 'src/app/models/pushNotification';
 import { Constants } from 'src/app/models/constants';
+import { ModelFileUplod } from 'src/app/models/modelFileUpload';
 
 @Component({
   selector: 'app-create-feed',
@@ -31,6 +33,8 @@ export class CreateFeedComponent implements OnInit {
   hasTime: boolean;
   session: string;
   localPageTitle: string;
+  formData: FormData;
+  localImages: ModelFileUplod;
   constructor(
     private feedService: FeedService,
     private messagingService: MessagingService,
@@ -56,26 +60,13 @@ export class CreateFeedComponent implements OnInit {
 
   checkFeed() {
     this.feed = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
+
     if (!this.feed) {
       this.feed = new Feed();
     }
 
-    if (!this.feed.date) {
-      this.feed.date = this.datePipe.transform(Date.now(), 'dd/MM/yyyy');
-    } else {
-    }
-
     if (!this.feed.publisher) {
-      const user = LoginService.getUser();
-      this.feed.publisher = new User();
-      this.feed.publisher.id = user.id;
-      this.feed.publisher.roles = user.roles;
-    }
-
-    if (this.session === '1') {
-      this.feed.isAvailable = false;
-    } else if (this.session === '3') {
-      this.feed.isAvailable = true;
+      this.feed.publisher = LoginService.getUser();
     }
     this.save();
   }
@@ -87,8 +78,12 @@ export class CreateFeedComponent implements OnInit {
   }
   nextSession() {
     const aux = Number(this.session) + 1;
-    this.session = String(aux);
-    this.save();
+    if (aux > 3) {
+      this.publish();
+    } else {
+      this.checkFeed();
+      this.session = String(aux);
+    }
   }
   back() {
     UiService.localRemove(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
@@ -102,66 +97,75 @@ export class CreateFeedComponent implements OnInit {
 
   receiveSubpage(obj: any) {
     if (obj.files) {
-      this.feedService
-        .upload(obj.files.formData, this.feed)
-        .then((responser) => {
-          this.feed.image = responser.data.image;
-          this.save();
-        });
+      this.localImages = obj.files;
+      this.feed.image = this.localImages?.files[0]?.path;
+      this.save();
     }
   }
 
   publish() {
-    this.checkFeed();
+    console.log(this.feed);
+    if (this.validForm()) {
+      this.is_loading = true;
+      this.feedService
+        .store2(this.formData)
+        .then(async (responser) => {
+          this.feed = responser.data;
+          await this.exceptionService.openLoading(
+            'Publicação enviada!',
+            'Parabéns!Você Acabou de realizar uma publicação!'
+          );
 
-    if (this.session !== '2') {
-      if (this.validForm()) {
-        this.feedService
-          .store(this.feed)
-          .then((responser) => {
-            this.feed = responser.data;
-            this.save();
-            if (this.session === '3') {
-              this.exceptionService.openLoading(
-                'Publicação enviada!',
-                'Parabéns!Você Acabou de realizar uma publicação!'
-              );
-              this.back();
-              const push: PushNotify = new PushNotify(
-                this.feed.title,
-                this.feed.message
-              );
-              this.messagingService.send(push);
-            } else {
-              this.nextSession();
-            }
-          })
-          .catch((error) => this.exceptionService.error(error));
-      }
-    } else {
-      this.nextSession();
+          this.back();
+        })
+        .catch((error) => {
+          this.backSession();
+          this.exceptionService.error(error);
+        })
+        .finally(() => (this.is_loading = false));
     }
   }
 
   validForm() {
-    if (this.session === '1') {
-      if (!this.feed?.title) {
-        this.exceptionService.alertDialog(ConstantMessages.TITILE_INVALID);
-        return;
-      }
-      if (!this.feed?.message) {
-        this.exceptionService.alertDialog(ConstantMessages.LEGEND_INVALID);
-        return;
-      }
-    } else if (this.session === '3') {
-      if (!this.feed?.date) {
-        this.exceptionService.alertDialog(ConstantMessages.DATE_INVALID);
-        return;
-      }
-      if (!this.feed?.time) {
-        this.exceptionService.alertDialog(ConstantMessages.TIME_INVALID);
-        return;
-      }
+    if (!this.formData) {
+      this.formData = new FormData();
+    }
+
+    if (!this.feed?.title) {
+      this.exceptionService.alertDialog(ConstantMessages.TITILE_INVALID);
+      return;
+    }
+    this.formData.append('title', this?.feed?.title);
+
+    if (!this.feed?.message) {
+      this.exceptionService.alertDialog(ConstantMessages.LEGEND_INVALID);
+      return;
+    }
+    this.formData.append('message', this?.feed?.message);
+    if (!this.feed?.publisher?.id) {
+      this.exceptionService.alertDialog(ConstantMessages.LEGEND_INVALID);
+      return;
+    }
+    this.formData.append('publisher_id', String(this?.feed?.publisher?.id));
+    if (!this.feed?.date) {
+      this.exceptionService.alertDialog(ConstantMessages.DATE_INVALID);
+      return;
+    }
+    if (!this.feed?.time) {
+      this.exceptionService.alertDialog(ConstantMessages.TIME_INVALID);
+      return;
+    }
+
+    this.feed.date += ' ' + this.feed.time;
+
+    this.formData.append('date', this?.feed?.date);
+
+    if (this.localImages?.files?.length > 0) {
+      this.formData.append(
+        'file',
+        this.localImages?.files[0]?.file,
+        this.localImages?.files[0]?.name
+      );
     }
     return true;
   }

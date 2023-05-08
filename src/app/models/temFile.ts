@@ -6,13 +6,16 @@ export class TempFile {
   extension: string;
   checked: boolean;
   isValid: boolean;
+  file: File;
 
   constructor(
+    file,
     name?: string,
     path?: any,
     type?: string,
     checked: boolean = false
   ) {
+    this.file = file;
     this.name = name;
     this.path = path;
 

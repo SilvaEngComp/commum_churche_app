@@ -30,20 +30,16 @@ export class ReviewFeedComponent implements OnInit {
     this.checkFeed();
     this.today = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
     if (!this?.feed?.date) {
-      this.feed.date = this.today;
+      this.setDateAsNow();
+    }
+    if (!this?.feed?.time) {
+      this.setTimeAsNow();
     }
   }
   checkFeed() {
     this.feed = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
     if (!this.feed) {
       this.feed = new Feed();
-    }
-
-    if (!this.feed.publisher) {
-      const user = LoginService.getUser();
-      this.feed.publisher = new User();
-      this.feed.publisher.id = user.id;
-      this.feed.publisher.roles = user.roles;
     }
   }
   showCompleteMessage() {
@@ -65,9 +61,17 @@ export class ReviewFeedComponent implements OnInit {
       }
     }
   }
+  save() {
+    UiService.localSet(Constants.FEED_ATTRIBUTES_FEED_OBJECT, this.feed);
+  }
 
   setTime(time) {
-    this.feed.time = String(time).substring(11, 16);
+    if (time?.length > 5) {
+      this.feed.time = String(time).substring(11, 16);
+    } else {
+      this.feed.time = time;
+    }
+    this.save();
   }
   setDateAsNow() {
     this.feed.date = this.datePipe.transform(Date.now(), 'dd/MM/yyyy');
@@ -89,5 +93,6 @@ export class ReviewFeedComponent implements OnInit {
         this.feed.date = this.datePipe.transform(yesterday, 'yyyy-MM-dd');
       }
     }
+    this.save();
   }
 }

@@ -47,7 +47,12 @@ export class LoadImagesComponent implements OnInit {
 
       const url = URL.createObjectURL(fileItem._file);
 
-      const image = new TempFile(fileItem._file.name, url, fileItem._file.type);
+      const image = new TempFile(
+        fileItem._file,
+        fileItem._file.name,
+        url,
+        fileItem._file.type
+      );
       this.localImages.files.push(image);
       if (this.single) {
         this.localImages.formData.append(

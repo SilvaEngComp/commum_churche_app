@@ -17,41 +17,23 @@ export class EditTextFeedComponent implements OnInit {
 
   @Input() feed: Feed;
   publisher: User;
-  is_loading: boolean;
-  image: FormData;
-
   session: number;
-  constructor(private exceptionService: ExceptionService) {}
+  constructor() {}
 
   ngOnInit() {
     this.session = 1;
-    this.image = new FormData();
+    this.checkFeed();
+  }
+
+  checkFeed() {
     this.feed = UiService.localGet(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
     if (!this.feed) {
       this.feed = new Feed();
     }
-    if (!this.feed?.hasTime) {
-      this.feed.hasTime = false;
-    }
-    console.log(this.feed);
   }
 
-  back() {
-    this.returnSubpage.emit({ subpage: Constants.FEED_PAGE_PUBLIC });
-
-    UiService.localRemove(Constants.FEED_ATTRIBUTES_FEED_OBJECT);
-  }
   save() {
     UiService.localSet(Constants.FEED_ATTRIBUTES_FEED_OBJECT, this.feed);
-  }
-
-  async addImage() {
-    this.save();
-    this.returnSubpage.emit({
-      subpage: 'load-image',
-      callbackSubpage: 'create',
-      feed: this.feed,
-    });
   }
 
   onTypeTitle(ev) {

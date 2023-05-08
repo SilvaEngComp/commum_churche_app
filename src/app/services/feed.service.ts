@@ -96,6 +96,18 @@ export class FeedService extends ServiceInterface {
       )
       .toPromise();
   }
+  async store2(formData: FormData): Promise<Responser> {
+    if (!(await LoginService.getHeaders())) {
+      this.checkLogged();
+      return Promise.resolve(null);
+    }
+    console.log(JSON.stringify(formData.getAll('feed')));
+    return this.http
+      .post<Responser>(`${environment.API2}/feeds`, formData, {
+        headers: await LoginService.getHeaders(true),
+      })
+      .toPromise();
+  }
 
   async publishFeed(feed: Feed, publish: boolean) {
     if (!(await LoginService.getHeaders())) {
