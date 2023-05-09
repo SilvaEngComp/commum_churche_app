@@ -77,3 +77,37 @@ ion-grid {
   font-family: Qanelas-bold;
   color: var(--ion-color-primary);
 }
+
+.date-options-label {
+  text-align: center;
+
+  ion-label {
+    font-family: Qanelas-bold;
+    color: var(--ion-color-primary);
+    margin: 5%;
+  }
+}
+
+.icon-fomat-date {
+  font-size: 20px;
+  color: var(--ion-color-primary);
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+input {
+  border: 0px;
+  border-radius: 20px;
+  border-bottom: 1px solid var(--ion-color-primary);
+  text-align: center;
+  font-size: 14pt;
+  font-family: Qanelas-bold;
+  color: var(--ion-color-primary);
+}
+
+.date-content {
+  overflow-y: scroll;
+}

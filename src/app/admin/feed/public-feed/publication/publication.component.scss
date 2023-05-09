@@ -89,7 +89,10 @@ ion-avatar {
 }
 
 .headers-reactions {
-  display: grid;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  align-content: space-between;
   grid-template-columns: 60px 60px auto;
   ion-icon {
     font-size: 30px;
@@ -105,6 +108,12 @@ ion-avatar {
     font-family: Qanelas-light;
     font-size: 10pt;
     color: var(--ion-color-dark);
+  }
+  ion-note {
+    margin-top: 10px;
+    margin-left: 40%;
+    font-family: Qanelas-light;
+    color: var(--ion-color-medium);
   }
 }
 
@@ -145,4 +154,8 @@ ion-avatar {
     word-wrap: break-word;
     text-align: left;
   }
+}
+
+.image-post {
+  max-height: 350px;
 }

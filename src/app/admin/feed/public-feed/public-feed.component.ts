@@ -39,12 +39,7 @@ export class PublicFeedComponent implements OnInit {
     this.user = LoginService.getUser();
     this.feedReaction = new FeedComment();
     this.filterFeed = new FilterFeed();
-    this.checkPermission();
     this.load();
-  }
-
-  checkPermission() {
-    this.editable = UiService.validPermissions(Constants.ROLE_MULTIMIDIA);
   }
 
   back() {

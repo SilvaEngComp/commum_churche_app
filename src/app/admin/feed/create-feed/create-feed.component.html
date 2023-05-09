@@ -17,8 +17,14 @@
   </ion-segment-button>
 </div>
 
-<ion-spinner mode="ios" *ngIf="is_loading" name="bubbles"></ion-spinner>
-<ion-grid>
+<div *ngIf="is_loading" class="progress_bar_waitting_redirect">
+  <ion-spinner name="dots"></ion-spinner>
+
+  <ion-label>Aguarde um instante</ion-label>
+
+  <ion-spinner name="dots"></ion-spinner>
+</div>
+<ion-grid *ngIf="!is_loading">
   <ion-row>
     <ion-col *ngIf="session==='1'">
       <ion-card>

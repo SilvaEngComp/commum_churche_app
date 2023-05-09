@@ -47,23 +47,17 @@ export class FeedService extends ServiceInterface {
       return Promise.resolve(null);
     }
     return this.http
-      .get<Responser>(`${environment.API2}/feeds/newest`, {
+      .get<Responser>(`${environment.API2}/feeds/checkNewFeed`, {
         headers: await LoginService.getHeaders(),
       })
       .toPromise();
   }
 
-  async hasSawNewest() {
-    if (!(await LoginService.getHeaders())) {
-      this.checkLogged();
-      return Promise.resolve(null);
-    }
+  async updateLastAccess() {
     const user = LoginService.getUser();
 
-    console.clear();
-    console.log(`${environment.API2}/feeds/hasSawNewest/${user.id}`);
     return this.http
-      .get(`${environment.API2}/feeds/hasSawNewest/${user.id}`, {
+      .get(`${environment.API2}/feeds/updateLastAccess/${user.id}`, {
         headers: await LoginService.getHeaders(),
       })
       .toPromise();

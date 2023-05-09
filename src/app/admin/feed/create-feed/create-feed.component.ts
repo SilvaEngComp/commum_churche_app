@@ -111,9 +111,9 @@ export class CreateFeedComponent implements OnInit {
         .store2(this.formData)
         .then(async (responser) => {
           this.feed = responser.data;
-          await this.exceptionService.openLoading(
-            'Publicação enviada!',
-            'Parabéns!Você Acabou de realizar uma publicação!'
+          await this.exceptionService.alertDialog(
+            'Parabéns!Você Acabou de realizar uma publicação!',
+            'Publicação enviada!'
           );
 
           this.back();
@@ -151,14 +151,8 @@ export class CreateFeedComponent implements OnInit {
       this.exceptionService.alertDialog(ConstantMessages.DATE_INVALID);
       return;
     }
-    if (!this.feed?.time) {
-      this.exceptionService.alertDialog(ConstantMessages.TIME_INVALID);
-      return;
-    }
 
-    this.feed.date += ' ' + this.feed.time;
-
-    this.formData.append('date', this?.feed?.date);
+    this.formData.append('date', String(this?.feed?.date));
 
     if (this.localImages?.files?.length > 0) {
       this.formData.append(

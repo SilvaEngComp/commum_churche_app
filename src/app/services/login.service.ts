@@ -6,8 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ExceptionService } from './exception-service.service';
 import { DataToken, TokenAccess } from '../models/token';
-import { User } from '../models/user';
 import { UiService } from './ui.service';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root',

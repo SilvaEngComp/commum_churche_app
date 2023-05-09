@@ -2,8 +2,8 @@
   <app-feed-home *ngSwitchCase="'0'" (returnPage)="receive($event)"></app-feed-home>
   <app-public-feed *ngSwitchCase="'1'" (returnPage)="receive($event)"></app-public-feed>
   <app-create-feed [feed]="feed" *ngSwitchCase="'2'" (returnSubpage)="receive($event)"></app-create-feed>
-  <app-publication [feed]="feed" [expandAll]="true" *ngSwitchCase="'3'" (returnPage)="receive($event)"
-    (returnPage)="receive($event)"></app-publication>
+  <app-publication [feed]="feed" [editable]="editable" [expandAll]="true" *ngSwitchCase="'3'"
+    (returnPage)="receive($event)" (returnPage)="receive($event)"></app-publication>
 
   <app-public-feed *ngSwitchCase="'4'" [isAdmin]="true" [editable]="true"
     (returnPage)="receive($event)"></app-public-feed>

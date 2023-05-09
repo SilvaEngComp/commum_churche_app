@@ -8,12 +8,12 @@
         <div class="lb-feed-title-div">
           <p class="lb-feed-title">Betel</p>
           <p class="lb-feed-subtitle">Sede-Cruz das Almas</p>
-          <p *permission="'multimidia'" class="lb-feed-subtitle" [ngStyle]="{'color': feed?.isPublished?'green':'red'}">
+          <p *ngIf="editable" class="lb-feed-subtitle" [ngStyle]="{'color': feed?.isPublished?'green':'red'}">
             {{feed?.isPublished?'Publicado':'Não publicado'}}</p>
 
         </div>
 
-        <ion-icon *permission="'multimidia'" color="primary" (click)="menuPost(feed, $event)"
+        <ion-icon *ngIf="editable" color="primary" (click)="menuPost(feed, $event)"
           name="ellipsis-vertical-outline"></ion-icon>
       </div>
       <div>
@@ -24,7 +24,7 @@
   <ion-row *ngIf="feed?.image?.length>0">
     <ion-col>
       <div>
-        <ion-img alt="Erro ao carregar imagem" [src]="feed?.image"></ion-img>
+        <img class="image-post" alt="Erro ao carregar imagem" [src]="feed?.image">
       </div>
     </ion-col>
   </ion-row>
@@ -37,6 +37,7 @@
         <ion-icon *ngIf="feed?.linkType===2" color="secondary" name="logo-youtube" (click)="accessUrl()"></ion-icon>
         <ion-icon *ngIf="feed?.linkType===3" color="secondary" name="link-outline" (click)="accessUrl()"></ion-icon>
         <ion-icon *ngIf="feed?.linkType===4" color="secondary" name="logo-whatsapp" (click)="goToWhatsapp()"></ion-icon>
+        <ion-note color="primary">{{feed?.date | dateAgo}}</ion-note>
       </div>
     </ion-col>
   </ion-row>

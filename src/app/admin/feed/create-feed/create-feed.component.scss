@@ -7,10 +7,20 @@
   align-self: center;
 }
 
-// ion-segment  {
-//   --background: #71c3ce;
-// }
-
+.progress_bar_waitting_redirect {
+  text-align: center;
+  // margin: 20%;
+  ion-spinner {
+    margin-top: 25px;
+    color: var(--ion-color-secondary);
+  }
+  ion-label {
+    margin: 1px;
+    font-size: 24pt;
+    font-family: Qanelas-bold;
+    color: var(--ion-color-primary);
+  }
+}
 ion-textarea {
   word-wrap: break-word;
 }

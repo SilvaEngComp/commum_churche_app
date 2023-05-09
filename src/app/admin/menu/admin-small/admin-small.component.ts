@@ -43,6 +43,7 @@ export class AdminSmallComponent implements OnInit {
   @ViewChild('tabAdmin', { static: false }) tab!: IonTabs;
 
   ngOnInit() {
+    this.checkNewFeed();
     this.isTest = environment.TEST;
     UiService.showColorMarkEmitter.subscribe((data) => {
       this.verse = data.verse;
@@ -71,14 +72,17 @@ export class AdminSmallComponent implements OnInit {
     UiService.localRemove(Constants.USER_MAINTAINCE);
     this.selectedPage.emit(page);
     this.setShowColorMark(false);
-    // UiService.localSet('tab-page', this.page_selected);
+    if (page === 7) {
+      this.updateLastAccess();
+    }
   }
 
-  async hasSaw() {
-    this.page_selected = await this.tab.getSelected();
-    if (this.page_selected === 'feed' && this.badge_feed > 0) {
-      await this.feedService.hasSawNewest();
+  async updateLastAccess() {
+    if (this.badge_feed > 0) {
       this.badge_feed = null;
+      this.feedService
+        .updateLastAccess()
+        .catch((error) => this.exceptionService.error(error));
     }
     UiService.localSet('tab-page', this.page_selected);
   }
@@ -111,9 +115,12 @@ export class AdminSmallComponent implements OnInit {
     );
   }
 
-  load() {
+  checkNewFeed() {
     this.feedService
       .checkNewest()
-      .then((responser) => (this.badge_feed = responser.data));
+      .then((responser) => {
+        this.badge_feed = responser.data;
+      })
+      .catch((error) => this.exceptionService.error(error));
   }
 }

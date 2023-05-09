@@ -18,11 +18,11 @@ import { LoginService } from 'src/app/services/login.service';
 import { MessagingService } from 'src/app/services/messaging.service';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { BrMaskerModule } from 'br-mask';
-import { FeedCommentComponent } from '../public-feed/feed-comment/feed-comment.component';
 import { FeedCommentService } from 'src/app/services/feed-reaction.service';
 import { PublicationComponent } from '../public-feed/publication/publication.component';
 import { DirectivesModule } from 'src/app/directives/directives.module';
 import { ResourcesModule } from 'src/app/resources/resources.module';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -34,13 +34,13 @@ import { ResourcesModule } from 'src/app/resources/resources.module';
     AngularFireMessagingModule,
     BrMaskerModule,
     DirectivesModule,
+    PipesModule,
   ],
   declarations: [
     FeedAdminPage,
     CreateFeedComponent,
     PublicFeedComponent,
     MenuPostComponent,
-    FeedCommentComponent,
     PublicationComponent,
     EditTextFeedComponent,
     ReviewFeedComponent,

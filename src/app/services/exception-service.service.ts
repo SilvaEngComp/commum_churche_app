@@ -43,7 +43,6 @@ export class ExceptionService {
     if (reload) {
       modal.onWillDismiss().then(() => window.location.reload());
     }
-    return Promise.resolve(true);
   }
   async wellcome() {
     const modal = await this.modalCtrl.create({

@@ -13,6 +13,7 @@ import { UiService } from 'src/app/services/ui.service';
 export class FeedAdminPage implements OnInit {
   @Output() sessionPage: EventEmitter<string> = new EventEmitter<string>();
   @Input() subpage: string;
+  @Input() editable: boolean;
   feed: Feed;
   callbackPage: string;
   constructor(private feedService: FeedService) {}

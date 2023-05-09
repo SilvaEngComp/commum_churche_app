@@ -10,11 +10,9 @@ export class Feed {
   image: string;
   isPublished: boolean;
   date: string;
-  time: string;
   checkPublish: boolean;
   love: boolean;
   comments: FeedComment[];
-  hasTime: boolean;
   showComment: boolean;
   url: string;
   linkType: number;
@@ -23,8 +21,7 @@ export class Feed {
     this.isPublished = false;
     this.showComment = false;
     const datePipe = new DatePipe('en');
-    this.date = datePipe.transform(Date.now(), 'yyyy-MM-dd');
-    this.time = datePipe.transform(Date.now(), 'HH:mm');
+    this.date = datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm');
     this.comments = [];
   }
 }

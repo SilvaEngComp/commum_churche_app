@@ -1,47 +1,32 @@
 <ion-grid>
+
+  <ion-row>
+    <ion-col>
+      <ion-popover trigger="popover-button-date" class="date-content">
+        <ng-template>
+          <ion-content>
+            <ion-datetime color="primary" locale="pt-BR" [showDefaultButtons]="true" #datePop [min]="today"
+              (ionChange)="onSetDate(datePop?.value)" doneText="OK" cancelText="CANCELAR">
+              <span slot="time-label">Horário</span>
+            </ion-datetime>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+      <ion-label class="label-item" position="floating">Data de publicação</ion-label>
+
+      <ion-item class="input-item" lines="none">
+        <input class="input" type="date-time" [value]="feed?.date" #inputDate (keyup)="onSetDate(inputDate.value)">
+        <ion-button fill="clear" id="popover-button-date"><ion-label> <ion-icon class="icon-fomat-date"
+              name="calendar-clear-outline"></ion-icon></ion-label></ion-button>
+
+
+      </ion-item>
+    </ion-col>
+  </ion-row>
   <ion-row>
     <ion-col>
       <app-publication [editable]="false" [feed]="feed" [showReactions]="false"
         [expandAll]="feed?.message?.length>500"></app-publication>
     </ion-col>
   </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-label class="label-item" position="floating">Data de publicação</ion-label>
-
-      <ion-item class="input-item" lines="none">
-        <ion-input class="input" type="date" [value]="feed?.date" #inputDate
-          (keyup)="onSetDate(inputDate.value)"></ion-input>
-      </ion-item>
-    </ion-col>
-  </ion-row><ion-row>
-    <ion-col>
-      <ion-label class="label-item" position="floating">Horário de publicação</ion-label>
-
-      <ion-item class="input-item" lines="none">
-        <ion-input type="time" #inputTime [value]="feed?.time" (keyup)="setTime(inputTime?.value)"></ion-input>
-      </ion-item>
-    </ion-col>
-  </ion-row>
 </ion-grid>
-
-
-<ion-popover trigger="popover-button-date" [dismissOnSelect]="true">
-  <ng-template>
-    <ion-content>
-      <ion-datetime [showDefaultButtons]="true" presentation="date" display-format="MM-YYYY-DD" #datePop [min]="today"
-        (click)="onSetDate(datePop?.value)" doneText="OK" cancelText="CANCELAR">
-      </ion-datetime>
-    </ion-content>
-  </ng-template>
-</ion-popover>
-
-<ion-popover trigger="popover-button-time" [dismissOnSelect]="true">
-  <ng-template>
-    <ion-item>
-      <ion-datetime [showDefaultButtons]="true" presentation="time" #timePop (click)="setTime(timePop?.value)"
-        doneText="OK" cancelText="CANCELAR">
-      </ion-datetime>
-    </ion-item>
-  </ng-template>
-</ion-popover>

@@ -28,12 +28,9 @@ export class ReviewFeedComponent implements OnInit {
   ngOnInit() {
     this.datePipe = new DatePipe('en');
     this.checkFeed();
-    this.today = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+    this.today = this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm');
     if (!this?.feed?.date) {
       this.setDateAsNow();
-    }
-    if (!this?.feed?.time) {
-      this.setTimeAsNow();
     }
   }
   checkFeed() {
@@ -44,11 +41,6 @@ export class ReviewFeedComponent implements OnInit {
   }
   showCompleteMessage() {
     this.expandAll = !this.expandAll;
-  }
-
-  setTimeExists() {
-    this.hasTime = !this.hasTime;
-    this.feed.hasTime = this.hasTime;
   }
 
   setDate(date) {
@@ -65,34 +57,14 @@ export class ReviewFeedComponent implements OnInit {
     UiService.localSet(Constants.FEED_ATTRIBUTES_FEED_OBJECT, this.feed);
   }
 
-  setTime(time) {
-    if (time?.length > 5) {
-      this.feed.time = String(time).substring(11, 16);
-    } else {
-      this.feed.time = time;
-    }
-    this.save();
-  }
   setDateAsNow() {
-    this.feed.date = this.datePipe.transform(Date.now(), 'dd/MM/yyyy');
-  }
-  setTimeAsNow() {
-    this.feed.time = this.datePipe.transform(Date.now(), 'HH::mm');
+    this.feed.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd HH:mm');
   }
 
-  onSetDate(value: any, option: number = 0) {
+  onSetDate(value: any) {
     if (value) {
-      this.feed.date = value.substring(0, 10);
-    } else {
-      if (option === 1) {
-        this.feed.date = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
-      } else {
-        const yesterday = new Date(
-          new Date().setDate(new Date().getDate() + 1)
-        );
-        this.feed.date = this.datePipe.transform(yesterday, 'yyyy-MM-dd');
-      }
+      this.feed.date = this.datePipe.transform(value, 'yyyy-MM-dd HH:mm');
+      this.save();
     }
-    this.save();
   }
 }
