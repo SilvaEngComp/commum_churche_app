@@ -1,3 +1,4 @@
+import { ExceptionService } from './../../../services/exception-service.service';
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Constants } from 'src/app/models/constants';
@@ -27,7 +28,7 @@ export class RegisterLoginComponent implements OnInit {
   diferentes: boolean;
   isRolesValid: boolean;
   is_registering: boolean;
-  constructor() {}
+  constructor(private exceptionService: ExceptionService) {}
 
   ngOnInit() {
     this.user = UiService.localGet(Constants.REGISTRING_USER);
@@ -55,6 +56,9 @@ export class RegisterLoginComponent implements OnInit {
   }
 
   setSession(session: number) {
+    if (!this.checkEmail()) {
+      this.exceptionService.alertDialog(Constants.INVALID_EMAIL, 'ERRO!');
+    }
     const lastSession = UiService.localGet(Constants.CURRENT_REGISTER_SESSION);
     let flag = true;
     if (lastSession < session) {
@@ -62,12 +66,15 @@ export class RegisterLoginComponent implements OnInit {
         flag = false;
       }
     }
-    console.log(flag);
     if (flag) {
       this.user.password = this.password;
       this.save();
       this.session.emit(session);
     }
+  }
+
+  checkEmail() {
+    return UiService.validEmail(this?.user?.email);
   }
 
   setEditing() {

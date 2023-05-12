@@ -46,7 +46,7 @@ export class RegisterPersonalInfoComponent implements OnInit {
   monthYear: string;
   subsession: number;
   date: DatePipe;
-
+  today: string;
   constructor(
     private exceptionService: ExceptionService,
     private inputMethodService: InputMethodService,
@@ -66,10 +66,10 @@ export class RegisterPersonalInfoComponent implements OnInit {
       this.save();
     }
     this.date = new DatePipe('en');
-
-    this.load();
+    this.today = this.date.transform(Date.now(), 'yyyy-MM-dd');
 
     this.isSmallDevice = this.platform.width() <= 500;
+    this.load();
   }
 
   async load() {
@@ -199,14 +199,24 @@ export class RegisterPersonalInfoComponent implements OnInit {
   }
 
   checkBirthday() {
+    let flag = true;
     if (!this?.user?.birthDate || this?.user?.birthDate?.length < 10) {
+      flag = false;
+    }
+
+    const dateOne = new Date(this?.user?.birthDate);
+    const dateTwo = new Date(this.today);
+    if (dateOne > dateTwo) {
+      flag = false;
+    }
+
+    if (!flag) {
       this.exceptionService.alertDialog(
         ConstantMessages.BIRTHDATE_INVALID,
         'Erro'
       );
-      return false;
     }
-    return true;
+    return flag;
   }
 
   checkIsBaptized() {
@@ -221,7 +231,7 @@ export class RegisterPersonalInfoComponent implements OnInit {
   }
 
   checkGender() {
-    if (this.user?.gender?.length <= 0) {
+    if (!this.user?.gender) {
       this.exceptionService.alertDialog(
         ConstantMessages.GENDER_INVALID,
         'Erro'
@@ -303,7 +313,7 @@ export class RegisterPersonalInfoComponent implements OnInit {
   }
 
   onSelectData(date: any) {
-    this.user.birthDate = date.substring(0, 10);
+    this.user.birthDate = this.date.transform(date, 'yyy-MM-dd');
     this.save();
   }
 

@@ -182,6 +182,7 @@ export class Constants {
   static TITHE_MENU_OPTION_TITHE = 'DÍZIMO';
   static TITHE_MENU_OPTION_OFFER = 'OFERTA';
   static INVALID_OPTION = 'Opção inválida';
+  static INVALID_EMAIL = 'Email inválido. Verifique o email e tente novamente!';
   static CHURCH_SCHEDULE_SELECTED_FILTER = 'churchScheduleSelectedFilter';
   static IS_COLOR_MANAGER_OPPENED = 'isColorManagerOppened';
   static ELEMENT_MARKER_REF = 'elementMarkerRef';
@@ -215,9 +216,9 @@ export class Constants {
   static FINANCY_REPORT_OUTPUT = 'financyReportOutput';
   static FINANCY_REPORT_GENERAL = 'financyReportGeneral';
   static SELECTED_VERSES_PRESSED = 'selectedVesesPressed';
-  static MENU_HOME_USER_REGISTRATION = 0;
-  static MENU_HOME_BIRTHDAY = 1;
-  static MENU_HOME_LOGIN = 2;
+  static MENU_HOME_USER_REGISTRATION = 1;
+  static MENU_HOME_BIRTHDAY = 2;
+  static MENU_HOME_LOGIN = 3;
   static MENU_HOME_USER_REGISTRATION_BY_LOGIN = 4;
   static HOME_SELECT_PAGE = 'homeSelectPage';
   static SECRETARY_FOLDER = 'secretaria';

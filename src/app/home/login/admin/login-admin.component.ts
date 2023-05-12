@@ -28,7 +28,7 @@ export class LoginAdminComponent implements OnInit {
 
   onSelectPage(page: any) {
     if (page === 4) {
-      this.sessionPage.emit(0);
+      this.sessionPage.emit(Constants.MENU_HOME_USER_REGISTRATION);
       UiService.localRemove(Constants.PAGE_MENU_LOGIN);
       return;
     }

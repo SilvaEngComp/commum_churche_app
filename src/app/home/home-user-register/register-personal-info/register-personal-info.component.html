@@ -32,8 +32,8 @@
         <ion-popover trigger="popover-button-month" [dismissOnSelect]="false">
           <ng-template>
             <ion-content>
-              <ion-datetime [showDefaultButtons]="true" presentation="date" display-format="MM-YYYY-DD" #timeMonth
-                (ionChange)="onSetDate(timeMonth.value)" doneText="OK" cancelText="CANCELAR">
+              <ion-datetime [showDefaultButtons]="true" presentation="date" [max]="today" display-format="MM-YYYY-DD"
+                #timeMonth (ionChange)="onSetDate(timeMonth.value)" doneText="OK" cancelText="CANCELAR">
               </ion-datetime>
             </ion-content>
           </ng-template>
