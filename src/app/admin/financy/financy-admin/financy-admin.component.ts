@@ -28,7 +28,6 @@ export class FinancyAdminComponent implements OnInit {
     });
 
     UiService.caixaAdminEmitter.subscribe((subpage) => {
-      debugger;
       this.subpage = subpage;
 
       this.save();
