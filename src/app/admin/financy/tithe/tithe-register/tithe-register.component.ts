@@ -36,7 +36,6 @@ export class TitheRegisterComponent implements OnInit, AfterViewInit {
   value: string;
   customizedMonth: CustomizedMonth;
   year: string;
-  localPageTitle: string;
   datePipe: DatePipe;
   lastMonth: string;
   currentMonth: string;
@@ -54,12 +53,12 @@ export class TitheRegisterComponent implements OnInit, AfterViewInit {
     this.validTithe();
 
     if (this.tithe.isTithe) {
-      this.localPageTitle = Constants.TITLE_TITHE_REGISTER;
+      UiService.subPageTitle.emit(Constants.TITLE_TITHE_REGISTER);
     } else {
-      this.localPageTitle = Constants.TITLE_OFFER_REGISTER;
+      UiService.subPageTitle.emit(Constants.TITLE_OFFER_REGISTER);
     }
-    UiService.localSet(Constants.TITLE_CURRENT_PAGE, this.localPageTitle);
-    UiService.pageTitle.emit(this.localPageTitle);
+
+    console.log(this.tithe);
   }
 
   onSetDate(value: any, option: number = 0) {
@@ -87,6 +86,7 @@ export class TitheRegisterComponent implements OnInit, AfterViewInit {
 
     if (this.tithe?.id) {
       this.isNew = false;
+      this.value = UiService.convertToCurrency(this.tithe?.amount);
     } else {
       this.value = '0,0';
     }
@@ -178,7 +178,7 @@ export class TitheRegisterComponent implements OnInit, AfterViewInit {
   }
 
   back() {
-    this.sessionPage.emit(UiService.localGet(Constants.BACK_PAGE));
+    UiService.caixaAdminEmitter.emit(UiService.localGet(Constants.BACK_PAGE));
   }
 
   setUser(user: User) {

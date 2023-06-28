@@ -132,6 +132,7 @@ export class Constants {
   static TITLE_SUMMARY_FINANCY_SUB = 'Resumo Financeiro';
   static TITLE_SUMMARY_FINANCY_REPORT = 'Relatório Financeiro';
   static TITLE_SUMMARY_REGISTER_BY_EXCEL = 'Registro Via Planilha';
+  static TITLE_SUMMARY_MANAGER_CATEGORY = 'Gerenciar Categoria e Subcategoria';
   static TITLE_SUMMARY_BALANCE = 'Receitas';
   static TITLE_BIRTHDAYS = 'Aniversariantes';
   static TITLE_SUMMARY_EXPANSE = 'Saídas';

@@ -2,6 +2,8 @@ import { TitheReport } from './../../../../models/sumaryInput';
 import { Component, Input, OnInit } from '@angular/core';
 import { Tithe } from 'src/app/models/tithe';
 import { TitheFacade } from 'src/app/facades/tithe-facade.service';
+import { Constants } from 'src/app/models/constants';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-tithe-summary',
@@ -21,7 +23,6 @@ export class TitheSummaryComponent implements OnInit {
       this.headTitheList.push('Ofertante');
     }
     this.headTitheList.push('');
-    console.log(this.titheReport);
   }
 
   setShowSummaryDetail() {
@@ -32,6 +33,18 @@ export class TitheSummaryComponent implements OnInit {
     const tithePosition = this.titheReport.titheSummary.tithes.indexOf(tithe);
     this.titheReport.titheSummary.tithes[tithePosition].showDetails =
       !this.titheReport.titheSummary.tithes[tithePosition].showDetails;
+  }
+
+  edit(tithe: Tithe) {
+    UiService.localSet(
+      Constants.BACK_PAGE,
+      Constants.MENU_FINANCY_OPTION_BALANCE
+    );
+    UiService.localSet(Constants.TITHE_MAINTAINCE, tithe);
+
+    UiService.caixaAdminEmitter.emit(
+      Constants.MENU_FINANCY_OPTION_TITHE_REGISTER
+    );
   }
 
   delete(tithe: Tithe) {

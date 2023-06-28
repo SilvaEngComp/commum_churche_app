@@ -1,7 +1,3 @@
-<ion-item class="item-page-title">
-  <ion-icon color="primary" name="chevron-back-circle-sharp" (click)="back()"></ion-icon>
-  <ion-title>{{localPageTitle}}</ion-title>
-</ion-item>
 <div class="flex-container">
   <div class="amount-label">
     <ion-label position="floating">*Digite o valor</ion-label>
@@ -41,7 +37,7 @@
       <ion-col>
         <div class="flex-container-row">
           <ion-icon name="storefront-outline" class="icon-format"></ion-icon>
-          <app-my-select-list [label]="'Membro'" [listName]="'users'" [create]="true"
+          <app-my-select-list [label]="'Membro'" [listName]="'users'" [create]="true" [obj]="tithe?.user"
             (selectEmiter)="setUser($event)"></app-my-select-list>
         </div>
       </ion-col>
@@ -52,7 +48,7 @@
         <div class="flex-container-row">
           <ion-icon name="storefront-outline" class="icon-format"></ion-icon>
           <app-my-select-list [label]="'*Organização'" [listName]="'churches'" [create]="true"
-            (selectEmiter)="setChurch($event)"></app-my-select-list>
+            (selectEmiter)="setChurch($event)" [obj]="tithe?.church"></app-my-select-list>
         </div>
       </ion-col>
     </ion-row>

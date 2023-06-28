@@ -10,6 +10,7 @@ import { CaixaCategoryRegisterComponent } from '../caixa/caixa-group-register/ca
 import { AlertController, PopoverController } from '@ionic/angular';
 import { ConstantMessages } from 'src/app/models/messages';
 import { Constants } from 'src/app/models/constants';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-category-manager',
@@ -22,7 +23,7 @@ export class CategoryManagerComponent implements OnInit {
   noContent = 'Nenhum Registro';
   categories: CaixaCategory[];
   subcategories: CaixaType[];
-  localPageTitle = 'Gerenciar Categoria e Subcategoria';
+
   constructor(
     private categoryService: CaixaCategoryService,
     private caixaTypeService: CaixaTypeService,
@@ -32,12 +33,14 @@ export class CategoryManagerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    UiService.localSet(
+      Constants.BACK_PAGE,
+      Constants.MENU_FINANCY_OPTION_SUMMARY
+    );
+    UiService.subPageTitle.emit(Constants.TITLE_SUMMARY_MANAGER_CATEGORY);
     this.load();
   }
 
-  back() {
-    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_SUMMARY);
-  }
   load() {
     this.loadCategory();
     this.loadSubcategory();

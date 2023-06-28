@@ -50,7 +50,6 @@ export class FinancyReportComponent implements OnInit, AfterViewInit {
   initialDate: string;
   endDate: string;
 
-  localPageTitle: string;
   wallet: Wallet;
 
   customMonth: any = {
@@ -58,16 +57,16 @@ export class FinancyReportComponent implements OnInit, AfterViewInit {
   };
 
   ngOnInit() {
-    this.localPageTitle = Constants.TITLE_SUMMARY_FINANCY_REPORT;
+    UiService.localSet(
+      Constants.BACK_PAGE,
+      Constants.MENU_FINANCY_OPTION_SUMMARY
+    );
+    UiService.subPageTitle.emit(Constants.TITLE_SUMMARY_FINANCY_REPORT);
   }
 
   async download() {
     this.exceptionService.loadingFunction('Processando Tabela Excel...');
     this.downloadService.buildFinancialReport('Relatório Financeiro');
-  }
-
-  back() {
-    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_SUMMARY);
   }
 
   checkFilter() {

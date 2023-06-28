@@ -18,6 +18,7 @@ export class RegisterJustificationComponent implements OnInit {
   }
 
   setSession(session: number) {
+    localStorage.clear();
     this.session.emit(session);
   }
 

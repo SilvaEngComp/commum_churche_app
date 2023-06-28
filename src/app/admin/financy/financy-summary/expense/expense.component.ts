@@ -1,4 +1,3 @@
-import { CaixaReport } from '../../../../models/CaixaReportChurch';
 import { Wallet } from './../../../../models/wallet';
 import { DatePipe } from '@angular/common';
 import {
@@ -10,7 +9,6 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { IonPopover } from '@ionic/angular';
-import { CaixaSummary } from 'src/app/models/caixaSummary';
 import { Constants } from 'src/app/models/constants';
 import { FinancySummaryFilter } from 'src/app/models/financySummaryFilter';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -33,7 +31,6 @@ export class ExpenseComponent implements OnInit, AfterViewInit {
   noContent = 'Nenhum Registro';
   initialDate: string;
   endDate: string;
-  localPageTitle: string;
   wallet: Wallet;
   total: number;
   constructor(
@@ -46,7 +43,11 @@ export class ExpenseComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.localPageTitle = Constants.TITLE_SUMMARY_EXPANSE;
+    UiService.localSet(
+      Constants.BACK_PAGE,
+      Constants.MENU_FINANCY_OPTION_SUMMARY
+    );
+    UiService.subPageTitle.emit(Constants.TITLE_SUMMARY_EXPANSE);
     this.checkFilter();
 
     this.load();
@@ -130,9 +131,6 @@ export class ExpenseComponent implements OnInit, AfterViewInit {
     return true;
   }
 
-  back() {
-    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_SUMMARY);
-  }
   setWallet(wallet: Wallet) {
     if (wallet) {
       this.wallet = wallet;

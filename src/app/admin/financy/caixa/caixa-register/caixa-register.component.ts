@@ -65,6 +65,7 @@ export class CaixaRegisterComponent implements OnInit, AfterViewInit {
     private walletService: WalletService,
     private actionCtrl: AlertController
   ) {}
+
   ngAfterViewInit(): void {
     this.inputAmount.setFocus();
   }
@@ -72,7 +73,6 @@ export class CaixaRegisterComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.height = Math.round(this.platform.height() * 0.7) + 'px';
     this.validCaixa();
-
     if (this.caixa.isEntry) {
       this.localPageTitle = Constants.TITLE_CAIXA_REGISTER_IN;
       this.buttonColor = 'success';
@@ -190,9 +190,8 @@ export class CaixaRegisterComponent implements OnInit, AfterViewInit {
   }
 
   back() {
-    this.sessionPage.emit(UiService.localGet(Constants.BACK_PAGE));
+    UiService.caixaAdminEmitter.emit(UiService.localGet(Constants.BACK_PAGE));
   }
-
   isFormValid() {
     if (!this.caixa?.caixaCategory?.id) {
       this.exceptionService.alertDialog(

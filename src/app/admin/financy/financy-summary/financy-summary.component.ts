@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import { TotalInputOutput } from './../../../models/totalInputOutput';
-import { MenuSummaryComponent } from './menu-summary/menu-summary.component';
 import { UiService } from 'src/app/services/ui.service';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { DatePipe } from '@angular/common';
@@ -10,11 +9,8 @@ import {
   EventEmitter,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
-import { IonPopover, ModalController, PopoverController } from '@ionic/angular';
-import { CaixaFacadeService } from 'src/app/facades/caixa-facade.service';
-import { Caixa } from 'src/app/models/caixa';
+import { IonPopover, ModalController } from '@ionic/angular';
 import { Constants } from 'src/app/models/constants';
 import { FinancySummaryFilter } from 'src/app/models/financySummaryFilter';
 import { ExceptionService } from 'src/app/services/exception-service.service';
@@ -24,10 +20,7 @@ import { CaixaSummary } from 'src/app/models/caixaSummary';
 import { Tithe } from 'src/app/models/tithe';
 import { Wallet } from 'src/app/models/wallet';
 import { ConstantMessages } from 'src/app/models/messages';
-import { DownloadService } from 'src/app/services/download.service';
 import { TitheSummary } from 'src/app/models/titheSummary';
-import { FileUploader, FileLikeObject } from 'ng2-file-upload';
-import { TempFile } from 'src/app/models/temFile';
 @Component({
   selector: 'app-summary',
   templateUrl: './financy-summary.component.html',
@@ -69,8 +62,8 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.localPageTitle = Constants.TITLE_SUMMARY_FINANCY_SUB;
-
+    UiService.localSet(Constants.BACK_PAGE, Constants.MENU_BACK);
+    UiService.subPageTitle.emit(Constants.TITLE_SUMMARY_FINANCY_SUB);
     this.checkFilter();
 
     this.load();
@@ -167,6 +160,10 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
   }
 
   async newCaixa(op: boolean) {
+    UiService.localSet(
+      Constants.BACK_PAGE,
+      Constants.MENU_FINANCY_OPTION_SUMMARY
+    );
     UiService.localRemove(Constants.CAIXA_MAINTAINCE);
 
     UiService.localSet(Constants.IS_ENTRY, op);
@@ -177,6 +174,11 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
     this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_CAIXA_REGISTER);
   }
   async newTithe(isTithe: boolean) {
+    UiService.localSet(
+      Constants.BACK_PAGE,
+      Constants.MENU_FINANCY_OPTION_SUMMARY
+    );
+    UiService.subPageTitle.emit(Constants.TITLE_SUMMARY_BALANCE);
     const tithe: Tithe = new Tithe();
     tithe.isTithe = isTithe;
     UiService.localSet(Constants.TITHE_MAINTAINCE, tithe);
@@ -213,10 +215,6 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
     } else {
       this.newCaixa(op);
     }
-  }
-
-  back() {
-    this.sessionPage.emit(Constants.MENU_BACK);
   }
 
   setWallet(wallet: Wallet) {

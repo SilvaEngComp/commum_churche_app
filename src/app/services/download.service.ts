@@ -186,13 +186,7 @@ export class DownloadService {
 
   async buildUserExcel(users: User[], generalTitle: string) {
     const userExcelFormat = new UserExcelFormat();
-    const header = [
-      'Nome',
-      'Organização',
-      'Data de Nascimento',
-      'Batizado',
-      'Ingresso por',
-    ];
+    const header = ['Nome', 'Data de Nascimento', 'Batizado', 'Ingresso por'];
 
     let title;
 
@@ -208,7 +202,6 @@ export class DownloadService {
 
           data.push([
             user?.name,
-            user?.church?.name,
             user?.birthDate,
             isBaptized,
             user?.inputMethod?.name,
@@ -222,23 +215,10 @@ export class DownloadService {
 
     data = [];
     users.filter((user) => {
-      if (!user?.church || user?.church?.name === '') {
+      if (!user?.church || !user?.church?.name) {
         const isBaptized = user?.isBaptized ? 'SIM' : 'NÃO';
-
-        if (title !== user?.church?.name) {
-          userExcelFormat.setWorksheet(
-            generalTitle,
-            'Sem Organização',
-            header,
-            data
-          );
-
-          title = user?.church?.name;
-          data = [];
-        }
         data.push([
           user?.name,
-          user?.church?.name,
           user?.birthDate,
           isBaptized,
           user?.inputMethod?.name,
@@ -246,6 +226,14 @@ export class DownloadService {
       }
     });
 
+    if (data?.length > 0) {
+      userExcelFormat.setWorksheet(
+        generalTitle,
+        'Sem Organização',
+        header,
+        data
+      );
+    }
     this.exceptionService.loadingFunction('Processando Tabela Excel...');
     this.testDownloadXls(
       userExcelFormat?.workbook,

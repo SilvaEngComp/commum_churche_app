@@ -75,9 +75,11 @@ export class RegisterPersonalInfoComponent implements OnInit {
   async load() {
     const inputMethodResponser = await this.inputMethodService.get();
     this.inputMethods = inputMethodResponser.data;
-
-    const maritalResponser = await this.maritalStatusService.get();
-    this.maritalStatuses = maritalResponser.data;
+    this.maritalStatusService
+      .get()
+      .then(
+        (maritalResponser) => (this.maritalStatuses = maritalResponser?.data)
+      );
     const churchResponser = await this.churchService.get();
     this.churches = churchResponser.data;
   }

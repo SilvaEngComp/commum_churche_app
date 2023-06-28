@@ -21,6 +21,10 @@
         </td>
         <td>
           <div class="buttons">
+            <ion-tab-button (click)="edit(item)">
+              <ion-icon name="document-text-outline"></ion-icon>
+              <ion-label>Editar</ion-label>
+            </ion-tab-button>
             <ion-tab-button (click)="delete(item)">
               <ion-icon name="trash-outline"></ion-icon>
               <ion-label>Excluir</ion-label>

@@ -42,6 +42,9 @@ export class UiService {
   static pageTitle: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
+  static subPageTitle: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
   static loadImageEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()

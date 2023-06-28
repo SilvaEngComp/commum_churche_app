@@ -31,7 +31,6 @@ export class BalanceComponent implements OnInit, AfterViewInit {
   noContent = 'Nenhum Registro';
   initialDate: string;
   endDate: string;
-  localPageTitle: string;
   wallet: Wallet;
   isLoading: boolean;
   constructor(
@@ -44,7 +43,11 @@ export class BalanceComponent implements OnInit, AfterViewInit {
     UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
   }
   ngOnInit() {
-    this.localPageTitle = Constants.TITLE_SUMMARY_BALANCE;
+    UiService.localSet(
+      Constants.BACK_PAGE,
+      Constants.MENU_FINANCY_OPTION_SUMMARY
+    );
+    UiService.subPageTitle.emit(Constants.TITLE_SUMMARY_BALANCE);
     this.checkFilter();
     this.load();
 
@@ -131,10 +134,6 @@ export class BalanceComponent implements OnInit, AfterViewInit {
       return false;
     }
     return true;
-  }
-
-  back() {
-    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_SUMMARY);
   }
 
   setWallet(wallet: Wallet) {

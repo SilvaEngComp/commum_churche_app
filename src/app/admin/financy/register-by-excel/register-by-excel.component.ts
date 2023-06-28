@@ -17,6 +17,7 @@ import { ImportCaixaExcel } from 'src/app/models/importCaixaExcel';
 import { ExceptionService } from './../../../services/exception-service.service';
 import { Church } from './../../../models/church';
 import { CaixaCategoryService } from 'src/app/services/caixa-category.service';
+import { UiService } from 'src/app/services/ui.service';
 @Component({
   selector: 'app-register-by-excel',
   templateUrl: './register-by-excel.component.html',
@@ -29,7 +30,6 @@ export class RegisterByExcelComponent implements OnInit {
   excelFile: TempFile;
   isValide: boolean;
   isUploading: boolean;
-  localPageTitle: string;
   importCaixaExcel: ImportCaixaExcel[];
   caixas: Caixa[];
   tithes: Tithe[];
@@ -47,7 +47,11 @@ export class RegisterByExcelComponent implements OnInit {
 
   ngOnInit() {
     this.importCaixaExcel = [];
-    this.localPageTitle = Constants.TITLE_SUMMARY_REGISTER_BY_EXCEL;
+    UiService.localSet(
+      Constants.BACK_PAGE,
+      Constants.MENU_FINANCY_OPTION_SUMMARY
+    );
+    UiService.subPageTitle.emit(Constants.TITLE_SUMMARY_REGISTER_BY_EXCEL);
     this.load();
   }
 
@@ -188,9 +192,6 @@ export class RegisterByExcelComponent implements OnInit {
       );
       this.isUploading = false;
     }, 1000);
-  }
-  back() {
-    this.sessionPage.emit(Constants.MENU_FINANCY_OPTION_SUMMARY);
   }
 
   async upload() {

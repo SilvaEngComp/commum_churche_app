@@ -2,8 +2,11 @@
   <table class="table  align-middle ">
     <thead>
       <tr class="table-dark">
-        <th colspan="6" *ngIf="caixaSummary?.caixaCategory"><ion-label
+        <th colspan="5" *ngIf="caixaSummary?.caixaCategory"><ion-label
             class="label-title">{{caixaSummary?.caixaCategory?.name}}</ion-label>
+        </th>
+        <th *ngIf="caixaSummary?.caixaCategory"><ion-label class="label-title">R$ {{caixaSummary?.total |
+            currencyBrl}}</ion-label>
         </th>
         <th colspan="6" *ngIf="!caixaSummary?.caixaCategory"><ion-label class="label-title">
             <ion-label>Sem
@@ -32,6 +35,7 @@
         <td>
 
           <div class="buttons">
+
             <ion-tab-button [disabled]="!item?.description" (click)="openDescription(item)">
               <ion-icon name="document-text-outline"></ion-icon>
               <ion-label>Descrição</ion-label>
@@ -39,7 +43,12 @@
             <ion-tab-button [disabled]="!item?.file" (click)="download(item)" [download]="item?.file">
               <ion-icon name="download-outline"></ion-icon>
               <ion-label>Comprovante</ion-label>
-            </ion-tab-button> <ion-tab-button (click)="delete(item)">
+            </ion-tab-button>
+            <ion-tab-button (click)="edit(item)">
+              <ion-icon name="document-text-outline"></ion-icon>
+              <ion-label>Editar</ion-label>
+            </ion-tab-button>
+            <ion-tab-button (click)="delete(item)">
               <ion-icon name="trash-outline"></ion-icon>
               <ion-label>Excluir</ion-label>
             </ion-tab-button>

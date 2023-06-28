@@ -33,6 +33,17 @@ export class CaixaSummaryComponent implements OnInit {
   }
 
   async edit(caixa: Caixa) {
+    if (caixa?.isEntry) {
+      UiService.localSet(
+        Constants.BACK_PAGE,
+        Constants.MENU_FINANCY_OPTION_BALANCE
+      );
+    } else {
+      UiService.localSet(
+        Constants.BACK_PAGE,
+        Constants.MENU_FINANCY_OPTION_EXPENSE
+      );
+    }
     UiService.localSet(Constants.CAIXA_MAINTAINCE, caixa);
 
     UiService.caixaAdminEmitter.emit(
@@ -41,23 +52,6 @@ export class CaixaSummaryComponent implements OnInit {
   }
   delete(caixa: Caixa) {
     this.caixaFacade.delete(caixa);
-  }
-
-  async openMenuOption(ev: any, caixa: Caixa) {
-    const pop = await this.popCtrl.create({
-      component: MenuCaixaSummaryComponent,
-      event: ev,
-    });
-
-    pop.present();
-
-    const { data } = await pop.onWillDismiss();
-
-    if (data?.option === Constants.OPTION_EDIT) {
-      this.edit(caixa);
-    } else if (data?.option === Constants.OPTION_DELETE) {
-      this.delete(caixa);
-    }
   }
 
   download(caixa: Caixa) {

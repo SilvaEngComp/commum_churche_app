@@ -74,7 +74,7 @@ export class MySelectListComponent implements OnInit {
         this.obj = data?.obj;
       }
       if (data?.listName === this.listName) {
-        this.load(this.obj);
+        this.load();
       }
     });
   }
@@ -100,7 +100,7 @@ export class MySelectListComponent implements OnInit {
     );
   }
 
-  async load(obj: any = null, isReload: boolean = false) {
+  async load(isReload: boolean = false) {
     this.isLoading = true;
 
     if (this.listName === 'users') {
@@ -127,8 +127,8 @@ export class MySelectListComponent implements OnInit {
       this.apiResponse = responser.data;
     } else if (this.listName === 'churchScheduleTypes') {
       const filter: ChurchScheduleFilter = new ChurchScheduleFilter();
-      if (obj?.church) {
-        filter.church = obj.church;
+      if (this.obj?.church) {
+        filter.church = this.obj.church;
       }
       const responser = await this.churchScheduleTypeService.get(filter);
       this.apiResponse = responser.data;
@@ -149,11 +149,10 @@ export class MySelectListComponent implements OnInit {
     } else {
       this.limit = 10;
     }
-
-    if (obj) {
+    if (this.obj) {
       this.apiResponseAdapted.filter((selection) => {
-        if (obj.id === selection.cod) {
-          this.selected = selection.value;
+        if (this.obj.id === Number(selection.cod)) {
+          this.onSelect(selection, false);
         }
       });
     }

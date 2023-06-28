@@ -114,6 +114,8 @@ export class CaixaService extends ServiceInterface {
       return Promise.resolve(null);
     }
 
+    console.log(JSON.stringify(caixa));
+
     return this.http
       .patch<Responser>(`${environment.API2}/caixas/${caixa.id}`, caixa, {
         headers: LoginService.getHeaders(),
