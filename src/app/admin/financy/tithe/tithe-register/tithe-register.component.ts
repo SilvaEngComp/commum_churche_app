@@ -51,14 +51,16 @@ export class TitheRegisterComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.validTithe();
-
+    let localPageTitle;
     if (this.tithe.isTithe) {
       UiService.subPageTitle.emit(Constants.TITLE_TITHE_REGISTER);
+      localPageTitle = Constants.TITLE_TITHE_REGISTER;
     } else {
       UiService.subPageTitle.emit(Constants.TITLE_OFFER_REGISTER);
+      localPageTitle = Constants.TITLE_OFFER_REGISTER;
     }
 
-    console.log(this.tithe);
+    UiService.localSet(Constants.TITLE_CURRENT_PAGE, localPageTitle);
   }
 
   onSetDate(value: any, option: number = 0) {
@@ -131,26 +133,30 @@ export class TitheRegisterComponent implements OnInit, AfterViewInit {
   }
 
   async askNeedDoAgain() {
-    const action = await this.actionCtrl.create({
-      header: 'O que deseja fazer?',
-      subHeader: 'Deseja realizar outro registro ?',
-      buttons: [
-        {
-          text: 'Sim',
-          handler: () => {
-            window.location.reload();
+    if (this.isNew) {
+      const action = await this.actionCtrl.create({
+        header: 'O que deseja fazer?',
+        subHeader: 'Deseja realizar outro registro ?',
+        buttons: [
+          {
+            text: 'Sim',
+            handler: () => {
+              window.location.reload();
+            },
           },
-        },
-        {
-          text: 'Não',
-          handler: () => {
-            this.back();
+          {
+            text: 'Não',
+            handler: () => {
+              this.back();
+            },
           },
-        },
-      ],
-    });
+        ],
+      });
 
-    await action.present();
+      await action.present();
+    } else {
+      this.back();
+    }
   }
 
   isFormValid() {

@@ -126,27 +126,32 @@ export class CaixaRegisterComponent implements OnInit, AfterViewInit {
   }
 
   async askNeedDoAgain() {
-    const action = await this.actionCtrl.create({
-      header: 'O que deseja fazer?',
-      subHeader: 'Deseja realizar outro registro ?',
-      buttons: [
-        {
-          text: 'Sim',
-          handler: () => {
-            window.location.reload();
+    if (this.isNew) {
+      const action = await this.actionCtrl.create({
+        header: 'O que deseja fazer?',
+        subHeader: 'Deseja realizar outro registro ?',
+        buttons: [
+          {
+            text: 'Sim',
+            handler: () => {
+              window.location.reload();
+            },
           },
-        },
-        {
-          text: 'Não',
-          handler: () => {
-            this.back();
+          {
+            text: 'Não',
+            handler: () => {
+              this.back();
+            },
           },
-        },
-      ],
-    });
+        ],
+      });
 
-    await action.present();
+      await action.present();
+    } else {
+      this.back();
+    }
   }
+
   async register(amount: any) {
     this.caixa.amount = UiService.convertToNumber(amount);
     if (this.isFormValid()) {

@@ -75,9 +75,10 @@ export class RegisterByExcelComponent implements OnInit {
     const target: DataTransfer = <DataTransfer>ev.target;
     const file = target.files[0];
     const url = URL.createObjectURL(file);
-    this.excelFile = new TempFile(file.name, url, file.type);
+    this.excelFile = new TempFile(file, file.name, url, file.type);
     this.excelFile.checkExpectedType([
       'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'vnd.ms-excel',
       'xls',
       'xlsx',
       'vnd.ms-excel',

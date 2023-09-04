@@ -18,7 +18,6 @@ export class TempFile {
     this.file = file;
     this.name = name;
     this.path = path;
-
     this.checked = checked;
     if (type) {
       const typePart: string[] = type.split('/');
@@ -28,11 +27,7 @@ export class TempFile {
   }
 
   checkExpectedType(expectedType: string[]) {
-    expectedType.filter((type) => {
-      if (type === this?.extension) {
-        this.isValid = true;
-      }
-    });
+    this.isValid = expectedType.includes(this?.extension);
   }
 
   setTempImage(fileItem: File, name?: string, checked: boolean = false) {

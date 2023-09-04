@@ -79,7 +79,7 @@
       <ion-list>
         <ion-item *ngSwitchCase="6" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}" lines="none">
           <ion-label>*Qual seu estado civil? </ion-label>
-          <ion-select [value]="user.maritalStatus.id" (ionChange)="setMaritalStatus($event)">
+          <ion-select interface="popover" [value]="user.maritalStatus.id" (ionChange)="setMaritalStatus($event)">
             <ion-select-option [value]="item?.id" *ngFor="let item of maritalStatuses">{{item?.name | uppercase}}
             </ion-select-option>
           </ion-select>
@@ -87,7 +87,7 @@
       </ion-list>
       <ion-item *ngSwitchCase="7" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}" lines="none">
         <ion-label>*Como veio para a igreja? </ion-label>
-        <ion-select [value]="user?.inputMethod?.id" (ionChange)="setInputMethod($event)">
+        <ion-select interface="popover" [value]="user?.inputMethod?.id" (ionChange)="setInputMethod($event)">
           <ion-select-option [value]="item?.id" *ngFor="let item of maritalStatuses">{{item?.name | uppercase}}
           </ion-select-option>
         </ion-select>
@@ -95,7 +95,7 @@
 
       <ion-item *ngSwitchCase="8" [ngClass]="{'input': !isSmallDevice, 'input-small':isSmallDevice}" lines="none">
         <ion-label>*Onde frequenta? </ion-label>
-        <ion-select [value]="user?.church?.id" (ionChange)="setChurch($event)">
+        <ion-select interface="popover" [value]="user?.church?.id" (ionChange)="setChurch($event)">
           <ion-select-option [value]="item?.id" *ngFor="let item of churches">{{item?.name | uppercase}}
           </ion-select-option>
         </ion-select>

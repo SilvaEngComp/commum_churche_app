@@ -263,13 +263,12 @@ export class ProfileComponent implements OnInit {
           (x) => !currentUser?.roles?.includes(x)
         );
       }
-      console.log(difference_a1);
       this.userService
         .update(this.user)
         .then((responser: Responser) => {
           this.exceptionService.alertDialog('Alteração realizada com sucesso');
-
-          if (difference_a1?.length <= 0) {
+          const loggedUser = LoginService.getUser();
+          if (difference_a1?.length <= 0 && loggedUser.id === this.user.id) {
             this.user = responser.data;
             LoginService.setUser(this.user);
           } else {
