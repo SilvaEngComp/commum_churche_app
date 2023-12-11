@@ -105,67 +105,67 @@ export class RegisterCardComponent implements OnInit {
       }
     }
 
-    if (
-      !this.user?.contact?.phone1 ||
-      this.user?.contact?.phone1?.length <= 0
-    ) {
-      this.exceptionService.alertDialog(ConstantMessages.PHONE_INVALID, 'Erro');
-      return false;
-    } else {
-      if (this?.user?.contact?.phone1) {
-        this.user.contact.phone1 = this.user.contact.phone1.replace(
-          /[^\d]+/g,
-          ''
-        );
-      }
-    }
+    // if (
+    //   !this.user?.contact?.phone1 ||
+    //   this.user?.contact?.phone1?.length <= 0
+    // ) {
+    //   this.exceptionService.alertDialog(ConstantMessages.PHONE_INVALID, 'Erro');
+    //   return false;
+    // } else {
+    //   if (this?.user?.contact?.phone1) {
+    //     this.user.contact.phone1 = this.user.contact.phone1.replace(
+    //       /[^\d]+/g,
+    //       ''
+    //     );
+    //   }
+    // }
 
-    if (!this.user.birthDate || this.user.birthDate.length < 10) {
-      this.exceptionService.alertDialog(
-        ConstantMessages.BIRTHDATE_INVALID,
-        'Erro'
-      );
-      return false;
-    }
+    // if (!this.user.birthDate || this.user.birthDate.length < 10) {
+    //   this.exceptionService.alertDialog(
+    //     ConstantMessages.BIRTHDATE_INVALID,
+    //     'Erro'
+    //   );
+    //   return false;
+    // }
 
-    if (!this.user.isBaptized) {
-      this.exceptionService.alertDialog(
-        ConstantMessages.ISBAPTIZED_INVALID,
-        'Erro'
-      );
-      return false;
-    }
-    if (this.user?.gender?.length <= 0) {
-      this.exceptionService.alertDialog(
-        ConstantMessages.GENDER_INVALID,
-        'Erro'
-      );
-      return false;
-    }
+    // if (!this.user.isBaptized) {
+    //   this.exceptionService.alertDialog(
+    //     ConstantMessages.ISBAPTIZED_INVALID,
+    //     'Erro'
+    //   );
+    //   return false;
+    // }
+    // if (this.user?.gender?.length <= 0) {
+    //   this.exceptionService.alertDialog(
+    //     ConstantMessages.GENDER_INVALID,
+    //     'Erro'
+    //   );
+    //   return false;
+    // }
 
-    if (!this.user?.maritalStatus?.id) {
-      this.exceptionService.alertDialog(
-        ConstantMessages.MARITAL_STATUS_INVALID,
-        'Erro'
-      );
-      return false;
-    }
+    // if (!this.user?.maritalStatus?.id) {
+    //   this.exceptionService.alertDialog(
+    //     ConstantMessages.MARITAL_STATUS_INVALID,
+    //     'Erro'
+    //   );
+    //   return false;
+    // }
 
-    if (!this.user?.inputMethod?.id) {
-      this.exceptionService.alertDialog(
-        ConstantMessages.INPUT_METHOD_INVALID,
-        'Erro'
-      );
-      return false;
-    }
+    // if (!this.user?.inputMethod?.id) {
+    //   this.exceptionService.alertDialog(
+    //     ConstantMessages.INPUT_METHOD_INVALID,
+    //     'Erro'
+    //   );
+    //   return false;
+    // }
 
-    if (!this.user?.church?.id) {
-      this.exceptionService.alertDialog(
-        ConstantMessages.CHURCH_INVALID,
-        'Erro'
-      );
-      return false;
-    }
+    // if (!this.user?.church?.id) {
+    //   this.exceptionService.alertDialog(
+    //     ConstantMessages.CHURCH_INVALID,
+    //     'Erro'
+    //   );
+    //   return false;
+    // }
 
     this.user.password = this.user.birthDate;
     return true;
