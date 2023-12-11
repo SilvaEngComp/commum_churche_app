@@ -1,17 +1,6 @@
-<app-admin-small *ngIf="isLarge" (selectedPage)="onSelectPage($event)"></app-admin-small>
-<div class="div-header">
-  <ion-avatar class="left" [ngClass]="{'hasBorder': user?.image}" (click)="setPage('0')">
-    <img id="userImage" [src]="user?.image" (error)="standby()" />
-  </ion-avatar>
+<app-side-menu-admin (selectedPage)="onSelectPage($event)"></app-side-menu-admin>
 
-  <ion-label>{{pageTile}}</ion-label>
 
-  <ion-avatar class="right" (click)="showTutorial($event)">
-    <img src="./assets/images/help.png" />
-  </ion-avatar>
-</div>
-
-<!-- <ion-content ionScroll="true" #mainSmall *ngIf="!isLarge"> -->
 <ion-content ionScroll="true" #mainSmall>
 
   <div [ngSwitch]="page">
@@ -33,4 +22,3 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 </ion-content>
-<app-admin-small *ngIf="!isLarge" (selectedPage)="onSelectPage($event)"></app-admin-small>

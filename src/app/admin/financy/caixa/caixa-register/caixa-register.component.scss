@@ -26,6 +26,12 @@ textarea {
   width: 100%;
 }
 
+.grid-body-row {
+  display: grid;
+  grid-template-columns: 60px 200px;
+  align-content: center;
+  width: 100%;
+}
 .flex-container-col {
   display: flex;
   flex-direction: column;

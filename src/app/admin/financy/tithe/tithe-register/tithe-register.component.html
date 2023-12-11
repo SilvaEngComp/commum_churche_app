@@ -35,14 +35,28 @@
 
     <ion-row>
       <ion-col>
-        <div class="flex-container-row">
-          <ion-icon name="storefront-outline" class="icon-format"></ion-icon>
+        <div class="grid-body-row">
+          <ion-icon name="person-outline" class="icon-format"></ion-icon>
           <app-my-select-list [label]="'Membro'" [listName]="'users'" [create]="true" [obj]="tithe?.user"
             (selectEmiter)="setUser($event)"></app-my-select-list>
         </div>
       </ion-col>
     </ion-row>
 
+    <ion-row *ngIf="tithe?.user">
+      <ion-col>
+        <div class="grid-body-row">
+          <ion-icon name="storefront-outline" class="icon-format"></ion-icon>
+          <div>
+            <ion-label color="light">Organização</ion-label><br>
+            <ion-label
+              [ngClass]="{'churchOk': tithe?.church?.name, 'churchNotOk': !tithe?.church?.name }">{{tithe?.church
+              ? tithe?.church?.name: "Membro Sem Igreja"}}</ion-label>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- </ion-row>
     <ion-row>
       <ion-col>
         <div class="flex-container-row">
@@ -51,7 +65,7 @@
             (selectEmiter)="setChurch($event)" [obj]="tithe?.church"></app-my-select-list>
         </div>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   </ion-grid>
 
   <ion-fab class="confirm-button" slot="fixed" horizontal="center" vertical="bottom">

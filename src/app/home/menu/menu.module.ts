@@ -12,12 +12,14 @@ import { HomePageModule } from '../home/home.module';
 import { HomeUserRegisterModule } from '../home-user-register/home-user-register.module';
 import { HomePageRoutingModule } from './app-routing.module';
 import { LoginModule } from '../login/admin/login-admin.module';
+import { SideMenuComponent } from './side-menu/side-menu.component';
 
 @NgModule({
   declarations: [
     MenuHomeLargeComponent,
     MenuHomeSelectComponent,
     MenuHomeSmallComponent,
+    SideMenuComponent,
   ],
   imports: [
     CommonModule,

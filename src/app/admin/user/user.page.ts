@@ -57,12 +57,12 @@ export class UserPage implements OnInit {
   ngOnInit() {
     UiService.localSet(
       Constants.TITLE_CURRENT_PAGE,
-      Constants.TITLE_USER_MEMBERS
+      Constants.TITLE_MEMBERS_LIST
     );
 
-    this.localPageTitle = Constants.TITLE_USER_MEMBERS;
+    this.localPageTitle = Constants.TITLE_MEMBERS_LIST;
 
-    UiService.pageTitle.emit(Constants.TITLE_USER_MEMBERS);
+    UiService.pageTitle.emit(Constants.TITLE_MEMBERS_LIST);
 
     this.loadUsers();
     this.letterSizeConfig = UiService.localGet(

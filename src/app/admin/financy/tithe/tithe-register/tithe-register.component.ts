@@ -169,6 +169,12 @@ export class TitheRegisterComponent implements OnInit, AfterViewInit {
       this.exceptionService.alertDialog(ConstantMessages.DATE_INVALID);
       return;
     }
+    if (!this.tithe.church) {
+      this.exceptionService.alertDialog(
+        ConstantMessages.CHURCH_INVALID_FINANCY
+      );
+      return;
+    }
 
     if (UiService.validPermissions(Constants.FINANCIAL)) {
       if (!this.tithe?.user?.id) {
@@ -191,6 +197,7 @@ export class TitheRegisterComponent implements OnInit, AfterViewInit {
     if (user) {
       this.tithe.user = new User(true);
       this.tithe.user.id = user.id;
+      this.tithe.church = user.church;
     } else {
       this.tithe.user = null;
     }

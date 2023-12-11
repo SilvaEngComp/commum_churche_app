@@ -64,13 +64,14 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     UiService.localSet(Constants.BACK_PAGE, Constants.MENU_BACK);
     UiService.subPageTitle.emit(Constants.TITLE_SUMMARY_FINANCY_SUB);
-    this.checkFilter();
+    this.checkFiltter();
 
     this.load();
   }
 
-  checkFilter() {
+  checkFiltter() {
     this.filter = UiService.localGet(Constants.FINANCY_SUMMARY_FILTER);
+    this.wallet = UiService.localGet(Constants.CAIXA_WALLET);
     if (!this.filter) {
       this.filter = new FinancySummaryFilter();
 
@@ -80,17 +81,16 @@ export class FinancySummaryComponent implements OnInit, AfterViewInit {
       const ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
       this.initialDate = datePipe.transform(primeiroDia, 'YYYY-MM-dd');
       this.endDate = datePipe.transform(ultimoDia, 'YYYY-MM-dd');
-      this.wallet = UiService.localGet(Constants.CAIXA_WALLET);
       UiService.mySelectEmitter.emit({ obj: this.wallet, listName: 'wallets' });
 
       this.filter.dateI = this.initialDate;
       this.filter.dateF = this.endDate;
 
-      if (this?.wallet) {
-        this.filter.wallet_id = this?.wallet?.id;
-      } else {
-        this.filter.wallet_id = Constants.WALLET_FLUX_ID;
+      if (!this?.wallet) {
+        this.wallet = new Wallet();
       }
+
+      this.filter.wallet_id = this?.wallet?.id;
     } else {
       this.initialDate = this.filter.dateI;
       this.endDate = this.filter.dateF;

@@ -1,3 +1,5 @@
+import { Constants } from './constants';
+
 export class Wallet {
   id: number;
   name: string;
@@ -5,7 +7,8 @@ export class Wallet {
     if (id) {
       this.id = id;
     } else {
-      this.id = 1;
+      this.name = Constants.WALLET_FLUX_NAME;
+      this.id = Constants.WALLET_FLUX_ID;
     }
   }
 }

@@ -11,6 +11,9 @@ import { AlertController, PopoverController } from '@ionic/angular';
 import { ConstantMessages } from 'src/app/models/messages';
 import { Constants } from 'src/app/models/constants';
 import { UiService } from 'src/app/services/ui.service';
+import { Church } from 'src/app/models/church';
+import { ChurchService } from 'src/app/services/church.service';
+import { ChurchRegisterComponent } from '../../church/church-register/church-register.component';
 
 @Component({
   selector: 'app-category-manager',
@@ -23,13 +26,15 @@ export class CategoryManagerComponent implements OnInit {
   noContent = 'Nenhum Registro';
   categories: CaixaCategory[];
   subcategories: CaixaType[];
+  churches: Church[];
 
   constructor(
     private categoryService: CaixaCategoryService,
     private caixaTypeService: CaixaTypeService,
     private popCtrl: PopoverController,
     private exceptionService: ExceptionService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private churchService: ChurchService
   ) {}
 
   ngOnInit() {
@@ -44,6 +49,7 @@ export class CategoryManagerComponent implements OnInit {
   load() {
     this.loadCategory();
     this.loadSubcategory();
+    this.loadChurches();
   }
 
   async loadCategory() {
@@ -53,6 +59,32 @@ export class CategoryManagerComponent implements OnInit {
   async loadSubcategory() {
     const responser3 = await this.caixaTypeService.get();
     this.subcategories = responser3.data;
+  }
+  async loadChurches() {
+    const responser3 = await this.churchService.get();
+    this.churches = responser3.data;
+  }
+  prepareAlterCategory(category: CaixaCategory) {
+    this.categories.filter((obj) => {
+      if (obj.id === category?.id) {
+        obj.show = !obj?.show;
+      }
+    });
+  }
+
+  prepareAlterSubcategory(category: CaixaType) {
+    this.subcategories.filter((obj) => {
+      if (obj.id === category?.id) {
+        obj.show = !obj?.show;
+      }
+    });
+  }
+  prepareAlterChurch(church: Church) {
+    this.churches.filter((obj) => {
+      if (obj.id === church?.id) {
+        obj.show = !obj?.show;
+      }
+    });
   }
 
   deleteCategory(category: CaixaCategory) {
@@ -79,21 +111,7 @@ export class CategoryManagerComponent implements OnInit {
       })
       .catch((error) => this.exceptionService.error(error));
   }
-  prepareAlterCategory(category: CaixaCategory) {
-    this.categories.filter((obj) => {
-      if (obj.id === category?.id) {
-        obj.show = !obj?.show;
-      }
-    });
-  }
 
-  prepareAlterSubcategory(category: CaixaType) {
-    this.subcategories.filter((obj) => {
-      if (obj.id === category?.id) {
-        obj.show = !obj?.show;
-      }
-    });
-  }
   deleteSubcategory(subcategory: CaixaType) {
     this.caixaTypeService
       .delete(subcategory)
@@ -119,6 +137,30 @@ export class CategoryManagerComponent implements OnInit {
       .catch((error) => this.exceptionService.error(error));
   }
 
+  alterChurch(church: Church) {
+    this.churchService
+      .update(church)
+      .then(() => {
+        this.exceptionService.alertDialog(
+          ConstantMessages.ACTION_SUCCESS_PERFORMED,
+          'Alteração de Organização'
+        );
+        this.loadSubcategory();
+      })
+      .catch((error) => this.exceptionService.error(error));
+  }
+  deleteChurch(church: Church) {
+    this.churchService
+      .delete(church)
+      .then(() => {
+        this.exceptionService.alertDialog(
+          ConstantMessages.ACTION_SUCCESS_PERFORMED,
+          'Exclusão de Organização'
+        );
+        this.loadChurches();
+      })
+      .catch((error) => this.exceptionService.error(error));
+  }
   async createNew(op: number) {
     let apiResponse;
     let component = null;
@@ -128,6 +170,9 @@ export class CategoryManagerComponent implements OnInit {
     } else if (op === 2) {
       component = CaixaTypeRegisterComponent;
       apiResponse = this.subcategories;
+    } else if (op === 3) {
+      component = ChurchRegisterComponent;
+      apiResponse = this.churches;
     }
     const modal = await this.popCtrl.create({
       component,
@@ -159,6 +204,8 @@ export class CategoryManagerComponent implements OnInit {
               this.deleteCategory(obj);
             } else if (op === 2) {
               this.deleteSubcategory(obj);
+            } else if (op === 3) {
+              this.deleteChurch(obj);
             }
           },
         },

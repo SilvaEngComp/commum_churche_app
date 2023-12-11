@@ -41,6 +41,27 @@ ion-grid {
   width: 100%;
 }
 
+.grid-body-row {
+  display: grid;
+  grid-template-columns: 60px 200px;
+  align-content: center;
+  width: 100%;
+
+  div {
+    text-align: center;
+  }
+}
+
+.churchOk {
+  color: var(--ion-color-primary);
+  text-align: center;
+}
+
+.churchNotOk {
+  color: var(--ion-color-danger);
+  text-align: center;
+}
+
 .flex-container-col {
   display: flex;
   flex-direction: column;

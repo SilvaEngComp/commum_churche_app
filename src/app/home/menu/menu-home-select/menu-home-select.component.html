@@ -3,9 +3,10 @@
 </ion-content> -->
 
 <app-menu-home-small *ngIf="isLarge" (selectedPage)="onSelectPage($event)"></app-menu-home-small>
-
+<app-side-menu *ngIf="!isLarge" (selectedPage)="onSelectPage($event)"></app-side-menu>
 
 <ion-content>
+
   <div [ngSwitch]="page">
     <app-home-user-register [session]="0" *ngSwitchCase="1"
       (sessionPage)="onSelectPage($event)"></app-home-user-register>
@@ -20,4 +21,4 @@
     </ion-refresher-content>
   </ion-refresher>
 </ion-content>
-<app-menu-home-small *ngIf="!isLarge" (selectedPage)="onSelectPage($event)"></app-menu-home-small>
+<!-- <app-menu-home-small *ngIf="!isLarge" (selectedPage)="onSelectPage($event)"></app-menu-home-small> -->

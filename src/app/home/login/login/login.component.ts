@@ -5,6 +5,7 @@ import { User } from 'src/app/models/User';
 import { Constants } from 'src/app/models/constants';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +33,12 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit() {
+    UiService.localSet(
+      Constants.TITLE_CURRENT_PAGE,
+      Constants.TITLE_LOGIN_PAGE
+    );
+    UiService.pageTitle.emit(Constants.TITLE_LOGIN_PAGE);
+
     this.password = 'password';
     this.show = false;
     this.user = new User();

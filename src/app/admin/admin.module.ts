@@ -14,12 +14,14 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { UserPageModule } from './user/user.module';
 import { TutorialComponent } from './tutorial/tutorial.component';
+import { SideMenuAdminComponent } from './menu/side-menu-admin/side-menu-admin.component';
 
 @NgModule({
   declarations: [
     AdminSelectorComponent,
     AdminSmallComponent,
     TutorialComponent,
+    SideMenuAdminComponent,
   ],
   imports: [
     CommonModule,

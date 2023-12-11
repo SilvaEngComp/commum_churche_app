@@ -9,6 +9,7 @@ import { ExceptionService } from 'src/app/services/exception-service.service';
 import { DatePipe } from '@angular/common';
 import { CustomizedMonth } from 'src/app/models/customizedMonth';
 import { LoginService } from 'src/app/services/login.service';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-birthdays',
@@ -22,7 +23,6 @@ export class BirthdaysComponent implements OnInit {
   filter: UserFilter;
   currentMonth: CustomizedMonth;
   isLoggedIn: boolean;
-  localPageTitle: string;
   user: User;
   constructor(
     private userSerice: UserService,
@@ -31,13 +31,14 @@ export class BirthdaysComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    UiService.localSet(Constants.TITLE_CURRENT_PAGE, Constants.TITLE_BIRTHDAYS);
+    UiService.pageTitle.emit(Constants.TITLE_BIRTHDAYS);
     this.filter = new UserFilter();
     const datepipe: DatePipe = new DatePipe('en');
     this.filter.birthdayMonth = datepipe.transform(Date.now(), 'MM');
     this.currentMonth = new CustomizedMonth(Number(this.filter.birthdayMonth));
     this.isLoggedIn = LoginService.isLogged();
 
-    this.localPageTitle = Constants.TITLE_BIRTHDAYS;
     this.loadUsers();
   }
 

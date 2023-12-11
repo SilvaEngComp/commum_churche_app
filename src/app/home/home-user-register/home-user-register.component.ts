@@ -27,6 +27,12 @@ export class HomeUserRegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    UiService.localSet(
+      Constants.TITLE_CURRENT_PAGE,
+      Constants.TITLE_USER_REGISTER
+    );
+    UiService.pageTitle.emit(Constants.TITLE_USER_REGISTER);
+
     this.session = UiService.localGet(Constants.CURRENT_REGISTER_SESSION);
     if (!this.session) {
       this.session = 0;

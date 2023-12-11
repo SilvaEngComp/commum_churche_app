@@ -23,6 +23,11 @@ export class RevoverPasswordComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    UiService.localSet(
+      Constants.TITLE_CURRENT_PAGE,
+      Constants.TITLE_PASSWORD_RESTORE_PAGE
+    );
+    UiService.pageTitle.emit(Constants.TITLE_PASSWORD_RESTORE_PAGE);
     this.email = '';
     this.erro = false;
     this.typePassword = 'password';

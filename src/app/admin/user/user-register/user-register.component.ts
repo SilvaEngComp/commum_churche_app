@@ -22,7 +22,7 @@ export class UserRegisterComponent implements OnInit {
   ngOnInit() {
     this.isSmallDevice = this.platform.width() <= 500;
     this.user = new User();
-    this.localPageTitle = Constants.TITLE_USER_REGISTER;
+    this.localPageTitle = Constants.TITLE_MEMBER_REGISTER;
   }
 
   back() {

@@ -13,6 +13,8 @@ export class ConstantMessages {
   static ISBAPTIZED_INVALID = 'Você já é batizado? Marque SIM ou NÃO';
   static GENDER_INVALID = 'Qual o seu gênero? Marque Masculino ou Feminino';
   static CHURCH_INVALID = 'Selecione o templo onde tem frequentado';
+  static CHURCH_INVALID_FINANCY =
+    'Este usuário não está associado à uma organização. Faça a regularização do seu cadastro e tente novamente';
 
   //Contact register constants
   static STREET_INVALID = 'É necessário inserir um logradouro (Rua, AV., Trv.)';

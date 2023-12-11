@@ -30,14 +30,13 @@ export class AdminSelectorComponent implements OnInit {
   defaultPageName = 'menu-admin-page';
 
   isBibleOppened: boolean;
-  pageTile: string;
+
   constructor(
     private exceptionService: ExceptionService,
     private platform: Platform,
     private router: Router,
     private messagingService: MessagingService,
-    private fcmService: FcmService,
-    private popCtrl: PopoverController
+    private fcmService: FcmService
   ) {}
 
   ngOnInit() {
@@ -56,28 +55,8 @@ export class AdminSelectorComponent implements OnInit {
     } else {
       this.fcmService.initPush();
     }
-    this.pageTile = UiService.localGet(Constants.TITLE_CURRENT_PAGE);
-
-    UiService.pageTitle.subscribe((title: string) => {
-      this.pageTile = title;
-      console.log(this.pageTile);
-      if (title.toLocaleLowerCase().includes('dia')) {
-        this.isBibleOppened = true;
-      } else {
-        this.isBibleOppened = false;
-      }
-    });
   }
 
-  async showTutorial(event: any) {
-    const pop = await this.popCtrl.create({
-      component: TutorialComponent,
-      event,
-      componentProps: { event },
-    });
-
-    pop.present();
-  }
   listenForMessages() {
     this.messagingService.getMessages().subscribe(
       async (msg: any) => {
@@ -106,16 +85,6 @@ export class AdminSelectorComponent implements OnInit {
         this.exceptionService.alertDialog(err, 'Erro!');
       }
     );
-  }
-  standby() {
-    let localImage;
-    if (this.user?.gender?.toLocaleLowerCase().includes('masculino')) {
-      localImage = Constants.MALE_PERSON;
-    } else {
-      localImage = Constants.FEMALE_PERSON;
-    }
-
-    document.getElementById('userImage').setAttribute('src', localImage);
   }
 
   onSelectPage(page: any) {

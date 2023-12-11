@@ -76,6 +76,10 @@ export class EmergencyUserRegisterComponent implements OnInit {
       this.exceptionService.alertDialog(ConstantMessages.BIRTHDATE_INVALID);
       return;
     }
+    if (!this.user?.church) {
+      this.exceptionService.alertDialog(ConstantMessages.CHURCH_INVALID);
+      return;
+    }
 
     return true;
   }

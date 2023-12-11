@@ -87,6 +87,7 @@ export class Constants {
   static CAIXA_MAINTAINCE = 'caixatitheMaintaince';
   static USER_MAINTAINCE = 'userMaintaince';
   static CAIXA_WALLET = 'caixaWallet';
+  static WALLET_FLUX_NAME = 'Fluxo';
   static WALLET_FLUX_ID = 1;
   static WALLET_PROVISIONED_ID = 2;
   static MENU_USER_OPTION_PROFILE = '0';
@@ -127,6 +128,7 @@ export class Constants {
   static BIBLE_PROGRAM_MENU_READERS = '5';
   static BIBLE_PROGRAM_SUBPAGE = 'bible-program-subpage';
 
+  static TITLE_ADMIN_PAGE = 'ADMINISTRATIVO';
   static TITLE_CURRENT_PAGE = 'currentPageTitle';
   static TITLE_DAILY_READER = 'Leitura Bíblica';
   static TITLE_SUMMARY_FINANCY_SUB = 'Resumo Financeiro';
@@ -135,12 +137,13 @@ export class Constants {
   static TITLE_SUMMARY_MANAGER_CATEGORY = 'Gerenciar Categoria e Subcategoria';
   static TITLE_SUMMARY_BALANCE = 'Receitas';
   static TITLE_BIRTHDAYS = 'Aniversariantes';
+  static TITLE_USER_REGISTER = 'cadastro usuário';
   static TITLE_SUMMARY_EXPANSE = 'Saídas';
   static TITLE_SUMMARY_FINANCY = 'Tesouraria';
   static TITLE_SECRETARY = 'Sercretaria';
   static TITLE_USER_PROFILE = 'PERFIL';
-  static TITLE_USER_MEMBERS = 'LISTA DE MEMBROS';
-  static TITLE_USER_REGISTER = 'Cadastro de Membro';
+  static TITLE_MEMBERS_LIST = 'LISTA DE MEMBROS';
+  static TITLE_MEMBER_REGISTER = 'Cadastro de Membro';
   static TITLE_TITHE_HISTORIC = 'DÍZIMOS E OFERTAS';
   static TITLE_TITHE_HISTRIC = 'LISTA DE MEMBROS';
   static TITLE_CAIXA_REGISTER_OUT = 'REGISTRAR SAÍDA';
@@ -149,6 +152,8 @@ export class Constants {
   static TITLE_OFFER_REGISTER = 'REGISTRAR OFERTA';
   static TITLE_FEED_REGISTER = 'FEED NOTÍCIAS';
   static TITLE_CHURCH_SCHEDULE_REGISTER = 'PROGRAMAÇÕES';
+  static TITLE_LOGIN_PAGE = 'LOGIN';
+  static TITLE_PASSWORD_RESTORE_PAGE = 'ESQUECI SENHHA';
   static FCM_TOKEN = 'fcmToken';
   static COLOR_TRANSPARENT = 'transparent';
 

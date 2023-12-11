@@ -1,0 +1,15 @@
+ion-item {
+  --background: var(--ion-color-primary);
+  ion-label {
+    margin-left: 10px;
+    color: var(--ion-color-light);
+  }
+
+  ion-icon {
+    color: var(--ion-color-light);
+  }
+}
+
+ion-content {
+  --background: var(--ion-color-primary);
+}

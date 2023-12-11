@@ -12,6 +12,7 @@ import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { Constants } from 'src/app/models/constants';
 import { Contact } from 'src/app/models/contact';
 import { Share } from '@capacitor/share';
+import { UiService } from 'src/app/services/ui.service';
 @Component({
   selector: 'app-more',
   templateUrl: './more.page.html',
@@ -33,6 +34,12 @@ export class MorePage implements OnInit {
   ) {}
 
   ngOnInit() {
+    UiService.localSet(
+      Constants.TITLE_CURRENT_PAGE,
+      Constants.TITLE_ADMIN_PAGE
+    );
+    UiService.pageTitle.emit(Constants.TITLE_ADMIN_PAGE);
+
     this.height = this.platform.height() * 0.9 + 'px';
     this.validUser();
   }

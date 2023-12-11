@@ -103,6 +103,58 @@
             </table>
           </div>
         </ion-accordion>
+
+        <ion-accordion value="church">
+          <ion-item slot="header" color="light">
+            <ion-card-title>Organizações</ion-card-title>
+            <ion-icon slot="end" name="add-circle-sharp" (click)="createNew(3)"></ion-icon>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+
+            <table class="table  align-middle ">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th class="col-option">Opção</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <tr *ngFor="let item of churches">
+                  <td *ngIf="!item?.show">
+                    {{item?.name}}
+                  </td>
+                  <td *ngIf="item?.show">
+                    <ion-item color="medium">
+                      <ion-input [(ngModel)]="item.name" focus="true"></ion-input>
+                    </ion-item>
+                  </td>
+                  <td>
+                    <div class="buttons" *ngIf="!item?.show">
+                      <ion-tab-button (click)="prepareAlterChurch(item)">
+                        <ion-icon color="warning" name="create-outline"></ion-icon>
+                        <ion-label>Alterar</ion-label>
+                      </ion-tab-button>
+                      <ion-tab-button (click)="checkDelete(item,3)">
+                        <ion-icon color="danger" name="trash-outline"></ion-icon>
+                        <ion-label>Excluir</ion-label>
+                      </ion-tab-button>
+                    </div>
+                    <div class="buttons" *ngIf="item?.show">
+                      <ion-tab-button (click)="alterChurch(item)">
+                        <ion-icon color="success" name="checkmark-done-circle-outline"></ion-icon>
+                        <ion-label>Confirmar</ion-label>
+                      </ion-tab-button>
+                      <ion-tab-button (click)="prepareAlterChurch(item)">
+                        <ion-icon color="danger" name="close-circle-outline"></ion-icon>
+                        <ion-label>Cancelar</ion-label>
+                      </ion-tab-button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ion-accordion>
       </ion-accordion-group>
     </ion-col>
   </ion-row>

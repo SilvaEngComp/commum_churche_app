@@ -38,7 +38,7 @@
         <ion-col>
 
 
-          <div class="flex-container-row" (click)="setShowDescription()" *ngIf="!showDescription">
+          <div class="grid-body-row" (click)="setShowDescription()" *ngIf="!showDescription">
             <ion-icon name="reader-outline" class="icon-format"></ion-icon>
             <ion-label class="description-label">DESCRIÇÃO</ion-label>
           </div>
@@ -54,7 +54,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <div class="flex-container-row">
+          <div class="grid-body-row">
             <ion-icon name="menu-outline" class="icon-format"></ion-icon>
             <app-my-select-list [label]="'*Categoria'" [listName]="'categories'" [create]="true"
               [obj]="caixa?.caixaCategory" (selectEmiter)="setCategory($event)"></app-my-select-list>
@@ -63,7 +63,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <div class="flex-container-row">
+          <div class="grid-body-row">
             <ion-icon name="list-outline" class="icon-format"></ion-icon>
             <app-my-select-list [label]="'Sub Categoria'" [listName]="'types'" [create]="true"
               (selectEmiter)="setType($event)" [obj]="caixa?.caixaType"></app-my-select-list>
@@ -72,7 +72,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <div class="flex-container-row">
+          <div class="grid-body-row">
             <ion-icon name="storefront-outline" class="icon-format"></ion-icon>
             <app-my-select-list [label]="'*Organização'" [listName]="'churches'" [create]="true"
               (selectEmiter)="setChurch($event)" [obj]="caixa?.church"></app-my-select-list>
@@ -82,7 +82,7 @@
 
       <ion-row>
         <ion-col>
-          <div class="flex-container-row">
+          <div class="grid-body-row">
             <ion-icon name="wallet-outline" class="icon-format"></ion-icon>
             <app-my-select-list [label]="'*Conta'" [listName]="'wallets'" [obj]="wallet"
               (selectEmiter)="setWallet($event)" [obj]="caixa?.wallet"></app-my-select-list>
@@ -91,7 +91,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <div class="flex-container-row">
+          <div class="grid-body-row">
             <ion-icon name="document-attach-outline" class="icon-format"></ion-icon>
 
             <input type='file' ng2FileSelect [uploader]="uploader" (onFileSelected)="onSelectFile()" />

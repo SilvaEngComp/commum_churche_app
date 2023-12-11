@@ -40,6 +40,7 @@ export class FinancyAdminComponent implements OnInit {
   back() {
     const subpage = UiService.localGet(Constants.BACK_PAGE);
     if (subpage) {
+      UiService.localSet(Constants.PAGE_CONTROLL_FINANCY_ADMIN, subpage);
       if (subpage === '-1') {
         this.sessionPage.emit(Constants.MENU_GENERAL_OPTION_MORE);
       }
