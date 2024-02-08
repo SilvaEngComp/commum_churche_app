@@ -113,7 +113,8 @@ export class SideMenuAdminComponent implements OnInit {
     if (page === 7) {
       this.updateLastAccess();
     }
-    this.menuSide.close(true);
+    console.log(this.menuSide);
+    await this.menuSide.close(true);
   }
 
   async updateLastAccess() {

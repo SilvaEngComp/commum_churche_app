@@ -340,6 +340,8 @@ export class UiService {
     labels,
     datas,
     datasetLabel,
+    datasets?: any,
+    title?: string,
     backgroundColor?: string[],
     borderColor?: string[]
   ): Chart {
@@ -356,27 +358,40 @@ export class UiService {
     if (!borderColor) {
       borderColor = ['rgba(176,224,230)'];
     }
-
+    let defaultDataset = datasets;
+    if (!datasets) {
+      defaultDataset = [
+        {
+          data: datas,
+          label: datasetLabel,
+          backgroundColor,
+          borderColor,
+          borderWidth: 1,
+          barPercentage: 0.8,
+          barThickness: 'flex',
+        },
+      ];
+    }
     const config: ChartConfiguration = {
       type,
       data: {
         labels,
-        datasets: [
-          {
-            data: datas,
-            label: datasetLabel,
-            backgroundColor,
-            borderColor,
-            borderWidth: 1,
-            barPercentage: 0.8,
-            barThickness: 'flex',
-          },
-        ],
+        datasets: defaultDataset,
       },
       options: {
         scales: {
           y: {
             beginAtZero: true,
+          },
+        },
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: title,
           },
         },
       },

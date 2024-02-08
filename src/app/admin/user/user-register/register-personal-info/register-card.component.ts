@@ -243,7 +243,7 @@ export class RegisterCardComponent implements OnInit {
       this.exceptionService.loadingFunction();
 
       this.usuarioService
-        .createByCard(this.user)
+        .store(this.user)
         .then(() => {
           this.user = new User();
           this.exceptionService.openLoading(

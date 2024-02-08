@@ -65,6 +65,22 @@ export class UserPage implements OnInit {
     UiService.pageTitle.emit(Constants.TITLE_MEMBERS_LIST);
 
     this.loadUsers();
+    this.startLetterConfig();
+
+    this.subScriptions();
+  }
+
+  subScriptions() {
+    this.userFacadeService.dataLoaded.subscribe((data) => {
+      this.setConfigPagination(true);
+      this.isLoading = false;
+      this.users = data.data;
+      this.users.sort((a, b) => (a?.name > b?.name ? 1 : -1));
+      this.checkImage();
+    });
+  }
+
+  startLetterConfig() {
     this.letterSizeConfig = UiService.localGet(
       Constants.USER_LETTER_SIZE_CONFIG
     );
@@ -73,26 +89,6 @@ export class UserPage implements OnInit {
     }
 
     this.letterSize = this.letterSizeConfig + 'pt';
-    this.userFacadeService.dataLoaded.subscribe((data) => {
-      this.setConfigPagination(true);
-      this.isLoading = false;
-      this.users = data.data;
-      this.users.sort((a, b) => (a?.name > b?.name ? 1 : -1));
-      this.checkImage();
-      this.upperLimit = UiService.localGet(Constants.USER_SUPERIOR_LIMIT);
-      this.inferiorLimit = UiService.localGet(Constants.USER_INFERIOR_LIMIT);
-      this.paginationNumber = UiService.localGet(Constants.USER_PAGE_NUMBER);
-
-      if (!this.upperLimit) {
-        UiService.localSet(Constants.USER_SUPERIOR_LIMIT, 10);
-      }
-      if (!this.inferiorLimit) {
-        UiService.localSet(Constants.USER_INFERIOR_LIMIT, 0);
-      }
-      if (!this.paginationNumber) {
-        UiService.localSet(Constants.USER_PAGE_NUMBER, 1);
-      }
-    });
   }
 
   setLetterSize(isUpper: boolean) {
@@ -132,8 +128,9 @@ export class UserPage implements OnInit {
       this.paginationNumber = this.upperLimit / this.tresholderPagination;
       return;
     }
-    this.inferiorLimit = UiService.localGet('inferiorUserLimit');
-    this.upperLimit = UiService.localGet('upperUserLimit');
+    this.upperLimit = UiService.localGet(Constants.USER_SUPERIOR_LIMIT);
+    this.inferiorLimit = UiService.localGet(Constants.USER_INFERIOR_LIMIT);
+
     if (!this.inferiorLimit) {
       this.inferiorLimit = 0;
     }
@@ -186,7 +183,7 @@ export class UserPage implements OnInit {
     this.sessionPage.emit(Constants.PAGE_ADMIN_REGISTER);
   }
 
-  edit(user: User = null) {
+  edit(user: User) {
     let isEditing = false;
     if (user?.isEditing) {
       UiService.localRemove(Constants.USER_MAINTAINCE);

@@ -68,7 +68,9 @@ export class InputsGraphComponent implements OnInit {
       'doughnut',
       labels,
       total,
-      [generallabel]
+      '',
+      null,
+      generallabel
     );
   }
 }

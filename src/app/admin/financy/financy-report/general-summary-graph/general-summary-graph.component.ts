@@ -93,7 +93,9 @@ export class GeneralSummaryComponent implements OnInit {
       'bar',
       labels,
       total,
-      [generallabel]
+      '',
+      null,
+      generallabel
     );
   }
 }

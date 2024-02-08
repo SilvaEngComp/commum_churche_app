@@ -64,13 +64,23 @@
         </ion-card-content>
       </ion-card>
     </ion-col>
+    <ion-col class="card-options">
+      <ion-card class="div-canvas">
+        <ion-card-content>
+          <app-balance-period-graph></app-balance-period-graph>
+        </ion-card-content>
+      </ion-card>
+    </ion-col> <ion-col class="card-options">
+      <ion-card class="div-canvas">
+        <ion-card-content>
+          <app-balance-trimestral-graph></app-balance-trimestral-graph>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
   </ion-row>
   <ion-row>
     <ion-col class="card-options">
       <ion-card class="div-canvas">
-        <ion-card-header>
-          <ion-title>Resumo de Entradas Por Organização</ion-title>
-        </ion-card-header>
         <ion-card-content>
           <app-inputs-graph></app-inputs-graph>
         </ion-card-content>
@@ -80,14 +90,10 @@
   <ion-row>
     <ion-col class="card-options">
       <ion-card class="div-canvas">
-        <ion-card-header>
-          <ion-title>Resumo de Saídas Por Organização</ion-title>
-        </ion-card-header>
         <ion-card-content>
           <app-outputs-graph></app-outputs-graph>
         </ion-card-content>
       </ion-card>
     </ion-col>
   </ion-row>
-
 </ion-grid>

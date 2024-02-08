@@ -9,6 +9,8 @@ import { UiModule } from 'src/app/ui/ui.module';
 import { GeneralSummaryComponent } from './general-summary-graph/general-summary-graph.component';
 import { InputsGraphComponent } from './inputs-graph/inputs-graph.component';
 import { OutputsGraphComponent } from './outputs-graph/outputs-graph.component';
+import { BalancePeriodGraphComponent } from './balance-period-graph/balance-period-graph.component';
+import { BalanceTrimestralGraphComponent } from './balance-trimestral-graph/balance-trimestral-graph.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { OutputsGraphComponent } from './outputs-graph/outputs-graph.component';
     GeneralSummaryComponent,
     InputsGraphComponent,
     OutputsGraphComponent,
+    BalancePeriodGraphComponent,
+    BalanceTrimestralGraphComponent,
   ],
   imports: [
     CommonModule,
