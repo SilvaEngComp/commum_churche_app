@@ -14,7 +14,6 @@ import {
 } from '@angular/core';
 import { IonSlides, Platform, PopoverController } from '@ionic/angular';
 import { BibleProgramMap } from 'src/app/models/bibleProgramMap';
-import { ChallengeQuiz } from 'src/app/models/challengeQuiz';
 import { User } from 'src/app/models/User';
 import { ExceptionService } from 'src/app/services/exception-service.service';
 import { LoginService } from 'src/app/services/login.service';
@@ -22,7 +21,6 @@ import { BibleProgramService } from 'src/app/services/bible-program.service';
 import { BibleReaderProgram } from 'src/app/models/bibleReaderProgram';
 import { ClipboardService } from 'ngx-clipboard';
 import { ConstantsMidia } from 'src/app/models/contantsMidia';
-import { TutorialComponent } from '../../tutorial/tutorial.component';
 import { BibleProgramUserService } from 'src/app/services/bible-program-user.service';
 
 @Component({
@@ -104,13 +102,16 @@ export class DailyReaderComponent implements OnInit {
   async load() {
     this.is_loading = true;
     await this.bibleProgramService
-      .show()
+      .show(new BibleReaderProgram(), 1)
       .then((responser) => {
         this.selectedProgram = responser.data;
 
         this.ajusteSlide();
       })
-      .catch(() => (this.is_loading = false));
+      .catch((e) => {
+        this.is_loading = false;
+        console.log(e);
+      });
   }
 
   ajusteSlide() {

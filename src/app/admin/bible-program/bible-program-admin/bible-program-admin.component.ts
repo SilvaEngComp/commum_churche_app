@@ -20,6 +20,7 @@ export class BibleProgramAdminComponent implements OnInit {
       this.subpage = Constants.BIBLE_PROGRAM_MENU_READ_DAY;
     }
 
+    this.subpage = String(this.subpage);
     console.log(this.subpage);
   }
 

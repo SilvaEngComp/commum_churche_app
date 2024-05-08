@@ -31,7 +31,7 @@ export class BibleProgramMapComponent implements OnInit {
     this.isLoading = true;
     const responser = await this.bibleProgramService.show(
       this.selectedProgram,
-      0
+      1
     );
     const programList: BibleReaderProgram = responser.data;
     this.bibleProgram = programList.program;
