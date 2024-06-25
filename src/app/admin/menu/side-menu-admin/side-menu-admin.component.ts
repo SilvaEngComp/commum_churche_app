@@ -38,7 +38,6 @@ export class SideMenuAdminComponent implements OnInit {
   renderer: Renderer2;
   pageTile: string;
 
-  isBibleOppened: boolean;
   constructor(
     private feedService: FeedService,
     private exceptionService: ExceptionService,
@@ -60,16 +59,6 @@ export class SideMenuAdminComponent implements OnInit {
     });
 
     this.pageTile = UiService.localGet(Constants.TITLE_CURRENT_PAGE);
-
-    UiService.pageTitle.subscribe((title: string) => {
-      this.pageTile = title;
-      console.log(this.pageTile);
-      if (title.toLocaleLowerCase().includes('dia')) {
-        this.isBibleOppened = true;
-      } else {
-        this.isBibleOppened = false;
-      }
-    });
   }
 
   async showTutorial(event: any) {

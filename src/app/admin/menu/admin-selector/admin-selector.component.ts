@@ -55,6 +55,14 @@ export class AdminSelectorComponent implements OnInit {
     } else {
       this.fcmService.initPush();
     }
+
+    UiService.pageTitle.subscribe((title: string) => {
+      if (title.toLocaleLowerCase().includes('dia')) {
+        this.isBibleOppened = true;
+      } else {
+        this.isBibleOppened = false;
+      }
+    });
   }
 
   listenForMessages() {

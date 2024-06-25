@@ -2,16 +2,18 @@
   <ion-header>
     <ion-toolbar>
       <div class="div-header">
-        <ion-avatar class="left" [ngClass]="{'hasBorder': user?.image}" (click)="setPage(0)">
+        <ion-avatar
+          class="left"
+          [ngClass]="{ hasBorder: user?.image }"
+          (click)="setPage(0)"
+        >
           <img id="userImage" [src]="user?.image" (error)="standby()" />
         </ion-avatar>
-        <ion-note>{{user?.name}}</ion-note>
+        <ion-note>{{ user?.name }}</ion-note>
       </div>
-
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-
     <ion-item lines="none" (click)="setPage(3)" *noPermission="'member'">
       <ion-icon name="grid-sharp"></ion-icon>
       <ion-label>Admin</ion-label>
@@ -20,7 +22,7 @@
     <ion-item lines="none" (click)="setPage(7)" *ngIf="isTest">
       <ion-icon name="chatbox-ellipses-outline"></ion-icon>
       <ion-label>Fórum</ion-label>
-      <ion-badge color="success" *ngIf="badgeFeed">{{badgeFeed}}</ion-badge>
+      <ion-badge color="success" *ngIf="badgeFeed">{{ badgeFeed }}</ion-badge>
     </ion-item>
     <!--
       <ion-item lines="none" tab="more" (click)="setPage(7)" *ngIf="isTest">
@@ -33,8 +35,6 @@
       <ion-label>Leitura</ion-label>
     </ion-item>
 
-
-
     <!-- <ion-item lines="none" tab="more" (click)="setPage(0)">
         <ion-icon name="person-sharp"></ion-icon>
         <ion-label>Perfil</ion-label>
@@ -44,12 +44,10 @@
         <ion-label>Convidar</ion-label>
       </ion-item> -->
 
-
     <ion-item lines="none" (click)="setPage(-2)">
       <ion-icon name="power-sharp"></ion-icon>
       <ion-label>Sair</ion-label>
     </ion-item>
-
 
     <ion-item lines="none" *ngIf="isTest">
       <ion-icon color="warning" name="logo-apple-ar"></ion-icon>
@@ -64,8 +62,7 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
 
-
-      <ion-title>{{pageTile | uppercase}}</ion-title>
+      <ion-title>{{ pageTile | uppercase }}</ion-title>
 
       <ion-buttons slot="end">
         <ion-avatar (click)="showTutorial($event)">
@@ -75,3 +72,7 @@
     </ion-toolbar>
   </ion-header>
 </div>
+
+<ion-footer *ngIf="showColorMark">
+  <ion-toolbar> <app-color-manager></app-color-manager> </ion-toolbar>
+</ion-footer>
